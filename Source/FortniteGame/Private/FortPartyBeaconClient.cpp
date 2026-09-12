@@ -30,6 +30,12 @@ void AFortPartyBeaconClient::ClientAllowedToProceedFromReservation_Implementatio
 //void AFortPartyBeaconClient::ClientAbandonResponse_Implementation(TEnumAsByte<EPartyReservationResult::Type> ReservationResponse) {
 //}
 
+void AFortPartyBeaconClient::ClientAbandonResponse_Implementation(EPartyReservationResult::Type ReservationResponse) {
+}
+
+void AFortPartyBeaconClient::ClientReconnectResponse_Implementation(EPartyReservationResult::Type ReservationResponse) {
+}
+
 AFortPartyBeaconClient::AFortPartyBeaconClient() {
     ReconnectionInitialTimeout = 1;
     ReconnectionTimeout = 1;

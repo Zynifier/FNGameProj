@@ -47,5 +47,8 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     AAthenaBigBaseWall* GetBigBaseWall() const;
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsBarrierUp() const;
+    
 };
 

@@ -4,6 +4,7 @@
 #include "Subsystems/WorldSubsystem.h"
 #include "OnEnvelopeFollowerUpdatedDelegate.h"
 #include "OnSpectralAnalysisUpdatedDelegate.h"
+#include "FortSubmixAnalyzerData.h"
 #include "FortAudioAnalysisSubsystem.generated.h"
 
 class UAudioAnalysisSubmixAnalyzer;
@@ -46,7 +47,7 @@ public:
     void UnRegisterDefaultSubmix();
     
     UFUNCTION(BlueprintCallable)
-    void RegisterSubmix(USoundSubmix* InSubmix);
+    void RegisterSubmix(USoundSubmix* InSubmix, FFortSubmixAnalyzerData InAnalyzerData);
     
     UFUNCTION(BlueprintCallable)
     void RegisterDefaultSubmix();

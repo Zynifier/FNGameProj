@@ -39,6 +39,20 @@ void AContentBeaconClient::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
     
     DOREPLIFETIME(AContentBeaconClient, ClientContentManifest);
     DOREPLIFETIME(AContentBeaconClient, bHostActivatedContent);
+    DOREPLIFETIME(AContentBeaconClient, ContentMessagesArray);
+    DOREPLIFETIME(AContentBeaconClient, ClientContentModules);
+}
+
+void AContentBeaconClient::ServerFinishedActivatingContent_Implementation(bool bSuccess) {
+}
+bool AContentBeaconClient::ServerFinishedActivatingContent_Validate(bool bSuccess) {
+    return true;
+}
+
+void AContentBeaconClient::ServerStartingContentUnload_Implementation(const FString& PluginURL) {
+}
+bool AContentBeaconClient::ServerStartingContentUnload_Validate(const FString& PluginURL) {
+    return true;
 }
 
 AContentBeaconClient::AContentBeaconClient() {

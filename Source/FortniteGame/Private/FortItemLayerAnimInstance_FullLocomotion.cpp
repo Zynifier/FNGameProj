@@ -13,5 +13,6 @@ UFortItemLayerAnimInstance_FullLocomotion::UFortItemLayerAnimInstance_FullLocomo
     StopCardinalDirection = EFortCardinalDirection::North;
     PrePivotCardinalDirection = EFortCardinalDirection::North;
     PostPivotCardinalDirection = EFortCardinalDirection::North;
+    bIsSprinting = false;
 }
 

@@ -22,6 +22,10 @@ class UFortMedalsPunchCardItemDefinition;
 class UFortRepeatableDailiesCardItemDefinition;
 class UFortTokenType;
 
+class UAthenaSeasonItemData;
+class UDataAsset;
+class UFortCollectionsDataTable;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UAthenaSeasonItemDefinition : public UFortAccountItemDefinition {
     GENERATED_BODY()
@@ -29,6 +33,12 @@ public:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bXpOnlySeason;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bCapFreeBattlePassLevels;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseSeasonCurveForBattlePassRewards;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUseAccoladePunchCard;
@@ -92,6 +102,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FString> BattlePassLevelOfferIDs;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 BattlePassLevelOffer_MaxLevel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString BattlePassLevelBundleOfferID;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 BattlePassLevelBundleOffer_MaxLevel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 BattlePassLevelBundleOffer_NumLevels;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FPrimaryAssetId> FreeTokenItemPrimaryAssetIds;
@@ -187,7 +209,31 @@ protected:
     TSoftObjectPtr<UFortTokenType> NoBattleBundleToken;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortCollectionsDataTable> CollectionsDataTable;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UDataTable* NPCConversationQuests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UDataTable* SharedQuests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UDataTable* NPCConversationServices;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UDataTable* NPCConversationSalesInventory;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FGameplayTag, UDataTable*> SeasonDataTables;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FGameplayTag, UDataAsset*> SeasonDataAssets;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FGameplayTag> FirstTimeTrackedBitFlags;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Export, meta=(AllowPrivateAccess=true))
+    TArray<UAthenaSeasonItemData*> AdditionalSeasonData;
     
 public:
     UAthenaSeasonItemDefinition(const FObjectInitializer& ObjectInitializer);

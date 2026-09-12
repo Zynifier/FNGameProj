@@ -105,6 +105,21 @@ bool UFortGameInstance::CancelUninstallAllOptionalContentOnNextBoot() {
 void UFortGameInstance::CancelContentInstall() {
 }*/
 
+void UFortGameInstance::OnTournamentDataRefreshed() {
+}
+
+UDAD_CosmeticItemUserOptionsCollection* UFortGameInstance::GetDADCosmeticItemOptionsCollection() const {
+    return NULL;
+}
+
+UDAD_IslandQuerier* UFortGameInstance::GetDADIslandQuerier() const {
+    return NULL;
+}
+
+UFortDataAssetDirectoryManager* UFortGameInstance::GetDataAssetDirectoryManager() const {
+    return NULL;
+}
+
 UFortGameInstance::UFortGameInstance() {
     bBattleRoyaleMatchmakingEnabled = true;
     bCreativeModeProfileEnabled = true;
@@ -147,5 +162,8 @@ UFortGameInstance::UFortGameInstance() {
     ExtractionBootstrapper = NULL;
     PegasusDriver = NULL;
     ContentBeaconClient = NULL;
+    DADIslandQuerier = NULL;
+    DADCosmeticItemUserOptionsCollection = NULL;
+    CreativeDiscoverySurfaceManager = NULL;
 }
 

@@ -6,6 +6,8 @@
 #include "PartOverrideData.h"
 #include "FortAthenaMutator_CustomCharacterParts.generated.h"
 
+class AFortPlayerController;
+
 UCLASS(Abstract, Blueprintable, HideDropdown)
 class AFortAthenaMutator_CustomCharacterParts : public AFortAthenaMutator {
     GENERATED_BODY()
@@ -24,7 +26,7 @@ public:
     AFortAthenaMutator_CustomCharacterParts();
 protected:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-    bool GetPartOverridesForPlayer(TArray<FPartOverrideData>& OutOverrideParts, uint8 PayloadData) const;
+    bool GetPartOverridesForPlayer(TArray<FPartOverrideData>& OutOverrideParts, const AFortPlayerController* FortPlayerController) const;
     
 };
 

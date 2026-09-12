@@ -8,7 +8,7 @@
 class ULightComponent;
 
 UCLASS(Blueprintable)
-class ABuildingTimeOfDayLights : public ABuildingAutoNav {
+class FORTNITEGAME_API ABuildingTimeOfDayLights : public ABuildingAutoNav {
     GENERATED_BODY()
 public:
 protected:
@@ -29,6 +29,9 @@ public:
 protected:
    // UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
  //   void GetTimeOfDayBlueprintDefaultVariables(FTimeOfDayBlueprintDefaultVariables OutVariables);
+    
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    void GetTimeOfDayBlueprintDefaultVariables(FTimeOfDayBlueprintDefaultVariables& OutVariables);
     
 };
 

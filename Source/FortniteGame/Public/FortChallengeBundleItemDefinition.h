@@ -67,7 +67,13 @@ private:
     bool bHideFromMapChallenges;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bHideFromMapChallengeUntilBundleExists: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bHideRewardFromMapChallenges;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHideTimeRemaining;
     
 public:
     UFortChallengeBundleItemDefinition(const FObjectInitializer& ObjectInitializer);

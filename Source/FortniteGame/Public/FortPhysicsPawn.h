@@ -17,6 +17,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_GravityMultiplier, meta=(AllowPrivateAccess=true))
     float GravityMultiplier;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUseNetPrediction: 1;
+    
 public:
     AFortPhysicsPawn();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

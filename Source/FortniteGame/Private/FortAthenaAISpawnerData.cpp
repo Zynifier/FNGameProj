@@ -37,6 +37,26 @@ UFortAthenaAISpawnerDataComponentList* UFortAthenaAISpawnerData::CreateComponent
     return NULL;
 }
 
+UFortAthenaAISpawnerDataComponent_ChanceEncounterBase* UFortAthenaAISpawnerData::GetChanceEncounterComponent() const {
+    return NULL;
+}
+
+UFortAthenaAISpawnerDataComponent_ConversationBase* UFortAthenaAISpawnerData::GetConversationComponent() const {
+    return NULL;
+}
+
+UFortAthenaAISpawnerDataComponent_CosmeticBase* UFortAthenaAISpawnerData::GetCosmeticComponent() const {
+    return NULL;
+}
+
+UFortAthenaAISpawnerDataComponent_OptimBase* UFortAthenaAISpawnerData::GetOptimizationComponent() const {
+    return NULL;
+}
+
+UFortAthenaAISpawnerDataComponent_VoiceBase* UFortAthenaAISpawnerData::GetVoiceComponent() const {
+    return NULL;
+}
+
 UFortAthenaAISpawnerData::UFortAthenaAISpawnerData() {
     SpawnParamsComponent = NULL;
     BehaviorComponent = NULL;
@@ -45,5 +65,10 @@ UFortAthenaAISpawnerData::UFortAthenaAISpawnerData() {
     DebugComponent = NULL;
     AnalyticComponent = NULL;
     GameplayComponent = NULL;
+    ConversationComponent = NULL;
+    VoiceComponent = NULL;
+    CosmeticComponent = NULL;
+    ChanceEncounterComponent = NULL;
+    OptimizationComponent = NULL;
 }
 

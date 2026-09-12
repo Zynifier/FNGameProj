@@ -12,5 +12,6 @@ void UBulletWhipTrackerComponentBase::Disable() {
 UBulletWhipTrackerComponentBase::UBulletWhipTrackerComponentBase() {
     bEnableGravityCheck = false;
     CachedPassByPawn = NULL;
+    FadeTimeOnProjectileStop = 0.0f;
 }
 

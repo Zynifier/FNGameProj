@@ -22,5 +22,8 @@ UFortSKPushVehicleConfigs::UFortSKPushVehicleConfigs() {
     FastDismountDuration = 1;
     CanCoastAfterFastDismountCooldown = 1;
     PassengerVehicleWeightShiftYawStrength = 1;
+    UphillIncline = 0.0f;
+    MinPushForceMagnitude = 0.0f;
+    MinGearRampTime = 0.0f;
 }
 

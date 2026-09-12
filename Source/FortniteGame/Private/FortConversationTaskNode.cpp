@@ -16,6 +16,18 @@ AActor* UFortConversationTaskNode::GetParticipantActorNPC(const FConversationCon
     return NULL;
 }
 
+TSoftObjectPtr<USoundBase> UFortConversationTaskNode::GetChoiceSound() const {
+    return TSoftObjectPtr<USoundBase>();
+}
+
+TSoftObjectPtr<USoundBase> UFortConversationTaskNode::GetHoverChoiceSound() const {
+    return TSoftObjectPtr<USoundBase>();
+}
+
+TSoftObjectPtr<UObject> UFortConversationTaskNode::GetTaskIcon() const {
+    return TSoftObjectPtr<UObject>();
+}
+
 UFortConversationTaskNode::UFortConversationTaskNode() {
 }
 

@@ -1,6 +1,6 @@
 #include "FortPetAnimInstance_HighTowerRadish.h"
 
-void UFortPetAnimInstance_HighTowerRadish::UpdateBodyOffsetWithSpring(float Mass, FVector LagFactor, FVector BackpackOffset, float OwnerRootYawOffsetFractioned, bool bSlowDownInterp) {
+void UFortPetAnimInstance_HighTowerRadish::UpdateBodyOffsetWithSpring(float Mass, FVector LagFactor, FVector BackpackOffset, float OwnerRootYawOffsetFractioned, bool NewBSlowDownInterp) {
 }
 
 
@@ -30,5 +30,11 @@ UFortPetAnimInstance_HighTowerRadish::UFortPetAnimInstance_HighTowerRadish() {
     bIsPlayingEmoteExtra = false;
     bIsInVehicle = false;
     InVehicle = 1;
+    bIsSkydivingFE = false;
+    bSlowDownInterp = false;
+    bPetUnderWaterAndNotTargeting = false;
+    bIsOwnerPlayingMeleeAnim = false;
+    bIsSkydivingInGameOrIsParachuteOpen = false;
+    BodyOffsetSpringMass = 0.0f;
 }
 

@@ -79,5 +79,13 @@ AFortAthenaSKPushVehicle::AFortAthenaSKPushVehicle() {
     CacheAudioScrape = NULL;
     CacheAudioWind = NULL;
     CacheWheelDustFX = NULL;
+    bConstrainedRotation = false;
+    bIsCoastingOrDismounting = false;
+    ForwardForceTractionScale = 0.0f;
+    CurrentPhysicsCoastState = ECoastState::Idle;
+    CurrentAnimCoastState = ECoastState::Idle;
+    bIsDriverTargetting = false;
+    StandingInPlaceSteerAngle = 0.0f;
+    bPedalForceCooldown = false;
 }
 

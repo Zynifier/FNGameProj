@@ -6,7 +6,7 @@
 class UDataTable;
 
 UCLASS(Blueprintable)
-class UFortQuestMapDataAsset : public UPrimaryDataAsset {
+class UFortQuestMapDataAsset : public UDataAsset {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

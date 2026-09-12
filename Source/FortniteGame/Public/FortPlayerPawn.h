@@ -81,6 +81,18 @@
 #include "VortexParams.h"
 #include "ZiplinePawnState.h"
 #include "ZiplineStateChangedDelegate.h"
+#include "OnDBNOHoisterChangedDelegate.h"
+#include "OnGroupEmoteFollowerJoinedDelegate.h"
+#include "OnGroupEmoteFollowerLeftDelegate.h"
+#include "OnGroupEmoteSecondaryFirePressedDelegate.h"
+#include "OnGroupEmoteSyncValueChangedDelegate.h"
+#include "OnPlayerRevivedFromDBNODelegate.h"
+#include "OnVehicleStateChangeEventDelegate.h"
+#include "FortPawnMaterialOverride.h"
+#include "FortPawnMaterialOverrideCopiedParameters.h"
+#include "FortPawnMaterialOverrideState.h"
+#include "FortPlayerPawnObjectReference.h"
+#include "MaterialOverrideAppliedDelegateDelegate.h"
 #include "FortPlayerPawn.generated.h"
 
 class AActor;
@@ -150,6 +162,13 @@ class USkeletalMeshComponent;
 class USkeletalMeshComponentBudgeted;
 class USoundBase;
 class UTexture;
+
+class AFortWeapon;
+class UFortControllerComponent_TransientQuests;
+class UFortPlayerStateComponent_Quests;
+class UWidget;
+
+class UMaterialInterface;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortPlayerPawn : public AFortPawn, public IFortCarriedObjectHolderInterface, public IFortInteractInterface, public ICustomCharacterPartOwnerInterface, public IFortUICameraFrameTargetInterface {
@@ -354,11 +373,14 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bInitializedCharacterPartRBANSettings: 1;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    uint8 bIsLocalViewTarget: 1;
-    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bHasWaterParticleSystem: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bCanShowDefaultSkin: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_bDisabledTetheringSupport, meta=(AllowPrivateAccess=true))
+    uint8 bDisabledTetheringSupport: 1;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -387,14 +409,23 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     uint8 bDoubleFileEmoteSecondLine: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bEmoteUsesSecondaryFire: 1;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_LockGroupEmoteLeaderRotation, meta=(AllowPrivateAccess=true))
     uint8 bLockGroupEmoteLeaderRotation: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_GroupEmoteLookTarget, meta=(AllowPrivateAccess=true))
     AFortPlayerPawn* GroupEmoteLookTarget;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    AFortPlayerPawn* GroupEmoteTailTarget;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<AFortPlayerPawn*> GroupEmoteFollowers;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    float GroupEmoteAnimOffset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     float GroupEmoteLeaderRotationYawOffset;
@@ -404,6 +435,33 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float GroupEmoteMaximumZDifference;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnGroupEmoteSyncValueChanged OnGroupEmoteSyncValueChanged;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnGroupEmoteFollowerJoined OnGroupEmoteFollowerJoined;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnGroupEmoteFollowerLeft OnGroupEmoteFollowerLeft;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnGroupEmoteSecondaryFirePressed OnGroupEmoteSecondaryFirePressed;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_GroupEmoteSyncValue, meta=(AllowPrivateAccess=true))
+    uint8 GroupEmoteSyncValue;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 GroupEmoteSoundValue;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 GroupEmoteParticleValue;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UAnimMontage* TransformationMontage;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float TransformationMontageStartTime;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -446,6 +504,12 @@ public:
     
     UPROPERTY(EditAnywhere, ReplicatedUsing=OnRep_CustomMeshHeightAdjustTarget, meta=(AllowPrivateAccess=true))
     uint16 ReplicatedCustomMeshHeightAdjustTarget;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float UnburrowLaunchXYSpeed;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float UnburrowLaunchZSpeed;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_VehicleInputStateUnreliable, meta=(AllowPrivateAccess=true))
     FFortAthenaVehicleInputStateUnreliable VehicleInputStateUnreliable;
@@ -530,6 +594,12 @@ protected:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FZiplineStateChanged ZiplineStateChanged;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float ZiplineSpeedFactorTarget;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float ZiplineSpeedFactor;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat EnableSwimSprintDiveCooldown;
     
@@ -580,6 +650,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FVehiclePawnState VehicleStateLocal;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AActor* VehicleLastTick;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnVehicleStateChangeEvent OnVehicleStateChangedEvent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FVehiclePawnState VehicleStateLastTick;
@@ -656,7 +732,7 @@ protected:
     FTimeline BlueprintPaperPulseTimeline;
     
     UPROPERTY(EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
-    UCustomColorComponent* AccessoryColorSwatchHandler[6];
+    UCustomColorComponent* AccessoryColorSwatchHandler[7];
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -672,13 +748,13 @@ private:
     UCustomPlayerComponent* HACK_CustomPRIComponent;
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCustomCharacterPart* CharacterParts[6];
+    UCustomCharacterPart* CharacterParts[7];
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UCustomColorSwatch* CharacterColorSwatches[2];
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCustomColorSwatch* CharacterPartColorSwatches[6];
+    UCustomColorSwatch* CharacterPartColorSwatches[7];
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UAthenaCharmItemDefinition* CharacterCharms[4];
@@ -688,13 +764,13 @@ private:
     
 protected:
     UPROPERTY(EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
-    USkeletalMeshComponentBudgeted* CharacterPartSkeletalMeshComponents[6];
+    USkeletalMeshComponentBudgeted* CharacterPartSkeletalMeshComponents[7];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<AFortPlayerCharm*> CharacterCharmActors;
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    int8 CharacterPartSMHiddenRefCount[6];
+    int8 CharacterPartSMHiddenRefCount[7];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_BaseCosmeticLoadout, meta=(AllowPrivateAccess=true))
     FFortAthenaLoadout BaseCosmeticLoadout;
@@ -715,11 +791,25 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAllowClientLoadoutChangeSync;
     
-    UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCustomCharacterPart* PreviousCharacterParts[6];
+public:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FMaterialOverrideAppliedDelegate OnMaterialOverrideApplied;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_MaterialOverrides, meta=(AllowPrivateAccess=true))
+    TArray<FFortPawnMaterialOverride> MaterialOverrides;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortPawnMaterialOverride> LocalMaterialOverrides;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<USceneComponent*, FFortPawnMaterialOverrideState> MaterialOverrideStateMap;
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    ACustomCharacterPartModifier* CharacterPartModifiers[6];
+    UCustomCharacterPart* PreviousCharacterParts[7];
+    
+    UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    ACustomCharacterPartModifier* CharacterPartModifiers[7];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_CharPartAnimMontageInfo, meta=(AllowPrivateAccess=true))
     FFortCharacterPartsRepMontageInfo RepCharPartAnimMontageInfo;
@@ -747,6 +837,17 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortFootstepAudioBank* OriginalFootstepBank;
+    
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    UFortWeaponAnimSet* AnimSetOverride;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_AnimLayersOverride, meta=(AllowPrivateAccess=true))
+    TArray<TSubclassOf<UAnimInstance>> AnimLayersOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<TSubclassOf<UAnimInstance>> PreviousAnimLayersOverride;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -837,6 +938,12 @@ public:
     
     UPROPERTY(EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     uint16 PackedReplicatedSlopeAngles;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnDBNOHoisterChanged OnDBNOHoisterChangedDelegate;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerRevivedFromDBNO OnRevivedFromDBNODelegate;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FNewPlayerStateDelegate OnNewPlayerState;
@@ -1131,6 +1238,9 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bDisallowInterrogationOnNPC;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bHideBodyOnDeathRequested: 1;
+    
 protected:
     UPROPERTY(EditAnywhere, Transient, ReplicatedUsing=OnRep_ControlledRCPawn, meta=(AllowPrivateAccess=true))
     TWeakObjectPtr<AFortRemoteControlledPawnAthena> ControlledRCPawn;
@@ -1146,6 +1256,10 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float GhostModeExitDuration;
+    
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FName, FFortPlayerPawnObjectReference> CachedReferencesByName;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
@@ -1217,6 +1331,10 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat LastHitWeakSpotResourceBonus;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UWidget* CustomInteractionWidget;
     
 public:
     AFortPlayerPawn();
@@ -1567,7 +1685,7 @@ protected:
     void OnRep_RepAnimMontageStartSection();
     
     UFUNCTION(BlueprintCallable)
-    void OnRep_PossessedProp();
+    void OnRep_PossessedProp(ABuildingGameplayActorPlayerPropAttachment* OldProp);
     
     UFUNCTION(BlueprintCallable)
     void OnRep_ParachuteLockedOpen();
@@ -1842,13 +1960,13 @@ public:
     bool IsCharacterCustomizationLoadingCompleted() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    bool IsActivelyStrafingInAir() const;
+    bool IsActivelyStrafingInAir(const bool bCheckMovementMode) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool IsActivelySkydivingUpInVortex() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    bool IsActivelySkydiving() const;
+    bool IsActivelySkydiving(const bool bCheckMovementMode) const;
     
     UFUNCTION(BlueprintCallable)
     void InvokeWaterJumpSplash(const FVector& SplashPosition, float SplashScale);
@@ -2038,7 +2156,7 @@ public:
     void EnterSkyTube(AFortSkyTube* SkyTube, bool& bIsFirstTube);
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic)
-    void EndZiplining(bool bFromJump);
+    void EndZiplining(bool bFromJump, bool bReachedEnd);
     
     UFUNCTION(BlueprintCallable)
     void EndSkydiving();
@@ -2198,6 +2316,127 @@ public:
     
     UFUNCTION(BlueprintCallable)
     USkeletalMeshComponent* GetCustomizationRootSkeletalMeshComponent() const override PURE_VIRTUAL(GetCustomizationRootSkeletalMeshComponent, return NULL;);
+    
+    UFUNCTION(BlueprintCallable)
+    void AllowPickupInteractionWhileSkydiving(const bool bAllow);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void AuthUpdateLockedFloatSliderVariant(const UAthenaCosmeticItemDefinition* ItemVariantIsUsedFor, const FGameplayTag& ChannelTag);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void BlindTestPredictiveInput();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void CheckForUnburrowTeleport();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetZiplineSpeedFactor();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetZiplineSpeedFactorTarget();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void HACK_ApplyCosmetics(const FString& ApplyCosmetics);
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsMaterialOverrideApplied(const FGuid& MaterialOverrideId, bool& bOutIsCurrentOverride);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_AnimLayersOverride();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_bDisabledTetheringSupport();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_GroupEmoteSyncValue();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_MaterialOverrides();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnWeaponEquippedNative(AFortWeapon* NewWeapon, AFortWeapon* OldWeapon);
+    
+    UFUNCTION(BlueprintCallable)
+    void PopAnimLayersOverride(int32 Priority, const TArray<TSubclassOf<UAnimInstance>>& InAnimLayersOverride);
+    
+    UFUNCTION(BlueprintCallable)
+    void PopAnimSetOverride(int32 Priority, UFortWeaponAnimSet* InAnimSetOverride);
+    
+    UFUNCTION(BlueprintCallable)
+    void PushAnimLayersOverride(int32 Priority, const TArray<TSubclassOf<UAnimInstance>>& InAnimLayersOverride);
+    
+    UFUNCTION(BlueprintCallable)
+    void PushAnimSetOverride(int32 Priority, UFortWeaponAnimSet* InAnimSetOverride);
+    
+    UFUNCTION(BlueprintCallable)
+    void RemoveCosmeticSwap(const FGuid& SwapId);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    bool RemoveMaterialOverride(const FGuid& MaterialOverrideId);
+    
+    UFUNCTION(BlueprintCallable)
+    bool RemoveMaterialOverrideLocal(const FGuid& MaterialOverrideId);
+    
+    UFUNCTION(BlueprintCallable, Server, Unreliable)
+    void ServerEmoteSecondaryFirePressed();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerStartGliderSwap();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerStopGliderSwap();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetScalarParamOnOverriddenMaterials(const FName ParamName, float Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTetherRopeRodMesh(USkeletalMesh* InMesh);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTextureParamOnOverriddenMaterials(const FName ParamName, UTexture* Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTransformationMontage(UAnimMontage* CurrentMontage, UAnimMontage* FutureMontage, float StartTime);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetVectorParamOnOverriddenMaterials(const FName ParamName, const FLinearColor& Value);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ShowTestingPredictiveInput();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetBuildCostModifier() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetBuildSpeedModifier() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FFortAthenaLoadout GetPawnCosmeticLoadout(const bool bGetBaseLoadout, const bool bWarn) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortPlayerStateComponent_Quests* GetPlayerStateQuestsComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TArray<USkeletalMeshComponent*> GetSkeletalMeshesForAllParts() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    USkeletalMesh* GetTetherRopeRodMesh() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortControllerComponent_TransientQuests* GetTransientQuestsComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsPickupInteractionWhileSkydivingAllowed() const;
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    FGuid ApplyMaterialOverride(const TSoftObjectPtr<UMaterialInterface>& Material, const FFortPawnMaterialOverrideCopiedParameters& MaterialParamsToCopy, float Priority, bool bHideParticleSystems, bool bApplyToWeapon);
+    
+    UFUNCTION(BlueprintCallable)
+    FGuid ApplyMaterialOverrideLocal(const TSoftObjectPtr<UMaterialInterface>& Material, const FFortPawnMaterialOverrideCopiedParameters& MaterialParamsToCopy, float Priority, bool bHideParticleSystems, bool bApplyToWeapon);
     
 };
 

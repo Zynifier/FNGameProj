@@ -13,6 +13,8 @@
 #include "TowhookActionDelegateDelegate.h"
 #include "TowhookParams.h"
 #include "TowhookYankDelegateDelegate.h"
+#include "FortTowhookModel.h"
+#include "SphericalDriveContact.h"
 #include "FortOctopusVehicle.generated.h"
 
 class AActor;
@@ -20,7 +22,7 @@ class AFortOctopusTowhookAttachableProjectile;
 class AFortPlayerPawn;
 class UFortOctopusVehicleConfigs;
 class UFortVehicleAudioVoice;
-class UCameraShake;
+class UMatineeCameraShake;
 class UParticleSystemComponent;
 class UPrimitiveComponent;
 
@@ -29,7 +31,7 @@ class AFortOctopusVehicle : public AFortAthenaSKVehicle {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    UCameraShake* CacheDriverCameraShake;
+    UMatineeCameraShake* CacheDriverCameraShake;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float BounceContactRepulsionForce;
@@ -110,12 +112,32 @@ public:
     FNetTowhookAttachState ReplicatedAttachState;
     
 protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortOctopusVehicleConfigs> FortOctopusConfigsClass;
+    
+protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortOctopusVehicleConfigs* FortOctopusVehicleConfigs;
     
 private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FQuat ShellRotation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector CachedCameraDir;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortTowhookModel TowhookModel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector TowhookAimDir;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_NetTowhookAimDir, meta=(AllowPrivateAccess=true))
     FVector_NetQuantizeNormal NetTowhookAimDir;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSphericalDriveContact> CachedContactPoints;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UParticleSystemComponent* CacheCoilIdleTopR;

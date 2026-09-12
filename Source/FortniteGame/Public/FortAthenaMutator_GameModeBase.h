@@ -6,12 +6,16 @@
 #include "EAthenaGamePhase.h"
 #include "FortAthenaMutator.h"
 #include "FortMutatorAudioStinger.h"
+#include "EAthenaGamePhaseStep.h"
 #include "FortAthenaMutator_GameModeBase.generated.h"
 
 class AFortPlayerStateAthena;
 class AFortSquadStart;
 class UAudioComponent;
 class UFortAudioEventForwarder;
+
+class IFortSafeZoneInterface;
+class UFortSafeZoneInterface;
 
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortAthenaMutator_GameModeBase : public AFortAthenaMutator {
@@ -63,6 +67,9 @@ protected:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     FText GetPOINameForTag(const FGameplayTag& POITag) const;
+    
+    UFUNCTION(BlueprintCallable)
+    void OnGamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep);
     
 };
 

@@ -19,5 +19,6 @@ enum class EPlayerCompetitiveBanReasons : uint8 {
     CircumventingRegionLock,
     CircumventingBan,
     Smurfing,
+    CircumventingTeamLock,
 };
 

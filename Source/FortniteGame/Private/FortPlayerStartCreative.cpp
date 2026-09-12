@@ -12,5 +12,6 @@ AFortPlayerStartCreative::AFortPlayerStartCreative() : APlayerStart(FObjectIniti
     PriorityGroup = 0;
     bIsEnabled = true;
     CreativeLinkComponent = CreateDefaultSubobject<UFortCreativeVolumeLinkComponent>(TEXT("CreativeLinkComponent"));
+    ApplicableClass = 0;
 }
 

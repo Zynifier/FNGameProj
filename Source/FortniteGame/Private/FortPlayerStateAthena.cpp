@@ -221,6 +221,71 @@ void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
     DOREPLIFETIME(AFortPlayerStateAthena, bIsAnAthenaGameParticipant);
     DOREPLIFETIME(AFortPlayerStateAthena, BotUniqueId);
     DOREPLIFETIME(AFortPlayerStateAthena, bPreserveSquad);
+    DOREPLIFETIME(AFortPlayerStateAthena, bShowingSeasonLevel);
+    DOREPLIFETIME(AFortPlayerStateAthena, bIsContributingToOverbudgetHeatmap);
+    DOREPLIFETIME(AFortPlayerStateAthena, InitialSquadSize);
+    DOREPLIFETIME(AFortPlayerStateAthena, SquadSizeIncrements);
+    DOREPLIFETIME(AFortPlayerStateAthena, SquadSizeDecrements);
+    DOREPLIFETIME(AFortPlayerStateAthena, bInventoriesInNonPersistenceMode);
+    DOREPLIFETIME(AFortPlayerStateAthena, KeepPlayingTogetherVotingStatus);
+}
+
+FLinearColor AFortPlayerStateAthena::GetPinColorBySquadMemberIndex(int32 SquadIndex) {
+    return FLinearColor{};
+}
+
+void AFortPlayerStateAthena::OnInteractionEventOccurred(UPARAM(Ref) FGameplayTagContainer& InteractionTargetTags) {
+}
+
+void AFortPlayerStateAthena::OnRep_InventoriesInNonPersistenceMode() {
+}
+
+void AFortPlayerStateAthena::OnRep_IsContributingToOverbudgetHeatmap() {
+}
+
+void AFortPlayerStateAthena::OnRep_KeepPlayingTogetherVotingStatus() {
+}
+
+void AFortPlayerStateAthena::OnSquadSpecificContainerDestroyed(ABuildingContainer* DestroyedContainer) {
+}
+
+void AFortPlayerStateAthena::OnSquadSpecificContainerSpawned(ABuildingContainer* SpawnedContainer) {
+}
+
+void AFortPlayerStateAthena::SetIsContributingToOverbudgetHeatmap(bool bContributingToOverbudget) {
+}
+
+bool AFortPlayerStateAthena::GetInventoriesInNonPersistenceMode() const {
+    return false;
+}
+
+TSoftObjectPtr<UTexture2D> AFortPlayerStateAthena::GetSocialAvatarBrush(const bool bSmallImage) const {
+    return TSoftObjectPtr<UTexture2D>();
+}
+
+uint8 AFortPlayerStateAthena::GetSquadID() const {
+    return 0;
+}
+
+int32 AFortPlayerStateAthena::GetSquadMemberIndex() const {
+    return 0;
+}
+
+uint8 AFortPlayerStateAthena::GetTeam() const {
+    return 0;
+}
+
+UFortControllerComponent_TransientQuests* AFortPlayerStateAthena::GetTransientQuestsComponent() const {
+    return NULL;
+}
+
+void AFortPlayerStateAthena::Server_SetKeepPlayingTogetherVotingStatus_Implementation(EKeepPlayingTogetherVotingStatus NewStatus) {
+}
+bool AFortPlayerStateAthena::Server_SetKeepPlayingTogetherVotingStatus_Validate(EKeepPlayingTogetherVotingStatus NewStatus) {
+    return true;
+}
+
+void AFortPlayerStateAthena::ClientReportTournamentStatUpdate_Implementation(const FFortTournamentStatInfo& TournamentStatInfo) const {
 }
 
 AFortPlayerStateAthena::AFortPlayerStateAthena() {
@@ -269,5 +334,12 @@ AFortPlayerStateAthena::AFortPlayerStateAthena() {
     MatchAbandonState = EMatchAbandonState::None;
     bIsAnAthenaGameParticipant = true;
     bPreserveSquad = false;
+    bShowingSeasonLevel = false;
+    bIsContributingToOverbudgetHeatmap = false;
+    InitialSquadSize = 0;
+    SquadSizeIncrements = 0;
+    SquadSizeDecrements = 0;
+    bInventoriesInNonPersistenceMode = false;
+    KeepPlayingTogetherVotingStatus = EKeepPlayingTogetherVotingStatus::Undecided;
 }
 

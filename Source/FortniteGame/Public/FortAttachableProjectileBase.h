@@ -42,5 +42,9 @@ public:
     UFUNCTION(BlueprintCallable)
     AActor* GetAttachedToActor();
     
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnAttachedToEndPlayed(AActor* DamagedActor, EEndPlayReason::Type EndPlayReason);
+    
 };
 

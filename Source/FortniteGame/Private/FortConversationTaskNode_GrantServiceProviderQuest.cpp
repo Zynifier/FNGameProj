@@ -1,0 +1,4 @@
+#include "FortConversationTaskNode_GrantServiceProviderQuest.h"
+
+UFortConversationTaskNode_GrantServiceProviderQuest::UFortConversationTaskNode_GrantServiceProviderQuest() {
+}

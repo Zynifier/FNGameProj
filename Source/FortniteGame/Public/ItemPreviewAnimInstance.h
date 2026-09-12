@@ -15,26 +15,8 @@ class FORTNITEGAME_API UItemPreviewAnimInstance : public UFrontendAnimInstance {
     GENERATED_BODY()
 public:
 protected:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    FFortAnimInput_StandingPawnAnimAsset CurrentAnimSet;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    FFortAnimInput_StandingPawnAnimAsset DefaultAnimSetMale;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    FFortAnimInput_StandingPawnAnimAsset DefaultAnimSetFemale;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    FFortAnimInput_PlayerGliderAnimAsset CurrentGliderAnimSet;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    FFortAnimInput_Skydiving Skydiving;
-    
 public:
     UItemPreviewAnimInstance();
 protected:
-    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-    void OnFocusedItemChanged(const UFortItemDefinition* FocusedItem, const AFortWeapon* EquippedWeapon, const AFortPlayerParachute* CurrentParachute);
-    
 };
 

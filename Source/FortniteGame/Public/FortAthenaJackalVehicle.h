@@ -16,6 +16,8 @@ class UFortVehicleAudioVoice;
 class UMaterialInstanceDynamic;
 class UParticleSystemComponent;
 
+class AFortPlayerPawn;
+
 UCLASS(Blueprintable)
 class AFortAthenaJackalVehicle : public AFortAthenaSKVehicle {
     GENERATED_BODY()
@@ -50,6 +52,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float JumpCooldownRemaining;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float PendingJumpCharge;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UParticleSystemComponent* CacheBoostFX;
     
@@ -76,6 +81,13 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FVector FXBoostEnd;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bBoosting;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bShouldCorrectYaw;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -155,6 +167,9 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void CacheAudioPointers(UFortVehicleAudioVoice* InAudioMovement, UFortVehicleAudioVoice* InAudioBoost, UFortVehicleAudioVoice* InAudioWind);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void ShowCooldownCue(AFortPlayerPawn* Pawn, float Duration);
     
 };
 

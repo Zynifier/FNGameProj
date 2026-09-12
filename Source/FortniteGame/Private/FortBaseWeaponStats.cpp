@@ -63,5 +63,9 @@ FFortBaseWeaponStats::FFortBaseWeaponStats() {
     ChargeDamageMultiplierCurve = NULL;
     EquipAnimRate = 1;
     QuickBarSlotCooldownDuration = 1;
+    ShortRangeHitImpulseMagnitude = 0.0f;
+    MidRangeHitImpulseMagnitude = 0.0f;
+    LongRangeHitImpulseMagnitude = 0.0f;
+    HitImpulseZBias = 0.0f;
 }
 

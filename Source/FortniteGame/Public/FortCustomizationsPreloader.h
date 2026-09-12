@@ -12,10 +12,10 @@ class UFortCustomizationsPreloader : public UObject {
 public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    TArray<UCustomCharacterPart*> PrioritizedCharacterPartsNPCBudget;
+    TSet<UCustomCharacterPart*> PrioritizedCharacterPartsNPCBudget;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    TArray<UCustomCharacterPart*> PrioritizedCharacterPartsPlayerBudget;
+    TSet<UCustomCharacterPart*> PrioritizedCharacterPartsPlayerBudget;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<UFortAIPawnCustomizationDefinition*> PrioritizedAIPawnCustomizations;

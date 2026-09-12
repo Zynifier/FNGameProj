@@ -3,10 +3,10 @@
 #include "GameFramework/Info.h"
 #include "FortMinigameState.generated.h"
 
-UCLASS(Blueprintable, Deprecated, NotPlaceable, Config=Creative)
-class ADEPRECATED_FortMinigameState : public AInfo {
+UCLASS(Blueprintable)
+class FORTNITEGAME_API AFortMinigameState : public AInfo {
     GENERATED_BODY()
 public:
-    ADEPRECATED_FortMinigameState();
+    AFortMinigameState();
+    
 };
-

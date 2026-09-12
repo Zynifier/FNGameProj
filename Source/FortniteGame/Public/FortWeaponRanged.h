@@ -31,6 +31,9 @@ class USkeletalMesh;
 class UStaticMeshComponent;
 class UTexture2D;
 
+class UFXSystemComponent;
+class UNiagaraComponent;
+
 UCLASS(Blueprintable, MinimalAPI, Config=Game)
 class AFortWeaponRanged : public AFortWeapon {
     GENERATED_BODY()
@@ -64,6 +67,12 @@ protected:
     uint8 bShouldDisplayAmmoCounter: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bShouldDisplayAmmoCounterDuringSecondaryFire: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bShouldHideReserveAmmo: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bShouldAimFromMuzzleAtCloseRange: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -83,6 +92,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bUseBeamParticles: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bActivateRangeAbilityPerBurstShot: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bUseImpactFXForProjectiles: 1;
@@ -219,7 +231,7 @@ protected:
     UAnimMontage* WeaponCockingMontage;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
-    UParticleSystemComponent* BeamPSC;
+    UFXSystemComponent* BeamPSC;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float CrouchWalkSpeedThreshold;
@@ -353,7 +365,7 @@ protected:
     bool IsCachedIsProjectileWeapon() const;
     
     UFUNCTION(BlueprintCallable)
-    void InitializeBeamFX(UParticleSystemComponent* InBeamPSC);
+    void InitializeBeamFX(UFXSystemComponent* InBeamPSC);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool GetUseBeamParticles() const;
@@ -430,6 +442,14 @@ protected:
 public:
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void AbortScopeFX();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UNiagaraComponent* GetBeamNiagaraComponent() const;
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldDisplayAmmoCounterDuringSecondaryFire() const;
     
 };
 

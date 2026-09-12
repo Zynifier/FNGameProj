@@ -128,6 +128,29 @@ void AFortPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
     DOREPLIFETIME(AFortPickup, bRandomRotation);
 }
 
+void AFortPickup::SetDespawnTime(float InDespawnTime) {
+}
+
+AFortPickupEffect* AFortPickup::GetPickupEffectBlueprint() const {
+    return NULL;
+}
+
+USkeletalMeshComponent* AFortPickup::GetPickupSkeletalMeshComponent() const {
+    return NULL;
+}
+
+UStaticMeshComponent* AFortPickup::GetPickupStaticMeshComponent() const {
+    return NULL;
+}
+
+FGuid AFortPickup::GetTrackerGuid() const {
+    return FGuid{};
+}
+
+bool AFortPickup::IsSkeletalMeshComponent() const {
+    return false;
+}
+
 AFortPickup::AFortPickup() {
     bUsePickupWidget = true;
     bSuppressInteractionWidget = false;

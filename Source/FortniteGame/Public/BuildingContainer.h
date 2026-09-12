@@ -11,6 +11,7 @@
 #include "FortSearchBounceData.h"
 #include "LootTierGroupTagOverride.h"
 #include "RandomUpgradeData.h"
+#include "MarkedActorDisplayInfo.h"
 #include "BuildingContainer.generated.h"
 
 class AFortPlayerPawn;
@@ -20,6 +21,8 @@ class UFortWorldItemDefinition;
 class UMaterialInterface;
 class USoundCue;
 class UStaticMesh;
+
+class UTexture;
 
 UCLASS(Blueprintable, MinimalAPI)
 class ABuildingContainer : public ABuildingTimeOfDayLights {
@@ -67,6 +70,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bSpawnedActor: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bBlockMarking: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCanBeMarked: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FMarkedActorDisplayInfo MarkerDisplay;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector MarkerPositionOffset;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -181,6 +196,12 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     float TimeUntilLootRegenerates;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UTexture* SoundIndicatorIconOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FLinearColor SoundIndicatorTintOverride;
+    
 public:
     ABuildingContainer();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -246,6 +267,13 @@ protected:
 public:
     UFUNCTION(BlueprintCallable)
     void BounceContainer();
+    
+protected:
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
+    bool BP_IsAlreadySearched();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void BP_SetAlreadySearched(bool bInAlreadySearched);
     
 };
 

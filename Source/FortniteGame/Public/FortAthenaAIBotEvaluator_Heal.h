@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "FortAthenaAIBotEvaluator.h"
+#include "GameplayTagContainer.h"
 #include "FortAthenaAIBotEvaluator_Heal.generated.h"
 
 class UFortAthenaAIBotHealingDigestedSkillSet;
@@ -12,6 +13,9 @@ public:
 private:
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName HealingObjectKeyName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTagQuery RequiredTagQuery;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaAIBotHealingDigestedSkillSet* HealingSkillSet;

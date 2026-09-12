@@ -10,5 +10,7 @@ AAthenaAIController::AAthenaAIController() {
     bIsGoalRequiredForBehavior = true;
     SecondaryGoalActor = NULL;
     AthenaPFC = NULL;
+    bRegisterToAthenaAIDropper = false;
+    CachedAffiliationManager = NULL;
 }
 

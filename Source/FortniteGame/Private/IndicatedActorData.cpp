@@ -7,5 +7,7 @@ FIndicatedActorData::FIndicatedActorData() {
     bClampToScreen = false;
     Sound = NULL;
     StateImageOverride = EIndicatorStateImage::Default;
+    ShareActorWithMask = 0;
+    DisplayTeamOverride = 0;
 }
 

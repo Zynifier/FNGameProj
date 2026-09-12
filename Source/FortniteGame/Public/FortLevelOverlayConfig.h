@@ -14,5 +14,8 @@ private:
     
 public:
     UFortLevelOverlayConfig();
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    void GetOverlayList(TArray<FFortSourceWorldAndOverlayWorld>& OutOverlayList) const;
+    
 };
 

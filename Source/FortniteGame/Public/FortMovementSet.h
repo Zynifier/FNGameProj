@@ -48,6 +48,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     FFortGameplayAttributeData SwimSpeedMultiplier;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    FFortGameplayAttributeData LandSpeedWhileBurrowingMultiplier;
+    
 public:
     UFortMovementSet();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

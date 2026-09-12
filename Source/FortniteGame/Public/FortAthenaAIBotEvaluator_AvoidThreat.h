@@ -6,6 +6,8 @@
 class AFortProjectileBase;
 class UFortAthenaAIBotEvasiveManeuversDigestedSkillSet;
 
+class AActor;
+
 UCLASS(Blueprintable)
 class UFortAthenaAIBotEvaluator_AvoidThreat : public UFortAthenaAIBotEvaluator_Movement {
     GENERATED_BODY()
@@ -19,6 +21,9 @@ private:
     
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName AvoidThreatDestinationKeyName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AActor* CurrentThreatActorAvoiding;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortProjectileBase* CurrentProjectileAvoiding;

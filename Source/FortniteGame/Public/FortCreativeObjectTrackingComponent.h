@@ -8,10 +8,18 @@ UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UFortCreativeObjectTrackingComponent : public UActorComponent {
     GENERATED_BODY()
 public:
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    bool bUpdatePreviewLocation;
+    
+public:
     UFortCreativeObjectTrackingComponent();
 private:
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
     void ServerSetPreviewLocation(bool bPreviewActive, const FVector& Location);
+    
+public:
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     
 };
 

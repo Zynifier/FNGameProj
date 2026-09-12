@@ -1,0 +1,4 @@
+#include "FortAthenaAISpawnerDataComponent_ChanceEncounterBase.h"
+
+UFortAthenaAISpawnerDataComponent_ChanceEncounterBase::UFortAthenaAISpawnerDataComponent_ChanceEncounterBase() {
+}

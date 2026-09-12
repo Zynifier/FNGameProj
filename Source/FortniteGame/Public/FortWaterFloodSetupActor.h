@@ -15,7 +15,7 @@ protected:
     void SetMinimapData(TSoftObjectPtr<UTexture2D> BaseTexture, TSoftObjectPtr<UTexture2D> DiscoveryMaskTexture);
     
 public:
-    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    UFUNCTION(BlueprintImplementableEvent)
     void OnSetOceanFloodHeight(const int32 Step);
     
 };

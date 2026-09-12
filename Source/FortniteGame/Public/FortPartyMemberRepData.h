@@ -15,6 +15,10 @@
 #include "PartyMemberFrontendEmote.h"
 #include "PartyMemberSquadAssignmentRequest.h"
 #include "PartyMemberVariantCache.h"
+#include "EPartyMemberSidekickStatus.h"
+#include "PartyMemberCampaignInfo.h"
+#include "PartyMemberFrontEndMapMarker.h"
+#include "PartyMemberLobbyState.h"
 #include "FortPartyMemberRepData.generated.h"
 
 class UFortFeatItemDefinition;
@@ -29,6 +33,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FPartyMemberCampaignHero CampaignHero;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FPartyMemberCampaignInfo CampaignInfo;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 MatchmakingLevel;
@@ -53,6 +60,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FDateTime UtcTimeStartedMatchAthena;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FPartyMemberLobbyState LobbyState;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EGameReadiness GameReadiness;
@@ -80,6 +90,12 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EPartyMemberVoiceChatStatus VoiceChatStatus;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EPartyMemberSidekickStatus SidekickStatus;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FPartyMemberFrontEndMapMarker FrontEndMapMarker;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FPartyMemberCosmeticLoadout AthenaCosmeticLoadout;

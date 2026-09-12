@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "BuildingGameplayActor.h"
+#include "GameplayTagContainer.h"
 #include "BuildingGameplayActorQuest.generated.h"
 
 UCLASS(Blueprintable)
@@ -13,5 +14,8 @@ protected:
     
 public:
     ABuildingGameplayActorQuest();
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FGameplayTagContainer GetStaticGameplayTags();
+    
 };
 

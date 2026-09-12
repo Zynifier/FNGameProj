@@ -11,6 +11,8 @@
 
 class AController;
 
+class AFortMinigame;
+
 UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class FORTNITEGAME_API UCreativeQuestComponent : public UActorComponent {
     GENERATED_BODY()
@@ -67,6 +69,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_QuestUpdate, meta=(AllowPrivateAccess=true))
     int32 QuestAllProgress;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    AFortMinigame* MyMinigame;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_QuestActive, meta=(AllowPrivateAccess=true))
     TArray<bool> QuestTeamActive;
     
@@ -87,7 +92,7 @@ public:
     void ResetQuestProgress();
     
     UFUNCTION(BlueprintCallable)
-    void RegisterQuest();
+    void RegisterQuest(AFortMinigame* Minigame);
     
 private:
     UFUNCTION(BlueprintCallable)

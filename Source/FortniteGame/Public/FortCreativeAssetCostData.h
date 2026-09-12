@@ -10,6 +10,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<FString, FCreativeActorMetaData> MetaDataMap;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FName, FCreativeActorMetaData> NameMetaDataMap;
+    
     FORTNITEGAME_API FFortCreativeAssetCostData();
 };
 

@@ -11,5 +11,6 @@ enum class EFortDamageNumberType : uint8 {
     Shield,
     Score,
     DBNO,
+    Percent,
 };
 

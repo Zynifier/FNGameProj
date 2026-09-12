@@ -105,6 +105,13 @@ bool UFortContentControlsManager::GetAllowedToAcquire() const {
     return false;
 }
 
+void UFortContentControlsManager::SetCanCastHouseparty(bool bInValue) {
+}
+
+bool UFortContentControlsManager::GetCanCastHouseparty() const {
+    return false;
+}
+
 UFortContentControlsManager::UFortContentControlsManager() {
     OwningPlayer = NULL;
 }

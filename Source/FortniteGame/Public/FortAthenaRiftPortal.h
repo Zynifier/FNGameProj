@@ -12,6 +12,11 @@ UCLASS(Blueprintable)
 class AFortAthenaRiftPortal : public ABuildingGameplayActorConsumable, public IVehicleTeleportPortal {
     GENERATED_BODY()
 public:
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<AActor*> IgnoredActors;
+    
+public:
     AFortAthenaRiftPortal();
     UFUNCTION(BlueprintCallable)
     void TeleportVehicleFacing(AActor* Vehicle, const FVector& TeleportLocation, const FRotator& Rot);
@@ -27,5 +32,11 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable)
+    void AddIgnoredActor(const AActor* Actor);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsIgnoredActor(const AActor* QueryActor) const;
+    
 };
 

@@ -13,19 +13,19 @@ void AFortAIGoalManager::RemoveGoalsFromWorldAssignment(UObject* WorldContextObj
 void AFortAIGoalManager::RemoveGoalFromWorldAssignment(UObject* WorldContextObject, const FFortAIAssignmentIdentifier& AssignmentIdentifier, const FFortAIGoalInfo GoalInfo) {
 }
 
-void AFortAIGoalManager::MakeGoalsFromLocationsAndActor(TArray<FFortAIGoalInfo> Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations, const AActor* GoalActor) {
+void AFortAIGoalManager::MakeGoalsFromLocationsAndActor(TArray<FFortAIGoalInfo>& Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations, const AActor* GoalActor) {
 }
 
-void AFortAIGoalManager::MakeGoalsFromLocations(TArray<FFortAIGoalInfo> Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations) {
+void AFortAIGoalManager::MakeGoalsFromLocations(TArray<FFortAIGoalInfo>& Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations) {
 }
 
-void AFortAIGoalManager::MakeGoalsFromActors(TArray<FFortAIGoalInfo> Goals, const UObject* WorldContextObject, const TArray<AActor*>& GoalActors, bool bActorsAlwaysPerceived, bool bGoalActorsAllowUndermining) {
+void AFortAIGoalManager::MakeGoalsFromActors(TArray<FFortAIGoalInfo>& Goals, const UObject* WorldContextObject, const TArray<AActor*>& GoalActors, bool bActorsAlwaysPerceived, bool bGoalActorsAllowUndermining) {
 }
 
-void AFortAIGoalManager::MakeGoalFromLocation(FFortAIGoalInfo Goal, const UObject* WorldContextObject, const FVector& GoalLocation) {
+void AFortAIGoalManager::MakeGoalFromLocation(FFortAIGoalInfo& Goal, const UObject* WorldContextObject, const FVector& GoalLocation) {
 }
 
-void AFortAIGoalManager::MakeGoalFromActor(FFortAIGoalInfo Goal, const UObject* WorldContextObject, AActor* GoalActor, bool bActorAlwaysPerceived, bool bGoalActorAllowsUndermining) {
+void AFortAIGoalManager::MakeGoalFromActor(FFortAIGoalInfo& Goal, const UObject* WorldContextObject, AActor* GoalActor, bool bActorAlwaysPerceived, bool bGoalActorAllowsUndermining) {
 }
 
 void AFortAIGoalManager::CreateWorldAssignment(UObject* WorldContextObject, FFortAIAssignmentIdentifier WorldAssignmentIdentifier, UFortAIAssignmentSettings* AssignmentSettings, TSubclassOf<UFortAIGoalProvider> GoalProvider, FFortAIAssignmentIdentifier& AssignmentIdentifier, EAssignmentCreationResult& CreationResult) {

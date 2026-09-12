@@ -32,5 +32,6 @@ FFortTargetFilter::FFortTargetFilter() {
     bTraceComplexCollision = false;
     bExcludeLandscape = false;
     bConsiderPhysicsPawnsAsNonPlayerPawns = false;
+    bExcludePawnNeutrals = false;
 }
 

@@ -18,6 +18,7 @@
 #include "OnVolumePerformanceMetricsUpdatedDelegate.h"
 #include "Templates/SubclassOf.h"
 #include "VolumeActorStats.h"
+#include "ESpatialLoadingState.h"
 #include "FortVolume.generated.h"
 
 class AActor;
@@ -36,6 +37,11 @@ class UFortPlaysetItemDefinition;
 class UFortVolumeObjectTrackingComponent;
 class UPrimitiveComponent;
 class UStaticMeshComponent;
+
+class UCreativeIslandResourceManagerComponent;
+class UDevicesDataTrackingComponent;
+class UFortPlayerSaveComponent;
+class UFortVolumePersistenceOptions;
 
 UCLASS(Blueprintable, MinimalAPI, Config=Game)
 class AFortVolume : public AGameplayVolume, public IFortMutatorOwner, public IFortVolumeAccessor {
@@ -58,12 +64,20 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, ReplicatedUsing=OnRep_ObjectTrackingComponent, meta=(AllowPrivateAccess=true))
     UFortVolumeObjectTrackingComponent* ObjectTrackingComponent;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UDevicesDataTrackingComponent* DevicesDataTrackingComponent;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortPlaysetItemDefinition* OverridePlayset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     uint8 bNeverAllowSaving: 1;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bShouldTrackObjects: 1;
+    
+public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_bShowPublishWatermark, meta=(AllowPrivateAccess=true))
     uint8 bShowPublishWatermark: 1;
     
@@ -90,11 +104,17 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<AFortAthenaCreativePortal*> LinkedPortals;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bAdjustNavInvokerSizeToVolume: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCreateNavOctreeInclusionBound: 1;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<AActor*> DeferredDestroyActors;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_VolumeState, meta=(AllowPrivateAccess=true))
-    EVolumeState VolumeState;
+    ESpatialLoadingState VolumeState;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UAsyncTaskQueue* TaskQueue;
@@ -154,6 +174,15 @@ public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_UserGeneratedContentRestrictions, meta=(AllowPrivateAccess=true))
     bool bUserGeneratedContentRestricted;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    UCreativeIslandResourceManagerComponent* IslandResourceManagerComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortPlayerSaveComponent* PlayerSaveComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    UFortVolumePersistenceOptions* FortVolumePersistenceOptions;
     
 public:
     AFortVolume();
@@ -266,6 +295,15 @@ public:
     
     UFUNCTION()
     void AddMutatorToList(AFortGameplayMutator* Mutator) override PURE_VIRTUAL(AddMutatorToList,);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FString GetAccountIdOwnerOfIsland() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortVolumePersistenceOptions* GetFortVolumePersistenceOptions() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortVolumeObjectTrackingComponent* GetObjectTrackingComponent() const;
     
 };
 

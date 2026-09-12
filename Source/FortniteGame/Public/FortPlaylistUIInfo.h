@@ -4,6 +4,7 @@
 #include "Styling/SlateBrush.h"
 #include "PostGameScreenTagClassPair.h"
 #include "Templates/SubclassOf.h"
+#include "FortOptionsMenuData.h"
 #include "FortPlaylistUIInfo.generated.h"
 
 class USoundCue;
@@ -13,6 +14,9 @@ UCLASS(Blueprintable)
 class UFortPlaylistUIInfo : public UDataAsset {
     GENERATED_BODY()
 public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortOptionsMenuData> OptionsMenuOverrides;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UUserWidget> PostGamePlacementOverlayClass;
     

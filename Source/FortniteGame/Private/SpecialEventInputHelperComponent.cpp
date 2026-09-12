@@ -9,5 +9,7 @@ void USpecialEventInputHelperComponent::PopInputComponent() {
 USpecialEventInputHelperComponent::USpecialEventInputHelperComponent() {
     bBlockInput = false;
     InputComp = NULL;
+    bConsumeMoveInput = false;
+    bConsumeLookInput = false;
 }
 

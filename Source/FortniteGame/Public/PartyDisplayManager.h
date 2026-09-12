@@ -18,6 +18,8 @@ class UMaterialInstance;
 class UMeshComponent;
 class UObject;
 
+class UFortItemDefinition;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API APartyDisplayManager : public AActor {
     GENERATED_BODY()
@@ -58,6 +60,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortAthenaLoadout CurrentlyDisplayedCosmeticLoadout;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortItemDefinition*> CurrentContentOnDemandItemDefs;
     
 public:
     APartyDisplayManager();

@@ -46,6 +46,13 @@ class UReplayVideoManager;
 class USidecarSys;
 class UVideoExtractionBootstrapper;
 
+class UCurveTable;
+class UDAD_CosmeticItemUserOptionsCollection;
+class UDAD_IslandQuerier;
+class UDataTable;
+class UFortCreativeDiscoverySurfaceManager;
+class UObject;
+
 UCLASS(Blueprintable, MinimalAPI, NonTransient)
 class UFortGameInstance : public UGameInstance {
     GENERATED_BODY()
@@ -85,6 +92,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FAthenaDataTableSet AthenaDataTables;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TMap<TSoftObjectPtr<UDataTable>, UDataTable*> CachedBaseDataTables;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TMap<TSoftObjectPtr<UCurveTable>, UCurveTable*> CachedBaseCurveTables;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bOverridingCurrentEmoteMusicFFT;
@@ -234,6 +247,18 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AContentBeaconClient* ContentBeaconClient;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UDAD_IslandQuerier* DADIslandQuerier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UDAD_CosmeticItemUserOptionsCollection* DADCosmeticItemUserOptionsCollection;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortCreativeDiscoverySurfaceManager* CreativeDiscoverySurfaceManager;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<TSoftClassPtr<UObject>> BlacklistedPhysicsAssets;
+    
 public:
     UFortGameInstance();
   //  UFUNCTION(BlueprintCallable, Reliable)
@@ -337,5 +362,19 @@ public:
     UFUNCTION(BlueprintCallable, Reliable, ServiceResponse)
     void CancelContentInstall();
     */
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnTournamentDataRefreshed();
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UDAD_CosmeticItemUserOptionsCollection* GetDADCosmeticItemOptionsCollection() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UDAD_IslandQuerier* GetDADIslandQuerier() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortDataAssetDirectoryManager* GetDataAssetDirectoryManager() const;
+    
 };
 

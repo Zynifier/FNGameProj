@@ -8,6 +8,8 @@
 #include "FortCreativeTagsHelper.h"
 #include "FortPlaysetStreamingData.h"
 #include "LevelSaveRecordProvider.h"
+#include "EPlaysetCategory.h"
+#include "FortPreviewActorData.h"
 #include "FortPlaysetItemDefinition.generated.h"
 
 class AActor;
@@ -45,6 +47,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ZSnapTolerance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EPlaysetCategory PlaysetCategory;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EPlaysetOffsetType OffsetType;
@@ -85,6 +90,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<TSoftObjectPtr<UFortPlaysetPropItemDefinition>> AssociatedPlaysetProps;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortPreviewActorData> PreviewActorData;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName PlaysetName;

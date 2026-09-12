@@ -6,5 +6,7 @@ FFortUpdatedObjectiveStat::FFortUpdatedObjectiveStat() {
     ShadowStatValue = 0;
     StatDelta = 0;
     CurrentStage = 0;
+    bSharedQuestUpdate = false;
+    bShowToast = false;
 }
 

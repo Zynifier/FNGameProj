@@ -69,6 +69,8 @@ class USoundBase;
 class USoundMix;
 class UUserWidget;
 
+class UFortQuestMapData;
+
 UCLASS(Blueprintable, MinimalAPI)
 class UGameDataSTW : public UPrimaryDataAsset {
     GENERATED_BODY()
@@ -421,6 +423,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> QuestAchievementData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortQuestMapData> QuestMapData;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortItemDefinition> SkillPointItemDef;

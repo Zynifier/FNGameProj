@@ -1,0 +1,4 @@
+#include "FortConversationRequirement_HasNoActiveQuests.h"
+
+UFortConversationRequirement_HasNoActiveQuests::UFortConversationRequirement_HasNoActiveQuests() {
+}

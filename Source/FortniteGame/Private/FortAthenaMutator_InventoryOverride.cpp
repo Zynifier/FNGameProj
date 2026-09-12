@@ -11,5 +11,7 @@ AFortAthenaMutator_InventoryOverride::AFortAthenaMutator_InventoryOverride() {
     AmmoDropOverride = EAthenaLootDropOverride::NoOverride;
     InventoryUpdateOverride = EAthenaInventorySpawnOverride::NoOverride;
     InventoryLoadoutIndex = 0;
+    InventoryAutoEquipSlot = 0;
+    bForceInventoryAutoEquip = false;
 }
 

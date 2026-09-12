@@ -3,6 +3,10 @@
 void AFortPickupsParent::SetupStretchMIDsInternal() {
 }
 
+EFortRarity AFortPickupsParent::GetClientCosmeticRarity(const UFortItem* Item) const {
+    return EFortRarity::Common;
+}
+
 AFortPickupsParent::AFortPickupsParent() {
     DefaultBaseMaterial = NULL;
     LootGiftMaterialSkelMesh = NULL;

@@ -1,0 +1,5 @@
+#include "FortConversationRequirement_HasNoActiveQuestsFromSlottedQuestProvider.h"
+
+UFortConversationRequirement_HasNoActiveQuestsFromSlottedQuestProvider::UFortConversationRequirement_HasNoActiveQuestsFromSlottedQuestProvider() {
+    QuestSlot = 0;
+}

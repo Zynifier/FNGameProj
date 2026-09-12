@@ -48,6 +48,7 @@
 #include "MarkedActorDisplayInfo.h"
 #include "TInteractionType.h"
 #include "Templates/SubclassOf.h"
+#include "EBuildingActorComponentCreationPolicy.h"
 #include "BuildingActor.generated.h"
 
 class ABuildingActor;
@@ -73,6 +74,9 @@ class UPrimitiveComponent;
 class UProjectileMovementComponent;
 class USoundBase;
 
+class UFortDamageSet;
+class UFortPhysicsObjectComponent;
+
 UCLASS(Abstract, Blueprintable, Config=Game)
 class FORTNITEGAME_API ABuildingActor : public AActor, public IFortInteractInterface, public INavLinkHostInterface, public IFortTeamActorInterface, public IFortInitializationInterface, public INavRelevantInterface, public INavAgentInterface, public IFortSpawnableByPlacementSystemInterface, public IGameplayTagAssetInterface, public IGameplayCueInterface, public IFortDamageableActorInterface/*, public IFortAbilitySystemInterface*/, public ILevelSaveSpawnable, public IFortCurieInterface, public IFortMarkableActorInterface {
     GENERATED_BODY()
@@ -89,7 +93,7 @@ public:
     TSoftClassPtr<UNavArea> AreaClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftClassPtr<UNavLinkDefinition> NavigationLinksClass;
+    TSubclassOf<UNavLinkDefinition> NavigationLinksClass;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_InitialOverlappingVehicles, meta=(AllowPrivateAccess=true))
@@ -108,6 +112,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortBuildingActorSet* BuildingAttributeSet;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortDamageSet* DamageAttributeSet;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, ReplicatedUsing=OnRep_BuildingAttributeSet, meta=(AllowPrivateAccess=true))
     UFortBuildingActorSet* ReplicatedBuildingAttributeSet;
@@ -123,7 +130,7 @@ protected:
     EAttributeInitLevelSource AttributeInitLevelSource;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    EAbilitySystemComponentCreationPolicy AbilitySystemComponentCreationPolicy;
+    EBuildingActorComponentCreationPolicy AbilitySystemComponentCreationPolicy;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -141,7 +148,22 @@ protected:
     float LifespanAfterDeath;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bUseMinLifeSpan;
+    FGameplayTag PhysicsObjectPresetTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag PhysicsObjectPhysicalDataTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag PhysicsObjectBuoyancyDataTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag PhysicsObjectImpactDamageDataTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortPhysicsObjectComponent* PhysicsObjectComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUseMinLifeSpan: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortAbilitySystemComponent* AbilitySystemComponent;
@@ -232,6 +254,15 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bIsIndestructibleForTargetSelection: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bPropagateDrawDistanceOnAdditionalComponent: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCreatePhysicsObjectComponent: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsGameFrameworkComponentReceiver: 1;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=HandleDestroyed, meta=(AllowPrivateAccess=true))
@@ -487,6 +518,10 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCurveTableRowHandle InteractionSpeed;
     
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShouldClearMarkerOnInteract;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 DataVersion;
@@ -549,18 +584,6 @@ private:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UProjectileMovementComponent* ProjectileMovementComponent;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    uint8 bCanBeMarked: 1;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    uint8 bBlockMarking: 1;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    FVector MarkerPositionOffset;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    FMarkedActorDisplayInfo MarkerDisplay;
     
 public:
     ABuildingActor();
@@ -719,7 +742,7 @@ public:
     bool IsAcceptablePositionForPlacement(const FVector& InLocation, const FRotator& InRotation, AFortDecoTool* DecoTool, bool bIsCDO, FText& OutFailureReason) const;
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    void InitializeKismetSpawnedBuildingActor(ABuildingActor* BuildingOwner, AFortPlayerController* SpawningController, bool bUsePlayerBuildAnimations);
+    void InitializeKismetSpawnedBuildingActor(ABuildingActor* BuildingOwner, AFortPlayerController* SpawningController, bool bUsePlayerBuildAnimations, ABuildingActor* ReplacedBuilding);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool HasHealthLeft() const;
@@ -797,7 +820,7 @@ public:
     void ClearPlayedDying();
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
-    bool BlueprintOnLocalInteract(AFortPlayerPawn* InteractingPawn);
+    bool BlueprintOnLocalInteract(AFortPlayerPawn* InteractingPawn, const EInteractionBeingAttempted InteractionBeingAttempted);
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
     void BlueprintOnInterruptInteract();
@@ -867,5 +890,8 @@ public:
     {
         return FPrimaryAssetId("PlayerBuildingClass", GetFName());
     }
+    UFUNCTION(BlueprintCallable)
+    static UFortPhysicsObjectComponent* GetPhysicsObjectComponent(ABuildingActor* Building);
+    
 };
 

@@ -44,9 +44,9 @@ bool AFortPlayerControllerAthena::UpdateCreativeIslandDescriptionTags_Validate(c
     return true;
 }
 
-void AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Implementation(FFortPlaysetStreamingData PlaysetData, AFortVolume* Volume) {
+void AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Implementation(FFortPlaysetStreamingData PlaysetData, AActor* Volume) {
 }
-bool AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Validate(FFortPlaysetStreamingData PlaysetData, AFortVolume* Volume) {
+bool AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Validate(FFortPlaysetStreamingData PlaysetData, AActor* Volume) {
     return true;
 }
 
@@ -56,10 +56,10 @@ void AFortPlayerControllerAthena::StopRecordingHighlights() {
 void AFortPlayerControllerAthena::StartRespawnLoading() {
 }
 
-void AFortPlayerControllerAthena::StartMatchmakingByLinkCode(const FString& LinkCode) {
+void AFortPlayerControllerAthena::StartMatchmakingByLinkCode(const FString& LinkCode, FName PlaylistName, bool bIsPrivateMatch) {
 }
 
-void AFortPlayerControllerAthena::StartCreativeMatchmakingReadyCheck(const FString& LinkCode, bool& OutDidStartMatchmakingImmediately) {
+void AFortPlayerControllerAthena::StartCreativeMatchmakingReadyCheck(const FString& LinkCode, FName PlaylistName, bool& OutDidStartMatchmakingImmediately, bool isPrivateMatch) {
 }
 
 void AFortPlayerControllerAthena::ShowHighlightSummary() {
@@ -72,9 +72,6 @@ void AFortPlayerControllerAthena::SetFocalPointWithDuration(AActor* InFocalPoint
 }
 
 void AFortPlayerControllerAthena::SetFocalPoint(AActor* InFocalPoint, FVector InFocalPointOffset, float InFocalPointFOV) {
-}
-
-void AFortPlayerControllerAthena::SetCanStreamBuildingFoundationsIn(bool bCanStream) {
 }
 
 void AFortPlayerControllerAthena::ServerUpdateUserCameraPreview_Implementation() {
@@ -140,9 +137,9 @@ bool AFortPlayerControllerAthena::ServerStopSavingCreativePlot_Validate() {
     return true;
 }
 
-void AFortPlayerControllerAthena::ServerStartUnloadingVolume_Implementation(AFortVolume* VolumeToUnload) {
+void AFortPlayerControllerAthena::ServerStartUnloadingVolume_Implementation(AActor* VolumeToUnload) {
 }
-bool AFortPlayerControllerAthena::ServerStartUnloadingVolume_Validate(AFortVolume* VolumeToUnload) {
+bool AFortPlayerControllerAthena::ServerStartUnloadingVolume_Validate(AActor* VolumeToUnload) {
     return true;
 }
 
@@ -152,9 +149,9 @@ bool AFortPlayerControllerAthena::ServerStartMinigame_Validate() {
     return true;
 }
 
-void AFortPlayerControllerAthena::ServerStartLoadingVolume_Implementation(AFortVolume* VolumeToLoad) {
+void AFortPlayerControllerAthena::ServerStartLoadingVolume_Implementation(AActor* VolumeToLoad) {
 }
-bool AFortPlayerControllerAthena::ServerStartLoadingVolume_Validate(AFortVolume* VolumeToLoad) {
+bool AFortPlayerControllerAthena::ServerStartLoadingVolume_Validate(AActor* VolumeToLoad) {
     return true;
 }
 
@@ -326,9 +323,9 @@ bool AFortPlayerControllerAthena::ServerGenerateMockMatchReport_Validate() {
     return true;
 }
 
-void AFortPlayerControllerAthena::ServerEndUnloadingVolume_Implementation(AFortVolume* VolumeToUnload) {
+void AFortPlayerControllerAthena::ServerEndUnloadingVolume_Implementation(AActor* VolumeToUnload) {
 }
-bool AFortPlayerControllerAthena::ServerEndUnloadingVolume_Validate(AFortVolume* VolumeToUnload) {
+bool AFortPlayerControllerAthena::ServerEndUnloadingVolume_Validate(AActor* VolumeToUnload) {
     return true;
 }
 
@@ -338,9 +335,9 @@ bool AFortPlayerControllerAthena::ServerEndMinigame_Validate(bool bAbandon) {
     return true;
 }
 
-void AFortPlayerControllerAthena::ServerEndLoadingVolume_Implementation(AFortVolume* VolumeToLoad) {
+void AFortPlayerControllerAthena::ServerEndLoadingVolume_Implementation(AActor* VolumeToLoad) {
 }
-bool AFortPlayerControllerAthena::ServerEndLoadingVolume_Validate(AFortVolume* VolumeToLoad) {
+bool AFortPlayerControllerAthena::ServerEndLoadingVolume_Validate(AActor* VolumeToLoad) {
     return true;
 }
 
@@ -667,10 +664,6 @@ UAthenaPlayerMatchReport* AFortPlayerControllerAthena::GetMatchReport() {
     return NULL;
 }
 
-UAthenaMarkerComponent* AFortPlayerControllerAthena::GetMarkerComponent() const {
-    return NULL;
-}
-
 int32 AFortPlayerControllerAthena::GetInventorySpace() const {
     return 0;
 }
@@ -856,13 +849,13 @@ void AFortPlayerControllerAthena::ClientAlertLeaveIsland_Implementation() {
 void AFortPlayerControllerAthena::ClientAddProfileGoCollection_Implementation(const FString& CollectionName, const TArray<FProfileGoScenario>& NewScenarios) {
 }
 
-void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Implementation(FFortUpdatedObjectiveStat ObjectiveUpdated, const AFortPlayerState* QuestOwner, const AFortPlayerState* AssistingPlayer) {
+void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Implementation(const TArray<FFortDisplayQuestUpdateData>& UpdateData) {
 }
 
 void AFortPlayerControllerAthena::ClearInventorySpaces(int32 NumSpaces) {
 }
 
-void AFortPlayerControllerAthena::ClearDroppableItems() {
+void AFortPlayerControllerAthena::ClearDroppableItems(bool bAllowShouldDropItemOverride) {
 }
 
 void AFortPlayerControllerAthena::CheckIfSafeToTurnOnCamera() {
@@ -919,6 +912,89 @@ void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimePro
     DOREPLIFETIME(AFortPlayerControllerAthena, CurrentPlayset);
     DOREPLIFETIME(AFortPlayerControllerAthena, CreativeUserContentManager);
     DOREPLIFETIME(AFortPlayerControllerAthena, CreativeObjectTrackingComponent);
+}
+
+void AFortPlayerControllerAthena::BroadcastOnPickupProjectileCreated(UFortItemDefinition* ItemDefinition) {
+}
+
+void AFortPlayerControllerAthena::ClientAlertForcedOffIsland_Implementation() {
+}
+
+void AFortPlayerControllerAthena::ClientDownloadContentForLinkCodeResult_Implementation(bool bSuccess) {
+}
+bool AFortPlayerControllerAthena::ClientDownloadContentForLinkCodeResult_Validate(bool bSuccess) {
+    return true;
+}
+
+void AFortPlayerControllerAthena::ClientReportPhaseFound_Implementation(const FString& Phase) {
+}
+
+void AFortPlayerControllerAthena::ClientResolveHermesLinkCodeResult_Implementation(const FString& LinkCode, bool bSuccess) {
+}
+bool AFortPlayerControllerAthena::ClientResolveHermesLinkCodeResult_Validate(const FString& LinkCode, bool bSuccess) {
+    return true;
+}
+
+bool AFortPlayerControllerAthena::GetIgnoreSignifanceBasedCustomDepthRendering() {
+    return false;
+}
+
+void AFortPlayerControllerAthena::ServerAlertForceOthersOffIsland_Implementation() {
+}
+bool AFortPlayerControllerAthena::ServerAlertForceOthersOffIsland_Validate() {
+    return true;
+}
+
+void AFortPlayerControllerAthena::ServerEnteredCameraMode_Implementation() {
+}
+
+void AFortPlayerControllerAthena::ServerEnteredCursorMode_Implementation() {
+}
+
+void AFortPlayerControllerAthena::ServerFriendGameMemberAdded_Implementation(AFortPlayerStateAthena* FriendPSA) {
+}
+
+void AFortPlayerControllerAthena::ServerFriendGameMemberRemoved_Implementation(AFortPlayerStateAthena* FriendPSA) {
+}
+
+void AFortPlayerControllerAthena::ServerRequestHermesDownloadForIsland_Implementation(const FString& LinkCode) {
+}
+bool AFortPlayerControllerAthena::ServerRequestHermesDownloadForIsland_Validate(const FString& LinkCode) {
+    return true;
+}
+
+void AFortPlayerControllerAthena::ServerRequestVkModuleVersionFromLinkCode_Implementation(const FString& LinkCode) {
+}
+bool AFortPlayerControllerAthena::ServerRequestVkModuleVersionFromLinkCode_Validate(const FString& LinkCode) {
+    return true;
+}
+
+void AFortPlayerControllerAthena::ServerShowSeasonLevel_Implementation() {
+}
+bool AFortPlayerControllerAthena::ServerShowSeasonLevel_Validate() {
+    return true;
+}
+
+void AFortPlayerControllerAthena::ServerUpdateHeatmapBoundsForCurrentVolume_Implementation() {
+}
+bool AFortPlayerControllerAthena::ServerUpdateHeatmapBoundsForCurrentVolume_Validate() {
+    return true;
+}
+
+void AFortPlayerControllerAthena::SetIgnoreSignifanceBasedCustomDepthRendering(bool bValue, UObject* ModifyingObject) {
+}
+
+void AFortPlayerControllerAthena::TeleportToPlaygroundLobbyIsland() {
+}
+
+UFortControllerComponent_TransientQuests* AFortPlayerControllerAthena::GetTransientQuestsComponent() const {
+    return NULL;
+}
+
+void AFortPlayerControllerAthena::Client_DisplayReceivedMultipleInstanceLoot_Implementation(const TArray<FGiftUINotificationInfo>& ItemsReceived) {
+}
+
+void AFortPlayerControllerAthena::ServerUpdatePrimaryQuickBarSlots_Implementation(const FQuickBarEquippedItemGuids& SlotItemGuids) {
 }
 
 AFortPlayerControllerAthena::AFortPlayerControllerAthena() {
@@ -1023,5 +1099,11 @@ AFortPlayerControllerAthena::AFortPlayerControllerAthena() {
     CreativeUserContentManager = NULL;
     CreativeObjectTrackingComponent = NULL;
     CreativeItemToRemoveWhenAddingInventoryItem = NULL;
+    bLockingOnFocalPoint = false;
+    RespawnCamera_OffsetFromHit = 0.0f;
+    SocialNotificationInputComponent = NULL;
+    TransientQuestsComponent = NULL;
+    InventoryServiceComponent = NULL;
+    RadiusTrackerComponent = NULL;
 }
 

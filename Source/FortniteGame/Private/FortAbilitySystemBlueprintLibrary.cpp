@@ -36,6 +36,21 @@ void UFortAbilitySystemBlueprintLibrary::AssignActiveGameplayEffectTagSetByCalle
 void UFortAbilitySystemBlueprintLibrary::AssignActiveGameplayEffectSetByCallerMagnitude(FActiveGameplayEffectHandle ActiveHandle, FName DataName, float Magnitude) {
 }
 
+void UFortAbilitySystemBlueprintLibrary::GrantAndActivateAbilityOnSelfWithParams(UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayAbility>& AbilityToGrant, UObject* ContextObject, const FGameplayEventData GameplayEventData) {
+}
+
+bool UFortAbilitySystemBlueprintLibrary::IsGameplayCueActive(AActor* Actor, const FGameplayTag& GameplayCueTag) {
+    return false;
+}
+
+bool UFortAbilitySystemBlueprintLibrary::IsGameplayEffectContextAbilityChildOf(const FGameplayEffectContextHandle& GameplayEffectContextHandle, const TSubclassOf<UGameplayAbility> AbilityClass) {
+    return false;
+}
+
+bool UFortAbilitySystemBlueprintLibrary::IsGameplayEffectContextAbilityInstance(const FGameplayEffectContextHandle& GameplayEffectContextHandle, const UGameplayAbility* AbilityInstance) {
+    return false;
+}
+
 UFortAbilitySystemBlueprintLibrary::UFortAbilitySystemBlueprintLibrary() {
 }
 

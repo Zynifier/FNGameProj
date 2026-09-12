@@ -4,6 +4,7 @@
 #include "FortNavSystem.h"
 #include "NavDataSetVariantSettings.h"
 #include "OnNavGenerationFinishedDelegate.h"
+#include "UObject/NoExportTypes.h"
 #include "AthenaNavSystem.generated.h"
 
 class AAthenaNavOctTreeInclusionBounds;
@@ -37,7 +38,7 @@ private:
     TArray<FBoxNavInvoker> BoxInvokers;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TArray<AAthenaNavOctTreeInclusionBounds*> NavOctTreeInclusionBounds;
+    TArray<FBox> NavOctTreeInclusionBounds;
     
 public:
     UAthenaNavSystem();

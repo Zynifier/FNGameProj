@@ -58,5 +58,6 @@ UFortAnimInstance::UFortAnimInstance() {
     bAnimDynamicsEnabled = false;
     bRigidBodyEnabled = false;
     bEnableAdditiveLayer = false;
+    bIsInGoop = false;
 }
 

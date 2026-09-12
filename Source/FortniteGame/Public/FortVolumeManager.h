@@ -15,6 +15,7 @@
 #include "OnVolumeStateChangedDelegate.h"
 #include "Templates/SubclassOf.h"
 #include "VolumePlayerStateInfo.h"
+#include "ESpatialLoadingState.h"
 #include "FortVolumeManager.generated.h"
 
 class AActor;
@@ -203,7 +204,7 @@ public:
     AFortVolume* GetVolumeForActor(const AActor* Actor) const;
     
     UFUNCTION(BlueprintCallable)
-    static AFortMinigameSettingsBuilding* GetSettingsActorForVolume(const AFortVolume* ContextVolume);
+    static AFortMinigameSettingsBuilding* GetSettingsActorForVolume(const AActor* ContextVolume);
     
     UFUNCTION(BlueprintCallable)
     static AFortMinigameSettingsBuilding* GetSettingsActor(const AActor* ContextActor);
@@ -212,7 +213,7 @@ public:
     AFortMinigame* GetMinigameFromVolume(const AActor* Actor) const;
     
     UFUNCTION(BlueprintCallable)
-    static AFortMinigame* GetMinigameForVolume(const AFortVolume* Volume);
+    static AFortMinigame* GetMinigameForVolume(const AActor* Volume);
     
     UFUNCTION(BlueprintCallable)
     static AFortMinigame* GetMinigameForPlayerState(const APlayerState* PlayerState);
@@ -261,6 +262,10 @@ private:
 public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool ActorsAreInSameVolume(const AActor* Left, const AActor* Right) const;
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void HandleSpatialLoadingStateChanged(ESpatialLoadingState NewState, AFortVolume* Volume);
     
 };
 

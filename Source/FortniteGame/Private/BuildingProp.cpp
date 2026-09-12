@@ -15,5 +15,7 @@ ABuildingProp::ABuildingProp() {
     bDoNotBlockMarkerTraceWhenOverlappingPlayer = false;
     bSuppressSimpleInteractionWidgetForTouch = true;
     bKeepWhenUnderwater = false;
+    bCanBeMarked = false;
+    bBlockMarking = false;
 }
 

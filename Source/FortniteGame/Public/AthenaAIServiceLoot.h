@@ -6,6 +6,7 @@
 #include "EAthenaGamePhaseStep.h"
 #include "MovingLootInfo.h"
 #include "Templates/SubclassOf.h"
+#include "UObject/NoExportTypes.h"
 #include "AthenaAIServiceLoot.generated.h"
 
 class ABuildingProp;
@@ -20,6 +21,12 @@ class UAthenaAIServiceLoot : public UAthenaAIService {
     GENERATED_BODY()
 public:
 private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector LootOctreeCenter;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat LootOctreeRadius;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat SupplyDropStatusUpdateRate;
     

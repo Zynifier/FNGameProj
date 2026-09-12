@@ -14,9 +14,6 @@ void AFortAthenaMutator_DadBro::OnRep_DadBroPawn() {
 void AFortAthenaMutator_DadBro::OnRep_DadBroCodeState() {
 }
 
-void AFortAthenaMutator_DadBro::OnGamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep) {
-}
-
 void AFortAthenaMutator_DadBro::ListenedPawnLanded(const FHitResult& Hit) {
 }
 

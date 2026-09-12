@@ -33,5 +33,9 @@ AFortWorldSettings::AFortWorldSettings() {
     TimeOfDayManager = NULL;
     VehicleManager = NULL;
     LevelOverlayManager = NULL;
+    bSpawnPhysicsObjectManager = false;
+    bDisableGlobalWeatherEvents = false;
+    PhysicsObjectManager = NULL;
+    ExternalContentManager = NULL;
 }
 

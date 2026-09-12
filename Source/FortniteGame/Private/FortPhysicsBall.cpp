@@ -13,6 +13,12 @@ void AFortPhysicsBall::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     DOREPLIFETIME(AFortPhysicsBall, bApplyingLift);
 }
 
+void AFortPhysicsBall::AuthTriggerTargetHit_Implementation(FVector StartPos, FVector EndPos) {
+}
+bool AFortPhysicsBall::AuthTriggerTargetHit_Validate(FVector StartPos, FVector EndPos) {
+    return true;
+}
+
 AFortPhysicsBall::AFortPhysicsBall() {
     bDetachRootChildrenOnServer = true;
     bUpdateRotationOnlyIfRendered = true;

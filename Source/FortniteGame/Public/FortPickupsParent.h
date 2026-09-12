@@ -4,6 +4,7 @@
 #include "UObject/NoExportTypes.h"
 #include "UObject/NoExportTypes.h"
 #include "FortPickupEffect.h"
+#include "EFortRarity.h"
 #include "FortPickupsParent.generated.h"
 
 class UMaterialInstanceDynamic;
@@ -12,6 +13,8 @@ class UParticleSystemComponent;
 class UPrimitiveComponent;
 class USkeletalMeshComponent;
 class UStaticMeshComponent;
+
+class UFortItem;
 
 UCLASS(Blueprintable)
 class AFortPickupsParent : public AFortPickupEffect {
@@ -101,6 +104,9 @@ public:
     AFortPickupsParent();
     UFUNCTION(BlueprintCallable)
     void SetupStretchMIDsInternal();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    EFortRarity GetClientCosmeticRarity(const UFortItem* Item) const;
     
 };
 

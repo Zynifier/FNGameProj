@@ -85,6 +85,12 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     FFortGameplayAttributeData TurboBuildInterval;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_BuildSpeedModifier, meta=(AllowPrivateAccess=true))
+    FFortGameplayAttributeData BuildSpeedModifier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_BuildCostModifier, meta=(AllowPrivateAccess=true))
+    FFortGameplayAttributeData BuildCostModifier;
+    
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortGameplayAttributeData ActiveEffectDuration;
@@ -163,5 +169,11 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable)
+    void OnRep_BuildCostModifier(const FFortGameplayAttributeData& OldValue);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_BuildSpeedModifier(const FFortGameplayAttributeData& OldValue);
+    
 };
 

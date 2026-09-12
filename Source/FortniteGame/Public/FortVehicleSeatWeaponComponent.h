@@ -5,12 +5,15 @@
 #include "FortCachedWeaponOverheatData.h"
 #include "VehicleWeapon_RetainedData.h"
 #include "WeaponSeatDefinition.h"
+#include "OnOverheatStateChangedDelegate.h"
 #include "FortVehicleSeatWeaponComponent.generated.h"
 
 class AActor;
 class AFortPawn;
 class AFortWeaponRanged;
 class UFortWeaponRangedItemDefinition;
+
+class USkeletalMeshComponent;
 
 UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UFortVehicleSeatWeaponComponent : public UActorComponent {
@@ -61,6 +64,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_ShotsFired, meta=(AllowPrivateAccess=true))
     int32 ShotsFired;
     
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnOverheatStateChanged OnOverheatStateChanged;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     bool bWeaponOverheatDataHasBeenCached;
@@ -73,6 +79,21 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bSaveAndRestoreWeaponData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    USkeletalMeshComponent* WeaponSklMeshComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName VehicleSocketName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName VehiclePawnAttachSocketName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float AttachmentAngleOffsetYaw;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bIsStandaloneComponent;
     
 public:
     UFortVehicleSeatWeaponComponent();

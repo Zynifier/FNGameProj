@@ -12,5 +12,6 @@ AFortItemPreviewOffPawnActor::AFortItemPreviewOffPawnActor() {
     PreviewStaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("PreviewStaticMesh"));
     PreviewSkelMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("PreviewSkeletalMesh"));
     bUseItemDefConfiguredLocation = true;
+    ContentOnDemandItemDefinition = NULL;
 }
 

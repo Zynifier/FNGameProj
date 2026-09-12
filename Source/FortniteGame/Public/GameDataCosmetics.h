@@ -42,6 +42,8 @@ class UFortItemDefinition;
 class UItemPreviewAnimInstance;
 class UTexture2D;
 
+class UFortMetaTagToPreviewActorMapping;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UGameDataCosmetics : public UPrimaryDataAsset {
     GENERATED_BODY()
@@ -224,6 +226,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UItemPreviewAnimInstance> DefaultPreviewPawnAnimInstanceClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortMetaTagToPreviewActorMapping* MetaTagToPreviewActorAsset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ItemPreviewLODStreamingTimeout;

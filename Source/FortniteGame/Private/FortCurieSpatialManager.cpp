@@ -9,5 +9,6 @@ UFortCurieSpatialManager::UFortCurieSpatialManager() {
     OverlapFireApplicationMaxMagnitude = 1;
     GrassFoliageTypes.AddDefaulted(3);
     IgnitablePhysicalMaterials.AddDefaulted(1);
+    InternalManagerConfig = NULL;
 }
 

@@ -20,10 +20,10 @@ protected:
     UMaterialInterface* BlueprintPaperMaterial;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UTexture2D* BlueprintDiffuseTextures[5];
+    UTexture2D* BlueprintDiffuseTextures[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UTexture2D* BlueprintEmissiveMaskTextures[5];
+    UTexture2D* BlueprintEmissiveMaskTextures[6];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UCurveFloat* BlueprintPaperPulseCurve;

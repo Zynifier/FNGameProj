@@ -160,5 +160,11 @@ public:
     UFUNCTION(BlueprintCallable)
     void GetHealthAndShields(float& Health, float& HealthMax, float& Shield, float& ShieldMax);
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool HasEverSkydivedFromBus() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool HasEverSkydivedFromBusAndLanded() const;
+    
 };
 

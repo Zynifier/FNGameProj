@@ -44,5 +44,6 @@ FFlightParams::FFlightParams() {
     MinStallYawMultiplier = 1;
     MaxStallYawMultiplier = 1;
     StallHighVelocityDeviationAngle = 1;
+    LandingSpeedKmh = 0.0f;
 }
 

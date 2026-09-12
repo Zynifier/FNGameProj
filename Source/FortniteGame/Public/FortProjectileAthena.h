@@ -73,5 +73,8 @@ protected:
     UFUNCTION(BlueprintCallable)
     void KillAfterNoPawnHit();
     
+    UFUNCTION(BlueprintCallable)
+    void OnOwnerDestroyed(AActor* DestroyedOwner);
+    
 };
 

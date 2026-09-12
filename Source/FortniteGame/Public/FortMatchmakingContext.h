@@ -170,7 +170,7 @@ public:
     bool HasBroadcasterToken() const;
     
     UFUNCTION(BlueprintCallable)
-    FText GetMatchmakingFillText(bool bDesiredFill);
+    FText GetMatchmakingFillText(bool bDesiredFill) const;
     
     UFUNCTION(BlueprintCallable)
     float GetLobbyWaitForPlayersTimeRemaining();
@@ -182,7 +182,7 @@ public:
     FText GetLegacyNonInputBasedPlayAgainstText();
     
     UFUNCTION(BlueprintCallable)
-    ECommonInputType GetInputBasedMatchmakingPool(bool& bIsDefaultPool, bool& bEntirePartyUsingTargetPoolInput);
+    ECommonInputType GetInputBasedMatchmakingPool(bool& bIsDefaultPool, bool& bEntirePartyUsingTargetPoolInput) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     FString GetCustomMatchmakingKey() const;
@@ -201,6 +201,18 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void CancelMatchmaking();
+    
+    UFUNCTION(BlueprintCallable)
+    void RequestUtilityToCancelMatchmaking();
+    
+    UFUNCTION(BlueprintCallable)
+    void RequestUtilityToMatchmake();
+    
+    UFUNCTION(BlueprintCallable)
+    void RequestUtilityToToggleMatchmaking();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsMatchmakingRegionEnabled() const;
     
 };
 

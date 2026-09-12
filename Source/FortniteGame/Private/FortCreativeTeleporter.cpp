@@ -5,6 +5,14 @@ bool AFortCreativeTeleporter::IsTeleporterBlocked(const AActor* ActorToTeleport,
     return false;
 }
 
+bool AFortCreativeTeleporter::IsLocationBlocked(const AActor* ActorToTeleport, FVector LocationToTeleport, const FRotator& InPawnTeleportedRotation) const {
+    return false;
+}
+
+bool AFortCreativeTeleporter::IsPortalDebuggingEnabled() const {
+    return false;
+}
+
 AFortCreativeTeleporter::AFortCreativeTeleporter() {
     TeleporterAbility = NULL;
     Knob_TeleporterGroup = EFortCreativeTeleporterGroup::Group_A;

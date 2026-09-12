@@ -12,6 +12,8 @@ class AFortPawn;
 class UFortItemDefinition;
 class UPrimitiveComponent;
 
+class UFortAthenaAIRuntimeParameters_AIAnalytic;
+
 UCLASS(Blueprintable, MinimalAPI, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UFortAIComponent_Telemetry : public UActorComponent {
     GENERATED_BODY()
@@ -32,6 +34,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<UFortItemDefinition*> DroppedPickups;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIRuntimeParameters_AIAnalytic* AnalyticRuntimeParameters;
     
 public:
     UFortAIComponent_Telemetry();

@@ -34,11 +34,17 @@ void UFortCurieManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
     DOREPLIFETIME(UFortCurieManager, ValidStateIdentifiers);
 }
 
+void UFortCurieManager::InternalPhysicsComponentAwakeChanged(UPrimitiveComponent* SimulatingComponent, bool bIsAwake) {
+}
+
 UFortCurieManager::UFortCurieManager() {
     SpatialManager = NULL;
     FirePropagationManager = NULL;
     ElectricityPropagationManager = NULL;
     CableSignalManager = NULL;
     FXManager = NULL;
+    CurieSettings = NULL;
+    bAllowCurieApplicationViaDamageFormulaTags = false;
+    bCurieElementsBlockBuildingEdit = false;
 }
 

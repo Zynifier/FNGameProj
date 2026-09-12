@@ -42,5 +42,9 @@ UFortVehicleConfigs::UFortVehicleConfigs() {
     FireDamageTickRate = 1;
     bCanBeOnFire = false;
     LeakFuelProjectileTemplate = NULL;
+    NumWheelsTouchingGroundForWheelsOnGround = 0;
+    TimeToIdleBrake = 0.0f;
+    ChangeDirBrakeDelta = 0.0f;
+    bShouldProtectFromFireDamage = false;
 }
 

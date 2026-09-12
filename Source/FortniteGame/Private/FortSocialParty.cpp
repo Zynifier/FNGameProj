@@ -3,5 +3,6 @@
 UFortSocialParty::UFortSocialParty() {
     bSendSocialFriendsActiveAnalytics = true;
     bPromoteMemberWhenBackgrounding = false;
+    bEnableBootToGroup = false;
 }
 

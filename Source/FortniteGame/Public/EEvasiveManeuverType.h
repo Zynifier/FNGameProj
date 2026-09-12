@@ -7,6 +7,7 @@ enum class EEvasiveManeuverType : uint8 {
     Crouch,
     Dodge,
     Jump,
+    JetpackStrafe,
     None,
 };
 

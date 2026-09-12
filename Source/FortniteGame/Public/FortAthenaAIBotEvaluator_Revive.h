@@ -6,6 +6,8 @@
 class AFortPlayerPawnAthena;
 class UFortAthenaAIBotReviveDigestedSkillSet;
 
+class UFortAthenaAIRuntimeParameters_ReviveBehavior;
+
 UCLASS(Blueprintable)
 class UFortAthenaAIBotEvaluator_Revive : public UFortAthenaAIBotEvaluator_Movement {
     GENERATED_BODY()
@@ -13,6 +15,9 @@ public:
 private:
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName ReviveTargetKeyName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIRuntimeParameters_ReviveBehavior* ReviveBehaviorRuntimeParameters;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAllowReviveSquadmates;

@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
+#include "UObject/NoExportTypes.h"
 #include "FortSquadStart.generated.h"
 
 class USceneComponent;
@@ -19,5 +20,11 @@ protected:
     
 public:
     AFortSquadStart();
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FTransform GetPlayerStartTransform(const int32 Index) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FGameplayTagContainer GetSquadStartGameplayTags() const;
+    
 };
 

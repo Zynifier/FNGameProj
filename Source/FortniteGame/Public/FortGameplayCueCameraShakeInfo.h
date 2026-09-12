@@ -4,19 +4,23 @@
 //CROSS-MODULE INCLUDE V2: -ModuleName=Engine -ObjectName=ECameraShakePlaySpace -FallbackName=ECameraShakePlaySpace
 #include "FortGameplayCueAOEInfo.h"
 #include "Templates/SubclassOf.h"
+#include "Camera/CameraTypes.h"
 #include "FortGameplayCueCameraShakeInfo.generated.h"
 
-class UCameraShake;
+class UMatineeCameraShake;
 
 USTRUCT(BlueprintType)
 struct FFortGameplayCueCameraShakeInfo {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> Shake;
+    TSubclassOf<UMatineeCameraShake> Shake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float Scale;
+    
+    UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
+    ECameraShakePlaySpace Playspace;
     
  //   UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
    // ECameraShakePlaySpace Playspace;

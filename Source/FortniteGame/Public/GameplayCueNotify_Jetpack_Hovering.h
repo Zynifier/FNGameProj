@@ -10,6 +10,8 @@ class UAudioComponent;
 class UCurveFloat;
 class UParticleSystemComponent;
 
+class USoundBase;
+
 UCLASS(Blueprintable)
 class AGameplayCueNotify_Jetpack_Hovering : public AFortGameplayCueNotify_Loop {
     GENERATED_BODY()
@@ -59,6 +61,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FTimerHandle GroundFXTimerHandle;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<float> BeepTimes;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundBase* SoundOnFuelLowWarning;
     
 public:
     AGameplayCueNotify_Jetpack_Hovering();

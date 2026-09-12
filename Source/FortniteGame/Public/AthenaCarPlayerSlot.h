@@ -4,6 +4,7 @@
 #include "ActionDefForUI.h"
 #include "AthenaVehicleShootingCone.h"
 #include "Templates/SubclassOf.h"
+#include "ESlotEnvironmentExposure.h"
 #include "AthenaCarPlayerSlot.generated.h"
 
 class AFortPlayerControllerZone;
@@ -11,6 +12,9 @@ class AFortPlayerPawn;
 class UAnimInstance;
 class UFortVehicleSeatWeaponComponent;
 class USoundBase;
+
+class IFortVehicleUserInterface;
+class UFortVehicleUserInterface;
 
 USTRUCT(BlueprintType)
 struct FAthenaCarPlayerSlot {
@@ -104,6 +108,9 @@ public:
     AFortPlayerPawn* Player;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, NotReplicated, Transient, meta=(AllowPrivateAccess=true))
+    TScriptInterface<IFortVehicleUserInterface> ControllerUser;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, NotReplicated, Transient, meta=(AllowPrivateAccess=true))
     AFortPlayerControllerZone* Controller;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -128,13 +135,22 @@ public:
     UFortVehicleSeatWeaponComponent* WeaponComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bIsMountedWeaponOnlySeat;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float CameraPitchConstraint;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float CameraYawConstraint;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bReserved;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FActionDefForUI> ActionDefForUI;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    ESlotEnvironmentExposure EnvironmentExposure;
     
     FORTNITEGAME_API FAthenaCarPlayerSlot();
 };

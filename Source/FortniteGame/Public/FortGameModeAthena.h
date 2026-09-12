@@ -21,6 +21,7 @@
 #include "SupplyDropSpawnData.h"
 #include "Templates/SubclassOf.h"
 #include "TimeOfDayOverride.h"
+#include "FortCustomRepNodeClassMapping.h"
 #include "FortGameModeAthena.generated.h"
 
 class AActor;
@@ -49,6 +50,8 @@ class UFortMutatorListComponent;
 class UFortServerBotManagerAthena;
 class UGameplayEffect;
 class UObject;
+
+class AFortPlayerStateAthena;
 
 UCLASS(Blueprintable, MinimalAPI, NonTransient)
 class AFortGameModeAthena : public AFortGamePvPBase, public IGameplayMutatorObserverInterface, public IFortMutatorOwner {
@@ -196,6 +199,9 @@ protected:
     float ForceKickAfterDeathTime;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bIgnoreCanSpectateAfterDeathToken;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 CreativeModeGracefulShutdownTime;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -206,6 +212,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FHotfixVolumePlacement> HotfixUndergroundVolumes;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FName> DisableMatchStatsReportingPlaylists;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FName> DisableProgressionReportingPlaylists;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<AFortAthenaAircraft*> Aircrafts;
@@ -455,6 +467,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FFortSpawnActorData> SpawnActorDataList;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortCustomRepNodeClassMapping> GlobalRepGraphNodeClassesToAdd;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UCurveTable* AthenaGameDataTable;
     
@@ -614,6 +629,15 @@ public:
     
     UFUNCTION()
     void AddMutatorToList(AFortGameplayMutator* Mutator) override PURE_VIRTUAL(AddMutatorToList,);
+    
+    UFUNCTION(BlueprintCallable)
+    void GetSquadIds(TArray<uint8>& SquadIds);
+    
+    UFUNCTION(BlueprintCallable)
+    void GetSquadIdsOfNonSolos(TArray<uint8>& SquadsWithNonSolos);
+    
+    UFUNCTION(BlueprintCallable)
+    void GetSquadMembers(uint8 SquadId, TArray<AFortPlayerStateAthena*>& SquadMembers);
     
 };
 

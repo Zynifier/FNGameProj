@@ -2,5 +2,6 @@
 
 FCreativePublishOptions::FCreativePublishOptions() {
     bActivateLink = false;
+    bClearPersistentData = false;
 }
 

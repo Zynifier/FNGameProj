@@ -92,6 +92,34 @@ bool UFortCurieBlueprintFunctionLibrary::AddElectricLink(UObject* WorldContextOb
     return false;
 }
 
+void UFortCurieBlueprintFunctionLibrary::DisableElementInteractionOnActor(AActor* TargetActor, FGameplayTag ElementTag) {
+}
+
+void UFortCurieBlueprintFunctionLibrary::DisableStateAttachmentOnActor(AActor* TargetActor, FGameplayTag StateTag) {
+}
+
+void UFortCurieBlueprintFunctionLibrary::EnableElementInteractionOnActor(AActor* TargetActor, FGameplayTag ElementTag) {
+}
+
+void UFortCurieBlueprintFunctionLibrary::EnableStateAttachmentOnActor(AActor* TargetActor, FGameplayTag StateTag) {
+}
+
+FGameplayTagContainer UFortCurieBlueprintFunctionLibrary::GetAttachedCurieElements(AActor* Actor) {
+    return FGameplayTagContainer{};
+}
+
+FGameplayTagContainer UFortCurieBlueprintFunctionLibrary::GetAttachedCurieStates(AActor* Actor) {
+    return FGameplayTagContainer{};
+}
+
+AActor* UFortCurieBlueprintFunctionLibrary::GetLastElectricityPropagationParent(AActor* TargetActor) {
+    return NULL;
+}
+
+bool UFortCurieBlueprintFunctionLibrary::HasCurieElementAttached(AActor* Actor, FGameplayTag ElementIdentifier) {
+    return false;
+}
+
 UFortCurieBlueprintFunctionLibrary::UFortCurieBlueprintFunctionLibrary() {
 }
 

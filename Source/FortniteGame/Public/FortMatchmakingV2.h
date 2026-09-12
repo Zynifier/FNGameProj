@@ -51,7 +51,13 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FName> WhitelistedPlaylistsForActiveCheck;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseHotfixVersionForPlaylistRevision;
+    
 public:
     UFortMatchmakingV2();
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static float GetMatchmakingAttemptThrottleTime();
+    
 };
 

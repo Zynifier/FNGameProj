@@ -5,6 +5,8 @@
 #include "DigestedWeaponAccuracyCategory.h"
 #include "FortAthenaAIBotDigestedSkillSet.h"
 #include "LookAtDigestedSetting.h"
+#include "DigestedWeaponAccuracy.h"
+#include "DigestedFocusSetting.h"
 #include "FortAthenaAIBotAimingDigestedSkillSet.generated.h"
 
 class AFortWeapon;
@@ -26,6 +28,12 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float IgnoreThreatDurationDeviation;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FDigestedFocusSetting DefaultFocusSetting;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FDigestedFocusSetting> FocusSettings;
+    
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FLookAtDigestedSetting LookAtSettings[3];
     
@@ -37,6 +45,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float TrackingInterpTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float TrackingInterpTimeMultForGroundVehicles;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float TrackingInterpTimeMultForFlyingVehicles;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float MaxTrackingPredictionError;
@@ -70,6 +84,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float ReachLeashLimitToleranceDistance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bShootFloorTrapOnlyWhenHigherThanTrap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FDigestedWeaponAccuracy NoWeaponAccuracy;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FDigestedWeaponAccuracyCategory> WeaponAccuracies;

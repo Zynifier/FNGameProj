@@ -16,32 +16,6 @@ USoundAttenuation* UFortFootstepAudioBank::GetAttenuationAsset(bool bIsLocal, TE
 }
 
 UFortFootstepAudioBank::UFortFootstepAudioBank() {
-    PhysicalSurfaceMappings[0] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[1] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[2] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[3] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[4] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[5] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[6] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[7] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[8] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[9] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[10] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[11] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[12] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[13] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[14] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[15] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[16] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[17] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[18] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[19] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[20] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[21] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[22] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[23] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[24] = EFortFootstepSurfaceType::Default;
-    PhysicalSurfaceMappings[25] = EFortFootstepSurfaceType::Default;
     TeammateVolumeMultiplier = 1;
     MaxFootstepDistance = 1;
     VerticalPitchMaxBelow = 1;

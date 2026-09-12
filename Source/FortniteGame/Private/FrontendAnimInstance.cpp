@@ -14,6 +14,13 @@ void UFrontendAnimInstance::PlayIntro() {
 }
 
 
+void UFrontendAnimInstance::AnimNotify_PlayFireFX(const UAnimNotify* Notify) {
+}
+
+bool UFrontendAnimInstance::IsInLobby() {
+    return false;
+}
+
 UFrontendAnimInstance::UFrontendAnimInstance() {
     bIsSkydiving = false;
     bEnableHandIK = false;
@@ -40,5 +47,6 @@ UFrontendAnimInstance::UFrontendAnimInstance() {
     bCanPlayCustomAnimations = false;
     bDontCrossArms = false;
     bNoHandsOnHips = false;
+    ContrailDiveFactor = 0.0f;
 }
 

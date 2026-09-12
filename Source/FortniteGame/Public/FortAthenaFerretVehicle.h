@@ -11,10 +11,12 @@ class UFortFerretVehicleConfigs;
 class UFortVehicleAudioVoice;
 class UGameplayEffect;
 class UMaterialInstanceDynamic;
-class UCameraShake;
+class UMatineeCameraShake;
 class UParticleSystemComponent;
 class USceneComponent;
 class UStaticMeshComponent;
+
+class UParticleSystem;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortAthenaFerretVehicle : public AFortAthenaDoghouseVehicle {
@@ -36,10 +38,10 @@ public:
     bool bLocalPlayerADS;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* DriverCameraShake;
+    UMatineeCameraShake* DriverCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* PassengerCameraShake;
+    UMatineeCameraShake* PassengerCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortPlayerPawn* LocalPlayerPawn;
@@ -58,6 +60,13 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MinPropSpeedWhenShooting;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UParticleSystem* PS_TrailTop;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UParticleSystem* PS_TrailBottom;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
@@ -128,6 +137,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     float MaxHealthToDestroyProp;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShowWingTrails;
+    
     AFortAthenaFerretVehicle();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     
@@ -186,6 +198,17 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void BoostBegin();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void HandleBoostChargeAboveThreshold();
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void SpawnWingTrailParticles();
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetBoostCharge() const;
     
 };
 

@@ -760,7 +760,7 @@ bool UFortClientSettingsRecord::GetLocalNotificationsEnabled() const {
     return false;
 }
 
-ELicensedAudioTreatment UFortClientSettingsRecord::GetLicensedAudioTreatment() const {
+ELicensedAudioTreatment UFortClientSettingsRecord::GetLicensedAudioTreatment(bool bIgnoreGameStreamingCheck) const {
     return ELicensedAudioTreatment::None;
 }
 
@@ -984,6 +984,156 @@ bool UFortClientSettingsRecord::GetAimAssistEnabled() const {
     return false;
 }
 
+void UFortClientSettingsRecord::ForceToggleHousepartyCastingEnabled() {
+}
+
+bool UFortClientSettingsRecord::GetAttendingRiftTour(int32 TimeSlotId) {
+    return false;
+}
+
+void UFortClientSettingsRecord::SetAllowSidekickFeature1(bool bNewValue) {
+}
+
+void UFortClientSettingsRecord::SetAttendingRiftTour(int32 TimeSlotId, bool bAttending) {
+}
+
+void UFortClientSettingsRecord::SetDisablePreEditsWhenPlacingBuilding(bool InDisablePreEditsWhenPlacingBuilding) {
+}
+
+void UFortClientSettingsRecord::SetEnableGameVoiceChannel(bool bNewValue) {
+}
+
+void UFortClientSettingsRecord::SetEnablePartyVoiceChannel(bool bNewValue) {
+}
+
+void UFortClientSettingsRecord::SetEnablePreferredItemSlots(const bool bNewValue) {
+}
+
+void UFortClientSettingsRecord::SetHighResTexturesReminderEnabled(bool bEnable) {
+}
+
+void UFortClientSettingsRecord::SetHousepartyCastingEnabled(bool bEnable) {
+}
+
+void UFortClientSettingsRecord::SetPIPVolume(float InVolume) {
+}
+
+void UFortClientSettingsRecord::SetShowSeasonLevel(bool bEnable) {
+}
+
+void UFortClientSettingsRecord::SetTriggerHapticsEnabled(bool bNewTriggerHapticsEnabled) {
+}
+
+void UFortClientSettingsRecord::SetTriggerHapticsStartPosition(uint8 NewTriggerHapticStartPosition) {
+}
+
+void UFortClientSettingsRecord::SetTriggerHapticsStrength(uint8 NewTriggerHapticStrength) {
+}
+
+void UFortClientSettingsRecord::SetTriggerHapticsUseThreshold(bool bNewTriggerPullUsesHapticThreshold) {
+}
+
+bool UFortClientSettingsRecord::GetAllowSidekickFeature1() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::GetChatDisabledForPlatform() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::GetDisablePreEditsWhenPlacingBuilding() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::GetEnableGameVoiceChannel() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::GetEnablePartyVoiceChannel() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::GetHighResTexturesReminderEnabled() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::GetHousepartyCastingEnabled() const {
+    return false;
+}
+
+ELicensedAudioTreatment UFortClientSettingsRecord::GetLicensedAudioTreatmentInternal() const {
+    return ELicensedAudioTreatment::None;
+}
+
+float UFortClientSettingsRecord::GetPIPVolume() const {
+    return 0.0f;
+}
+
+void UFortClientSettingsRecord::GetPreferredSlotIndicesFromDefinition(const UFortWorldItemDefinition* WorldItemDefinition, TArray<int32>& OutIndices) const {
+}
+
+bool UFortClientSettingsRecord::GetShowSeasonLevel() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::GetTriggerHapticsEnabled() const {
+    return false;
+}
+
+uint8 UFortClientSettingsRecord::GetTriggerHapticsStartPosition() const {
+    return 0;
+}
+
+uint8 UFortClientSettingsRecord::GetTriggerHapticsStrength() const {
+    return 0;
+}
+
+bool UFortClientSettingsRecord::GetTriggerHapticsUseThreshold() const {
+    return false;
+}
+
+bool UFortClientSettingsRecord::IsPreferredItemSlotsEnabled() const {
+    return false;
+}
+
+EFortPreferredItemSlotItemType UFortClientSettingsRecord::GetPreferredItemTypeSlotIndex_1() {
+    return EFortPreferredItemSlotItemType::Unassigned;
+}
+
+EFortPreferredItemSlotItemType UFortClientSettingsRecord::GetPreferredItemTypeSlotIndex_2() {
+    return EFortPreferredItemSlotItemType::Unassigned;
+}
+
+EFortPreferredItemSlotItemType UFortClientSettingsRecord::GetPreferredItemTypeSlotIndex_3() {
+    return EFortPreferredItemSlotItemType::Unassigned;
+}
+
+EFortPreferredItemSlotItemType UFortClientSettingsRecord::GetPreferredItemTypeSlotIndex_4() {
+    return EFortPreferredItemSlotItemType::Unassigned;
+}
+
+EFortPreferredItemSlotItemType UFortClientSettingsRecord::GetPreferredItemTypeSlotIndex_5() {
+    return EFortPreferredItemSlotItemType::Unassigned;
+}
+
+void UFortClientSettingsRecord::SetPreferredItemTypeSlotIndex_1(const EFortPreferredItemSlotItemType ItemType) {
+}
+
+void UFortClientSettingsRecord::SetPreferredItemTypeSlotIndex_2(const EFortPreferredItemSlotItemType ItemType) {
+}
+
+void UFortClientSettingsRecord::SetPreferredItemTypeSlotIndex_3(const EFortPreferredItemSlotItemType ItemType) {
+}
+
+void UFortClientSettingsRecord::SetPreferredItemTypeSlotIndex_4(const EFortPreferredItemSlotItemType ItemType) {
+}
+
+void UFortClientSettingsRecord::SetPreferredItemTypeSlotIndex_5(const EFortPreferredItemSlotItemType ItemType) {
+}
+
+void UFortClientSettingsRecord::GetPreferredSlotIndices(const EFortPreferredItemSlotItemType ItemType, TArray<int32>& OutIndices) const {
+}
+
 UFortClientSettingsRecord::UFortClientSettingsRecord() {
     HUDScale = 1;
     InitialHUDScale = 1;
@@ -1197,5 +1347,23 @@ UFortClientSettingsRecord::UFortClientSettingsRecord() {
     LastAttemptedSaveCount = 0;
     LastSaveAttemptTime = 4294967295;
     NextCloudSaveTime = 4294967295;
+    bHighResTexturesReminderEnabled = false;
+    MotionYawAxisMobile = EFortMotionYawAxis::Yaw;
+    bTriggerHapticsEnabled = false;
+    bTriggerPullUsesHapticThreshold = false;
+    TriggerHapticStrength = 0;
+    TriggerHapticStartPosition = 0;
+    bDisablePreEditsWhenPlacingBuilding = false;
+    bEnablePreferredItemSlots = false;
+    PIPVolume = 0.0f;
+    bEnableHousepartyCasting = false;
+    bShowSeasonLevel = false;
+    bInitialEnablePreferredItemSlots = false;
+    bEnablePartyVoiceChannel = false;
+    bEnableGameVoiceChannel = false;
+    bAllowSidekickFeature1 = false;
+    CapMipsExperimentVersion = 0;
+    QuestListSortType = 0;
+    InZoneMapScreenTab = 0;
 }
 

@@ -199,7 +199,7 @@ void AFortGameStateAthena::OnRep_AICharacterPartsPreloadData() {
 void AFortGameStateAthena::OnRep_AdditionalGameFeaturePlugins() {
 }
 
-void AFortGameStateAthena::OnLoadedAllAdditionalContent() {
+void AFortGameStateAthena::OnLoadedAllAdditionalContent(bool bSuccess) {
 }
 
 bool AFortGameStateAthena::IsWorldResourceWidgetVisible(const AFortPlayerController* Controller, const EFortResourceType ResourceType) const {
@@ -278,7 +278,7 @@ bool AFortGameStateAthena::HasValidFocalPointActor() const {
     return false;
 }
 
-void AFortGameStateAthena::HandleHideGameModeMessageRequest(const EAthenaGameMsgType MsgType, const bool bInstantHide, const bool bClearQueue) {
+void AFortGameStateAthena::HandleHideGameModeMessageRequest(const EAthenaGameMsgType MsgType, const bool bInstantHide, const bool bClearQueue, int32 MessageChannel) {
 }
 
 void AFortGameStateAthena::HandleGameModeShowMarker(int32 PlayerId, int32 InstanceID) {
@@ -406,7 +406,7 @@ int32 AFortGameStateAthena::GetDamageComboHUDMinHits() const {
     return 0;
 }
 
-FName AFortGameStateAthena::GetCurrentPlaylistName() {
+FName AFortGameStateAthena::GetCurrentPlaylistName() const {
     return NAME_None;
 }
 
@@ -543,7 +543,6 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
     DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel1);
     DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel2);
     DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel3);
-    DOREPLIFETIME(AFortGameStateAthena, bFishingCollectionEnabled);
     DOREPLIFETIME(AFortGameStateAthena, MeshNetworkStatus);
     DOREPLIFETIME(AFortGameStateAthena, VolumeManager);
     DOREPLIFETIME(AFortGameStateAthena, LocalizationService);
@@ -555,6 +554,71 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
     DOREPLIFETIME(AFortGameStateAthena, ReticulatedSplineIds);
     DOREPLIFETIME(AFortGameStateAthena, bDamageComboHUDEnabled);
     DOREPLIFETIME(AFortGameStateAthena, DamageComboHUDMinHits);
+    DOREPLIFETIME(AFortGameStateAthena, SafeZoneDamage);
+    DOREPLIFETIME(AFortGameStateAthena, RolledLootGroupTags);
+    DOREPLIFETIME(AFortGameStateAthena, MatchesProxyMatchId);
+    DOREPLIFETIME(AFortGameStateAthena, DelayMovementInputReplicated);
+    DOREPLIFETIME(AFortGameStateAthena, bCraftingEnabled);
+}
+
+void AFortGameStateAthena::GatherCustomCharacterPartOverridesFromMutator(AFortPlayerController* FortPC, TArray<UCustomCharacterPart*>& OutOverrides) {
+}
+
+bool AFortGameStateAthena::HasInfiniteWarmup() {
+    return false;
+}
+
+void AFortGameStateAthena::InitializeAnimationSharing(const UFortPlaylistAthena* FortAthenaPlaylist) {
+}
+
+void AFortGameStateAthena::MulticastAdditionalGameFeaturePluginLoaded_Implementation() {
+}
+
+void AFortGameStateAthena::OnRep_SafeZoneDamage() {
+}
+
+bool AFortGameStateAthena::ShouldAllowKeepPlayingTogether() {
+    return false;
+}
+
+bool AFortGameStateAthena::ShouldAllowSquadSizeTracking() {
+    return false;
+}
+
+bool AFortGameStateAthena::IsAsyncPhysicsPlaylist() const {
+    return false;
+}
+
+bool AFortGameStateAthena::IsBattleRoyalePlaylist() const {
+    return false;
+}
+
+bool AFortGameStateAthena::IsPapayaPlaylist() const {
+    return false;
+}
+
+bool AFortGameStateAthena::IsPlayerClearPersistanceIslandDataAllowed(const APawn* SwitchingPawn) const {
+    return false;
+}
+
+bool AFortGameStateAthena::IsTherePersistenceDevices(const APawn* SwitchingPawn) const {
+    return false;
+}
+
+bool AFortGameStateAthena::IsWeaponReticleWidgetVisible(const AFortPlayerController* Controller, const AFortWeapon* Weapon) const {
+    return false;
+}
+
+bool AFortGameStateAthena::ShouldBlockTrapPlacement(const APawn* Pawn) const {
+    return false;
+}
+
+bool AFortGameStateAthena::ShouldPlayDeathSoundEffects(const AActor* Victim) const {
+    return false;
+}
+
+bool AFortGameStateAthena::EvaluateDBNOMutator(const AFortPlayerState* PS, FDBNOCustomSettings& OutDBNOSetting) const {
+    return false;
 }
 
 AFortGameStateAthena::AFortGameStateAthena() {
@@ -651,7 +715,6 @@ AFortGameStateAthena::AFortGameStateAthena() {
     StormCNDamageVulnerabilityLevel1 = 1;
     StormCNDamageVulnerabilityLevel2 = 1;
     StormCNDamageVulnerabilityLevel3 = 1;
-    bFishingCollectionEnabled = true;
     VolumeManagerToUse = NULL;
     VolumeManager = NULL;
     LocalizationService = NULL;
@@ -663,5 +726,17 @@ AFortGameStateAthena::AFortGameStateAthena() {
     bEnvironmentDamageBlocked = false;
     bDamageComboHUDEnabled = true;
     DamageComboHUDMinHits = 0;
+    AthenaGameDataTable = NULL;
+    MiniMapRadiusTrackerCircleDrawingMaterial = NULL;
+    SafeZoneDamage = 0.0f;
+    FortGameStateComponent_Quests = NULL;
+    FortGameStateComponent_RadiusTracker = NULL;
+    AffiliationManager = NULL;
+    FortGameStateComponent_TimeDilation = NULL;
+    SanitizationService = NULL;
+    HermesLoadContext = NULL;
+    bEnableMatchesProxy = false;
+    DelayMovementInputReplicated = 0.0f;
+    bCraftingEnabled = false;
 }
 

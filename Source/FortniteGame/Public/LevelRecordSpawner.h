@@ -19,7 +19,7 @@ public:
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    AFortVolume* VolumeCurrentlySpawningWithin;
+    AActor* VolumeCurrentlySpawningWithin;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UAsyncTaskQueue* TaskQueue;

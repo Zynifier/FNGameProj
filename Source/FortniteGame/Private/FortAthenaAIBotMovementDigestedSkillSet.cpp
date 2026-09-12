@@ -38,5 +38,15 @@ UFortAthenaAIBotMovementDigestedSkillSet::UFortAthenaAIBotMovementDigestedSkillS
     MoveToRangeAttackMaxOffset = 1;
     LKPMinOffset = 1;
     LKPMaxOffset = 1;
+    GliderNoiseMinDistance = 0.0f;
+    GliderNoiseDistanceTreshold = 0.0f;
+    GliderStopRotationDistance = 0.0f;
+    MaxAfterLaunchedFromVortexPauseTime = 0.0f;
+    bSwimSprintJumpNav2D = false;
+    SandTunnelJumpMinTime = 0.0f;
+    SandTunnelJumpMaxTime = 0.0f;
+    SandTunnelBurrowedAndHiddenChance = 0.0f;
+    SandTunnelBurrowedAndHiddenMinTime = 0.0f;
+    SandTunnelBurrowedAndHiddenMaxTime = 0.0f;
 }
 

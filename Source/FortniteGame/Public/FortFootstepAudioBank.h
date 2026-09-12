@@ -17,7 +17,7 @@ class UFortFootstepAudioBank : public UDataAsset {
     GENERATED_BODY()
 public:
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    TEnumAsByte<EFortFootstepSurfaceType::Type> PhysicalSurfaceMappings[26];
+    TEnumAsByte<EFortFootstepSurfaceType::Type> PhysicalSurfaceMappings[27];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float TeammateVolumeMultiplier;
@@ -36,10 +36,10 @@ public:
     
 protected:
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FFortFootstepSurfaceAudioData SurfaceData1P[10];
+    FFortFootstepSurfaceAudioData SurfaceData1P[11];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FFortFootstepSurfaceAudioData SurfaceData3P[10];
+    FFortFootstepSurfaceAudioData SurfaceData3P[11];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortFootstepAttenuationData AttenuationData1P[7];

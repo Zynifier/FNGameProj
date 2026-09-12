@@ -33,5 +33,17 @@ public:
     UFUNCTION(BlueprintCallable)
     void ForwardMinigameActivityEnded(const FMinigameActivityEndedData& EndData);
     
+    UFUNCTION(BlueprintCallable)
+    void SetUIBestLapTimeEnabled(const bool bEnabled);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetUIEnabled(const bool bEnabled);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetUIProgressEnabled(const bool bEnabled);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetUITimeEnabled(const bool bEnabled);
+    
 };
 

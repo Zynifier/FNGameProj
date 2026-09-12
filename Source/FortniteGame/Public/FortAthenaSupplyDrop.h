@@ -19,6 +19,8 @@ class UFortSpectateClickableMapIcon;
 class UFortWorldItemDefinition;
 class USoundCue;
 
+class AAthenaFillFloor;
+
 UCLASS(Abstract, Blueprintable)
 class FORTNITEGAME_API AFortAthenaSupplyDrop : public ABuildingGameplayActor {
     GENERATED_BODY()
@@ -44,6 +46,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bReplicateLongUseNotifies;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bDisableAbilitySystemReplication;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     int32 CachedSpecialActorIdx;
@@ -126,6 +131,10 @@ public:
     
     UFUNCTION(BlueprintCallable)
     FVector FindGroundLocationAt(const FVector& InLocation);
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnTouchedFillFloor(AAthenaFillFloor* FillFloorActor);
     
 };
 

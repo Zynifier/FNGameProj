@@ -3,7 +3,7 @@
 void UQuickHealItemPicker::HandlePlayerHealthOrShieldChanged() {
 }
 
-void UQuickHealItemPicker::HandleOnSafeZoneOccupancyChanged(bool bIsInSafeZone) {
+void UQuickHealItemPicker::HandleOnSafeZoneOccupancyChanged(AFortPlayerPawn* PlayerPawn, bool bIsInSafeZone) {
 }
 
 UQuickHealItemPicker::UQuickHealItemPicker() {

@@ -40,5 +40,6 @@ UPlaysetLevelStreamComponent::UPlaysetLevelStreamComponent() {
     bAllowUnload = true;
     CurrentPlayset = NULL;
     StreamedLevel = NULL;
+    bWaitOnMessageBeforeLoading = false;
 }
 

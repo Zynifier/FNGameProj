@@ -12,6 +12,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<EFortItemType, FNestedPartyVariantRep> vL;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool fT;
+    
 public:
     FORTNITEGAME_API FPartyMemberVariantCache();
 };

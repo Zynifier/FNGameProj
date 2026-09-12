@@ -19,6 +19,9 @@ protected:
     bool bShouldStopDropsAfterApplying;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 SlotToSwapToAfterGrant_DEPRECATE;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 SlotToSwapToAfterGrant;
     
 public:

@@ -1,5 +1,9 @@
 #include "FortMatchmakingV2.h"
 
+float UFortMatchmakingV2::GetMatchmakingAttemptThrottleTime() {
+    return 0.0f;
+}
+
 UFortMatchmakingV2::UFortMatchmakingV2() {
     MMSVersionCompatability = TEXT("*");
     MMSTicketURLClient = TEXT("/api/game/v2/matchmakingservice/ticket/player/`id");
@@ -14,5 +18,6 @@ UFortMatchmakingV2::UFortMatchmakingV2() {
     bSubmitSecondaryLogs = false;
     LogTailKb = 0;
     WhitelistedPlaylistsForActiveCheck.AddDefaulted(1);
+    bUseHotfixVersionForPlaylistRevision = false;
 }
 

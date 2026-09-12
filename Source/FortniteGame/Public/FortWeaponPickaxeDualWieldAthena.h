@@ -4,6 +4,7 @@
 #include "EFortDualWieldSwingState.h"
 #include "FortWeaponPickaxeAthena.h"
 #include "RespondsToVariantAction.h"
+#include "Templates/SubclassOf.h"
 #include "FortWeaponPickaxeDualWieldAthena.generated.h"
 
 class UAnimMontage;
@@ -14,6 +15,8 @@ class UParticleSystem;
 class UParticleSystemComponent;
 class USkeletalMeshComponentBudgeted;
 class USoundBase;
+
+class UFortGameplayAbility;
 
 UCLASS(Blueprintable)
 class AFortWeaponPickaxeDualWieldAthena : public AFortWeaponPickaxeAthena, public IRespondsToVariantAction {
@@ -58,18 +61,24 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     USoundBase* OffhandGenericImpactSound;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UAnimMontage* PickaxeOffhandHarvestingMontage;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UAnimMontage* PickaxeOffhandEquipMontage;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<UNiagaraSystem*> OffhandImpactNiagaraPhysicalSurfaceEffectInstances;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    USoundBase* OffhandImpactPhysicalSurfaceSounds[26];
+    USoundBase* OffhandImpactPhysicalSurfaceSounds[27];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UParticleSystem* OffhandImpactPhysicalSurfaceEffects[26];
+    UParticleSystem* OffhandImpactPhysicalSurfaceEffects[27];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TArray<TSoftObjectPtr<UNiagaraSystem>> OffhandImpactNiagaraPhysicalSurfaceEffects;
+    TArray<UNiagaraSystem*> OffhandImpactNiagaraPhysicalSurfaceEffects;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_WieldStance, meta=(AllowPrivateAccess=true))
     EFortDualWieldStance CurrentWieldStance;
@@ -78,7 +87,13 @@ protected:
     UFortWeaponAdditionalData_SingleWieldState* EffectiveSingleWieldState;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortWeaponAdditionalData_SingleWieldState* LastAppliedWieldState;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAnimMontage* OriginalEquipAnimation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortGameplayAbility> PrimaryFireAbilityOverrideClass;
     
 public:
     AFortWeaponPickaxeDualWieldAthena();

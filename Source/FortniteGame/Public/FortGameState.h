@@ -15,6 +15,7 @@
 #include "OnTimeHitInfo.h"
 #include "TeamChangeRequest.h"
 #include "Templates/SubclassOf.h"
+#include "GameplayTagContainer.h"
 #include "FortGameState.generated.h"
 
 class AFortAIPawn;
@@ -37,6 +38,8 @@ class UCreativeQuestManager;
 class UFortAmbientAudioController;
 class UFortMovementComp_Character;
 class UFortMusicManagerBank;
+
+class APawn;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortGameState : public AFortGameStateBase {
@@ -77,6 +80,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bShowLoadingScreenUntilAllLevelAreLoaded: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    bool bFishingCollectionEnabled;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    bool bCharacterCollectionEnabled;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
@@ -302,6 +311,15 @@ protected:
 public:
     UFUNCTION(BlueprintCallable, NetMulticast, Reliable)
     void Client_InitiateEndOfDayRecap(const FEndOfDayRecap& EndOfDayRecap);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FString GetGameSessionID() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FGameplayTagContainer GetHUDElementsToHide(const APawn* Pawn) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FGameplayTagContainer GetHUDElementsToShow(const APawn* Pawn) const;
     
 };
 

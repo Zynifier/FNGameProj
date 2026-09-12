@@ -57,45 +57,28 @@ bool AFortPlayerMannequin::CyclePartBP(EFortCustomPartType Part, bool bNextPart)
     return false;
 }
 
+void AFortPlayerMannequin::ChoosePartsForHeroType(UFortHeroType* HeroType, const TArray<FMcpVariantChannelInfo> InOverrideVariants, const bool bClearOldParts) {
+}
+
+TArray<UCustomCharacterPart*> AFortPlayerMannequin::GetCustomCharacterParts() {
+    return TArray<UCustomCharacterPart*>();
+}
+
+UAthenaCharacterItemDefinition* AFortPlayerMannequin::GetAthenaCharacterItemDefinition() const {
+    return NULL;
+}
+
+UAudioComponent* AFortPlayerMannequin::GetEmoteAudioComponent(const FName InSoundId) const {
+    return NULL;
+}
+
 AFortPlayerMannequin::AFortPlayerMannequin() {
     CurrentFortHeroType = NULL;
     AthenaCharacter = NULL;
     AthenaBackBling = NULL;
-    CharacterParts[0] = NULL;
-    CharacterParts[1] = NULL;
-    CharacterParts[2] = NULL;
-    CharacterParts[3] = NULL;
-    CharacterParts[4] = NULL;
-    CharacterParts[5] = NULL;
-    CharacterParts[6] = NULL;
     MannequinBoundsScale = 1;
     bIsMannequinVisible = true;
     bMannequinCastsHiddenShadow = false;
-    CharacterPartList[0] = NULL;
-    CharacterPartList[1] = NULL;
-    CharacterPartList[2] = NULL;
-    CharacterPartList[3] = NULL;
-    CharacterPartList[4] = NULL;
-    CharacterPartList[5] = NULL;
-    CharacterPartColorSwatches[0] = NULL;
-    CharacterPartColorSwatches[1] = NULL;
-    CharacterPartColorSwatches[2] = NULL;
-    CharacterPartColorSwatches[3] = NULL;
-    CharacterPartColorSwatches[4] = NULL;
-    CharacterPartColorSwatches[5] = NULL;
-    CharacterPartColorSwatches[6] = NULL;
-    ColorSwatchesForCharacterParts[0] = NULL;
-    ColorSwatchesForCharacterParts[1] = NULL;
-    ColorSwatchesForCharacterParts[2] = NULL;
-    ColorSwatchesForCharacterParts[3] = NULL;
-    ColorSwatchesForCharacterParts[4] = NULL;
-    ColorSwatchesForCharacterParts[5] = NULL;
-    AccessoryColorSwatchHandler[0] = NULL;
-    AccessoryColorSwatchHandler[1] = NULL;
-    AccessoryColorSwatchHandler[2] = NULL;
-    AccessoryColorSwatchHandler[3] = NULL;
-    AccessoryColorSwatchHandler[4] = NULL;
-    AccessoryColorSwatchHandler[5] = NULL;
     ColorSwatches[0] = NULL;
     ColorSwatches[1] = NULL;
     WeaponSkeletalMesh = NULL;

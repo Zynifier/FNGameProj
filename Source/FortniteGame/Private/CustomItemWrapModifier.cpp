@@ -14,6 +14,10 @@ AActor* ACustomItemWrapModifier::GetVehicle() const {
     return NULL;
 }
 
+TArray<UMeshComponent*> ACustomItemWrapModifier::GetWrappedMeshComponents() const {
+    return TArray<UMeshComponent*>();
+}
+
 ACustomItemWrapModifier::ACustomItemWrapModifier() {
 }
 

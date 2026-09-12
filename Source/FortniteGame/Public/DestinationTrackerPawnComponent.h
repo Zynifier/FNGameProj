@@ -40,5 +40,11 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     FVector GetDestination() const;
     
+    UFUNCTION(BlueprintCallable)
+    void ClearDestination();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetDestination(const FVector& InDestination);
+    
 };
 

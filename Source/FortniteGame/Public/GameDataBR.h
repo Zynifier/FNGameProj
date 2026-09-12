@@ -4,6 +4,7 @@
 #include "Engine/DataAsset.h"
 #include "GameplayTagMessage.h"
 #include "SettingsHUDVisibilityAndText.h"
+#include "CreativeBetaPermission.h"
 #include "GameDataBR.generated.h"
 
 class AFortAIDirector;
@@ -34,6 +35,13 @@ class UReverbEffect;
 class USoundMix;
 class UUserWidget;
 
+class UCreativeBetaPermissionsDataAsset;
+class UCurveTable;
+class UFortFactionMapping;
+class UFortLootGroupWeightedRollingData;
+class UFortResourceItemDefinition;
+class UFortTokenType;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UGameDataBR : public UPrimaryDataAsset {
     GENERATED_BODY()
@@ -50,6 +58,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> QuestEventXPTable;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<TSoftObjectPtr<UFortTokenType>> RarityTokens;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> NamedWeightTagQueryTable;
@@ -102,8 +113,20 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> CreativeInventoryTable;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UDataTable> CreativeRealEstatePlotTable;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UCreativeBetaPermissionsDataAsset> CreativeBetaPermissions;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TMap<FPrimaryAssetId, int32> CachedCreativeInventory;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FPrimaryAssetId> CachedCreativeRealEstatePlots;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FCreativeBetaPermission> CachedCreativeBetaPermissions;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> CreativeTagsTable;
@@ -121,6 +144,9 @@ private:
     TArray<TSoftClassPtr<UGameStateComponent>> FrontendGameStateComponents;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortFactionMapping> FortFactionMapping;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortItemWrapMappingData> ItemWrapConfigAsset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -134,6 +160,18 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> WeaponUpgradeTable;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortResourceItemDefinition> DefaultGlobalCurrencyItemDefinition;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UCurveTable> DefaultCurrencyPayoutTable;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortLootGroupWeightedRollingData> DefaultLootGroupData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UDataTable> PlayerAttributesClampingDataTable;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

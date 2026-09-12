@@ -20,5 +20,7 @@ FFortCurieMaterialDefinition::FFortCurieMaterialDefinition() {
     InactiveDataResetInterval = 1;
     FirePropagationCost = 1;
     ElectricityPropagationLimitIncrease = 0;
+    WaterContentStabilizationRate = 0.0f;
+    FuelContentStabilizationRate = 0.0f;
 }
 

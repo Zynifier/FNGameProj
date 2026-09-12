@@ -48,6 +48,18 @@ bool UFortExperimentContext::ShouldProposeRequiredVBucksSKUs() const {
     return false;
 }
 
+bool UFortExperimentContext::ShouldCapMips() const {
+    return false;
+}
+
+bool UFortExperimentContext::ShouldShowPRMMOTDNews() const {
+    return false;
+}
+
+bool UFortExperimentContext::ShouldUseLargeItemShopLayout() const {
+    return false;
+}
+
 UFortExperimentContext::UFortExperimentContext() {
 }
 

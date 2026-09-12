@@ -7,6 +7,9 @@ void ABuildingCustomizableSpawnContainer::GetLifetimeReplicatedProps(TArray<FLif
     DOREPLIFETIME(ABuildingCustomizableSpawnContainer, SpawnItems);
 }
 
+void ABuildingCustomizableSpawnContainer::ValidateSpawnItems() {
+}
+
 ABuildingCustomizableSpawnContainer::ABuildingCustomizableSpawnContainer() {
 }
 

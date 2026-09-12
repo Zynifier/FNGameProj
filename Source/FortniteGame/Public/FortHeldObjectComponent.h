@@ -11,6 +11,12 @@
 #include "HeldObjectMovementReplicatedData.h"
 #include "HeldObjectThrownData.h"
 #include "Templates/SubclassOf.h"
+#include "OnHeldObjectAttachedDelegate.h"
+#include "OnHeldObjectEnteredWaterDelegate.h"
+#include "OnHeldObjectGuideProjectileStartedDelegate.h"
+#include "OnHeldObjectGuideProjectileStoppedDelegate.h"
+#include "OnHeldObjectMovedToVehicleDelegate.h"
+#include "OnHeldObjectOwningPawnChangedDelegate.h"
 #include "FortHeldObjectComponent.generated.h"
 
 class AActor;
@@ -25,6 +31,10 @@ class UFortWorldItem;
 class UMaterialInterface;
 class UMeshComponent;
 class UPrimitiveComponent;
+
+class AFortProjectileBase;
+class AFortWaterBodyActor;
+class UFortWaterInteractionComponent;
 
 UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class FORTNITEGAME_API UFortHeldObjectComponent : public UActorComponent {
@@ -51,10 +61,13 @@ protected:
     EAttachmentRule PlayerAttachmentScaleRule;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bBlocksVehicleDriverSeat;
+    uint8 bAllowObjectToBeHeldInVehicle: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bApplyAngularImpulseOnThrow;
+    uint8 bBlocksVehicleDriverSeat: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bApplyAngularImpulseOnThrow: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVector2D ThrowAngularImpulseRange;
@@ -64,6 +77,15 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<AFortDecoPreview> PlacementPreviewClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<AFortProjectileBase> GuideProjectileClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector GuideAttachLocationOffset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FRotator GuideAttachRotationOffset;
     
 public:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -76,6 +98,18 @@ public:
     FOnHeldObjectDropped OnHeldObjectDropped;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnHeldObjectGuideProjectileStarted OnHeldObjectGuideProjectileStarted;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnHeldObjectGuideProjectileStopped OnHeldObjectGuideProjectileStopped;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnHeldObjectEnteredWater OnHeldObjectEnteredWater;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnHeldObjectMovedToVehicle OnHeldObjectMovedToVehicle;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnHeldObjectThrown OnHeldObjectThrown;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -83,6 +117,12 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnHeldObjectDestroy OnHeldObjectDestroy;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnHeldObjectAttached OnHeldObjectAttached;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnHeldObjectOwningPawnChanged OnHeldObjectOwningPawnChanged;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_UsePreviewMaterial, meta=(AllowPrivateAccess=true))
@@ -129,6 +169,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortDecoPreview* PlacementPreviewActor;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    AFortProjectileBase* GuideProjectile;
     
 public:
     UFortHeldObjectComponent();
@@ -225,6 +268,34 @@ public:
     
     UFUNCTION(BlueprintCallable)
     bool CanInteract(const AFortPlayerPawn* RequestingPawn);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void DropObjectHeldInVehicle();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void GuideProjectileStopped(const FHitResult& ImpactResult);
+    
+    UFUNCTION(BlueprintCallable)
+    void HandleGuideProjectileDestroyed(AActor* DestroyedActor);
+    
+public:
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void HoldObjectInVehicle();
+    
+    UFUNCTION(BlueprintCallable)
+    void RemoveHeldObjectFromVehicle();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void ThrownObjectEnteredWater(AFortWaterBodyActor* WaterBody, UFortWaterInteractionComponent* WaterInteractionComponent, bool bIsFirstBody);
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool GetAllowObjectToBeHeldInVehicle() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsHeldInVehicle() const;
     
 };
 

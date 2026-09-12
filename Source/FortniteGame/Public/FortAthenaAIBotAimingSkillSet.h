@@ -6,6 +6,8 @@
 #include "TargetBasedAccuracyCategory.h"
 #include "TrackingOffsetModifierInfo.h"
 #include "WeaponAccuracyCategory.h"
+#include "WeaponAccuracy.h"
+#include "FocusSetting.h"
 #include "FortAthenaAIBotAimingSkillSet.generated.h"
 
 UCLASS(Blueprintable, EditInlineNew)
@@ -25,6 +27,12 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat IgnoreThreatDurationDeviation;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFocusSetting DefaultFocusSetting;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFocusSetting> FocusSettings;
+    
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     FLookAtSetting LookAtSettings[3];
     
@@ -36,6 +44,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat TrackingInterpTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat TrackingInterpTimeMultForGroundVehicles;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat TrackingInterpTimeMultForFlyingVehicles;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat MaxTrackingPredictionError;
@@ -69,6 +83,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat ReachLeashLimitToleranceDistance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat ShootFloorTrapOnlyWhenHigherThanTrap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FWeaponAccuracy NoWeaponAccuracy;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FWeaponAccuracyCategory> WeaponAccuracies;

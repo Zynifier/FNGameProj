@@ -4,10 +4,17 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Engine/CollisionProfile.h"
 #include "ESubGame.h"
+#include "FortCreativeAnimateFloatCurveResult.h"
 #include "CreativeBlueprintLibrary.generated.h"
 
 class AController;
 class UFortMinigameManager;
+
+class AFortVolumeManager;
+class UFortItemDefinition;
+class UObject;
+
+class UCurveFloat;
 
 UCLASS(Blueprintable)
 class UCreativeBlueprintLibrary : public UBlueprintFunctionLibrary {
@@ -29,6 +36,25 @@ private:
     
     UFUNCTION(BlueprintCallable)
     static UFortMinigameManager* GetMinigameManager(AController* Controller, ESubGame SubGame);
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool IsBlackListedItemDefinition(const AFortVolumeManager* VolumeManager, const UFortItemDefinition* ItemDefinition);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool IsUseRestrictionComponentDebuggingEnabled();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool IsWhiteListedItemDefinition(const UFortItemDefinition* ItemDefinition);
+    
+    UFUNCTION(BlueprintCallable)
+    static void LogCreativeStreamingMessage(const FString& Message);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void UpdateInGameMapHeatmapTexture(const UObject* WorldContextObject);
+    
+    UFUNCTION(BlueprintCallable)
+    static FFortCreativeAnimateFloatCurveResult AnimateFloatCurve(const float DeltaTime, UPARAM(Ref) float& CurrentTime, UCurveFloat* FCurve, const float TotalAnimationTime, const bool bInvertTime);
     
 };
 

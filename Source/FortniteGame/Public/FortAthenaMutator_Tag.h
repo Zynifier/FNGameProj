@@ -7,12 +7,14 @@
 #include "FortAthenaMutator.h"
 #include "TagTeamInfoArray.h"
 #include "TagVisualsData.h"
+#include "FortAthenaMutator_GameModeBase.h"
+#include "TeamPawnColor_VisualData.h"
 #include "FortAthenaMutator_Tag.generated.h"
 
 class AFortPlayerControllerAthena;
 
 UCLASS(Blueprintable)
-class FORTNITEGAME_API AFortAthenaMutator_Tag : public AFortAthenaMutator {
+class FORTNITEGAME_API AFortAthenaMutator_Tag : public AFortAthenaMutator_GameModeBase {
     GENERATED_BODY()
 public:
 protected:
@@ -20,10 +22,10 @@ protected:
     FScalableFloat TimerLength;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    FTagVisualsData RedTeamVisuals;
+    FTeamPawnColor_VisualData RedTeamVisuals;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    FTagVisualsData BlueTeamVisuals;
+    FTeamPawnColor_VisualData BlueTeamVisuals;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FSlateBrush BlueTeamMapBrush;
@@ -54,8 +56,5 @@ public:
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     
 protected:
-    UFUNCTION(BlueprintCallable)
-    void OnGamePhaseChanged(EAthenaGamePhase NewPhase);
-    
 };
 

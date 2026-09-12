@@ -130,7 +130,7 @@ bool ABuildingActor::IsAcceptablePositionForPlacement_Implementation(const FVect
     return false;
 }
 
-void ABuildingActor::InitializeKismetSpawnedBuildingActor(ABuildingActor* BuildingOwner, AFortPlayerController* SpawningController, bool bUsePlayerBuildAnimations) {
+void ABuildingActor::InitializeKismetSpawnedBuildingActor(ABuildingActor* BuildingOwner, AFortPlayerController* SpawningController, bool bUsePlayerBuildAnimations, ABuildingActor* ReplacedBuilding) {
 }
 
 bool ABuildingActor::HasHealthLeft() const {
@@ -258,6 +258,10 @@ void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
     DOREPLIFETIME(ABuildingActor, BaselineScale);
 }
 
+UFortPhysicsObjectComponent* ABuildingActor::GetPhysicsObjectComponent(ABuildingActor* Building) {
+    return NULL;
+}
+
 ABuildingActor::ABuildingActor() {
     SavedHealthPct = 1;
     CurrentBuildingLevel = 0;
@@ -267,7 +271,7 @@ ABuildingActor::ABuildingActor() {
     ReplicatedBuildingAttributeSet = NULL;
     MaxHealthInitializationValue = 1;
     AttributeInitLevelSource = EAttributeInitLevelSource::WorldDifficulty;
-    AbilitySystemComponentCreationPolicy = EAbilitySystemComponentCreationPolicy::Never;
+    AbilitySystemComponentCreationPolicy = EBuildingActorComponentCreationPolicy::Never;
     PrimarySurfaceType = SurfaceType_Default;
     WeaponResponseType = EFortBaseWeaponDamage::Combat;
     OwnerPersistentID = 0;
@@ -379,7 +383,11 @@ ABuildingActor::ABuildingActor() {
     BaselineScale = 1;
     AccumulatedDeltaSinceLastVisualsTick = 1;
     ProjectileMovementComponent = NULL;
-    bCanBeMarked = false;
-    bBlockMarking = true;
+    DamageAttributeSet = NULL;
+    bPropagateDrawDistanceOnAdditionalComponent = false;
+    bCreatePhysicsObjectComponent = false;
+    bIsGameFrameworkComponentReceiver = false;
+    bShouldClearMarkerOnInteract = false;
+    PhysicsObjectComponent = NULL;
 }
 

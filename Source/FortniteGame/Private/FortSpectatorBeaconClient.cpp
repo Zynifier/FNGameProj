@@ -21,6 +21,12 @@ void AFortSpectatorBeaconClient::ClientAllowedToProceedFromReservation_Implement
 }
 
 
+void AFortSpectatorBeaconClient::ClientAbandonResponse_Implementation(ESpectatorReservationResult::Type ReservationResponse) {
+}
+
+void AFortSpectatorBeaconClient::ClientReconnectResponse_Implementation(ESpectatorReservationResult::Type ReservationResponse) {
+}
+
 AFortSpectatorBeaconClient::AFortSpectatorBeaconClient() {
     ReconnectionInitialTimeout = 1;
     ReconnectionTimeout = 1;

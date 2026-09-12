@@ -7,5 +7,6 @@ enum class EFortCollectedVariantClientUpdate : int32 {
     NewVariant,
     CollectedCount,
     Improvement,
+    HiddenImprovement,
 };
 

@@ -5,5 +5,7 @@ FStenciledActorInfoEntry::FStenciledActorInfoEntry() {
     StartTime = 1;
     EndTime = 1;
     bReplaceExistingWhenAdded = false;
+    MarkedBy = NULL;
+    bRefreshExistingWhenAdded = false;
 }
 

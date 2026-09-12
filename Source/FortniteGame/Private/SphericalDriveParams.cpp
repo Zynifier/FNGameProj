@@ -19,5 +19,6 @@ FSphericalDriveParams::FSphericalDriveParams() {
     bMassDirectionInvert = false;
     ShellAngularDrag = 1;
     TractionMultiplier = 1;
+    BounceForce = 0.0f;
 }
 

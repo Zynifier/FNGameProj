@@ -26,6 +26,9 @@ public:
     int32 NetworkCost;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCostOverridden: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FCreativeAssetMetaData> AssetDependencies;
     
     FORTNITEGAME_API FCreativeActorMetaData();

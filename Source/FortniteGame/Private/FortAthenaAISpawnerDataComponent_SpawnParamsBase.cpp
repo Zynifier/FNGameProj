@@ -17,6 +17,22 @@ TSubclassOf<APawn> UFortAthenaAISpawnerDataComponent_SpawnParamsBase::GetPawnCla
     return NULL;
 }
 
+float UFortAthenaAISpawnerDataComponent_SpawnParamsBase::GetInAirSpawnTraceEndHeight_Implementation() {
+    return 0.0f;
+}
+
+float UFortAthenaAISpawnerDataComponent_SpawnParamsBase::GetInAirSpawnTraceSphereRadius_Implementation() {
+    return 0.0f;
+}
+
+float UFortAthenaAISpawnerDataComponent_SpawnParamsBase::GetInAirSpawnTraceStartHeight_Implementation() {
+    return 0.0f;
+}
+
+bool UFortAthenaAISpawnerDataComponent_SpawnParamsBase::ShouldSpawnInAir_Implementation() {
+    return false;
+}
+
 UFortAthenaAISpawnerDataComponent_SpawnParamsBase::UFortAthenaAISpawnerDataComponent_SpawnParamsBase() {
 }
 

@@ -6,5 +6,6 @@ UFortAthenaNpcEvaluator_Leash::UFortAthenaNpcEvaluator_Leash() {
     LeashDestinationKeyName = TEXT("AIEvaluator_Leash_Destination");
     LeashLocationKeyName = TEXT("AIEvaluator_Leash_Location");
     LeashOuterRadiusKeyName = TEXT("AIEvaluator_Leash_OuterRadius");
+    LeashRuntimeParameters = NULL;
 }
 

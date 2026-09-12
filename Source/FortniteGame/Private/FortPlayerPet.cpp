@@ -26,5 +26,6 @@ AFortPlayerPet::AFortPlayerPet() {
     PetMesh = CreateDefaultSubobject<USkeletalMeshComponentBudgeted>(TEXT("PetMesh0"));
     InteractionCollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("InteractionCollisionSphere"));
     SoundBank = NULL;
+    bSuppressInteract = false;
 }
 

@@ -1,6 +1,6 @@
 #include "FortAthenaMutator_FactionCustomCharacterParts.h"
 
-uint8 AFortAthenaMutator_FactionCustomCharacterParts::GetFactionForPlayer_Implementation(const AFortPlayerControllerAthena* PlayerController) {
+uint8 AFortAthenaMutator_FactionCustomCharacterParts::GetFactionForPlayer_Implementation(const AFortPlayerControllerAthena* PlayerController) const {
     return 0;
 }
 

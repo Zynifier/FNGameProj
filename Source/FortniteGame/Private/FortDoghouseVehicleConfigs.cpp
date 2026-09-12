@@ -24,5 +24,24 @@ UFortDoghouseVehicleConfigs::UFortDoghouseVehicleConfigs() {
     AltitudeUpdateFrequency = 1;
     ControlStateNetUpdateFrequency = 1;
     ForceHeadingUpdateFrequency = 1;
+    AileronRollMatchRate = 0.0f;
+    AileronRollRotationalDampingCoefficient = 0.0f;
+    AileronRollMaxRotationalDampingTorque = 0.0f;
+    DivebombSpeedMinKmh = 0.0f;
+    DivebombSpeedMaxKmh = 0.0f;
+    DivebombSteerPitchRate = 0.0f;
+    DivebombHeadingMatchRate = 0.0f;
+    HardRollHeadingMatchRate = 0.0f;
+    HardRollHeadingSteerRate = 0.0f;
+    HardRollOffsetPercent = 0.0f;
+    TimeBeforeStallWithNoPassengersInAir = 0.0f;
+    TimeBeforeStallWithNoPassengersOnGround = 0.0f;
+    BoostTopSpeedKmh = 0.0f;
+    BoostThrust = 0.0f;
+    AileronRollDoubleClickSpeed = 0.0f;
+    PitchBiasOnGround = 0.0f;
+    HeadingAutoCenterRate = 0.0f;
+    RollAutoCenterRate = 0.0f;
+    AirbrakeDragCoefficient = 0.0f;
 }
 

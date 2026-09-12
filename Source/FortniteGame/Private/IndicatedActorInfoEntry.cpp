@@ -5,5 +5,6 @@ FIndicatedActorInfoEntry::FIndicatedActorInfoEntry() {
     StartTime = 1;
     EndTime = 1;
     bReplaceExistingWhenAdded = false;
+    bRefreshExistingWhenAdded = false;
 }
 

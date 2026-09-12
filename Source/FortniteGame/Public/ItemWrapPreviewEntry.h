@@ -28,6 +28,12 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bPreviewUsingVehicleShader: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UObject> PreviewObjectFiringAnimation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UObject> PreviewObjectMuzzleFlashParticleSystem;
+    
     FORTNITEGAME_API FItemWrapPreviewEntry();
 };
 

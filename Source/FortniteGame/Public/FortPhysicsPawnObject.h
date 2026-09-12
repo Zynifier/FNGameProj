@@ -385,5 +385,15 @@ public:
     UFUNCTION(BlueprintCallable)
     void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const override PURE_VIRTUAL(GetOwnedGameplayTags,);
     
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
+    void OnCollisionHitClient(const FVector& HitLocation, const FVector& VelocityOfHitter, const FVector& HitNormal, AActor* HitActor, EPhysicalSurface HitSurfaceType);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintImplementableEvent)
+    void OnCollisionHitServer(const FVector& HitLocation, const FVector& VelocityOfHitter, const FVector& HitNormal, AActor* HitActor, EPhysicalSurface HitSurfaceType);
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnSurfaceTypePhysicsObjectIsOnChanged(EPhysicalSurface SurfaceTypePhysicsObjectIsOn);
+    
 };
 

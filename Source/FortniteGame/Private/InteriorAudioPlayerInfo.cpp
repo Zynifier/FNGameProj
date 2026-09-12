@@ -5,5 +5,6 @@ FInteriorAudioPlayerInfo::FInteriorAudioPlayerInfo() {
     PreviousAmbientBank = NULL;
     CenterCellActor = NULL;
     Quadrant = EInteriorAudioQuadrant::None;
+    CurrentState = EInteriorAudioState::Indoors;
 }
 

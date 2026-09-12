@@ -377,7 +377,7 @@ void AFortPlayerPawn::OnRep_ReplicatedAnimMontage() {
 void AFortPlayerPawn::OnRep_RepAnimMontageStartSection() {
 }
 
-void AFortPlayerPawn::OnRep_PossessedProp() {
+void AFortPlayerPawn::OnRep_PossessedProp(ABuildingGameplayActorPlayerPropAttachment* OldProp) {
 }
 
 void AFortPlayerPawn::OnRep_ParachuteLockedOpen() {
@@ -636,7 +636,7 @@ bool AFortPlayerPawn::IsCharacterCustomizationLoadingCompleted() const {
     return false;
 }
 
-bool AFortPlayerPawn::IsActivelyStrafingInAir() const {
+bool AFortPlayerPawn::IsActivelyStrafingInAir(const bool bCheckMovementMode) const {
     return false;
 }
 
@@ -644,7 +644,7 @@ bool AFortPlayerPawn::IsActivelySkydivingUpInVortex() const {
     return false;
 }
 
-bool AFortPlayerPawn::IsActivelySkydiving() const {
+bool AFortPlayerPawn::IsActivelySkydiving(const bool bCheckMovementMode) const {
     return false;
 }
 
@@ -881,7 +881,7 @@ void AFortPlayerPawn::ExitSkyTube(AFortSkyTube* SkyTube, bool& bIsLastTube) {
 void AFortPlayerPawn::EnterSkyTube(AFortSkyTube* SkyTube, bool& bIsFirstTube) {
 }
 
-void AFortPlayerPawn::EndZiplining(bool bFromJump) {
+void AFortPlayerPawn::EndZiplining(bool bFromJump, bool bReachedEnd) {
 }
 
 void AFortPlayerPawn::EndSkydiving() {
@@ -1083,6 +1083,152 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
     DOREPLIFETIME(AFortPlayerPawn, ControlledRCPawn);
     DOREPLIFETIME(AFortPlayerPawn, StoredControlRotation);
     DOREPLIFETIME(AFortPlayerPawn, FacialTypeOverride);
+    DOREPLIFETIME(AFortPlayerPawn, bCanShowDefaultSkin);
+    DOREPLIFETIME(AFortPlayerPawn, bDisabledTetheringSupport);
+    DOREPLIFETIME(AFortPlayerPawn, GroupEmoteTailTarget);
+    DOREPLIFETIME(AFortPlayerPawn, GroupEmoteAnimOffset);
+    DOREPLIFETIME(AFortPlayerPawn, GroupEmoteSyncValue);
+    DOREPLIFETIME(AFortPlayerPawn, AnimSetOverride);
+    DOREPLIFETIME(AFortPlayerPawn, AnimLayersOverride);
+    DOREPLIFETIME(AFortPlayerPawn, MaterialOverrides);
+}
+
+void AFortPlayerPawn::AllowPickupInteractionWhileSkydiving(const bool bAllow) {
+}
+
+void AFortPlayerPawn::AuthUpdateLockedFloatSliderVariant_Implementation(const UAthenaCosmeticItemDefinition* ItemVariantIsUsedFor, const FGameplayTag& ChannelTag) {
+}
+
+void AFortPlayerPawn::BlindTestPredictiveInput() {
+}
+
+void AFortPlayerPawn::CheckForUnburrowTeleport() {
+}
+
+float AFortPlayerPawn::GetZiplineSpeedFactor() {
+    return 0.0f;
+}
+
+float AFortPlayerPawn::GetZiplineSpeedFactorTarget() {
+    return 0.0f;
+}
+
+void AFortPlayerPawn::HACK_ApplyCosmetics(const FString& ApplyCosmetics) {
+}
+
+bool AFortPlayerPawn::IsMaterialOverrideApplied(const FGuid& MaterialOverrideId, bool& bOutIsCurrentOverride) {
+    return false;
+}
+
+void AFortPlayerPawn::OnRep_AnimLayersOverride() {
+}
+
+void AFortPlayerPawn::OnRep_bDisabledTetheringSupport() {
+}
+
+void AFortPlayerPawn::OnRep_GroupEmoteSyncValue() {
+}
+
+void AFortPlayerPawn::OnRep_MaterialOverrides() {
+}
+
+void AFortPlayerPawn::OnWeaponEquippedNative(AFortWeapon* NewWeapon, AFortWeapon* OldWeapon) {
+}
+
+void AFortPlayerPawn::PopAnimLayersOverride(int32 Priority, const TArray<TSubclassOf<UAnimInstance>>& InAnimLayersOverride) {
+}
+
+void AFortPlayerPawn::PopAnimSetOverride(int32 Priority, UFortWeaponAnimSet* InAnimSetOverride) {
+}
+
+void AFortPlayerPawn::PushAnimLayersOverride(int32 Priority, const TArray<TSubclassOf<UAnimInstance>>& InAnimLayersOverride) {
+}
+
+void AFortPlayerPawn::PushAnimSetOverride(int32 Priority, UFortWeaponAnimSet* InAnimSetOverride) {
+}
+
+void AFortPlayerPawn::RemoveCosmeticSwap(const FGuid& SwapId) {
+}
+
+bool AFortPlayerPawn::RemoveMaterialOverride(const FGuid& MaterialOverrideId) {
+    return false;
+}
+
+bool AFortPlayerPawn::RemoveMaterialOverrideLocal(const FGuid& MaterialOverrideId) {
+    return false;
+}
+
+void AFortPlayerPawn::ServerEmoteSecondaryFirePressed_Implementation() {
+}
+
+void AFortPlayerPawn::ServerStartGliderSwap_Implementation() {
+}
+bool AFortPlayerPawn::ServerStartGliderSwap_Validate() {
+    return true;
+}
+
+void AFortPlayerPawn::ServerStopGliderSwap_Implementation() {
+}
+bool AFortPlayerPawn::ServerStopGliderSwap_Validate() {
+    return true;
+}
+
+void AFortPlayerPawn::SetScalarParamOnOverriddenMaterials(const FName ParamName, float Value) {
+}
+
+void AFortPlayerPawn::SetTetherRopeRodMesh(USkeletalMesh* InMesh) {
+}
+
+void AFortPlayerPawn::SetTextureParamOnOverriddenMaterials(const FName ParamName, UTexture* Value) {
+}
+
+void AFortPlayerPawn::SetTransformationMontage(UAnimMontage* CurrentMontage, UAnimMontage* FutureMontage, float StartTime) {
+}
+
+void AFortPlayerPawn::SetVectorParamOnOverriddenMaterials(const FName ParamName, const FLinearColor& Value) {
+}
+
+void AFortPlayerPawn::ShowTestingPredictiveInput() {
+}
+
+float AFortPlayerPawn::GetBuildCostModifier() const {
+    return 0.0f;
+}
+
+float AFortPlayerPawn::GetBuildSpeedModifier() const {
+    return 0.0f;
+}
+
+FFortAthenaLoadout AFortPlayerPawn::GetPawnCosmeticLoadout(const bool bGetBaseLoadout, const bool bWarn) const {
+    return FFortAthenaLoadout{};
+}
+
+UFortPlayerStateComponent_Quests* AFortPlayerPawn::GetPlayerStateQuestsComponent() const {
+    return NULL;
+}
+
+TArray<USkeletalMeshComponent*> AFortPlayerPawn::GetSkeletalMeshesForAllParts() const {
+    return TArray<USkeletalMeshComponent*>();
+}
+
+USkeletalMesh* AFortPlayerPawn::GetTetherRopeRodMesh() const {
+    return NULL;
+}
+
+UFortControllerComponent_TransientQuests* AFortPlayerPawn::GetTransientQuestsComponent() const {
+    return NULL;
+}
+
+bool AFortPlayerPawn::IsPickupInteractionWhileSkydivingAllowed() const {
+    return false;
+}
+
+FGuid AFortPlayerPawn::ApplyMaterialOverride(const TSoftObjectPtr<UMaterialInterface>& Material, const FFortPawnMaterialOverrideCopiedParameters& MaterialParamsToCopy, float Priority, bool bHideParticleSystems, bool bApplyToWeapon) {
+    return FGuid{};
+}
+
+FGuid AFortPlayerPawn::ApplyMaterialOverrideLocal(const TSoftObjectPtr<UMaterialInterface>& Material, const FFortPawnMaterialOverrideCopiedParameters& MaterialParamsToCopy, float Priority, bool bHideParticleSystems, bool bApplyToWeapon) {
+    return FGuid{};
 }
 
 AFortPlayerPawn::AFortPlayerPawn() {
@@ -1148,7 +1294,6 @@ AFortPlayerPawn::AFortPlayerPawn() {
     bInitializedPostRepPlayerState = false;
     bEnableCharacterPartRigidBodyNode = false;
     bInitializedCharacterPartRBANSettings = false;
-    bIsLocalViewTarget = false;
     bHasWaterParticleSystem = true;
     bIsInFrontEndHologram = false;
     bForceMoveRelativeToCameraRotation = false;
@@ -1210,59 +1355,17 @@ AFortPlayerPawn::AFortPlayerPawn() {
     EmoteInteractionCollisionProfile = TEXT("FortTriggerOnlyInteractions");
     EmoteInteractCollisionComponent = NULL;
     BlueprintPaperMID = NULL;
-    AccessoryColorSwatchHandler[0] = NULL;
-    AccessoryColorSwatchHandler[1] = NULL;
-    AccessoryColorSwatchHandler[2] = NULL;
-    AccessoryColorSwatchHandler[3] = NULL;
-    AccessoryColorSwatchHandler[4] = NULL;
-    AccessoryColorSwatchHandler[5] = NULL;
     Hero = NULL;
     DisplayContext = EFortPawnDisplayContext::BattleRoyale;
     HACK_CustomPRIComponent = NULL;
-    CharacterParts[0] = NULL;
-    CharacterParts[1] = NULL;
-    CharacterParts[2] = NULL;
-    CharacterParts[3] = NULL;
-    CharacterParts[4] = NULL;
-    CharacterParts[5] = NULL;
     CharacterColorSwatches[0] = NULL;
     CharacterColorSwatches[1] = NULL;
-    CharacterPartColorSwatches[0] = NULL;
-    CharacterPartColorSwatches[1] = NULL;
-    CharacterPartColorSwatches[2] = NULL;
-    CharacterPartColorSwatches[3] = NULL;
-    CharacterPartColorSwatches[4] = NULL;
-    CharacterPartColorSwatches[5] = NULL;
     CharacterCharms[0] = NULL;
     CharacterCharms[1] = NULL;
     CharacterCharms[2] = NULL;
     CharacterCharms[3] = NULL;
-    CharacterPartSkeletalMeshComponents[0] = NULL;
-    CharacterPartSkeletalMeshComponents[1] = NULL;
-    CharacterPartSkeletalMeshComponents[2] = NULL;
-    CharacterPartSkeletalMeshComponents[3] = NULL;
-    CharacterPartSkeletalMeshComponents[4] = NULL;
-    CharacterPartSkeletalMeshComponents[5] = NULL;
-    CharacterPartSMHiddenRefCount[0] = 0;
-    CharacterPartSMHiddenRefCount[1] = 0;
-    CharacterPartSMHiddenRefCount[2] = 0;
-    CharacterPartSMHiddenRefCount[3] = 0;
-    CharacterPartSMHiddenRefCount[4] = 0;
-    CharacterPartSMHiddenRefCount[5] = 0;
     ServerLoadoutChangeSync = 0;
     bAllowClientLoadoutChangeSync = true;
-    PreviousCharacterParts[0] = NULL;
-    PreviousCharacterParts[1] = NULL;
-    PreviousCharacterParts[2] = NULL;
-    PreviousCharacterParts[3] = NULL;
-    PreviousCharacterParts[4] = NULL;
-    PreviousCharacterParts[5] = NULL;
-    CharacterPartModifiers[0] = NULL;
-    CharacterPartModifiers[1] = NULL;
-    CharacterPartModifiers[2] = NULL;
-    CharacterPartModifiers[3] = NULL;
-    CharacterPartModifiers[4] = NULL;
-    CharacterPartModifiers[5] = NULL;
     AnimBPOverride = NULL;
     OriginalAnimBP = NULL;
     OnCrouchStartSound = NULL;
@@ -1360,5 +1463,23 @@ AFortPlayerPawn::AFortPlayerPawn() {
     NiagaraPlayerWaterBoost = NULL;
     bWaterFootSplashActive = false;
     bEnableWaterInteractionEffects = true;
+    bCanShowDefaultSkin = false;
+    bDisabledTetheringSupport = false;
+    bEmoteUsesSecondaryFire = false;
+    GroupEmoteTailTarget = NULL;
+    GroupEmoteAnimOffset = 0.0f;
+    GroupEmoteSyncValue = 0;
+    GroupEmoteSoundValue = 0;
+    GroupEmoteParticleValue = 0;
+    TransformationMontage = NULL;
+    TransformationMontageStartTime = 0.0f;
+    UnburrowLaunchXYSpeed = 0.0f;
+    UnburrowLaunchZSpeed = 0.0f;
+    ZiplineSpeedFactorTarget = 0.0f;
+    ZiplineSpeedFactor = 0.0f;
+    VehicleLastTick = NULL;
+    AnimSetOverride = NULL;
+    bHideBodyOnDeathRequested = false;
+    CustomInteractionWidget = NULL;
 }
 

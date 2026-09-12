@@ -25,6 +25,9 @@
 #include "OnUIGameplayCueEventDelegate.h"
 #include "SharedRepMovement.h"
 #include "Templates/SubclassOf.h"
+#include "OnFortPlayerHitByVehicleDelegate.h"
+#include "OnPlayerLootedContainerDelegate.h"
+#include "FortPlayerAthenaGravityAttributeReplicationProxy.h"
 #include "FortPlayerPawnAthena.generated.h"
 
 class AActor;
@@ -42,11 +45,13 @@ class UForceFeedbackEffect;
 class UFortMobileInteractionComponent;
 class UFortPawnComponent_Convert;
 class UFortSkinWeightOverrideManager;
-class UCameraShake;
+class UMatineeCameraShake;
 class UParticleSystemComponent;
 class USoundBase;
 class UTexture2D;
 class UUnicornAthenaPawnSampler;
+
+class UFortActorComponent_Affiliation;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortPlayerPawnAthena : public AFortPlayerPawn, public IFortMutatorContext, public IFortMarkableActorInterface {
@@ -57,6 +62,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     AActor* ItemInteractionActor;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float CurrentPawnSquaredSpeed;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float CurrentPawnSquaredSpeedXY;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float CurrentPawnSpeed;
@@ -153,6 +164,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_AttributeProxy, meta=(AllowPrivateAccess=true))
     FFortPlayerAthenaAttributeReplicationProxy AttributeReplicationProxy;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_GravityAttributeReplicationProxy, meta=(AllowPrivateAccess=true))
+    FFortPlayerAthenaGravityAttributeReplicationProxy GravityAttributeReplicationProxy;
+    
     UPROPERTY( EditAnywhere, ReplicatedUsing=OnRep_ReplayRepAnimMontageInfo, meta=(AllowPrivateAccess=true))
     FGameplayAbilityRepAnimMontage ReplayRepAnimMontageInfo;
     
@@ -179,6 +193,9 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnFortPlayerDied OnFortPlayerDied;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnFortPlayerHitByVehicle OnFortPlayerHitByVehicle;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     APawn* KillerForSpectatorRotation;
@@ -223,6 +240,11 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer WeaponTagsToNotPlayCircleAndStreakFX;
     
+public:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerLootedContainer OnPlayerLootedContainer;
+    
+protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIsPlayerPawnReady;
     
@@ -334,6 +356,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_bIsCreativeGhostModeActivated, meta=(AllowPrivateAccess=true))
     bool bIsCreativeGhostModeActivated;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_bIsCreativeModeratorModeActivated, meta=(AllowPrivateAccess=true))
+    bool bIsCreativeModeratorModeActivated;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortSkinWeightOverrideManager* SkinWeightManager;
@@ -354,7 +379,7 @@ protected:
     UForceFeedbackEffect* DamageForceFeedback;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> DamageCameraShakeClass;
+    TSubclassOf<UMatineeCameraShake> DamageCameraShakeClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer DamageTagsExcludedFromCameraShake;
@@ -362,6 +387,9 @@ protected:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortPawnComponent_Convert* ConvertComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortActorComponent_Affiliation* AffiliationComponent;
     
 public:
     AFortPlayerPawnAthena();
@@ -393,7 +421,7 @@ public:
     
 protected:
     UFUNCTION(BlueprintCallable)
-    void SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue);
+    void SetDamageCameraShakeClass(TSubclassOf<UMatineeCameraShake> NewValue);
     
 public:
     UFUNCTION(BlueprintCallable)
@@ -514,7 +542,7 @@ protected:
     
 public:
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    void ForceReviveFromDBNO();
+    void ForceReviveFromDBNO(AController* EventInstigator);
     
 private:
     UFUNCTION(BlueprintCallable, NetMulticast, Unreliable)
@@ -537,6 +565,45 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION()
     void GetMutatorContext(FMutatorContext& MutatorContext) const override PURE_VIRTUAL(GetMutatorContext,);
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable)
+    void ClientSetGravityJumpMultipliers(float NewGravityVal, float NewVehicleGravityVal, float NewJumpZ, float NewJumpHorizontalAcceleration, float NewJumpHorizontalVelocity);
+    
+    UFUNCTION(BlueprintCallable)
+    void CreativeToggleInvulnerable();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnCreativeModeratorModeActivate();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnCreativeModeratorModeDeactivate();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnCreativeStartInvulnerable();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnCreativeStopInvulnerable();
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_bEnableRenderCustomDepth();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_bIsCreativeModeratorModeActivated();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_GravityAttributeReplicationProxy();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerCreativeToggleInvulnerable();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetEnableRenderCustomDepth(bool bInEnableRenderCustomDepth);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetReviveFromDBNOTime() const;
     
 };
 

@@ -18,6 +18,9 @@
 #include "SavedCredentials.h"
 #include "SavedCustomMatchOptions.h"
 #include "SavedShopSectionState.h"
+#include "EFortOfferSeenLevel.h"
+#include "ERHIType.h"
+#include "SocialStatusSerialized.h"
 #include "FortGameUserSettings.generated.h"
 
 UCLASS(Blueprintable)
@@ -69,6 +72,15 @@ private:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 CachedPlayerLevel;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 CachedBattleStars;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 CachedAlienStylePoints;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 CachedHighestBattlePassUnlockedPage;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bShowCareerTabBang;
@@ -131,6 +143,9 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 RayTracingGIQuality;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool b120FpsMode;
+    
 private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float DisplayGamma;
@@ -152,6 +167,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float DonutIdleGameHighScore;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FString, EFortOfferSeenLevel> DisplayAssetPathToOfferSeenLevel;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString LastSeenDailyStoreVersion;
@@ -207,6 +225,9 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString LastNewsVersionViewedSTW;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString LastPRMEtag;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FString LastPlaylistInfoVersionViewedBR;
     
@@ -246,6 +267,10 @@ private:
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bDesiredHeadphoneMode;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString AudioOutputDeviceId;
     
 private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -350,6 +375,9 @@ public:
     UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int64 CurrentLivePiPStreamOverrideCounter;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString SelectedFrontEnd;
+    
 private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bNeverShowMobileLink;
@@ -377,6 +405,14 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAllowCellularDownload;
     
+public:
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAutoDownloadHighResTextures;
+    
+    UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int64 LastAutoDownloadHighResTextureReminder;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bAllowCellularDownloadOverride;
     
@@ -459,10 +495,19 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FRecentPlayerEncounterSerialized> RecentPlayerEncounters;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSocialStatusSerialized> FriendSocialStatuses;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHasSeenSidekickWelcomePopup;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bPCMigratedToNextGenScalability;
+    
 public:
     UFortGameUserSettings();
     UFUNCTION(BlueprintCallable)
-    void ToggleScalabilityMode(EFortScalabilityMode Mode, bool bEnabled, bool bForceApply);
+    void ToggleScalabilityMode(EFortScalabilityMode Mode, bool bEnabled, bool bForceApply, bool bApplyImmediately);
     
     UFUNCTION(BlueprintCallable)
     void SetUserInterfaceContrast(float InContrast);
@@ -582,7 +627,7 @@ public:
     float GetResolutionFraction() const;
     
     UFUNCTION(BlueprintCallable)
-    int32 GetRenderingAPI() const;
+    ERHIType GetRenderingAPI() const;
     
     UFUNCTION(BlueprintCallable)
     bool GetRayTracingShadowsQuality() const;
@@ -628,6 +673,51 @@ public:
     
     UFUNCTION(BlueprintCallable)
     int32 GetCachedPlayerLevel() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void SetAudioOutputDeviceId(const FString& InAudioOutputDeviceId);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetAutoDownloadHighResTextures(bool bValue);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetCachedAlienStylePoints(int32 Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetCachedBattleStars(int32 Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetCachedHighestBattlePassUnlockedPage(int32 Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetMeshQuality(int32 Value);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FString GetAudioOutputDeviceId() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetAutoDownloadHighResTextures() const;
+    
+    UFUNCTION(BlueprintCallable)
+    int32 GetCachedAlienStylePoints() const;
+    
+    UFUNCTION(BlueprintCallable)
+    int32 GetCachedBattleStars() const;
+    
+    UFUNCTION(BlueprintCallable)
+    int32 GetCachedHighestBattlePassUnlockedPage() const;
+    
+    UFUNCTION(BlueprintCallable)
+    int32 GetMeshQuality() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsInPerformanceMode() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void SetRenderingAPISelection(ERHIType InRenderingAPI);
+    
+    UFUNCTION(BlueprintCallable)
+    ERHIType GetRenderingAPISelection() const;
     
 };
 

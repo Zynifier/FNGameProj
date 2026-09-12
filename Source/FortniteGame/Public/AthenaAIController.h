@@ -9,6 +9,8 @@ class AActor;
 class UAthenaPathFollowingComponent;
 class UFortGameplayAbility;
 
+class UFortGameStateComponent_AffiliationManager;
+
 UCLASS(Blueprintable, MinimalAPI)
 class AAthenaAIController : public AFortAIController {
     GENERATED_BODY()
@@ -42,7 +44,13 @@ protected:
     uint8 bIsGoalRequiredForBehavior: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bRegisterToAthenaAIDropper: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     AActor* SecondaryGoalActor;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortGameStateComponent_AffiliationManager* CachedAffiliationManager;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))

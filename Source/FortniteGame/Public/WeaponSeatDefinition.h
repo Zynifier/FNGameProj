@@ -1,5 +1,6 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "ActionDefForUI.h"
 #include "WeaponSeatDefinition.generated.h"
 
 class UFortWeaponItemDefinition;
@@ -13,6 +14,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortWeaponItemDefinition* VehicleWeapon;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FActionDefForUI> WeaponActionDefForUI;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortWeaponItemDefinition* VehicleWeaponOverride;

@@ -8,6 +8,8 @@ enum class EMatchmakingSourceV2 : uint8 {
     AthenaMatchmakingWidget,
     ActivityMatchmakingWidget,
     ReadyUpScreenWidget,
+    ForcedIntro,
+    KeepPlayingTogetherWidget,
     Unknown,
 };
 

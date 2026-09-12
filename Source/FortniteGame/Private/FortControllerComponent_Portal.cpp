@@ -23,6 +23,10 @@ bool UFortControllerComponent_Portal::CanCancelPortalMatchmaking() const {
     return false;
 }
 
+bool UFortControllerComponent_Portal::CanInitiatePrivateMatchmaking() {
+    return false;
+}
+
 UFortControllerComponent_Portal::UFortControllerComponent_Portal() {
     bAllowRequeueToLinks = false;
 }

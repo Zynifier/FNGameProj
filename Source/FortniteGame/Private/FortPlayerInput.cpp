@@ -1,5 +1,11 @@
 #include "FortPlayerInput.h"
 
+void UFortPlayerInput::HandleDesiredGamepadInputSettingsReloadConfig(UFortPlayerInputSettings* GamepadSettings) {
+}
+
+void UFortPlayerInput::HandleDesiredKBMInputSettingsReloadConfig(UFortPlayerInputSettings* KBMSettings) {
+}
+
 UFortPlayerInput::UFortPlayerInput() {
     CampaignDefaultKBMPresetName = TEXT("ConfigKBM_Campaign");
     AthenaDefaultKBMPresetName = TEXT("ConfigKBM_Athena");
@@ -32,5 +38,28 @@ UFortPlayerInput::UFortPlayerInput() {
     InputActionTypeFriendlyNames.AddDefaulted(4);
     InputActionGroupContexts.AddDefaulted(447);
     InputActionGroupExemptFromAllModesCheck.AddDefaulted(45);
+    GyroV2Sensitivity = 0.0f;
+    GyroV2DetachedYawAxis = EFortMotionYawAxis::Yaw;
+    GyroV2AttachedYawAxis = EFortMotionYawAxis::Yaw;
+    bGyroV2LookStickDisables = false;
+    bGyroV2AimAssist = false;
+    GyroV2AccelMultiplier = 0.0f;
+    GyroV2AccelMinThreshold = 0.0f;
+    GyroV2AccelMaxThreshold = 0.0f;
+    GyroV2VerticalMultiplier = 0.0f;
+    GyroV2DeadZone = 0.0f;
+    GyroV2Smoothing = 0.0f;
+    GyroV2Tightening = 0.0f;
+    GyroV2TrackballDecay = 0.0f;
+    GyroV2ButtonHoldTime = 0.0f;
+    bGyroV2DisabledWhileDriving = false;
+    bFlickStickEnabled = false;
+    FlickTime = 0.0f;
+    FlickSmoothingThreshold = 0.0f;
+    FlickDeadZone = 0.0f;
+    GyroV2ActiveMode = EGyroActiveMode::ScopeOnly;
+    GyroV2AccelerationMode = EGyroAcceleration::Off;
+    GyroV2ButtonX = EGyroButtonResponse::NoChange;
+    GyroV2ButtonY = EGyroButtonResponse::NoChange;
 }
 

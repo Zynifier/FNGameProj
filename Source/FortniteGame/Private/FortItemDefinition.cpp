@@ -133,6 +133,10 @@ UFortItem* UFortItemDefinition::CreateTemporaryInstanceFromExistingItemBP(UFortI
 void UFortItemDefinition::CopyTemplateIdToClipboard() {
 }
 
+EFortItemTier UFortItemDefinition::GetTier() const {
+    return EFortItemTier::No_Tier;
+}
+
 UFortItemDefinition::UFortItemDefinition(const FObjectInitializer& ObjectInitializer) 
     : Super(ObjectInitializer) {
     Rarity = EFortRarity::Common;
@@ -151,6 +155,7 @@ UFortItemDefinition::UFortItemDefinition(const FObjectInitializer& ObjectInitial
     FrontendPreviewScale = 1;
     Series = NULL;
     
+#if WITH_EDITORONLY_DATA
     FText ItemTypeText = GetItemTypeName(false);
     FString AssetName = GetFName().ToString().ToLower();
     FString ItemType = ItemTypeText.ToString();
@@ -159,6 +164,7 @@ UFortItemDefinition::UFortItemDefinition(const FObjectInitializer& ObjectInitial
         {
         ItemType = ItemType.RightChop(Index + 1);
         }
-    EditorTemplateId = FString(TEXT("" + ItemType + ":" + AssetName));
+    EditorTemplateId = ItemType + TEXT(":") + AssetName;
+#endif
 }
 

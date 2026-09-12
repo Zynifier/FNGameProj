@@ -85,5 +85,11 @@ AFortAthenaGoatVehicle::AFortAthenaGoatVehicle() {
     PSC_TrailRight = NULL;
     FortGoatVehicleConfigsClass = NULL;
     FortGoatVehicleConfigs = NULL;
+    AccumulatedPowerSlideBoostDiscrete = 0.0f;
+    PowerSlideState = EPowerSlideState::None;
+    BounceForceFR = 0.0f;
+    BounceForceBR = 0.0f;
+    BounceForceBL = 0.0f;
+    AngularSpeedEnterPowerSlide = 0.0f;
 }
 

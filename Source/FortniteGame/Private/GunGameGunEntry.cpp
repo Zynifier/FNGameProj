@@ -2,5 +2,6 @@
 
 FGunGameGunEntry::FGunGameGunEntry() {
     Weapon = NULL;
+    bShowHarvestingToolOnLadder = false;
 }
 

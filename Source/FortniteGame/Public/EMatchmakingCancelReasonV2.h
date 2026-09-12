@@ -10,6 +10,7 @@ enum class EMatchmakingCancelReasonV2 : uint8 {
     PartyMemberJoined,
     PartyMemberLeft,
     PartyMemberCanceled,
+    PartyLeaderSwap,
     PlayReplay,
     UIDestroyed,
     PCDestroyed,

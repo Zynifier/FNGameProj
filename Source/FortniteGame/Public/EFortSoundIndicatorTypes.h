@@ -10,6 +10,7 @@ enum class EFortSoundIndicatorTypes : uint8 {
     Chest,
     Glider,
     Vehicle,
+    Infected,
     COUNT,
 };
 

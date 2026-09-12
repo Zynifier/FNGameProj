@@ -1,5 +1,4 @@
 #include "FortMinigameState.h"
 
-ADEPRECATED_FortMinigameState::ADEPRECATED_FortMinigameState() {
+AFortMinigameState::AFortMinigameState() {
 }
-

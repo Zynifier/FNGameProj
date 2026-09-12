@@ -6,6 +6,7 @@
 #include "OnDeviceButtonClickedDelegateDelegate.h"
 #include "OnDeviceButtonLabelChangedDelegateDelegate.h"
 #include "Templates/SubclassOf.h"
+#include "GameplayTagContainer.h"
 #include "FortCreativeDeviceButtonComponent.generated.h"
 
 class UUserWidget;
@@ -35,6 +36,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UUserWidget> EditWidget;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTagContainer Tags;
     
 public:
     UFortCreativeDeviceButtonComponent();

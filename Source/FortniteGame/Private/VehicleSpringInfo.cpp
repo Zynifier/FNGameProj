@@ -14,5 +14,8 @@ FVehicleSpringInfo::FVehicleSpringInfo() {
     LookAheadMaxSpeed = 1;
     LookAheadMinStiff = 1;
     LookAheadMaxStiff = 1;
+    bForceAlongSpringGroundNormal = false;
+    SprungMass = 0.0f;
+    bEnabled = false;
 }
 

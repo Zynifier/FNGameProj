@@ -33,7 +33,7 @@ class UFortCameraMode;
 class UFortCameraMode_AthenaVehicle;
 class UFortDagwoodVehicleConfigs;
 class UFortSplatterSourceComponent;
-class UCameraShake;
+class UMatineeCameraShake;
 class UNiagaraComponent;
 class UNiagaraSystem;
 class UStaticMesh;
@@ -43,16 +43,16 @@ class AFortDagwoodVehicle : public AFortAthenaSKMotorVehicle {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> HardLandingCameraShake;
+    TSubclassOf<UMatineeCameraShake> HardLandingCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> OffroadCamShakeClass;
+    TSubclassOf<UMatineeCameraShake> OffroadCamShakeClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> DriverCamShakeClass;
+    TSubclassOf<UMatineeCameraShake> DriverCamShakeClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> HandBrakeCamShakeClass;
+    TSubclassOf<UMatineeCameraShake> HandBrakeCamShakeClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EVehicleClass VehicleClass;
@@ -344,16 +344,16 @@ protected:
     TArray<FName> SeatToWindowShapeNames;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* OffroadCameraShakeInstance;
+    UMatineeCameraShake* OffroadCameraShakeInstance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* DriverCameraShakeInstance;
+    UMatineeCameraShake* DriverCameraShakeInstance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* AccelCameraShakeInstance;
+    UMatineeCameraShake* AccelCameraShakeInstance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* HandBrakeCameraShakeInstance;
+    UMatineeCameraShake* HandBrakeCameraShakeInstance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UNiagaraComponent* NativeComp_RoadAndExhaust;

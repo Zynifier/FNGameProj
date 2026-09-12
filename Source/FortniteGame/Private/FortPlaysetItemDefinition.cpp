@@ -31,5 +31,6 @@ UFortPlaysetItemDefinition::UFortPlaysetItemDefinition(const FObjectInitializer&
     bUsePlaysetProps = false;
     LevelSaveRecord = NULL;
     PlaysetPropLevelSaveRecordCollection = NULL;
+    PlaysetCategory = EPlaysetCategory::Unset;
 }
 

@@ -3,12 +3,19 @@
 #include "OnlineBeaconClient.h"
 #include "ContentManifest.h"
 #include "EClientContentReadiness.h"
+#include "ContentMessageArray.h"
+#include "ReplicatedVkResolvedModule.h"
 #include "ContentBeaconClient.generated.h"
 
 UCLASS(Blueprintable, NonTransient)
 class FORTNITEGAME_API AContentBeaconClient : public AOnlineBeaconClient {
     GENERATED_BODY()
 public:
+protected:
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    FContentMessageArray ContentMessagesArray;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString DestSessionId;
@@ -18,6 +25,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     EClientContentReadiness ClientContentReadiness;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FReplicatedVkResolvedModule> ClientContentModules;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_ClientAdditionalContentBundles, meta=(AllowPrivateAccess=true))
     FContentManifest ClientContentManifest;
@@ -53,6 +63,12 @@ protected:
     
     UFUNCTION(BlueprintCallable, Client, Reliable)
     void ClientAdditionConentIsRequiredCheckComplete(bool bAdditionalContentRequired);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerFinishedActivatingContent(bool bSuccess);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerStartingContentUnload(const FString& PluginURL);
     
 };
 

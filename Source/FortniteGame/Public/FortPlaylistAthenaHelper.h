@@ -3,6 +3,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "EAthenaGamePhaseStep.h"
 #include "EFortPlaylistType.h"
+#include "GameplayTagContainer.h"
 #include "FortPlaylistAthenaHelper.generated.h"
 
 class UFortPlaylistAthena;
@@ -56,6 +57,9 @@ public:
     
     UFUNCTION(BlueprintCallable)
     static float GetEndGameReturnToMatchmakingOriginDelay(const UFortPlaylistAthena* Playlist);
+    
+    UFUNCTION(BlueprintCallable)
+    static bool HasTag(const UFortPlaylistAthena* Playlist, const FGameplayTag& InTag);
     
 };
 

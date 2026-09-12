@@ -9,6 +9,7 @@
 #include "CreativeIslandDescriptionTag.h"
 #include "CreativeLoadedLinkData.h"
 #include "VehicleTeleportPortal.h"
+#include "EMMSPrivacy.h"
 #include "FortAthenaCreativePortal.generated.h"
 
 class AActor;
@@ -88,6 +89,9 @@ protected:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_PopulationChanged, meta=(AllowPrivateAccess=true))
     uint8 CurrentPopulation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_MaxAvailablePopulationChanged, meta=(AllowPrivateAccess=true))
+    uint8 MaxAvailablePopulation;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_OwningPlayer, meta=(AllowPrivateAccess=true))
     FUniqueNetIdRepl OwningPlayer;
@@ -188,7 +192,7 @@ protected:
     void OnUserGeneratedContentRestrictionsChanged(bool bRestrictionEnabled);
     
     UFUNCTION(BlueprintCallable)
-    void OnUnloadPlotComplete(const FAsyncTaskResult& Result);
+    void OnUnloadPlotComplete();
     
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void OnThumbnailTextureReady();
@@ -334,5 +338,17 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+protected:
+    UFUNCTION(BlueprintCallable)
+    void LogIslandTeleportation();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_MaxAvailablePopulationChanged();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    EMMSPrivacy GetPrivacy() const;
+    
 };
 

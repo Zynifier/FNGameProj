@@ -21,6 +21,8 @@ class AFortSafeZoneStorm;
 class AVolume;
 class UFortSupplyDropInfo;
 
+class ABuildingFoundation;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortAthenaMapInfo : public AActor {
     GENERATED_BODY()
@@ -133,6 +135,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     AFortSafeZoneStorm* SafeZoneStorm;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<ABuildingFoundation> WarmupBuildingFoundation;
     
 public:
     AFortAthenaMapInfo();

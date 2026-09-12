@@ -31,6 +31,18 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer CheckLoadedAmmoForInfiniteAmmoCheats;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float NoWeaponGiveWeaponAfterTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float NoWeaponNoPlayerConeDistance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float NoWeaponNoPlayerConeFOV;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FName NoWeaponLootTierGroup;
+    
 public:
     UFortAthenaAIBotInventoryDigestedSkillSet();
 };

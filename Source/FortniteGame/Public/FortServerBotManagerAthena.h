@@ -38,6 +38,9 @@ class UFortAthenaAIBotNameDataAsset;
 class UFortAthenaAISpawnerDataComponentList;
 class UFortAthenaBeaconComponent;
 
+class AFortWeapon;
+class UAthenaAIServicePlayerBots;
+
 UCLASS(Blueprintable)
 class UFortServerBotManagerAthena : public UObject, public INavAgentInterface {
     GENERATED_BODY()
@@ -151,6 +154,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UAthenaAIPopulationTracker* CachedAIPopulationTracker;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UAthenaAIServicePlayerBots* CachedAIServicePlayerBots;
+    
 public:
     UFortServerBotManagerAthena();
     UFUNCTION(BlueprintCallable)
@@ -172,5 +178,11 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    bool IsWeaponSupported(AFortWeapon* FortWeapon);
+    
+    UFUNCTION(BlueprintCallable)
+    void NotifyAllAIServicesStarted();
+    
 };
 

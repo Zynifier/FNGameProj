@@ -64,7 +64,7 @@ bool AFortPlayerControllerZone::ServerRequestSeatChange_Validate(int32 TargetSea
     return true;
 }
 
-void AFortPlayerControllerZone::ServerRequestLoadoutRefresh_Implementation() {
+void AFortPlayerControllerZone::ServerRequestLoadoutRefresh_Implementation(bool bForceResfresh) {
 }
 
 void AFortPlayerControllerZone::ServerEndGameplayVote_Implementation(EFortVoteType VoteType) {
@@ -195,6 +195,10 @@ void AFortPlayerControllerZone::GetLifetimeReplicatedProps(TArray<FLifetimePrope
     DOREPLIFETIME(AFortPlayerControllerZone, DesyncNotifyList);
 }
 
+bool AFortPlayerControllerZone::IsShowingSeasonLevel() const {
+    return false;
+}
+
 AFortPlayerControllerZone::AFortPlayerControllerZone() {
     bDontChangeReticleColorForEnemy = false;
     LastVehicleSeatSwitchTime = 1;
@@ -211,5 +215,6 @@ AFortPlayerControllerZone::AFortPlayerControllerZone() {
     bAllowMovementCancellableActionsWithIceFeet = true;
     MoveForwardOnlyEmoteCancelBackwardsThreshold = 1;
     MoveForwardOnlyEmoteCancelStrafeThreshold = 1;
+    TriggerHapticsComponent = NULL;
 }
 

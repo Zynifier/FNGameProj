@@ -2,5 +2,6 @@
 
 UInstancedPropertyUpgradeMapping_Flag::UInstancedPropertyUpgradeMapping_Flag() {
     Index = 0;
+    Index_0 = 0;
 }
 

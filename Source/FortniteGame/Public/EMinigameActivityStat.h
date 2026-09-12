@@ -4,8 +4,13 @@
 
 UENUM(BlueprintType)
 enum class EMinigameActivityStat : uint8 {
+    Score,
     Time,
     Distance,
+    RaceProgress,
+    CurrentLap,
+    MaxLaps,
+    BestLapTime,
     COUNT,
 };
 

@@ -19,6 +19,9 @@ enum class EFortItemEntryState :uint8 {
         GenericAttributeValueSet,
         PickupInstigatorHandle,
         RechargingWeaponServerTime,
+        DisallowSwapOnNextPickUpAttempt,
+        DroppedFromQuestSource,
+        Tossed,
     };
 
 

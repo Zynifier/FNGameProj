@@ -10,6 +10,8 @@ class AFortPlayerPawnAthena;
 class UPrimitiveComponent;
 class USoundBase;
 
+class AFortPawn;
+
 UCLASS(Blueprintable)
 class AFortLauncherAthena : public ABuildingTrapFloor {
     GENERATED_BODY()
@@ -26,6 +28,12 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     USoundBase* OnLaunchSound1P;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowMultipleTriggers;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bLaunchPlayersFromVehicles;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRepLaunchServerInfo, meta=(AllowPrivateAccess=true))
     FServerLaunchInfo ServerLaunchInfo;
     
@@ -33,7 +41,7 @@ public:
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
-    void TriggerLaunchEffects(AFortPlayerPawnAthena* Pawn);
+    void TriggerLaunchEffects(AFortPawn* Pawn);
     
     UFUNCTION(BlueprintCallable)
     void ReTriggerForPawn(AFortPlayerPawnAthena* AthenaPawn);

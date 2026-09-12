@@ -40,13 +40,17 @@ float AFortMeatballVehicle::GetBoostCharge() const {
 void AFortMeatballVehicle::CachePSCPointers(UParticleSystemComponent* InCacheBoostReadyLFx, UParticleSystemComponent* InCacheBoostReadyRFx, UParticleSystemComponent* InCacheDirtCascade, UNiagaraComponent* InCacheSnowLandscapeComponent) {
 }
 
-void AFortMeatballVehicle::CacheAudioPointers(UFortVehicleAudioVoice* InAudioEngineUp, UFortVehicleAudioVoice* InAudioEngineDown, UFortVehicleAudioVoice* InAudioWakeTurn, UFortVehicleAudioVoice* InAudioWakeSpeed, UFortVehicleAudioVoice* InAudioScrape) {
+void AFortMeatballVehicle::CacheAudioPointers(UFortVehicleAudioVoice* InAudioEngineUp, UFortVehicleAudioVoice* InAudioEngineDown, UFortVehicleAudioVoice* InAudioWakeTurn, UFortVehicleAudioVoice* InAudioWakeSpeed, UFortVehicleAudioVoice* InAudioScrape, UFortVehicleAudioVoice* InAudioEngineOutOfFuel) {
 }
 
 void AFortMeatballVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
     DOREPLIFETIME(AFortMeatballVehicle, IsUsingNewFuelSystemState);
+    DOREPLIFETIME(AFortMeatballVehicle, VehicleFuelSystemState);
+}
+
+void AFortMeatballVehicle::OnRep_VehicleFuelSystemState() {
 }
 
 AFortMeatballVehicle::AFortMeatballVehicle() {
@@ -86,5 +90,8 @@ AFortMeatballVehicle::AFortMeatballVehicle() {
     WaterLineEndPontoonIndex = 0;
     bBoostFailed = false;
     FuelComponent = CreateDefaultSubobject<UFortAthenaVehicleFuelComponent>(TEXT("FuelComponent"));
+    CacheAudioEngineOutOfFuel = NULL;
+    VehicleCameraOverride = NULL;
+    VehicleFuelSystemState = EVehicleFuelState::Uninitialized;
 }
 

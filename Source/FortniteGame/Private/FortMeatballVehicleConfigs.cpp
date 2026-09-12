@@ -43,5 +43,6 @@ UFortMeatballVehicleConfigs::UFortMeatballVehicleConfigs() {
     MaxSpeedForTurnInPlaceKmH = 1;
     BlendOutExtraSpeedTurnInPlaceKmH = 1;
     MaxPitchForCameraInPlaceSteer = 1;
+    SpringLengthMutliplierWater = 0.0f;
 }
 

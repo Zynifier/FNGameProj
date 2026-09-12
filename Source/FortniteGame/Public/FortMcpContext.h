@@ -54,6 +54,8 @@
 #include "OnRealMoneyPurchaseCompleteMultiDelegate.h"
 #include "OnUpdatePrivacySettingsCompleteDelegate.h"
 #include "XpBoostChangeDelegateDelegate.h"
+#include "OnPurchaseBattlePassOfferCompleteDelegate.h"
+#include "OnPurchaseMultipleOffersCompleteDelegate.h"
 #include "FortMcpContext.generated.h"
 
 class UFortAccountItem;
@@ -191,6 +193,10 @@ protected:
     TArray<FString> EUCountryCodes;
     
 private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortGiftBoxItem*> RequestedGiftBoxesToDisplay;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnEpicPurchasingWidgetDisplay DisplayPurchaseWidget;
     
@@ -263,7 +269,7 @@ public:
     void PurchaseRealMoneyCatalogEntry(const FString& OfferId, const FOnRealMoneyPurchaseComplete& Callback, int32 PriceIndex, int32 Quantity);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    EOfferPurchaseError PurchaseOfferAsGift(const FString& OfferId, int32 Quantity, int32 PriceIndex, const TArray<FString>& ReceiverAccountIds, const FString& GiftWrapTemplateId, const FString& UserMessageToRecipients, const FOnGiftOfferComplete& OnComplete) const;
+    EOfferPurchaseError PurchaseOfferAsGift(const FString& OfferId, int32 Quantity, int32 PriceIndex, const TArray<FString>& ReceiverAccountIds, const FString& GiftWrapTemplateId, const FString& UserMessageToRecipients, const FOnGiftOfferComplete& OnComplete, int32 ExpectedTotalPrice) const;
     
     UFUNCTION(BlueprintCallable)
     EOfferPurchaseError PurchaseOffer(const FString& OfferId, const int32 PriceIndex, const FOnPurchaseOfferComplete& Callback, int32 Quantity, int32 IndexInSection, bool bIsIncarousel, int32 IndexIncarousel, int32 LengthOfCarousel, int32 ColumnIndexInSection, int32 InnerRowIndexInSection, int32 SectionIndex);
@@ -516,6 +522,15 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void AbandonExpedition(const UFortExpeditionItem* Expedition);
+    
+    UFUNCTION(BlueprintCallable)
+    void PurchaseBattlePassOffer(const TArray<FString>& OfferIdList, const FOnPurchaseBattlePassOfferComplete& Callback);
+    
+    UFUNCTION(BlueprintCallable)
+    EOfferPurchaseError PurchaseMultipleOffers(const TMap<FString, int32>& OfferIdToQuantityMap, const FOnPurchaseMultipleOffersComplete& Callback, int32 IndexInSection, int32 ColumnIndexInSection, int32 InnerRowIndexInSection, int32 SectionIndex);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsQosProbeDone() const;
     
 };
 

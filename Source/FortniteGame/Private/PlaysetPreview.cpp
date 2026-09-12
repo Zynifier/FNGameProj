@@ -13,6 +13,12 @@ void UPlaysetPreview::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
     DOREPLIFETIME(UPlaysetPreview, PlaysetToPlace);
 }
 
+void UPlaysetPreview::ServerSetPreviewLocation_Implementation(const FVector& NewPreviewLocation) {
+}
+bool UPlaysetPreview::ServerSetPreviewLocation_Validate(const FVector& NewPreviewLocation) {
+    return true;
+}
+
 UPlaysetPreview::UPlaysetPreview() {
     PreviewPlaysetStaticMeshActor = NULL;
     PlaysetMesh = NULL;

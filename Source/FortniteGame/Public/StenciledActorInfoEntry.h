@@ -6,12 +6,17 @@
 
 class AActor;
 
+class AFortPlayerStateAthena;
+
 USTRUCT(BlueprintType)
 struct FStenciledActorInfoEntry : public FFastArraySerializerItem {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     AActor* Actor;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    AFortPlayerStateAthena* MarkedBy;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float StartTime;
@@ -24,6 +29,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bReplaceExistingWhenAdded;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bRefreshExistingWhenAdded;
     
     FORTNITEGAME_API FStenciledActorInfoEntry();
 };

@@ -18,5 +18,14 @@ FTowhookParams::FTowhookParams() {
     bApplySpringToSelf = false;
     bApplySpringToOther = false;
     bTakeUpSlack = false;
+    bUseAsTractorBeam = false;
+    bEnableParentDominates = false;
+    bAttachToOwnersVehicle = false;
+    TractorBeamRestLength = 0.0f;
+    TractorBeamUpSpringStiffness = 0.0f;
+    TractorBeamSideSpringStiffness = 0.0f;
+    TractorBeamUpSpringDamping = 0.0f;
+    TractorBeamSideSpringDamping = 0.0f;
+    TractorBeamMaxStiffnessTime = 0.0f;
 }
 

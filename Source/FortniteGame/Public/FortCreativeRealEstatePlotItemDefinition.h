@@ -6,6 +6,7 @@
 #include "ERealEstateOffsetType.h"
 #include "FortAccountItemDefinition.h"
 #include "FortCreativeBudget.h"
+#include "FortCreativeGridCellBudget.h"
 #include "FortCreativeRealEstatePlotItemDefinition.generated.h"
 
 class UFortPlaysetItemDefinition;
@@ -53,6 +54,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortCreativeBudget> CreativeBudgetOverrides;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bCreativeHeatmapThermometerEnabled;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float CreativeHeatmapThermometerInfluenceDistanceMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 CreativeHeatmapThermometerCellSizeMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortCreativeGridCellBudget> CreativeHeatmapThermometerBudgetOverrides;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIsCreativeHeatmapEnabled;

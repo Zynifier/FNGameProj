@@ -10,5 +10,9 @@ FMountedWeaponInfo::FMountedWeaponInfo() {
     MaxAimAngleDiffForReticleAlpha = 1;
     bNeedsVehicleAttachment = false;
     AttachAttemptCount = 0;
+    bUseMountedWeaponAimRotOverride = false;
+    bUseAimingClampAngles = false;
+    MaximumPitchAimingAngle = 0.0f;
+    MinimumPitchAimingAngle = 0.0f;
 }
 

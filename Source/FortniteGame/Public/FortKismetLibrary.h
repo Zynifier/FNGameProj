@@ -65,6 +65,7 @@
 #include "ProjectileMovementDrunkConfig.h"
 #include "SpawnItemVariantParams.h"
 #include "Templates/SubclassOf.h"
+#include "Components/SceneCaptureComponent.h"
 #include "FortKismetLibrary.generated.h"
 
 class AActor;
@@ -126,6 +127,14 @@ class USoundBase;
 class UTexture;
 class UWorld;
 
+class AFortPlayerPawnAthena;
+class UClass;
+class UFXSystemComponent;
+class UFortGameplayAbility;
+class UPrimitiveComponent;
+class USceneCaptureComponent2D;
+class UStaticMesh;
+
 UCLASS(Blueprintable, MinimalAPI)
 class UFortKismetLibrary : public UBlueprintFunctionLibrary {
     GENERATED_BODY()
@@ -141,7 +150,7 @@ public:
     static bool ValidateOwnershipForGroupEmote(AFortPawn* Pawn, const UFortItemDefinition* EmoteDef);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static bool UpgradeAllWeaponsVerticalToRarity(AFortPlayerController* PlayerController, EFortRarity NewRarity);
+    static bool UpgradeAllWeaponsVerticalToRarity(AFortPlayerController* PlayerController, EFortRarity NewRarity, bool bThrottle);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
     static void UpdatePlayerCustomCharacterPartsVisualization(AFortPlayerState* PlayerState);
@@ -186,7 +195,7 @@ public:
     static AFortAreaOfEffectCloud* SpawnAreaOfEffectCloud(TSubclassOf<AFortAreaOfEffectCloud> AreaOfEffectClass, AActor* RequestedBy, const FVector& SpawnLocation, const FRotator& SpawnRotation, FFortGameplayEffectContainerSpec EffectContainerSpecToApplyOnHit, FFortGameplayEffectContainerSpec EffectContainerSpecToApplyOnExplode);
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic, meta=(WorldContext="WorldContextObject"))
-    static void ShowSoundIndicatorLocalForTeam(UObject* WorldContextObject, AActor* TrackedActor, FVector Location, float MaxAudibleDistance, EFortSoundIndicatorTypes IndicatorType, uint8 Team, TArray<TEnumAsByte<EFortTeamAffiliation::Type>> Affiliations, const AActor* Instigator, FLinearColor Tint, UTexture* OverrideIcon);
+    static void ShowSoundIndicatorLocalForTeam(UObject* WorldContextObject, AActor* TrackedActor, FVector Location, float MaxAudibleDistance, EFortSoundIndicatorTypes IndicatorType, const TArray<AFortPlayerController*>& IgnoreOnControllers, uint8 Team, TArray<TEnumAsByte<EFortTeamAffiliation::Type>> Affiliations, const AActor* Instigator, FLinearColor Tint, UTexture* OverrideIcon);
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic, meta=(WorldContext="WorldContextObject"))
     static void ShowSoundIndicatorLocal(UObject* WorldContextObject, AActor* TrackedActor, FVector Location, float MaxAudibleDistance, EFortSoundIndicatorTypes IndicatorType, const TArray<AFortPlayerController*>& IgnoreOnControllers, const AActor* Instigator, FLinearColor Tint, UTexture* OverrideIcon);
@@ -333,7 +342,7 @@ public:
     static void KeepCGPathOptimizations(const AController* RequestedBy, int64 ExpectedBudget, float Duration);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, meta=(WorldContext="WorldContextObject"))
-    static TArray<AFortPickup*> K2_SpawnPickupInWorldWithLootTier(UObject* WorldContextObject, FName LootTierName, FVector position, int32 OverrideMaxStackCount, bool bToss, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source);
+    static TArray<AFortPickup*> K2_SpawnPickupInWorldWithLootTier(UObject* WorldContextObject, FName LootTierName, FVector Position, int32 OverrideMaxStackCount, bool bToss, bool bTossWithVelocity, FVector TossVelocity, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, meta=(WorldContext="WorldContextObject"))
     static AFortPickup* K2_SpawnPickupInWorldWithClass(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, TSubclassOf<AFortPickup> PickupClass, int32 NumberToSpawn, FVector position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner);
@@ -504,7 +513,7 @@ public:
     static bool HasMultipleVisibleRewards(const FFortRewardInfo& RewardInfo);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static void GiveItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer, int32 ItemLevel, int32 PickupInstigatorHandle);
+    static void GiveItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer, int32 ItemLevel, int32 PickupInstigatorHandle, bool bUseItemPickupAnalyticEvent);
     
     UFUNCTION(BlueprintCallable)
     static bool GetWeaponStatsRow(FDataTableRowHandle DataTableRowHandle, FFortBaseWeaponStats& OutRow);
@@ -1054,6 +1063,75 @@ public:
     
     UFUNCTION(BlueprintCallable)
     static void ActivateQuickbarSlot(AFortPlayerPawn* PlayerPawn, EFortQuickBars InQuickBar, int32 Slot, float ActivateDelay, bool bUpdatePreviousFocusedSlot, bool bForceExecution);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void ApplyGameplayEffectSpecToActorsInRange(UObject* WorldContextObject, const FGameplayEffectSpecHandle& EffectSpecToApply, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, const FVector& SourcePosition, const float Range, const TArray<AActor*>& IgnoredActors, const bool bRequireLOS, UAbilitySystemComponent* InstigatorAbilitySystemComp);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static bool BoxOverlapActors(const UObject* WorldContextObject, const FTransform& BoxTransform, const FVector& BoxExtent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, UClass* ActorClassFilter, const TArray<AActor*>& ActorsToIgnore, TArray<AActor*>& OutActors);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static bool BoxOverlapComponents(const UObject* WorldContextObject, const FTransform& BoxTransform, const FVector& BoxExtent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, UClass* ComponentClassFilter, const TArray<AActor*>& ActorsToIgnore, TArray<UPrimitiveComponent*>& OutComponents);
+    
+    UFUNCTION(BlueprintCallable)
+    static bool CheckLineOfSightToActorWithChannel(const FVector& SourcePos, const AActor* Target, TEnumAsByte<ECollisionChannel> TargetFilterChannel, const AActor* Source);
+    
+    UFUNCTION(BlueprintCallable)
+    static void DeactivateAttachedParticleSystems(const AFortPlayerPawn* PlayerPawn, TArray<UFXSystemComponent*>& FXComponents, bool bOnlyActiveSystems);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static TArray<UActorComponent*> FindAllComponents(const UObject* WorldContextObject, TSubclassOf<UActorComponent> ComponentClass);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static void FortBlueprintLog(const UObject* WorldContextObject, const FString& inString);
+    
+    UFUNCTION(BlueprintCallable)
+    static FGuid GenerateGuidFromObject(const UObject* InObject, bool bOnlyStrings);
+    
+    UFUNCTION(BlueprintCallable)
+    static bool GetCameraLookHitResult(FHitResult& OutHitResult, const AFortPlayerController* PlayerController, const float CameraForwardTraceDistance, const bool bTraceComplex);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure, meta=(WorldContext="WorldContextObject"))
+    static AFortPlayerPawn* GetClosestFortPlayerPawnByTeamAffiliation(const UObject* WorldContextObject, const FVector& Position, const AActor* TeamAffiliationActor, const TEnumAsByte<EFortTeamAffiliation::Type> TeamAffiliation);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure, meta=(WorldContext="WorldContextObject"))
+    static AFortGameStateAthena* GetGameStateAthenaFromContext(const UObject* WorldContextObject);
+    
+    UFUNCTION(BlueprintCallable)
+    static UGameplayAbility* GetPrimaryAbilityInstanceOfAbilitySystemComponent(UFortAbilitySystemComponent* AbilitySystemComponent, TSubclassOf<UFortGameplayAbility> AbilityClass);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static void GetStaticMeshesForClass(const TSubclassOf<AActor> Class, TArray<UStaticMesh*>& OutStaticMeshes);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static TEnumAsByte<EFortTeamAffiliation::Type> GetTeamAffiliationForActorToLocalPlayer(const AActor* Actor, bool bIncludeNonSpectators, bool bIncludeSpectators);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure, meta=(WorldContext="WorldContextObject"))
+    static bool IsBattleLabModePlaylist(const UObject* WorldContextObject);
+    
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintPure)
+    static bool IsCosmeticObjectDisplayedInFrontendContext(UObject* CosmeticObject);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static bool IsLocationInSafeZone(UObject* WorldContextObject, const FVector& Location);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure, meta=(WorldContext="WorldContextObject"))
+    static bool IsPapayaPlaylist(const UObject* WorldContextObject);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static AFortPickup* K2_SpawnPickupInWorldWithClassAndLevel(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 WorldLevel, TSubclassOf<AFortPickup> PickupClass, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static AFortPickup* K2_SpawnPickupInWorldWithLevel(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 WorldLevel, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool OnSameSquad(const AFortPlayerPawnAthena* PlayerPawnA, const AFortPlayerPawnAthena* PlayerPawnB);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    static void RemoveItemFromInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortWorldItemDefinition* ItemDefinition);
+    
+    UFUNCTION(BlueprintCallable)
+    static void SetSceneCaptureShowFlags(USceneCaptureComponent2D* SceneCaptureComponent, const TArray<FEngineShowFlagsSetting>& ShowFlagSettings);
     
 };
 

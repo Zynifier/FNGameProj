@@ -8,5 +8,6 @@ UFortCreativeBudgeterData::UFortCreativeBudgeterData() {
     ComponentSimulationCosts.AddDefaulted(9);
     Budgets.AddDefaulted(1);
     BattleLabBudgets.AddDefaulted(1);
+    bEnableInstanceTracking = false;
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "EInteriorAudioBuildingDefaultRotation.h"
+#include "UObject/NoExportTypes.h"
 #include "InteriorAudioBuildingRotationConstraint.generated.h"
 
 USTRUCT(BlueprintType)
@@ -18,6 +19,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 Quadrant;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector DotProductComparisons;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUseDotProductComparison;

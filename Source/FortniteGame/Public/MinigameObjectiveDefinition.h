@@ -1,16 +1,16 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "UObject/Object.h"
-#include "GameplayTagContainer.h"
+#include "UObject/NoExportTypes.h"
 #include "EFortQuestObjectiveItemEvent.h"
 #include "EFortQuestObjectiveStatEvent.h"
+#include "GameplayTagContainer.h"
 #include "MinigameObjectiveDefinition.generated.h"
 
 class UFortItemDefinition;
 class UTexture2D;
 
-UCLASS(Abstract, Blueprintable, Deprecated, NotPlaceable)
-class UDEPRECATED_MinigameObjectiveDefinition : public UObject {
+UCLASS(Blueprintable)
+class FORTNITEGAME_API UMinigameObjectiveDefinition : public UObject {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -40,6 +40,6 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UTexture2D> HudIcon;
     
-    UDEPRECATED_MinigameObjectiveDefinition();
+    UMinigameObjectiveDefinition();
+    
 };
-

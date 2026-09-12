@@ -13,5 +13,7 @@ UFortVehicleLayerAnimInstance::UFortVehicleLayerAnimInstance() {
     bIsBackRightPassenger = false;
     bTransitionLocomotionAdditiveCrouchTurning = false;
     bRecentlyFired = false;
+    Speed2D = 0.0f;
+    bIsTargeting = false;
 }
 

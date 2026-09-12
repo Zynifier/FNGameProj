@@ -36,6 +36,8 @@ class UStaticMesh;
 class UStaticMeshComponent;
 class UTexture2D;
 
+class AActor;
+
 UCLASS(Blueprintable, NotPlaceable)
 class AFortTimeOfDayManager : public AInfo, public IFortInitializationInterface {
     GENERATED_BODY()
@@ -281,6 +283,13 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float StormStrength;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<AActor*> InhibitorDeviceCounter;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool DisableGlobalWeatherEvents;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortTimeOfDayWeatherComponent* WeatherComponent;
@@ -445,6 +454,33 @@ public:
     
     UFUNCTION()
     void MatchStarted() override PURE_VIRTUAL(MatchStarted,);
+    
+    UFUNCTION(BlueprintCallable)
+    void InhibitorDevicePlaced(AActor* NewInhibitor);
+    
+    UFUNCTION(BlueprintCallable)
+    void InhibitorDeviceRemoved(AActor* OldInhibitor);
+    
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
+    void OnDataDrivenCVarChangedEditorOnly(const FString& CVarName);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetDirectionalLightComponentRotation(const FQuat& NewQuat, bool bInEditor, float DeltaTime);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FLinearColor GetDirectOverrideFogColor() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetDirectOverrideFogDensity() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TArray<AActor*> GetEnabledInhibitors() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintPure)
+    float GetSafeZoneGamePhaseTimeRemaining() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsThereAnyInhibitor() const;
     
 };
 

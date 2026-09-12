@@ -7,5 +7,7 @@ void ABuildingMusicSequencer::HitActorsAsync(const FTransform& Transform, const 
 }
 
 ABuildingMusicSequencer::ABuildingMusicSequencer() {
+    TriggerInstigator = NULL;
+    CachedTriggerInstigator = NULL;
 }
 

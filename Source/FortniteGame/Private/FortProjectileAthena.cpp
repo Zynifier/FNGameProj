@@ -32,6 +32,9 @@ void AFortProjectileAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     DOREPLIFETIME(AFortProjectileAthena, PawnHitResult);
 }
 
+void AFortProjectileAthena::OnOwnerDestroyed(AActor* DestroyedOwner) {
+}
+
 AFortProjectileAthena::AFortProjectileAthena() {
     bExplodeOnPawnHit = false;
     bNoCollisionForNonOwningClients = false;

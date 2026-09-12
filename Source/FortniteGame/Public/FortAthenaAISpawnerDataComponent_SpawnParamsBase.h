@@ -24,5 +24,17 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
     TSubclassOf<APawn> GetPawnClass();
     
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    float GetInAirSpawnTraceEndHeight();
+    
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    float GetInAirSpawnTraceSphereRadius();
+    
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    float GetInAirSpawnTraceStartHeight();
+    
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    bool ShouldSpawnInAir();
+    
 };
 

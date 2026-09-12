@@ -2,5 +2,6 @@
 
 FFortSearchBounceData::FFortSearchBounceData() {
     SearchAnimationCount = 0;
+    SearchingPawn = NULL;
 }
 

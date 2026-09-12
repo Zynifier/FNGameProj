@@ -18,6 +18,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UMaterialInstanceConstant* GeneratedMaterial_Weapon_Opaque;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UMaterialInstanceConstant* GeneratedMaterial_Character_Opaque;
+    
     UFortItemWrapMaterialAssetData();
 };
 

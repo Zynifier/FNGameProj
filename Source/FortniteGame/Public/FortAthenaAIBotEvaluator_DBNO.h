@@ -7,6 +7,9 @@
 class AFortPlayerPawnAthena;
 class UFortAthenaAIBotDBNODigestedSkillSet;
 
+class AFortPawn;
+class UFortAthenaAIRuntimeParameters_DBNOBehavior;
+
 UCLASS(Blueprintable)
 class UFortAthenaAIBotEvaluator_DBNO : public UFortAthenaAIBotEvaluator_Movement {
     GENERATED_BODY()
@@ -30,7 +33,14 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaAIBotDBNODigestedSkillSet* DBNOSkillSet;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIRuntimeParameters_DBNOBehavior* DBNOBehaviorRuntimeParameters;
+    
 public:
     UFortAthenaAIBotEvaluator_DBNO();
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnAllyPawnDBNOStateChanged(AFortPawn* InPlayer, bool bInIsDBNO);
+    
 };
 

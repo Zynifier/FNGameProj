@@ -4,13 +4,26 @@
 #include "FortPlayerController.h"
 #include "FortPlayerControllerFrontEnd.generated.h"
 
+class UAthenaMarkerComponent;
+class UFortControllerComponent_MapDiscoverability;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortPlayerControllerFrontEnd : public AFortPlayerController {
     GENERATED_BODY()
 public:
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortControllerComponent_MapDiscoverability* DiscoverabilityComponent;
+    
+public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bUnlockAllZones;
     
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UAthenaMarkerComponent* MarkerComponent;
+    
+public:
     AFortPlayerControllerFrontEnd();
     UFUNCTION(BlueprintCallable, Exec)
     void StopWriteToAudioFile();

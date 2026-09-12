@@ -31,5 +31,6 @@ UFortAthenaAIBotPerceptionDigestedSkillSet::UFortAthenaAIBotPerceptionDigestedSk
     StealthMeterThreshold = 1;
     StealthMeterDecreaseSpeed = 1;
     bStealthMeterAllowSharedTarget = false;
+    bStealthMeterForceLKPWhenDamagedAndThreatened = false;
 }
 

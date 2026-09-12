@@ -28,11 +28,16 @@ UFortControllerComponent_InventoryNetworkManagement* UInventoryManagementLibrary
     return NULL;
 }
 
-void UInventoryManagementLibrary::AddItems(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, TArray<FItemAndCount> Items) {
+TArray<UFortWorldItem*> UInventoryManagementLibrary::AddItems(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, TArray<FItemAndCount> Items) {
+    return TArray<UFortWorldItem*>();
 }
 
-bool UInventoryManagementLibrary::AddItem(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortItemDefinition* ItemDefinition, int32 Count) {
-    return false;
+UFortWorldItem* UInventoryManagementLibrary::AddItem(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortItemDefinition* ItemDefinition, int32 Count) {
+    return NULL;
+}
+
+UFortItem* UInventoryManagementLibrary::FindExistingItemForDefinition(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortItemDefinition* ItemDefinition, bool bInStorageVault) {
+    return NULL;
 }
 
 UInventoryManagementLibrary::UInventoryManagementLibrary() {

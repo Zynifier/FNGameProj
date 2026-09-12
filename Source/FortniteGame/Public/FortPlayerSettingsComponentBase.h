@@ -182,6 +182,9 @@ private:
     bool bAllowFriendlyFire;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    bool bVehiclesDamageObjects;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     int32 MaximumResources;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_NameplateDisplayMode, meta=(AllowPrivateAccess=true))

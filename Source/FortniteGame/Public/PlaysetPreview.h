@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "ObjectInteractionBehavior.h"
 #include "PlaysetInfo.h"
+#include "UObject/NoExportTypes.h"
 #include "PlaysetPreview.generated.h"
 
 class AStaticMeshActor;
@@ -32,6 +33,10 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void OnRep_PlaysetToPlace();
+    
+protected:
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerSetPreviewLocation(const FVector& NewPreviewLocation);
     
 };
 

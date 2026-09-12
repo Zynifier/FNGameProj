@@ -2,5 +2,6 @@
 
 FFortSourceWorldAndOverlayWorld::FFortSourceWorldAndOverlayWorld() {
     bServerOnly = false;
+    bSpecifySourceWorld = false;
 }
 

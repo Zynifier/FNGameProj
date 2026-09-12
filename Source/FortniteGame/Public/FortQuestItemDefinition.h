@@ -20,6 +20,9 @@ class UFortAbilitySet;
 class UFortConversation;
 class UFortQuestItemDefinition;
 
+class UFortTandemCharacterData;
+class USoundBase;
+
 UCLASS(Blueprintable, MinimalAPI)
 class UFortQuestItemDefinition : public UFortAccountItemDefinition {
     GENERATED_BODY()
@@ -42,6 +45,15 @@ protected:
     uint8 bAthenaUpdateObjectiveOncePerMatch: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bAthenaGrantRarityToken: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bShouldAutoClaim: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bShouldGetFullMatchProgress: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bAthenaMustCompleteInSingleMatch: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -55,6 +67,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bHidden: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortTandemCharacterData> TandemCharacterData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<USoundBase> CharacterCompletionAudio;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float CharacterCompletionAudioDelay;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString CompletionVideoUID;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bSuppressQuestGrantedEvent: 1;
@@ -93,10 +117,16 @@ protected:
     uint8 bHideIncompleteObjectiveLocations: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsShared: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 ExpirationDuration;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 ObjectiveCompletionCount;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 Threshold;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortItemQuantityPair> Rewards;
@@ -118,6 +148,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortMcpQuestObjectiveInfo> Objectives;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<TSoftObjectPtr<UFortQuestItemDefinition>> TransientPrerequisiteQuests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bGrantTransientQuestToSquad;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bTransientAutoComplete;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowMultipleCompletionsPerMatch;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer Prerequisites;
@@ -159,6 +201,9 @@ protected:
     FText CompletionText;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FText NPCInteractionText;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortQuestMissionCreationContext> MissionCreationContexts;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -171,7 +216,22 @@ protected:
     int32 SortPriority;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 TransientQuestStage;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 TransientQuestMaxStage;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortAbilitySet> QuestAbilitySet;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHideQuestProgressNotification;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHideQuestRewardNotification;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bForceExpiryExport;
     
 public:
     UFortQuestItemDefinition(const FObjectInitializer& ObjectInitializer);
@@ -285,6 +345,27 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool AllowsPlayNowNavigation() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool CanProgressInBRWarmup() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TSoftObjectPtr<USoundBase> GetCharacterCompletionAudio() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetCharacterCompletionAudioDelay() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FString GetCompletionVideoUID() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    EFortQuestSubtype GetQuestSubtype() const;
+    
+    UFUNCTION(BlueprintCallable)
+    TSoftObjectPtr<UFortTandemCharacterData> GetSoftTandemCharacterData() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortTandemCharacterData* GetTandemCharacterData() const;
     
 };
 

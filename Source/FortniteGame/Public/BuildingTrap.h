@@ -80,9 +80,6 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortAbilitySet* AbilitySet;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
-    UFortDamageSet* DamageAttributeSet;
-    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, ReplicatedUsing=OnRep_ReplicatedAppliedAlterations, meta=(AllowPrivateAccess=true))
     TArray<UFortAlterationItemDefinition*> AppliedAlterations;
@@ -138,6 +135,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, SaveGame, meta=(AllowPrivateAccess=true))
     int32 OriginalTrapLevel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_bTrapRecharging, meta=(AllowPrivateAccess=true))
+    bool bTrapRecharging;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -310,6 +310,14 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION(BlueprintCallable)
     FTransform GetTargetingTransform(EFortAbilityTargetingSource Source, UFortGameplayAbility* SourceAbility) const override PURE_VIRTUAL(GetTargetingTransform, return FTransform{};);
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_bTrapRecharging();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void TriggerOverlapEnd(AActor* OtherActor);
     
 };
 

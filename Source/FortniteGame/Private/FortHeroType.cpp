@@ -22,6 +22,9 @@ TSubclassOf<UFrontendAnimInstance> UFortHeroType::GetFrontendAnimClass() const {
     return NULL;
 }
 
+void UFortHeroType::GetSpecializations(TArray<UFortHeroSpecialization*>& OutSpecializations) const {
+}
+
 UFortHeroType::UFortHeroType(const FObjectInitializer& ObjectInitializer) 
     : Super(ObjectInitializer){
     bForceShowHeadAccessory = false;

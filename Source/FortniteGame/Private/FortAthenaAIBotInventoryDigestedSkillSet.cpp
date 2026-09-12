@@ -4,5 +4,8 @@ UFortAthenaAIBotInventoryDigestedSkillSet::UFortAthenaAIBotInventoryDigestedSkil
     DefaultWeaponSelectionDistance = 1;
     DefaultWeaponSelectionDistanceDeviation = 1;
     bHasInfiniteResources = false;
+    NoWeaponGiveWeaponAfterTime = 0.0f;
+    NoWeaponNoPlayerConeDistance = 0.0f;
+    NoWeaponNoPlayerConeFOV = 0.0f;
 }
 

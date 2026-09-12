@@ -12,5 +12,6 @@ UFortAthenaAIBotEvaluator_RangeAttack::UFortAthenaAIBotEvaluator_RangeAttack() {
     CachePerceptionDigestedSkillSet = NULL;
     CacheMovementDigestedSkillSet = NULL;
     BlacklistReachingTarget = NULL;
+    CacheAttackingDigestedSkillSet = NULL;
 }
 

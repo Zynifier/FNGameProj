@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "FortAthenaAIBotSkillSet.h"
+#include "PlaystyleSwitchToAggressiveData.h"
 #include "FortAthenaAIBotPlayStyleSkillSet.generated.h"
 
 UCLASS(Blueprintable, EditInlineNew)
@@ -29,6 +30,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat PassiveOnHumansDBNOPlayStyle;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FPlaystyleSwitchToAggressiveData> ChangeToAggressiveData;
     
 public:
     UFortAthenaAIBotPlayStyleSkillSet();

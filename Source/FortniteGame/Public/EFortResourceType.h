@@ -10,6 +10,7 @@ enum class EFortResourceType : uint8
         Metal,
         Permanite,
         GoldCurrency,
+        Ingredient,
         None,
     };
 

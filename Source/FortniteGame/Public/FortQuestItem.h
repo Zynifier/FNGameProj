@@ -11,6 +11,7 @@
 #include "FortMissionInstancedConfigData.h"
 #include "FortRewardInfo.h"
 #include "Templates/SubclassOf.h"
+#include "EFortRarity.h"
 #include "FortQuestItem.generated.h"
 
 class AFortClientAnnouncement_Conversation;
@@ -39,6 +40,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FDateTime last_state_change_time;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortRarity quest_rarity;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FCompletionCountEntry> CompletionCounts;
     
@@ -47,6 +51,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bAllObjectivesComplete;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIsManuallyGrantedQuest;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bIsTransientManuallyGrantedQuest;
@@ -83,6 +90,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     int32 PlayerLevel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FGuid> TrackedGuids;
     
 public:
     UFortQuestItem();
@@ -187,6 +197,12 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool CanPinQuest() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    int32 GetBarsRewardValue() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool HasCompletedAllObjectives(const bool bCheckForTurnInObjective) const;
     
 };
 

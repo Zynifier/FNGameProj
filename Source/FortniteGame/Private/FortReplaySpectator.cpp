@@ -17,9 +17,6 @@ bool AFortReplaySpectator::SetOverrideTimeOfDay(bool bOverride, float Time, bool
 void AFortReplaySpectator::SetCloudAltitudes(float NewCloudAltitude) {
 }
 
-void AFortReplaySpectator::SetCanStreamBuildingFoundationsIn(bool bCanStream) {
-}
-
 void AFortReplaySpectator::SetAllowTimeDilation(bool bAllow) {
 }
 

@@ -7,6 +7,8 @@
 #include "FortSubGameLoadingScreen.h"
 #include "FortLoadingConfig.generated.h"
 
+class USoundBase;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UFortLoadingConfig : public UDataAsset {
     GENERATED_BODY()
@@ -28,6 +30,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortPSALoadingScreen> PSALoadingScreens;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundBase* LoadingMusic;
     
     UFortLoadingConfig();
 };

@@ -41,5 +41,11 @@ public:
    // UFUNCTION(BlueprintCallable, Client, Reliable)
    // void ClientAbandonResponse(TEnumAsByte<ESpectatorReservationResult::Type> ReservationResponse);
     
+    UFUNCTION(Client, Reliable)
+    void ClientAbandonResponse(ESpectatorReservationResult::Type ReservationResponse);
+    
+    UFUNCTION(Client, Reliable)
+    void ClientReconnectResponse(ESpectatorReservationResult::Type ReservationResponse);
+    
 };
 

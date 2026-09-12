@@ -10,6 +10,8 @@
 class AController;
 class UGameplayEffect;
 
+class USynchronizedTeleportPlayerComponent;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortAthenaMutator_SynchronizedTeleport : public AFortAthenaMutator {
     GENERATED_BODY()
@@ -41,6 +43,16 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat bStillInvincibleAfterFailsafeTimer;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<USynchronizedTeleportPlayerComponent> CustomTeleportPlayerComponentClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAutoEquipPickAxe;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    TArray<int32> InProgressTeleportPlayerIDs;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_TeleportComplete, meta=(AllowPrivateAccess=true))

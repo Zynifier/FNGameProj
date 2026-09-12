@@ -115,6 +115,10 @@ void AFortAthenaDoghouseVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProp
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
     DOREPLIFETIME(AFortAthenaDoghouseVehicle, ControlState);
+    DOREPLIFETIME(AFortAthenaDoghouseVehicle, VehicleFuelSystemState);
+}
+
+void AFortAthenaDoghouseVehicle::OnRep_VehicleFuelSystemState() {
 }
 
 AFortAthenaDoghouseVehicle::AFortAthenaDoghouseVehicle() {
@@ -148,5 +152,12 @@ AFortAthenaDoghouseVehicle::AFortAthenaDoghouseVehicle() {
     FreelookReturnAcceleration = 1;
     FreelookReturnDecelleration = 1;
     ShootAimAheadDistance = 1;
+    FortAirVehicleConfigs = NULL;
+    bIsFlying = false;
+    bIsEngineOn = false;
+    bAutoStartEngineInAir = false;
+    bEngineStartIsBeingHeld = false;
+    FuelComponent = NULL;
+    VehicleFuelSystemState = EVehicleFuelState::Uninitialized;
 }
 

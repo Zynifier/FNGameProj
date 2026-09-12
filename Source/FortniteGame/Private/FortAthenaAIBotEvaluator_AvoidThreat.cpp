@@ -6,5 +6,6 @@ UFortAthenaAIBotEvaluator_AvoidThreat::UFortAthenaAIBotEvaluator_AvoidThreat() {
     AvoidThreatDestinationKeyName = TEXT("AIEvaluator_AvoidThreat_Destination");
     CurrentProjectileAvoiding = NULL;
     CacheEMDigestedSkillSet = NULL;
+    CurrentThreatActorAvoiding = NULL;
 }
 

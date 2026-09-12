@@ -3,6 +3,7 @@
 #include "GameplayTagContainer.h"
 #include "GameplayTagContainer.h"
 #include "EFortFactionAttitude.h"
+#include "AttributeSet.h"
 #include "FactionData.generated.h"
 
 USTRUCT(BlueprintType)
@@ -23,6 +24,21 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TEnumAsByte<EFortFactionAttitude::Type> DefaultAttitude;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAreFactionMemberAllies;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShouldSpecificRelationsApplyToEntireFaction;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bMembersCanResetSpecificRelation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat ResetSpecificRelationUnawareDelay;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat ResetSpecificRelationNoDamageDelay;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bPropagateHostilityToFaction;

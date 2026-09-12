@@ -8,5 +8,6 @@ AFortItemPreviewMultiAngleActor::AFortItemPreviewMultiAngleActor() {
     AngleTransitionDuration = 1;
     AngleTransitionCurve = NULL;
     ActiveCameraAngle = CreateDefaultSubobject<UCameraComponent>(TEXT("ActiveCameraAngle"));
+    AutotestFloorMaterial = NULL;
 }
 

@@ -9,6 +9,9 @@ class UFortAthenaAISpawnerDataComponent_AIBotAnalytic : public UFortAthenaAISpaw
 public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUseDescriptorTagSuffix: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString BotIDSuffix;
     
 public:

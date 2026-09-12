@@ -10,10 +10,6 @@ FText AFortPawn_InteractablePawn::BlueprintGetInteractionString_Implementation(c
     return FText::GetEmpty();
 }
 
-bool AFortPawn_InteractablePawn::BlueprintCanInteract_Implementation(const AFortPawn* InteractingPawn) const {
-    return false;
-}
-
 AFortPawn_InteractablePawn::AFortPawn_InteractablePawn() {
 }
 

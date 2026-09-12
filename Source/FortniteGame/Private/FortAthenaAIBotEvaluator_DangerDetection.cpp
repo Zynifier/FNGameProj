@@ -7,5 +7,6 @@ UFortAthenaAIBotEvaluator_DangerDetection::UFortAthenaAIBotEvaluator_DangerDetec
     DangerZoneDetectedExecutionStatusName = TEXT("AIEvaluator_DangerZoneDetected_ExecutionStatus");
     DangerZoneDetectedSafeLocationKeyName = TEXT("AIEvaluator_DangerZoneDetected_SafeLocation");
     CachedMovementSkillSet = NULL;
+    MaxRadiusToSearchForSafePlace = 0.0f;
 }
 

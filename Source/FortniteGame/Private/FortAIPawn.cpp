@@ -336,6 +336,29 @@ void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
     DOREPLIFETIME(AFortAIPawn, CurrentAimTarget);
     DOREPLIFETIME(AFortAIPawn, TetheredFollower);
     DOREPLIFETIME(AFortAIPawn, bIsTetheredBoosting);
+    DOREPLIFETIME(AFortAIPawn, bCanUnloadCustomization);
+}
+
+void AFortAIPawn::DespawnAI(bool bDueToInactivity) {
+}
+
+void AFortAIPawn::HideMapMarker() {
+}
+
+void AFortAIPawn::NetMulticast_OnTurn_Implementation(float TurnAngle, float TurnRate) {
+}
+
+void AFortAIPawn::OnRep_CustomizationsToLoad() {
+}
+
+void AFortAIPawn::ShowMapMarker() {
+}
+
+void AFortAIPawn::SpawnPickupInWorldWithLootTierAsync(FName LootTierName, FVector Position, int32 OverrideMaxStackCount, bool bToss, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source) {
+}
+
+bool AFortAIPawn::BlueprintCanInteract_Implementation(const AFortPawn* InteractingPawn, const EInteractionBeingAttempted InteractionBeingAttempted) const {
+    return false;
 }
 
 AFortAIPawn::AFortAIPawn() {
@@ -467,58 +490,6 @@ AFortAIPawn::AFortAIPawn() {
     AttributesSet = NULL;
     CharacterAttrSet = NULL;
     WeaponAttrSet = NULL;
-    ImpactPhysicalSurfaceSounds[0] = NULL;
-    ImpactPhysicalSurfaceSounds[1] = NULL;
-    ImpactPhysicalSurfaceSounds[2] = NULL;
-    ImpactPhysicalSurfaceSounds[3] = NULL;
-    ImpactPhysicalSurfaceSounds[4] = NULL;
-    ImpactPhysicalSurfaceSounds[5] = NULL;
-    ImpactPhysicalSurfaceSounds[6] = NULL;
-    ImpactPhysicalSurfaceSounds[7] = NULL;
-    ImpactPhysicalSurfaceSounds[8] = NULL;
-    ImpactPhysicalSurfaceSounds[9] = NULL;
-    ImpactPhysicalSurfaceSounds[10] = NULL;
-    ImpactPhysicalSurfaceSounds[11] = NULL;
-    ImpactPhysicalSurfaceSounds[12] = NULL;
-    ImpactPhysicalSurfaceSounds[13] = NULL;
-    ImpactPhysicalSurfaceSounds[14] = NULL;
-    ImpactPhysicalSurfaceSounds[15] = NULL;
-    ImpactPhysicalSurfaceSounds[16] = NULL;
-    ImpactPhysicalSurfaceSounds[17] = NULL;
-    ImpactPhysicalSurfaceSounds[18] = NULL;
-    ImpactPhysicalSurfaceSounds[19] = NULL;
-    ImpactPhysicalSurfaceSounds[20] = NULL;
-    ImpactPhysicalSurfaceSounds[21] = NULL;
-    ImpactPhysicalSurfaceSounds[22] = NULL;
-    ImpactPhysicalSurfaceSounds[23] = NULL;
-    ImpactPhysicalSurfaceSounds[24] = NULL;
-    ImpactPhysicalSurfaceSounds[25] = NULL;
-    ImpactPhysicalSurfaceEffects[0] = NULL;
-    ImpactPhysicalSurfaceEffects[1] = NULL;
-    ImpactPhysicalSurfaceEffects[2] = NULL;
-    ImpactPhysicalSurfaceEffects[3] = NULL;
-    ImpactPhysicalSurfaceEffects[4] = NULL;
-    ImpactPhysicalSurfaceEffects[5] = NULL;
-    ImpactPhysicalSurfaceEffects[6] = NULL;
-    ImpactPhysicalSurfaceEffects[7] = NULL;
-    ImpactPhysicalSurfaceEffects[8] = NULL;
-    ImpactPhysicalSurfaceEffects[9] = NULL;
-    ImpactPhysicalSurfaceEffects[10] = NULL;
-    ImpactPhysicalSurfaceEffects[11] = NULL;
-    ImpactPhysicalSurfaceEffects[12] = NULL;
-    ImpactPhysicalSurfaceEffects[13] = NULL;
-    ImpactPhysicalSurfaceEffects[14] = NULL;
-    ImpactPhysicalSurfaceEffects[15] = NULL;
-    ImpactPhysicalSurfaceEffects[16] = NULL;
-    ImpactPhysicalSurfaceEffects[17] = NULL;
-    ImpactPhysicalSurfaceEffects[18] = NULL;
-    ImpactPhysicalSurfaceEffects[19] = NULL;
-    ImpactPhysicalSurfaceEffects[20] = NULL;
-    ImpactPhysicalSurfaceEffects[21] = NULL;
-    ImpactPhysicalSurfaceEffects[22] = NULL;
-    ImpactPhysicalSurfaceEffects[23] = NULL;
-    ImpactPhysicalSurfaceEffects[24] = NULL;
-    ImpactPhysicalSurfaceEffects[25] = NULL;
     MinimapIndicator = NULL;
     AIPawnAbilitySystemComponent = CreateDefaultSubobject<UFortAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
     CurrentAimTarget = NULL;
@@ -540,5 +511,11 @@ AFortAIPawn::AFortAIPawn() {
     CustomizationsToLoad = NULL;
     UsedCustomization = NULL;
     AIAssetLoader = NULL;
+    SecondInteractionType = TInteractionType::IT_NoInteraction;
+    SecondInteractionDuration = 0.0f;
+    InteractionSound = NULL;
+    bCanUseOpenedDoors = false;
+    bCanUnloadCustomization = false;
+    UpdateMovementSoundIndicatorFrequency = 0.0f;
 }
 

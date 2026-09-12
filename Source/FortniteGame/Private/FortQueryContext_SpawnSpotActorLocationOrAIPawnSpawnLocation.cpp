@@ -1,0 +1,4 @@
+#include "FortQueryContext_SpawnSpotActorLocationOrAIPawnSpawnLocation.h"
+
+UFortQueryContext_SpawnSpotActorLocationOrAIPawnSpawnLocation::UFortQueryContext_SpawnSpotActorLocationOrAIPawnSpawnLocation() {
+}

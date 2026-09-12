@@ -4,6 +4,7 @@
 #include "Engine/DataTable.h"
 #include "GameplayTagContainer.h"
 #include "EFortQuestObjectiveStatEvent.h"
+#include "EFortXPPropagationRule.h"
 #include "FortQuestObjectiveStatXPTableRow.generated.h"
 
 USTRUCT(BlueprintType)
@@ -39,6 +40,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bOnceOnly;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortXPPropagationRule XPPropagationRule;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bIsCached;

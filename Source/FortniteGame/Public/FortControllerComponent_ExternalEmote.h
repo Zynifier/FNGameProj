@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "ExternalEmoteCategory.h"
 #include "FortControllerComponent.h"
+#include "EmoteActionBinding.h"
 #include "FortControllerComponent_ExternalEmote.generated.h"
 
 class UInputComponent;
@@ -13,6 +14,9 @@ public:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_ExternalEmotes, meta=(AllowPrivateAccess=true))
     TArray<FExternalEmoteCategory> ExternalEmotes;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_UncategorizedEmotes, meta=(AllowPrivateAccess=true))
+    TArray<FEmoteActionBinding> UncategorizedEmotes;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FName> PlayedActions;
@@ -34,6 +38,17 @@ protected:
 public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     TArray<FExternalEmoteCategory> GetExternalEmotes() const;
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_UncategorizedEmotes(TArray<FEmoteActionBinding>& PreviousUncategorizedEmotes);
+    
+    UFUNCTION(BlueprintCallable)
+    void PlayUncategorizedEmoteAtIndex(const int32 EmoteIndex);
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TArray<FEmoteActionBinding> GetUncategorizedEmotes() const;
     
 };
 

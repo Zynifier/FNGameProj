@@ -7,5 +7,6 @@ FCreativeActorMetaData::FCreativeActorMetaData() {
     DrawCall = 0;
     AudioCost = 0;
     NetworkCost = 0;
+    bCostOverridden = false;
 }
 

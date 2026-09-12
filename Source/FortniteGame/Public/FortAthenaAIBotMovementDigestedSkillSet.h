@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "FortAthenaAIBotDigestedSkillSet.h"
+#include "DigestedBotKnockbackSettings.h"
 #include "FortAthenaAIBotMovementDigestedSkillSet.generated.h"
 
 UCLASS(Blueprintable, NonTransient)
@@ -24,6 +25,9 @@ protected:
     float GliderDeployMaxAngle;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float GliderNoiseMinDistance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float GliderNoiseMaxDistance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -31,6 +35,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float GliderNoiseMaxDelay;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float GliderNoiseDistanceTreshold;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float GliderStopRotationDistance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float JumpOffMinAngle;
@@ -81,6 +91,9 @@ protected:
     float MaxAfterLaunchedPauseTime;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float MaxAfterLaunchedFromVortexPauseTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float AfterLaunchedPauseTimeDeviation;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -108,6 +121,9 @@ protected:
     float SwimUnblockJumpHeightThreshold;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bSwimSprintJumpNav2D;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float MoveToRangeAttackMinOffset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -118,6 +134,27 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float LKPMaxOffset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float SandTunnelJumpMinTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float SandTunnelJumpMaxTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float SandTunnelBurrowedAndHiddenChance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float SandTunnelBurrowedAndHiddenMinTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float SandTunnelBurrowedAndHiddenMaxTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FDigestedBotKnockbackSettings DefaultKnockbackSettings;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FDigestedBotKnockbackSettings> KnockbackSettingsSpecializations;
     
 public:
     UFortAthenaAIBotMovementDigestedSkillSet();

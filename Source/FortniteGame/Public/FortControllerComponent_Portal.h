@@ -35,5 +35,8 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool CanCancelPortalMatchmaking() const;
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool CanInitiatePrivateMatchmaking();
+    
 };
 

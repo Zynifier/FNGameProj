@@ -5,5 +5,6 @@ FFortChallengeBundleQuestEntry::FFortChallengeBundleQuestEntry() {
     bStartActive = false;
     bIsPrerequisite = false;
     UnlockValue = 0;
+    bShowQuestDetailsWhenLocked = false;
 }
 

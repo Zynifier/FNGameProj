@@ -32,6 +32,12 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCombinedFeatureProgressSummary ProgressSummary;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 BundlesToInstall;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnoughFreeSpace;
+    
     FORTNITEGAME_API FFortGameFeatureOptionalInstallStatus();
 };
 

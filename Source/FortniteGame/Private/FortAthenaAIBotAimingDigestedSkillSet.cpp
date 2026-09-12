@@ -20,5 +20,8 @@ UFortAthenaAIBotAimingDigestedSkillSet::UFortAthenaAIBotAimingDigestedSkillSet()
     TargetingUpdateIntervalMaxDeviation = 1;
     ReachLeashLimitToleranceDistance = 1;
     CachedWeaponUsedToCalculateAccuracy = NULL;
+    TrackingInterpTimeMultForGroundVehicles = 0.0f;
+    TrackingInterpTimeMultForFlyingVehicles = 0.0f;
+    bShootFloorTrapOnlyWhenHigherThanTrap = false;
 }
 

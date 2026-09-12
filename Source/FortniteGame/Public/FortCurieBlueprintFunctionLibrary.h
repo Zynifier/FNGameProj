@@ -99,5 +99,29 @@ public:
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, meta=(WorldContext="WorldContextObject"))
     static bool AddElectricLink(UObject* WorldContextObject, AActor* FirstLinkActor, AActor* SecondLinkActor);
     
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    static void DisableElementInteractionOnActor(AActor* TargetActor, FGameplayTag ElementTag);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    static void DisableStateAttachmentOnActor(AActor* TargetActor, FGameplayTag StateTag);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    static void EnableElementInteractionOnActor(AActor* TargetActor, FGameplayTag ElementTag);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    static void EnableStateAttachmentOnActor(AActor* TargetActor, FGameplayTag StateTag);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
+    static FGameplayTagContainer GetAttachedCurieElements(AActor* Actor);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
+    static FGameplayTagContainer GetAttachedCurieStates(AActor* Actor);
+    
+    UFUNCTION(BlueprintCallable)
+    static AActor* GetLastElectricityPropagationParent(AActor* TargetActor);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
+    static bool HasCurieElementAttached(AActor* Actor, FGameplayTag ElementIdentifier);
+    
 };
 

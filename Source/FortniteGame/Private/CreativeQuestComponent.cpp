@@ -13,7 +13,7 @@ void UCreativeQuestComponent::SetActiveFor(AController* Player, bool bNewActive)
 void UCreativeQuestComponent::ResetQuestProgress() {
 }
 
-void UCreativeQuestComponent::RegisterQuest() {
+void UCreativeQuestComponent::RegisterQuest(AFortMinigame* Minigame) {
 }
 
 void UCreativeQuestComponent::OnRep_QuestUpdate() {
@@ -67,5 +67,6 @@ UCreativeQuestComponent::UCreativeQuestComponent() {
     ShowProgressMode = EShowProgressMode::Total;
     bShowCompleteEffects = true;
     QuestAllProgress = 0;
+    MyMinigame = NULL;
 }
 

@@ -42,5 +42,7 @@ AFortGameModePvE::AFortGameModePvE() {
     bSpawnWeaponsWithMaxPerks = true;
     bSpawnTrapsWithMaxPerks = false;
     bUseHighPerkSlotValues = false;
+    bEnableBigBenPvE = false;
+    BigBenPvEAdjust = 0.0f;
 }
 

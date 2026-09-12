@@ -98,6 +98,14 @@ void UFortPlayerAttrSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
     DOREPLIFETIME(UFortPlayerAttrSet, Resistance_Team);
     DOREPLIFETIME(UFortPlayerAttrSet, TurboBuildFirstInterval);
     DOREPLIFETIME(UFortPlayerAttrSet, TurboBuildInterval);
+    DOREPLIFETIME(UFortPlayerAttrSet, BuildSpeedModifier);
+    DOREPLIFETIME(UFortPlayerAttrSet, BuildCostModifier);
+}
+
+void UFortPlayerAttrSet::OnRep_BuildCostModifier(const FFortGameplayAttributeData& OldValue) {
+}
+
+void UFortPlayerAttrSet::OnRep_BuildSpeedModifier(const FFortGameplayAttributeData& OldValue) {
 }
 
 UFortPlayerAttrSet::UFortPlayerAttrSet() {

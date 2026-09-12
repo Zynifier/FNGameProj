@@ -353,5 +353,20 @@ UFortPlayerAnimInstance::UFortPlayerAnimInstance() {
     bEnableEmptyHands = false;
     bHideWeaponForEmptyHands = false;
     bSupressJogStartAdditiveForLiveEvent = false;
+    SnapWeapon_LHandAlphaSwitch = 0.0f;
+    FreeFall_AimPitch = 0.0f;
+    FreeFall_DiveAngleInterpSpeed = 0.0f;
+    bFreeFall_UseDiveAngleMod = false;
+    bIsTargetingConsumableThrow = false;
+    bIsFreeFloating = false;
+    bIsGoopSwimming = false;
+    bGoopExitJetPack = false;
+    bGoopJumpExecuted = false;
+    bIsValetDriver = false;
+    bIsValetPassenger = false;
+    WeaponAdditiveAnimSet = NULL;
+    DefaultSkydiveAnimSet = NULL;
+    bUsingDoubleJumpAbility = false;
+    VehicleSlotEnvironmentExposure = ESlotEnvironmentExposure::Unknown;
 }
 

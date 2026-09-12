@@ -8,7 +8,7 @@ bool UFortMovementComp_Character::IsPassivelyParachuting() const {
     return false;
 }
 
-bool UFortMovementComp_Character::IsActivelyStrafingInAir() const {
+bool UFortMovementComp_Character::IsActivelyStrafingInAir(const bool bCheckMovementMode) const {
     return false;
 }
 
@@ -16,7 +16,7 @@ bool UFortMovementComp_Character::IsActivelySkydivingUpInVortex() const {
     return false;
 }
 
-bool UFortMovementComp_Character::IsActivelySkydiving() const {
+bool UFortMovementComp_Character::IsActivelySkydiving(const bool bCheckMovementMode) const {
     return false;
 }
 
@@ -77,5 +77,9 @@ UFortMovementComp_Character::UFortMovementComp_Character() {
     bTriggeredFallingFeedbackSinceLanded = false;
     bUpdatesFloorWhenNotInFullSimulation = false;
     bUpdatesFloorWhenNotInFullSimulationOnlyOnNetUpdate = false;
+    CustomMeshHeightAdjust = 0.0f;
+    CustomMeshHeightAdjustLerpTarget = 0.0f;
+    CustomMeshHeightAdjustLerpSpeed = 0.0f;
+    CustomMeshHeightAdjustTotalApplied = 0.0f;
 }
 

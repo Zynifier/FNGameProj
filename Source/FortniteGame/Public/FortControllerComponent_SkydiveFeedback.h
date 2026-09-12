@@ -5,7 +5,7 @@
 #include "Templates/SubclassOf.h"
 #include "FortControllerComponent_SkydiveFeedback.generated.h"
 
-class UCameraShake;
+class UMatineeCameraShake;
 
 UCLASS(Blueprintable, MinimalAPI, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UFortControllerComponent_SkydiveFeedback : public UFortControllerComponent_HasCoupledWidgets {
@@ -13,10 +13,10 @@ class UFortControllerComponent_SkydiveFeedback : public UFortControllerComponent
 public:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* SkydiveCamShake;
+    UMatineeCameraShake* SkydiveCamShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> SkydiveCamShakeClass;
+    TSubclassOf<UMatineeCameraShake> SkydiveCamShakeClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float DropSpeedForMinShakeMultiplier;

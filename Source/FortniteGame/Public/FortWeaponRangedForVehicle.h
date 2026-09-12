@@ -11,6 +11,8 @@
 class AActor;
 class UFortVehicleSeatWeaponComponent;
 
+class USkeletalMeshComponent;
+
 UCLASS(Blueprintable)
 class AFortWeaponRangedForVehicle : public AFortWeaponRanged, public IFortMountedWeaponInterface {
     GENERATED_BODY()
@@ -20,6 +22,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_MountedWeaponInfoRepped, meta=(AllowPrivateAccess=true))
     FMountedWeaponInfoRepped MountedWeaponInfoRepped;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    USkeletalMeshComponent* CachedWeaponMeshCompOnVehicle;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

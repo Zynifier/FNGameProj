@@ -6,6 +6,7 @@
 #include "FortAthenaAIBotDigestedSkillSet.h"
 #include "SoundPerceptionDigestedSetting.h"
 #include "TrapPerceptionSettings.h"
+#include "DigestedSightReactionSpecialization.h"
 #include "FortAthenaAIBotPerceptionDigestedSkillSet.generated.h"
 
 UCLASS(Blueprintable, NonTransient)
@@ -18,6 +19,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float SightRandomDeviation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FDigestedSightReactionSpecialization> SightReactionSpecializations;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float LoseSightTime;
@@ -117,6 +121,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bStealthMeterAllowSharedTarget;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bStealthMeterForceLKPWhenDamagedAndThreatened;
     
 public:
     UFortAthenaAIBotPerceptionDigestedSkillSet();

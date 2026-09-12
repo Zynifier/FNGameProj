@@ -49,5 +49,11 @@ public:
  //   UFUNCTION(BlueprintCallable, Client, Reliable)
 //    void ClientAbandonResponse(TEnumAsByte<EPartyReservationResult::Type> ReservationResponse);
     
+    UFUNCTION(Client, Reliable)
+    void ClientAbandonResponse(EPartyReservationResult::Type ReservationResponse);
+    
+    UFUNCTION(Client, Reliable)
+    void ClientReconnectResponse(EPartyReservationResult::Type ReservationResponse);
+    
 };
 

@@ -16,5 +16,8 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
     void BindTo(UObject* AssociatedObject);
     
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    void UnbindFrom(UObject* AssociatedObject);
+    
 };
 

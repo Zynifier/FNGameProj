@@ -5,6 +5,7 @@
 #include "GameplayTagContainer.h"
 #include "GameplayTagContainer.h"
 #include "Styling/SlateBrush.h"
+#include "AttributeSet.h"
 #include "AthenaSpecialActorComponent.generated.h"
 
 UCLASS(Blueprintable, MinimalAPI, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
@@ -31,7 +32,7 @@ protected:
     bool bUseCompassIcon;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    float RenderDistance;
+    FScalableFloat RenderDistance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer RenderTags;

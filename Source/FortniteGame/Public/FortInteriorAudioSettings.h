@@ -6,6 +6,7 @@
 #include "GameplayTagContainer.h"
 #include "EInteriorAudioBuildingType.h"
 #include "InteriorAudioDictionary.h"
+#include "InteriorAudioRoomSizeInfo.h"
 #include "FortInteriorAudioSettings.generated.h"
 
 class UAmbientAudioDataAsset;
@@ -32,6 +33,18 @@ public:
     int32 TotalBuildingCountRequiredForInterior;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 TotalBuildingCountRequiredForPartialExterior;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 TotalCeilingCountRequiredAlongHorizontalScan;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 HorizontalLineTraceDistance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 VerticalLineTraceDistance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 TotalNonPartialBuildingCountRequiredForInterior;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -41,10 +54,25 @@ public:
     USoundMix* PartialInteriorSoundMix;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundMix* PartialExteriorSoundMix;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 AmbientEntryPriority;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UAmbientAudioDataAsset* AmbientBanks[5];
+    UAmbientAudioDataAsset* AmbientBanks[6];
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag AmbientTagOutdoors;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag AmbientTagIndoors;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag AmbientTagIndoorPlayerBuilt;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FInteriorAudioRoomSizeInfo> RoomSizeInfo;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<FVector2D, FGameplayTag> AmbientTags;

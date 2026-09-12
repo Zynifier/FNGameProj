@@ -1,9 +1,9 @@
 #include "FortCheatManagerCurie.h"
 
-void UFortCheatManagerCurie::VislogElementSubgridCollision() {
+void UFortCheatManagerCurie::VislogElementSubgridCollision(const FString& ElementTag) {
 }
 
-void UFortCheatManagerCurie::VisLogAllElementSubGridNodes() {
+void UFortCheatManagerCurie::VisLogAllElementSubGridNodes(const FString& ElementTag) {
 }
 
 void UFortCheatManagerCurie::VisLogAllElectricGrids() {

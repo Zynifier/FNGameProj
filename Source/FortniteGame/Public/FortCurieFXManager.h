@@ -14,6 +14,7 @@
 #include "FortCuriePendingElectricityArcRequest.h"
 #include "FortCurieSpatialCellIndex.h"
 #include "FortCurieWorldFirePlayerSystem.h"
+#include "FortSpatialCellIndex.h"
 #include "FortCurieFXManager.generated.h"
 
 class AFortCurieGrassFireReplicator;
@@ -91,6 +92,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FFortCurieFireParticleGrassData> CachedFireParticleGrassData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TSet<FFortSpatialCellIndex> CachedBurningGrassGridCells;
     
     //UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
    // TSet<FFortCurieSpatialCellIndex> CachedBurningGrassGridCells;

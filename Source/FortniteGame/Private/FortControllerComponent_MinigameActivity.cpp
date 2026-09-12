@@ -19,6 +19,18 @@ void UFortControllerComponent_MinigameActivity::ForwardMinigameActivityRankChang
 void UFortControllerComponent_MinigameActivity::ForwardMinigameActivityEnded(const FMinigameActivityEndedData& EndData) {
 }
 
+void UFortControllerComponent_MinigameActivity::SetUIBestLapTimeEnabled(const bool bEnabled) {
+}
+
+void UFortControllerComponent_MinigameActivity::SetUIEnabled(const bool bEnabled) {
+}
+
+void UFortControllerComponent_MinigameActivity::SetUIProgressEnabled(const bool bEnabled) {
+}
+
+void UFortControllerComponent_MinigameActivity::SetUITimeEnabled(const bool bEnabled) {
+}
+
 UFortControllerComponent_MinigameActivity::UFortControllerComponent_MinigameActivity() {
 }
 

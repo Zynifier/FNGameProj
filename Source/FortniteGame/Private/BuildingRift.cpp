@@ -74,5 +74,8 @@ ABuildingRift::ABuildingRift() {
     LootDropSpeed = 1;
     CosmeticState = ERiftCosmeticState::None;
     SpectatorMapIcon = CreateDefaultSubobject<UFortSpectateClickableMapIcon>(TEXT("FortSpectateClickableMapIcon"));
+    SpawnPointRadius = 0.0f;
+    bCanBeMarked = false;
+    bBlockMarking = false;
 }
 

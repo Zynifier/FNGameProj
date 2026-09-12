@@ -21,6 +21,9 @@ public:
     FVector PetAttachOffset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName PetAttachSocket;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<UFortPetStimuliBank*> StimuliBanks;
     
 private:

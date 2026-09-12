@@ -1,0 +1,7 @@
+#pragma once
+#include "CoreMinimal.h"
+#include "ControllerComponentMiniMapDiscoverableVisibilitiesMapUpdatedDelegate.generated.h"
+
+class UFortControllerComponent_MiniMapDiscoverable;
+
+UDELEGATE(BlueprintCallable) DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FControllerComponentMiniMapDiscoverableVisibilitiesMapUpdated, const UFortControllerComponent_MiniMapDiscoverable*, ControllerComponentMiniMapDiscoverable);

@@ -6,6 +6,8 @@
 class ABuildingGameplayActorSpawnChip;
 class AFortPlayerStateAthena;
 
+class ABuildingContainer;
+
 UCLASS(Blueprintable, NonTransient)
 class UFortReplicationGraphNode_AlwaysRelevantForSquad : public UReplicationGraphNode {
     GENERATED_BODY()
@@ -15,6 +17,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<ABuildingGameplayActorSpawnChip*> RebootCards;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<ABuildingContainer*> Containers;
     
     UFortReplicationGraphNode_AlwaysRelevantForSquad();
 };

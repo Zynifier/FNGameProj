@@ -208,7 +208,7 @@ void AFortPawn::OnRep_MovingEmoteFollowingOnly() {
 void AFortPawn::OnRep_MovingEmote() {
 }
 
-void AFortPawn::OnRep_LastReplicatedEmoteExecuted() {
+void AFortPawn::OnRep_LastReplicatedEmoteExecuted(const UFortItemDefinition* PreviousValue) {
 }
 
 void AFortPawn::OnRep_LandingFlashCount() {
@@ -368,7 +368,7 @@ bool AFortPawn::IsActionInputIgnored() const {
 void AFortPawn::InitializeDeathHitSocket(FVector WorldLocation, FVector WorldNormal) {
 }
 
-void AFortPawn::HideBodyOnDeath() {
+void AFortPawn::HideBodyOnDeath(bool bDeathAnimationPlayed) {
 }
 
 bool AFortPawn::HasCurrentMontage() const {
@@ -540,7 +540,7 @@ void AFortPawn::GameplayCue(TEnumAsByte<EGameplayCueEvent::Type> EventType, FGam
 void AFortPawn::ForceKill(FGameplayTag DeathReason, AController* KillerController, AActor* KillerActor) {
 }
 
-AFortWeapon* AFortPawn::EquipWeaponDefinition(const UFortWeaponItemDefinition* WeaponData, FGuid ItemEntryGuid) {
+AFortWeapon* AFortPawn::EquipWeaponDefinition(const UFortWeaponItemDefinition* WeaponData, FGuid ItemEntryGuid, FGuid TrackerGuid, bool bDisableEquipAnimation) {
     return NULL;
 }
 
@@ -638,6 +638,43 @@ void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
     DOREPLIFETIME(AFortPawn, CurrentCalloutTag);
     DOREPLIFETIME(AFortPawn, CurrentSentence);
     DOREPLIFETIME(AFortPawn, ClientAILODSettings);
+    DOREPLIFETIME(AFortPawn, bReplicatedIsInGoop);
+    DOREPLIFETIME(AFortPawn, bShouldUseCharacterMovementIdleFastPath);
+    DOREPLIFETIME(AFortPawn, FallbackTag);
+    DOREPLIFETIME(AFortPawn, DebugType);
+}
+
+void AFortPawn::OnRep_bIsInvulnerable() {
+}
+
+void AFortPawn::OnRep_ClientAILODSettings() {
+}
+
+void AFortPawn::OnRep_ReplicatedIsInGoop() {
+}
+
+void AFortPawn::PooledCascadeCameraLensEffectCompleted(UParticleSystemComponent* FinishedComponent) {
+}
+
+void AFortPawn::PooledNiagaraCameraLensEffectCompleted(UNiagaraComponent* FinishedComponent) {
+}
+
+void AFortPawn::SetIsInGoop(const bool bNewValue) {
+}
+
+void AFortPawn::TriggerAnimInputEvent(const UFortAnimInputEvent* AnimInputEvent) {
+}
+
+EFortSoundIndicatorTypes AFortPawn::GetPreferredSoundIndicatorType_Implementation() const {
+    return EFortSoundIndicatorTypes::Generic;
+}
+
+bool AFortPawn::IsInGoop() const {
+    return false;
+}
+
+bool AFortPawn::IsLocallyViewed() const {
+    return false;
 }
 
 AFortPawn::AFortPawn() {
@@ -763,5 +800,13 @@ AFortPawn::AFortPawn() {
     AnimUpdateRateVisibleMaxDistanceFactor.AddDefaulted(2);
     PegasusTimelineCollector = NULL;
     AILODComponent = NULL;
+    bIsInGoop = false;
+    bReplicatedIsInGoop = false;
+    DefaultSoundIndicatorType = EFortSoundIndicatorTypes::Generic;
+    SoundIndicatorMaxDistance = 0.0f;
+    bShouldUseCharacterMovementIdleFastPath = false;
+    bIsLocalViewTarget = false;
+    LastSurfaceTraceTime = 0.0f;
+    DefaultLifespanAfterDeath = 0.0f;
 }
 

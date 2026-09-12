@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "FortGameplayAbility_Action.h"
 #include "Templates/SubclassOf.h"
+#include "PossessPropClasses.h"
 #include "FortGameplayAbility_PossessProp.generated.h"
 
 class ABuildingActor;
@@ -29,6 +30,12 @@ protected:
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
     TSubclassOf<ABuildingActor> GetAllowedPropClassByIndex(int32 AllowedPropIndex) const;
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
+    FPossessPropClasses GetAllowedPropDataByIndex(int32 AllowedPropIndex) const;
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
+    float GetPreviewScaleByIndex(int32 AllowedPropIndex) const;
     
 };
 

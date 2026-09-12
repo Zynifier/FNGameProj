@@ -24,12 +24,19 @@
 #include "OnTeamPlacementChangedDelegate.h"
 #include "OnTeamScoreChangedDelegate.h"
 #include "SimpleMetricInformation.h"
+#include "DynamicBoolStateChangeDelegate.h"
+#include "OnSquadIdChangedDelegateDelegate.h"
+#include "EKeepPlayingTogetherVotingStatus.h"
+#include "FortTournamentStatInfo.h"
 #include "FortPlayerStateAthena.generated.h"
 
 class AFortPlayerStateAthena;
 class APlayerState;
 class UAthenaGadgetItemDefinition;
 class UTexture2D;
+
+class ABuildingContainer;
+class UFortControllerComponent_TransientQuests;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortPlayerStateAthena : public AFortPlayerStateZone, public IFortMutatorContext {
@@ -60,6 +67,9 @@ protected:
 public:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnTeamIndexChangedDelegate OnTeamIndexChangedDelegate;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnSquadIdChangedDelegate OnSquadIdChangedDelegate;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bHasWonAGame;
@@ -184,6 +194,9 @@ private:
     uint8 bUsingAnonymousCharacterMode: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bShowingSeasonLevel: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     FText PlayerNameCustomOverride;
     
 public:
@@ -192,6 +205,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIsMuted;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FDynamicBoolStateChange OnInventoriesInNonPersistenceModeChanged;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_MetricInformation, meta=(AllowPrivateAccess=true))
@@ -241,11 +257,29 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsAnAthenaGameParticipant: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_IsContributingToOverbudgetHeatmap, meta=(AllowPrivateAccess=true))
+    uint8 bIsContributingToOverbudgetHeatmap: 1;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     FUniqueNetIdRepl BotUniqueId;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_PreserveSquad, meta=(AllowPrivateAccess=true))
     bool bPreserveSquad;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_KeepPlayingTogetherVotingStatus, meta=(AllowPrivateAccess=true))
+    EKeepPlayingTogetherVotingStatus KeepPlayingTogetherVotingStatus;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    uint8 InitialSquadSize;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    uint8 SquadSizeIncrements;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    uint8 SquadSizeDecrements;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_InventoriesInNonPersistenceMode, meta=(AllowPrivateAccess=true))
+    bool bInventoriesInNonPersistenceMode;
     
 public:
     AFortPlayerStateAthena();
@@ -423,6 +457,54 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION()
     void GetMutatorContext(FMutatorContext& MutatorContext) const override PURE_VIRTUAL(GetMutatorContext,);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static FLinearColor GetPinColorBySquadMemberIndex(int32 SquadIndex);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnInteractionEventOccurred(UPARAM(Ref) FGameplayTagContainer& InteractionTargetTags);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_InventoriesInNonPersistenceMode();
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_IsContributingToOverbudgetHeatmap();
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_KeepPlayingTogetherVotingStatus();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void OnSquadSpecificContainerDestroyed(ABuildingContainer* DestroyedContainer);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void OnSquadSpecificContainerSpawned(ABuildingContainer* SpawnedContainer);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetIsContributingToOverbudgetHeatmap(bool bContributingToOverbudget);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool GetInventoriesInNonPersistenceMode() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TSoftObjectPtr<UTexture2D> GetSocialAvatarBrush(const bool bSmallImage) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    uint8 GetSquadID() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    int32 GetSquadMemberIndex() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    uint8 GetTeam() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortControllerComponent_TransientQuests* GetTransientQuestsComponent() const;
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void Server_SetKeepPlayingTogetherVotingStatus(EKeepPlayingTogetherVotingStatus NewStatus);
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable)
+    void ClientReportTournamentStatUpdate(const FFortTournamentStatInfo& TournamentStatInfo) const;
     
 };
 

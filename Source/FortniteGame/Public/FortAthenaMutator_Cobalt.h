@@ -138,6 +138,9 @@ protected:
     FScalableFloat ResetPlayerInventoryBetweenRounds;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat bKeepWarmupLoadoutsInFirstRound;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<EFortItemType> ItemTypesToRemove;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

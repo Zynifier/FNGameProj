@@ -91,5 +91,6 @@ AFortAthenaMutator_Mash::AFortAthenaMutator_Mash() {
     CurrentPhase = EMashPhase::NotStarted;
     RespawnLocationActor = NULL;
     FinalBoss = NULL;
+    bCheatMakeFirstPhaseTheFinalPhase = false;
 }
 

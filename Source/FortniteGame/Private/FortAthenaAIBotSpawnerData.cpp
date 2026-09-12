@@ -12,19 +12,19 @@ UFortAthenaAISpawnerDataComponent_GameplayAbilityBase* UFortAthenaAIBotSpawnerDa
     return NULL;
 }
 
-UFortAthenaAISpawnerDataComponent_CosmeticBase* UFortAthenaAIBotSpawnerData::GetCosmeticComponent() const {
-    return NULL;
-}
-
 UFortAthenaAISpawnerDataComponent_ConstructionBase* UFortAthenaAIBotSpawnerData::GetConstructionComponent() const {
     return NULL;
 }
 
+UFortAthenaAISpawnerDataComponent_VehicleBase* UFortAthenaAIBotSpawnerData::GetVehicleComponent() const {
+    return NULL;
+}
+
 UFortAthenaAIBotSpawnerData::UFortAthenaAIBotSpawnerData() {
-    CosmeticComponent = NULL;
     GameplayAbilityComponent = NULL;
     SkillSetComponent = NULL;
     InventoryComponent = NULL;
     ConstructionComponent = NULL;
+    VehicleComponent = NULL;
 }
 

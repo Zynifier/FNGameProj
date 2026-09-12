@@ -8,5 +8,7 @@ FFortGameFeatureStatus::FFortGameFeatureStatus() {
     bIsProgressPaused = false;
     IsActive = false;
     IsPendingActive = false;
+    BundlesToInstall = 0;
+    bEnoughFreeSpace = false;
 }
 

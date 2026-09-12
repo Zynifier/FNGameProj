@@ -12,5 +12,6 @@ FMinigamePlayer::FMinigamePlayer() {
     bIsLocalPlayer = false;
     bPreparingForRespawn = false;
     ClaimedPlayerStart = NULL;
+    bIsWaitingForPersistence = false;
 }
 

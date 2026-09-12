@@ -209,5 +209,14 @@ UFortPhysicsVehicleConfigs::UFortPhysicsVehicleConfigs() {
     ImminentCollisUpNormalMinProtected = 1;
     bOverrideErrorCorrection = true;
     BoundsXYSplineClass = NULL;
+    InvertSteeringMinSpeedKmh = 0.0f;
+    PawnLaunchMinVerticalVelocity = 0.0f;
+    PawnLaunchMinForwardVelocity = 0.0f;
+    bUseRechargeableFuel = false;
+    bUseBoxBasedWaterOverlapChecks = false;
+    MaxWaterDepth = 0.0f;
+    DebasePlayerLaunchSpeed = 0.0f;
+    bApplyPawnSpeedOnEntry = false;
+    MaxAppliedPawnSpeedOnEntry = 0.0f;
 }
 

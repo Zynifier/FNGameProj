@@ -126,8 +126,20 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UTexture2D* FogMask;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseExplorationBasedFogOfWar;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShareMapWithTeam;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bResetMapDataOnTeamSwitch;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UTexture2D* HeatmapMask;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bCanUpdateHeatmapMask;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MapWorldScale;
@@ -218,6 +230,12 @@ public:
     
     UFUNCTION()
     void MatchStarted() override PURE_VIRTUAL(MatchStarted,);
+    
+    UFUNCTION(BlueprintCallable)
+    UMaterialInstanceDynamic* GetMapMaterialMID();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetMapMaterial(UMaterialInterface* InMapMaterial);
     
 };
 

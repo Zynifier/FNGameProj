@@ -8,7 +8,13 @@
 #include "FortAthenaSKVehicle.h"
 #include "FortRechargingActionTimer.h"
 #include "ReplicatedControlState.h"
+#include "ActiveVehicleUI.h"
+#include "VehicleSpecificUIDetails.h"
+#include "EVehicleFuelState.h"
 #include "FortAthenaDoghouseVehicle.generated.h"
+
+class UFortAthenaVehicleFuelComponent;
+class UFortDoghouseVehicleConfigs;
 
 UCLASS(Blueprintable)
 class AFortAthenaDoghouseVehicle : public AFortAthenaSKVehicle {
@@ -116,6 +122,37 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ShootAimAheadDistance;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortDoghouseVehicleConfigs* FortAirVehicleConfigs;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bIsFlying;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bIsEngineOn;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAutoStartEngineInAir;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEngineStartIsBeingHeld;
+    
+    UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortAthenaVehicleFuelComponent* FuelComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_VehicleFuelSystemState, meta=(AllowPrivateAccess=true))
+    EVehicleFuelState VehicleFuelSystemState;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FActiveVehicleUI> ActiveUI;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FVehicleSpecificUIDetails> CustomUI;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FVehicleSpecificUIDetails> CustomFuelUI;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_ControlState, meta=(AllowPrivateAccess=true))
     FReplicatedControlState ControlState;
@@ -220,6 +257,10 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool GasPedalIsDown() const;
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_VehicleFuelSystemState();
     
 };
 

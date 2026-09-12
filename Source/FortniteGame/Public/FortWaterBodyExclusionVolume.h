@@ -7,6 +7,6 @@ UCLASS(Blueprintable)
 class AFortWaterBodyExclusionVolume : public AWaterBodyExclusionVolume {
     GENERATED_BODY()
 public:
-    AFortWaterBodyExclusionVolume();
+    AFortWaterBodyExclusionVolume(const FObjectInitializer& ObjectInitializer);
 };
 

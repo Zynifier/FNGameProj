@@ -10,5 +10,6 @@ UFortAthenaBTService_ManageWeapon::UFortAthenaBTService_ManageWeapon() {
     WeaponName = TEXT("AIEvaluator_Global_DesiredWeapon");
     WeaponTargetingName = TEXT("AIEvaluator_WeaponTargeting_ExecutionStatus");
     SprintExecutionStatusName = TEXT("AIEvaluator_Sprinting_ExecutionStatus");
+    bEndChargeOnFireStop = false;
 }
 

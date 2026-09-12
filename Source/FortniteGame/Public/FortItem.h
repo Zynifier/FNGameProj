@@ -265,5 +265,14 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable, BlueprintPure=false)
+    void BroadcastOnItemChanged(bool bItemChanged, bool bAmmoChanged, bool bIngredientsChanged, bool bLogBroadcasts) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FGuid GetTrackerGuid() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool UsesPhantomReserveAmmo() const;
+    
 };
 

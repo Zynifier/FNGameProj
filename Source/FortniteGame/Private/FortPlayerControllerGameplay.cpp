@@ -95,9 +95,6 @@ void AFortPlayerControllerGameplay::ResetTrick(AActor* VehicleActor) {
 void AFortPlayerControllerGameplay::ResetHUDElementVisibilityToSettings(const FGameplayTagContainer& HUDElementTags) {
 }
 
-void AFortPlayerControllerGameplay::RefreshHUDElementVisibilitiesToSettings() {
-}
-
 void AFortPlayerControllerGameplay::QuickTimeEventFeedbackWidget(EFortQuickTimeEventResult Result) {
 }
 
@@ -292,6 +289,67 @@ void AFortPlayerControllerGameplay::GetLifetimeReplicatedProps(TArray<FLifetimeP
     DOREPLIFETIME(AFortPlayerControllerGameplay, bCreativeMCPProfileIsMatchamkingEnabled);
     DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeThermometerNewUIEnabled);
     DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeIslandExporterEnabled);
+    DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeModeratorModeEnabled);
+    DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeModeratorModeActive);
+}
+
+void AFortPlayerControllerGameplay::ExitSpawnedVehicle() {
+}
+
+void AFortPlayerControllerGameplay::OnRep_IsCreativeModeratorModeActive() {
+}
+
+void AFortPlayerControllerGameplay::OnVerifyAllowedToBeInvulnerable() {
+}
+
+void AFortPlayerControllerGameplay::OnVerifyAllowModeratorMode() {
+}
+
+void AFortPlayerControllerGameplay::OnWantsToBeInvulnerableChanged(UFortCreativeOption* CreativeOption, uint8 IndexValue) {
+}
+
+void AFortPlayerControllerGameplay::ServerCreativeStartInvulnerable_Implementation() {
+}
+bool AFortPlayerControllerGameplay::ServerCreativeStartInvulnerable_Validate() {
+    return true;
+}
+
+void AFortPlayerControllerGameplay::ServerCreativeStopInvulnerable_Implementation() {
+}
+bool AFortPlayerControllerGameplay::ServerCreativeStopInvulnerable_Validate() {
+    return true;
+}
+
+void AFortPlayerControllerGameplay::ServerSetCreativeModeratorModeActive_Implementation(bool bActive) {
+}
+bool AFortPlayerControllerGameplay::ServerSetCreativeModeratorModeActive_Validate(bool bActive) {
+    return true;
+}
+
+void AFortPlayerControllerGameplay::SetCanStreamBuildingFoundationsIn(bool bCanStream) {
+}
+
+void AFortPlayerControllerGameplay::SimulatedSetCreativeModeratorModeActive(bool bActive) {
+}
+
+AFortAthenaVehicle* AFortPlayerControllerGameplay::SpawnVehicleAndEnter(TSubclassOf<AFortAthenaVehicle> VehicleClass, const bool bHidePawn, const bool bSetPawnAsVehicleOwner, const EVehicleSeats SeatToEnter, const bool bIgnoreDBNOCheck, const bool bCheckForNonBlockingSpawnPosition, const bool bForceToWaterSurfaceOnSpawn) {
+    return NULL;
+}
+
+bool AFortPlayerControllerGameplay::CanFollowAPlayer(const bool bOnlyCheckTeammates) const {
+    return false;
+}
+
+bool AFortPlayerControllerGameplay::IsCreativeModeratorModeActive() const {
+    return false;
+}
+
+bool AFortPlayerControllerGameplay::IsCreativeModeratorModeEnabled() const {
+    return false;
+}
+
+bool AFortPlayerControllerGameplay::FollowPlayer(const EPlayerControllerFollow Follow) {
+    return false;
 }
 
 AFortPlayerControllerGameplay::AFortPlayerControllerGameplay() {
@@ -322,5 +380,9 @@ AFortPlayerControllerGameplay::AFortPlayerControllerGameplay() {
     bIsCreativeIslandExporterEnabled = false;
     DefaultCameraModifierClasses.AddDefaulted(1);
     CreativeOptionsInternal = NULL;
+    CreativeModeratorModeInputComponent = NULL;
+    bIsCreativeModeratorModeEnabled = false;
+    bIsCreativeModeratorModeActive = false;
+    SpawnedVehicleComponent = NULL;
 }
 

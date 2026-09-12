@@ -2,5 +2,6 @@
 
 FFortPlayspaceConfigData::FFortPlayspaceConfigData() {
     CreationType = EPlayspaceCreationType::ChildOfRoot;
+    bSpawnAtPlayspaceSpawnActors = false;
 }
 

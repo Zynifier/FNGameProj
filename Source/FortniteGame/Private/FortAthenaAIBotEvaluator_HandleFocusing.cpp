@@ -9,5 +9,6 @@ UFortAthenaAIBotEvaluator_HandleFocusing::UFortAthenaAIBotEvaluator_HandleFocusi
     CacheAimingDigestedSkillSet = NULL;
     LastTargetedThreat = NULL;
     FocusActor = NULL;
+    NoRangedWeaponFocusBehavior = EFocusingBehavior::FocusCurrentTarget;
 }
 

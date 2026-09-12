@@ -12,5 +12,6 @@ void AFortWeaponRangedForVehicle::GetLifetimeReplicatedProps(TArray<FLifetimePro
 }
 
 AFortWeaponRangedForVehicle::AFortWeaponRangedForVehicle() {
+    CachedWeaponMeshCompOnVehicle = NULL;
 }
 

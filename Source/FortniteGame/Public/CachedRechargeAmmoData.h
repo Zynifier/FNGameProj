@@ -27,6 +27,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortWorldItemDefinition> AmmoItemDefinition;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShouldRechargeAmmoToClip;
+    
     FORTNITEGAME_API FCachedRechargeAmmoData();
 };
 

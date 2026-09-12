@@ -1,0 +1,4 @@
+#include "FortConversationTaskNode_ApplyDataDrivenEffect.h"
+
+UFortConversationTaskNode_ApplyDataDrivenEffect::UFortConversationTaskNode_ApplyDataDrivenEffect() {
+}

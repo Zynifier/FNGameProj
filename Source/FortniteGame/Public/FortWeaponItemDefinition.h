@@ -12,6 +12,7 @@
 #include "FortItemEntry.h"
 #include "FortWorldItemDefinition.h"
 #include "Templates/SubclassOf.h"
+#include "FortWeaponModSlot.h"
 #include "FortWeaponItemDefinition.generated.h"
 
 class AFortWeapon;
@@ -23,6 +24,8 @@ class UFortGameplayAbility;
 class UFortWeaponAdditionalData;
 class USkeletalMesh;
 class UTexture2D;
+
+class UAthenaCosmeticItemDefinition;
 
 UCLASS(Abstract, Blueprintable)
 class FORTNITEGAME_API UFortWeaponItemDefinition : public UFortWorldItemDefinition, public IFortCreativeTagsBearer, public IFortItemDefinitionAbilitySetInterface {
@@ -46,6 +49,9 @@ protected:
     FDataTableRowHandle WeaponStatHandle;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bRechargeAmmoToClip;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat WeaponRechargeAmmoRate;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -65,6 +71,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortAlterationItemDefinition> BaseCosmeticAlteration;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortWeaponModSlot> WeaponModSlots;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UFortGameplayAbility> PrimaryFireAbility;
@@ -89,6 +98,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortWorldItemDefinition> AmmoData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Export, meta=(AllowPrivateAccess=true))
+    TArray<UFortWeaponAdditionalData*> AdditionalDataFields;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortWeaponAdditionalData* AdditionalData;
@@ -128,6 +140,15 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bAlwaysChargeUpToMin: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bNoFireOnReleaseBeforeMinChargeTime: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bEndAbilityOnChargeEnd: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUpdateLastFireTimeOnDischarge: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bReticleCornerOutsideSpreadRadius: 1;
@@ -170,6 +191,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FName> ActualAnalyticFNames;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UAthenaCosmeticItemDefinition> RequiredWeaponParent;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -284,5 +308,14 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool NoFireOnReleaseBeforeMinChargeTime() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldEndAbilityOnChargeEnd() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldUpdateLastFireTimeOnDischarge() const;
+    
 };
 

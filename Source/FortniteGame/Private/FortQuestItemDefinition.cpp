@@ -148,6 +148,34 @@ bool UFortQuestItemDefinition::AllowsPlayNowNavigation() const {
     return false;
 }
 
+bool UFortQuestItemDefinition::CanProgressInBRWarmup() const {
+    return false;
+}
+
+TSoftObjectPtr<USoundBase> UFortQuestItemDefinition::GetCharacterCompletionAudio() const {
+    return TSoftObjectPtr<USoundBase>();
+}
+
+float UFortQuestItemDefinition::GetCharacterCompletionAudioDelay() const {
+    return 0.0f;
+}
+
+FString UFortQuestItemDefinition::GetCompletionVideoUID() const {
+    return TEXT("");
+}
+
+EFortQuestSubtype UFortQuestItemDefinition::GetQuestSubtype() const {
+    return EFortQuestSubtype::None;
+}
+
+TSoftObjectPtr<UFortTandemCharacterData> UFortQuestItemDefinition::GetSoftTandemCharacterData() const {
+    return TSoftObjectPtr<UFortTandemCharacterData>();
+}
+
+UFortTandemCharacterData* UFortQuestItemDefinition::GetTandemCharacterData() const {
+    return NULL;
+}
+
 UFortQuestItemDefinition::UFortQuestItemDefinition(const FObjectInitializer& ObjectInitializer) 
     : Super(ObjectInitializer) {
     QuestType = EFortQuestType::Task;
@@ -181,5 +209,19 @@ UFortQuestItemDefinition::UFortQuestItemDefinition(const FObjectInitializer& Obj
     ClaimPriority = 0;
     SortPriority = 0;
     ItemType = EFortItemType::Quest;
+    bAthenaGrantRarityToken = false;
+    bShouldAutoClaim = false;
+    bShouldGetFullMatchProgress = false;
+    CharacterCompletionAudioDelay = 0.0f;
+    bIsShared = false;
+    Threshold = 0;
+    bGrantTransientQuestToSquad = false;
+    bTransientAutoComplete = false;
+    bAllowMultipleCompletionsPerMatch = false;
+    TransientQuestStage = 0;
+    TransientQuestMaxStage = 0;
+    bHideQuestProgressNotification = false;
+    bHideQuestRewardNotification = false;
+    bForceExpiryExport = false;
 }
 

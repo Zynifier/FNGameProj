@@ -5,6 +5,7 @@
 #include "AudioAnalysisParameterVector.h"
 #include "AudioAnalysisSpectralAnalysisSettings.h"
 #include "Templates/SubclassOf.h"
+#include "FortSubmixAnalyzerData.h"
 #include "FortAudioAnalysisSettings.generated.h"
 
 class UFortAudioAnalysisDebugWidget;
@@ -16,6 +17,9 @@ class UFortAudioAnalysisSettings : public UPrimaryDataAsset {
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     USoundSubmix* DefaultAnalysisSubmix;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortSubmixAnalyzerData DefaultAnalysisData;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FAudioAnalysisParameterScalar> ScalarParameters;

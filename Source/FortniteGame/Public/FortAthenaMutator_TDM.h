@@ -31,6 +31,9 @@ protected:
     FScalableFloat GoalScoreMinToWin;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat AllowSpectatingAfterDeath;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIsTwoTeamTDM;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -50,9 +53,6 @@ public:
 protected:
     UFUNCTION(BlueprintCallable)
     void OnMutatorGenericIntegerUpdated(int32 GenericIntegerIndex, int32 NewIntegerValue);
-    
-    UFUNCTION(BlueprintCallable)
-    void OnGamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep);
     
 };
 

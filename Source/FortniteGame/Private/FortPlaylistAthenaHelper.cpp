@@ -60,6 +60,10 @@ float UFortPlaylistAthenaHelper::GetEndGameReturnToMatchmakingOriginDelay(const 
     return 0.0f;
 }
 
+bool UFortPlaylistAthenaHelper::HasTag(const UFortPlaylistAthena* Playlist, const FGameplayTag& InTag) {
+    return false;
+}
+
 UFortPlaylistAthenaHelper::UFortPlaylistAthenaHelper() {
 }
 

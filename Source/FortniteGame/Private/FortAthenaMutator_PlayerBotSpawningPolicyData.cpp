@@ -9,6 +9,5 @@ UFortAthenaMutator_PlayerBotSpawningPolicyData::UFortAthenaMutator_PlayerBotSpaw
     MinTraceHeight = 1;
     InitialSpawnDelay = 1;
     SpawnDelay = 1;
-    AISpawnerData = NULL;
 }
 

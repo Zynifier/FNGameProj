@@ -39,6 +39,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bSupportRuntimeNavmeshDisabling: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bNavOctreeUnlockedByDefaultWhenNotPreloadingNavData: 1;
+    
 public:
     UAthenaNavSystemConfig();
 };

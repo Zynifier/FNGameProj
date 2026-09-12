@@ -12,6 +12,10 @@ FFortColorPalette UFortRarityData::BPGetRarityColorPalette(EFortRarity Rarity) {
     return FFortColorPalette{};
 }
 
+EFortRarity UFortRarityData::GetRarityCosmeticForItem(const UObject* WorldContextObject, const UFortItem* Item) {
+    return EFortRarity::Common;
+}
+
 UFortRarityData::UFortRarityData() {
 }
 

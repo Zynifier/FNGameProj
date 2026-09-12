@@ -3,5 +3,6 @@
 
 AFortPhysicsReplicatedTargetGhost::AFortPhysicsReplicatedTargetGhost() {
     SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
+    StaticMesh = NULL;
 }
 

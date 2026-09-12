@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{49E3CA8E-4CA8-D4F0-BED4-698E9CB59248}",
+	"EngineAssociation": "{8E881366-432C-07DE-20E2-76BA604B87AE}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -259,23 +259,11 @@
 			"Enabled": true
 		},
 		{
-			"Name": "DSSNetworkReplayStreamer",
-			"Enabled": true
-		},
-		{
 			"Name": "EditableMesh",
 			"Enabled": false
 		},
 		{
 			"Name": "EditorScriptingUtilities",
-			"Enabled": true
-		},
-		{
-			"Name": "FortInstallBundleManager",
-			"Enabled": true
-		},
-		{
-			"Name": "FortniteEarlyStartupPatcher",
 			"Enabled": true
 		},
 		{
@@ -341,10 +329,6 @@
 			"Enabled": false
 		},
 		{
-			"Name": "LatencyTracker",
-			"Enabled": true
-		},
-		{
 			"Name": "LightPropagationVolume",
 			"Enabled": false
 		},
@@ -369,20 +353,8 @@
 			"Enabled": true
 		},
 		{
-			"Name": "ForwardingChannels",
-			"Enabled": true
-		},
-		{
-			"Name": "LiveStreamAnimation",
-			"Enabled": true
-		},
-		{
 			"Name": "LocationServicesBPLibrary",
 			"Enabled": false
-		},
-		{
-			"Name": "LogitechLED",
-			"Enabled": true
 		},
 		{
 			"Name": "MacGraphicsSwitching",
@@ -395,10 +367,6 @@
 		{
 			"Name": "MagicLeapMedia",
 			"Enabled": false
-		},
-		{
-			"Name": "MatchmakingService",
-			"Enabled": true
 		},
 		{
 			"Name": "MatineeToLevelSequence",
@@ -457,10 +425,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "NiagaraStaging",
-			"Enabled": true
-		},
-		{
 			"Name": "NetUI",
 			"Enabled": true
 		},
@@ -486,10 +450,6 @@
 		},
 		{
 			"Name": "OnlineSubsystem",
-			"Enabled": true
-		},
-		{
-			"Name": "ResultType",
 			"Enabled": true
 		},
 		{
@@ -591,10 +551,6 @@
 			"Enabled": true
 		},
 		{
-			"Name": "RazerChroma",
-			"Enabled": true
-		},
-		{
 			"Name": "RemoteSession",
 			"Enabled": true,
 			"WhitelistTargets": [
@@ -651,10 +607,6 @@
 		},
 		{
 			"Name": "SubtitlesWidgets",
-			"Enabled": true
-		},
-		{
-			"Name": "SubtitlesWidgetsEditor",
 			"Enabled": true
 		},
 		{
@@ -774,15 +726,7 @@
 			"Enabled": true
 		},
 		{
-			"Name": "EpicArtPipeline",
-			"Enabled": true
-		},
-		{
 			"Name": "F5Player",
-			"Enabled": true
-		},
-		{
-			"Name": "EOSMediaPlayer",
 			"Enabled": true
 		},
 		{
@@ -799,10 +743,6 @@
 		},
 		{
 			"Name": "ResonanceAudio",
-			"Enabled": true
-		},
-		{
-			"Name": "Neowiz",
 			"Enabled": true
 		},
 		{
@@ -826,14 +766,6 @@
 		},
 		{
 			"Name": "Procedural",
-			"Enabled": true
-		},
-		{
-			"Name": "LevelPartition",
-			"Enabled": true
-		},
-		{
-			"Name": "OnlineTracing",
 			"Enabled": true
 		},
 		{
@@ -872,10 +804,6 @@
 		},
 		{
 			"Name": "VirtualHeightfieldMesh",
-			"Enabled": true
-		},
-		{
-			"Name": "SVGF",
 			"Enabled": true
 		},
 		{

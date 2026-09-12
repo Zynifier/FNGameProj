@@ -1,0 +1,4 @@
+#include "UFortContextualTutorialDefinition_GameplayEvent.h"
+
+UUFortContextualTutorialDefinition_GameplayEvent::UUFortContextualTutorialDefinition_GameplayEvent() {
+}

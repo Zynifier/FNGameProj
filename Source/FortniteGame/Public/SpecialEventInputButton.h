@@ -8,5 +8,7 @@ enum class SpecialEventInputButton : uint8 {
     SecondaryFire,
     RollLeft,
     RollRight,
+    Jump,
+    Reload,
 };
 

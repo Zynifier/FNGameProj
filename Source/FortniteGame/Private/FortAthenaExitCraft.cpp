@@ -62,5 +62,7 @@ AFortAthenaExitCraft::AFortAthenaExitCraft() {
     BuildingZOffset = 1;
     SafetyTimerTime = 1;
     VehicleSkinIndex = 0;
+    CorrectionDistanceSquared = 0.0f;
+    InterpTimeInSeconds = 0.0f;
 }
 

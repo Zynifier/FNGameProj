@@ -163,10 +163,19 @@ protected:
     TArray<FCumulativeFrameTimeWithoutSleepLimits> CumulativeFrameTimeWithoutSleepLimits;
     
     UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<double> GameNetDriverTickFlushCostPerClientBucketsMicroSec;
+    
+    UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<double> GameNetDriverTickFlushTimeHistogramBucketsMs;
     
     UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<double> DemoNetDriverTickFlushTimeHistogramBucketsMs;
+    
+    UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<double> CPUTimeBuckets;
+    
+    UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<double> CPUPercentPerCoreBuckets;
     
     UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<double> ActorsStarvedByClassTimeHistogramBuckets;

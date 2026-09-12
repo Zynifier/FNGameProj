@@ -281,6 +281,23 @@ bool UFortGlobals::AllowContainersInCreativeItemLists() {
     return false;
 }
 
+FVector UFortGlobals::GetGlobalSnowOrigin() {
+    return FVector{};
+}
+
+float UFortGlobals::GetGlobalSnowRadius() {
+    return 0.0f;
+}
+
+void UFortGlobals::SetGlobalSnowOrigin(FVector Origin) {
+}
+
+void UFortGlobals::SetGlobalSnowRadius(float Radius) {
+}
+
+void UFortGlobals::UpdateAllGameFeaturesOnPauseChanged() {
+}
+
 UFortGlobals::UFortGlobals() {
     BRMap = TEXT("Apollo_Terrain");
     BRMapFullName = TEXT("/Game/Athena/Apollo/Maps/Apollo_Terrain");
@@ -417,5 +434,11 @@ UFortGlobals::UFortGlobals() {
     GlobalSnowAltitude = 1;
     SubGameAccess.AddDefaulted(3);
     GameFeaturePluginManager = NULL;
+    InvulnerableVerificationInterval = 0.0f;
+    ModeratorModeVerificationInterval = 0.0f;
+    bEnableSeasonalQuestline = false;
+    MaxElectraFpsVideos = 0.0f;
+    bElectraUseDedicatedMediaSegmentDownloadThreads = false;
+    GlobalSnowRadius = 0.0f;
 }
 

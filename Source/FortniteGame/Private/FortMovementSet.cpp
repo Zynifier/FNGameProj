@@ -20,6 +20,7 @@ void UFortMovementSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     DOREPLIFETIME(UFortMovementSet, SpeedMultiplier);
     DOREPLIFETIME(UFortMovementSet, LandSpeedMultiplier);
     DOREPLIFETIME(UFortMovementSet, SwimSpeedMultiplier);
+    DOREPLIFETIME(UFortMovementSet, LandSpeedWhileBurrowingMultiplier);
 }
 
 UFortMovementSet::UFortMovementSet() {

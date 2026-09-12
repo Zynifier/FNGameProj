@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "FortAISystem.h"
+#include "EAthenaGamePhase.h"
 #include "AthenaAISystem.generated.h"
 
 class AActor;
@@ -47,5 +48,11 @@ protected:
     
 public:
     UAthenaAISystem();
+    UFUNCTION(BlueprintCallable)
+    void AIProfiling_OnGamePhaseChanged(EAthenaGamePhase GamePhase);
+    
+    UFUNCTION(BlueprintCallable)
+    void AIProfiling_OnSafeZoneUpdated();
+    
 };
 

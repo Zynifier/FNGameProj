@@ -3,6 +3,8 @@
 #include "FortAthenaAIBotEvaluator_Movement.h"
 #include "FortAthenaNpcEvaluator_Leash.generated.h"
 
+class UFortAthenaAIRuntimeParameters_Leash;
+
 UCLASS(Blueprintable)
 class UFortAthenaNpcEvaluator_Leash : public UFortAthenaAIBotEvaluator_Movement {
     GENERATED_BODY()
@@ -22,6 +24,9 @@ private:
     
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName LeashOuterRadiusKeyName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIRuntimeParameters_Leash* LeashRuntimeParameters;
     
 public:
     UFortAthenaNpcEvaluator_Leash();

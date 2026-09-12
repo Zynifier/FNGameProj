@@ -26,6 +26,9 @@ protected:
     FScalableFloat bShouldBeActive;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat bShouldSetClientReadyOnRespawnPlayerFailSafe;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat bCanPlayerSelectRespawnTargetBeforeTheyCanRespawn;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

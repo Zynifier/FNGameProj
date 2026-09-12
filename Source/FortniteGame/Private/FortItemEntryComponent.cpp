@@ -30,7 +30,7 @@ int32 UFortItemEntryComponent::GetClipSize() const {
 void UFortItemEntryComponent::Empty() {
 }
 
-bool UFortItemEntryComponent::AddItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner) {
+bool UFortItemEntryComponent::AddItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, bool bUseItemPickupAnalyticEvent) {
     return false;
 }
 

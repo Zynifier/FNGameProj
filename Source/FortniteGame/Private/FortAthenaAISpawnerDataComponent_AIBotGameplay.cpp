@@ -11,5 +11,9 @@ UFortAthenaAISpawnerDataComponent_AIBotGameplay::UFortAthenaAISpawnerDataCompone
     LeashOuterRadius = 1;
     bCanInvestigateWithMeleeWeapon = false;
     bApplyMutatorsHealthAndShieldModifiers = true;
+    PawnCullDistanceAfterPlayerAggroMode = 0.0f;
+    bSupportsTethering = false;
+    bEnableRenderCustomDepth = false;
+    LeashReturnLocationMode = ELeashReturnLocationMode::Closest;
 }
 

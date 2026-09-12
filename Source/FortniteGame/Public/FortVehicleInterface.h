@@ -8,6 +8,7 @@
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "AthenaVehicleShootingCone.h"
+#include "Templates/SubclassOf.h"
 #include "FortVehicleInterface.generated.h"
 
 class AActor;
@@ -22,6 +23,9 @@ class UFortVehicleSeatWeaponComponent;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
 class USkeletalMeshComponent;
+
+class UFortGameplayAbility;
+class UFortVehicleConfigs;
 
 UINTERFACE(BlueprintType, MinimalAPI, meta=(CannotImplementInterfaceInBlueprint))
 class UFortVehicleInterface : public UInterface {
@@ -271,6 +275,24 @@ protected:
 public:
     UFUNCTION(BlueprintCallable)
     virtual void AddVehicleActionNamesAndLabels(AFortPlayerPawn* FortPlayerPawn, UPARAM(Ref) TArray<FName>& SeatActionNames, UPARAM(Ref) TArray<FText>& SeatActionLabels) PURE_VIRTUAL(AddVehicleActionNamesAndLabels,);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    virtual void ForceDestroyVehicle() PURE_VIRTUAL(ForceDestroyVehicle,);
+    
+    UFUNCTION(BlueprintCallable)
+    virtual bool IsPawnInSeatRequiringTargetingForShooting(AFortPlayerPawn* PawnToCheck) PURE_VIRTUAL(IsPawnInSeatRequiringTargetingForShooting, return false;);
+    
+    UFUNCTION(BlueprintCallable)
+    virtual UFortVehicleConfigs* GetVehicleConfigs() const PURE_VIRTUAL(GetVehicleConfigs, return NULL;);
+    
+    UFUNCTION(BlueprintCallable)
+    virtual TSubclassOf<UFortGameplayAbility> GetVehiclePrimaryFireAbility() const PURE_VIRTUAL(GetVehiclePrimaryFireAbility, return NULL;);
+    
+    UFUNCTION(BlueprintCallable)
+    virtual FName GetVehiclePrimaryFireActionName() const PURE_VIRTUAL(GetVehiclePrimaryFireActionName, return NAME_None;);
+    
+    UFUNCTION(BlueprintCallable)
+    virtual FName GetVehicleSecondaryFireActionName() const PURE_VIRTUAL(GetVehicleSecondaryFireActionName, return NAME_None;);
     
 };
 

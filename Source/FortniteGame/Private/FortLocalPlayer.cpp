@@ -12,6 +12,10 @@ UFortClientSettingsRecord* UFortLocalPlayer::GetClientSettings() const {
     return NULL;
 }
 
+UFortContentControlsManager* UFortLocalPlayer::GetContentControlsManagerEvenIfUninitialized() const {
+    return NULL;
+}
+
 UFortLocalPlayer::UFortLocalPlayer() {
     FortOnlineAccount = NULL;
     ClientSettingsRecord = NULL;

@@ -57,6 +57,13 @@ void ABuildingContainer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
     DOREPLIFETIME(ABuildingContainer, TimeUntilLootRegenerates);
 }
 
+bool ABuildingContainer::BP_IsAlreadySearched() {
+    return false;
+}
+
+void ABuildingContainer::BP_SetAlreadySearched(bool bInAlreadySearched) {
+}
+
 ABuildingContainer::ABuildingContainer() {
     SearchingSoundCueLoop = NULL;
     LootRepeatSoundCue = NULL;
@@ -95,5 +102,8 @@ ABuildingContainer::ABuildingContainer() {
     CurrentInteractBounceNormalCurve = NULL;
     SavedReservedRandomValueResult = 1;
     TimeUntilLootRegenerates = 1;
+    bBlockMarking = false;
+    bCanBeMarked = false;
+    SoundIndicatorIconOverride = NULL;
 }
 

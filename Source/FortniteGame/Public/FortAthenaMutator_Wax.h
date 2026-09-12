@@ -18,6 +18,7 @@
 #include "WaxRespawnLogicData.h"
 #include "WaxTokenFlashSignatureDelegate.h"
 #include "WaxVisibilityModifiers.h"
+#include "FortAthenaMutator_GameModeBase.h"
 #include "FortAthenaMutator_Wax.generated.h"
 
 class AFortAthena_WaxToken;
@@ -26,8 +27,13 @@ class AFortPlayerPawnAthena;
 class AFortPlayerStateAthena;
 class UFortWorldItemDefinition;
 
+class AActor;
+class UAudioComponent;
+class UFortQuestItemDefinition;
+class USoundBase;
+
 UCLASS(Blueprintable, MinimalAPI)
-class AFortAthenaMutator_Wax : public AFortAthenaMutator {
+class AFortAthenaMutator_Wax : public AFortAthenaMutator_GameModeBase {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_Leaders, meta=(AllowPrivateAccess=true))
@@ -53,6 +59,16 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FWaxEventSignature_NoParams AnyTokenChange;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundBase* RespawnSound;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundBase* GameEndMusicSound;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UAudioComponent* GameEndMusicAudioComponent;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -161,6 +177,18 @@ protected:
     FScalableFloat PodiumIcons_TeamBased;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSlateBrush> CompassBrushesByPlace;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSlateBrush> SquadmateCompassBrushesByPlace;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSlateBrush> MapBrushesByPlace;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSlateBrush> SquadmateMapBrushesByPlace;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FSlateBrush FirstPlaceCompassBrush;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -227,6 +255,9 @@ protected:
     FAthenaGameMessageData GameMsg_WaxLeaderChanged;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FAthenaGameMessageData> BusGameMessages;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FAthenaGameMessageData GameMsg_IntroOne;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -250,12 +281,24 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     FWaxPlayerDataArray PlayerData;
     
+    UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TMap<TWeakObjectPtr<AFortPlayerStateAthena>, int32> StatDataNumTokensCollectedByPlayerMap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<UFortQuestItemDefinition*> NumTokensCollectedStatTrackingQuestItemDefinitions;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTagContainer NumTokensCollectedStatTrackingTags;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<AFortPlayerStateAthena*, float> TimeSinceLastFireMap;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     AFortPlayerStateAthena* LastEligibleLeader;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<AFortPlayerStateAthena*> PlayersAboveThresholdByPlace;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     AFortPlayerStateAthena* FirstPlaceIfAboveThreshold;
@@ -268,6 +311,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<uint8, AFortPlayerStateAthena*> TopPlayerInSquadID;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<AActor*> RegisteredWaxPickupActors;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<AFortGameModePickup_Wax*> WaxPickupsToDraw;
@@ -314,10 +360,10 @@ public:
     bool IsPlayerInPodium(AFortPlayerStateAthena* Player) const;
     
     UFUNCTION(BlueprintCallable)
-    void GetWaxUI_Info(float& MyPercent, float& Enemy1Pct, float& Enemy2Pct, float& Enemy3Pct, int32& MyRank);
+    void GetWaxUI_Info(float& MyPercent, float& Enemy1Pct, float& Enemy2Pct, float& Enemy3Pct, int32& MyRank) const;
     
     UFUNCTION(BlueprintCallable)
-    int32 GetTokensToWinBP();
+    int32 GetTokensToWinBP() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     int32 GetTokensForPlayer(AFortPlayerStateAthena* Player) const;
@@ -343,6 +389,10 @@ public:
 private:
     UFUNCTION(BlueprintCallable)
     void CommonDeadPawn(AFortPlayerPawnAthena* DeadPawn);
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void SendTokenStats();
     
 };
 

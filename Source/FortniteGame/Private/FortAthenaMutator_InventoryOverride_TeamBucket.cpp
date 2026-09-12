@@ -1,0 +1,4 @@
+#include "FortAthenaMutator_InventoryOverride_TeamBucket.h"
+
+AFortAthenaMutator_InventoryOverride_TeamBucket::AFortAthenaMutator_InventoryOverride_TeamBucket() {
+}

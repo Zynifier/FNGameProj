@@ -508,6 +508,110 @@ void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
     DOREPLIFETIME(AFortAthenaVehicle, CorrectTargetOrientation);
     DOREPLIFETIME(AFortAthenaVehicle, AbilitySystemComponent);
     DOREPLIFETIME(AFortAthenaVehicle, HealthSet);
+    DOREPLIFETIME(AFortAthenaVehicle, SimulatedProxyMinimalReplicationGameplayCues);
+    DOREPLIFETIME(AFortAthenaVehicle, bHasPassengers);
+    DOREPLIFETIME(AFortAthenaVehicle, bEnforceTeamRestriction);
+    DOREPLIFETIME(AFortAthenaVehicle, TeamId);
+    DOREPLIFETIME(AFortAthenaVehicle, bShouldSleepAtSpawn);
+    DOREPLIFETIME(AFortAthenaVehicle, NetPredictionProxy_AP);
+    DOREPLIFETIME(AFortAthenaVehicle, NetPredictionProxy_SP);
+    DOREPLIFETIME(AFortAthenaVehicle, ToggledParts);
+}
+
+void AFortAthenaVehicle::ClientBroadcastAbilityImpactAtLocation_Implementation(UObject* WorldContextObject, USoundBase* InSound, UObject* InInstigator, const FVector& Position, float Radius, FName Tag, const bool bSubtractLocalNoise) {
+}
+
+void AFortAthenaVehicle::ForceSeatPawns(TArray<AFortPlayerPawn*> PawnsToSeat) {
+}
+
+bool AFortAthenaVehicle::ForceSeatSinglePawn(AFortPlayerPawn* PawnToSeat, int32 SeatIndex) {
+    return false;
+}
+
+void AFortAthenaVehicle::ManageSpeedDamageMutlipliers() {
+}
+
+void AFortAthenaVehicle::OnPrimitiveComponentSleep(UPrimitiveComponent* WakingComponent, FName BoneName) {
+}
+
+void AFortAthenaVehicle::OnPrimitiveComponentWake(UPrimitiveComponent* WakingComponent, FName BoneName) {
+}
+
+void AFortAthenaVehicle::OnRep_bEnforceTeamRestriction() {
+}
+
+void AFortAthenaVehicle::OnRep_NetPrediction_AP() {
+}
+
+void AFortAthenaVehicle::OnRep_NetPrediction_SP() {
+}
+
+void AFortAthenaVehicle::OnRep_TeamID() {
+}
+
+void AFortAthenaVehicle::OnWaterTooDeep_Implementation() {
+}
+
+void AFortAthenaVehicle::ReleaseVehicleControlledExternalyInternal() {
+}
+
+void AFortAthenaVehicle::RepairAllDamageableParts(const float NewHealth) {
+}
+
+void AFortAthenaVehicle::RepairDamageablePart(const FName ShapeName) {
+}
+
+void AFortAthenaVehicle::ServerReceiveInputCmd_Implementation(int32 ClientFrameNumber, const TArray<uint8>& Data) {
+}
+
+void AFortAthenaVehicle::SetEnforceTeamRestriction(const bool bNewEnforceTeamRestriction) {
+}
+
+void AFortAthenaVehicle::SetForceInfiniteFuel(const bool bNewForceInfiniteFuel) {
+}
+
+void AFortAthenaVehicle::SetStaticPhysics(const bool bStatic) {
+}
+
+void AFortAthenaVehicle::SetSupportCosmeticWrap(const bool bNewSupportCosmeticWrap) {
+}
+
+void AFortAthenaVehicle::SetTeamID(const uint8 NewTeamID) {
+}
+
+bool AFortAthenaVehicle::CanForcePawnToSeat(AFortPlayerPawn* PawnToSeat, const int32 SeatIndex) const {
+    return false;
+}
+
+float AFortAthenaVehicle::GetPontoonRadius(const int32 PontoonIndex) const {
+    return 0.0f;
+}
+
+uint8 AFortAthenaVehicle::GetTeamID() const {
+    return 0;
+}
+
+bool AFortAthenaVehicle::IsDriverSplitScreen() const {
+    return false;
+}
+
+bool AFortAthenaVehicle::IsDriverTeamRestricted(const AFortPlayerPawn* PlayerPawn) const {
+    return false;
+}
+
+bool AFortAthenaVehicle::IsEnforcingTeamRestriction() const {
+    return false;
+}
+
+bool AFortAthenaVehicle::IsOutOfRechargeableFuel() const {
+    return false;
+}
+
+bool AFortAthenaVehicle::IsRechargeableFuelBelowThreshold() const {
+    return false;
+}
+
+void AFortAthenaVehicle::OnRep_ToggleableParts(const TArray<FVehicleToggleablePart>& PrevToggleableParts) {
 }
 
 AFortAthenaVehicle::AFortAthenaVehicle() {
@@ -605,5 +709,50 @@ AFortAthenaVehicle::AFortAthenaVehicle() {
     ImpulseResponseSet = NULL;
     DamageSet = CreateDefaultSubobject<UFortDamageSet>(TEXT("DamageSet"));
     HealthBarIndicator = NULL;
+    bDisableUpdateForcedDebugInput = false;
+    bDisableUpdateAutoRun = false;
+    bDisableUpdateHonk = false;
+    bDisableUpdateIgnoredBuildingActors = false;
+    bDisableUpdateIngoredPawnsForDamage = false;
+    bDisableUpdateSafeTeleport = false;
+    bUseForceHeading = false;
+    bForceDeath = false;
+    bHasPassengers = false;
+    bCanSleepWhileNotTouchingAnything = false;
+    bIsTouchingAnything = false;
+    bIsInWater = false;
+    bIsInWaterBody = false;
+    bIsOverlappingWaterBody = false;
+    bIsFullyInWaterBody = false;
+    bCanDriveOnIncline = false;
+    bCanCoastOnIncline = false;
+    bWheelsOnGround = false;
+    bAnyWheelsOnGround = false;
+    bIsTouchingDrivableGround = false;
+    bIsTouchingGroundWithoutWheels = false;
+    bUseGravity = false;
+    bEnforceTeamRestriction = false;
+    bEnforceTeamRestrictionForMiniGame = false;
+    TeamId = 0;
+    bAttemptAsyncOrientationCorrection = false;
+    bIsAsyncCorrectingOrientation = false;
+    bAlwaysCreateNavComponent = false;
+    TopSpeedCurrentMultiplier = 0.0f;
+    PushForceCurrentMultiplier = 0.0f;
+    SteeringAngle = 0.0f;
+    FrontLateralFrictionRuntimeMultiplier = 0.0f;
+    RearLateralFrictionRuntimeMultiplier = 0.0f;
+    FrontMassRatio = 0.0f;
+    RearMassRatio = 0.0f;
+    TotalBrakingDelta = 0.0f;
+    FortPhysicsVehicleConfigs = NULL;
+    bAllowAutoCamera = false;
+    WaterLevel = 0.0f;
+    TargetingZOffset = 0.0f;
+    VehicleInteractionOverrideComponent = NULL;
+    TrackableAIObjectComponent = NULL;
+    NavModifierComponent = NULL;
+    bShouldSleepAtSpawn = false;
+    ImpactInstigator = NULL;
 }
 

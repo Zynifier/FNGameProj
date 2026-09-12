@@ -20,6 +20,8 @@ class UAthenaCosmeticItemDefinition;
 class UFortItem;
 class UObject;
 
+class AActor;
+
 UCLASS(Abstract, Blueprintable)
 class ACustomCosmeticModifierBase : public AActor {
     GENERATED_BODY()
@@ -62,10 +64,19 @@ protected:
     uint8 bUsesEnteredVehicle: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUsesExitVehicle: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bUsesTargetingOrFirstPersonCameraChange: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bUsesOnHitPawn: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUsesOnBeginSkydiving: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUsesOnEndSkydiving: 1;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -88,6 +99,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bRegisteredForEnterVehicle: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bRegisteredForExitVehicle: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bRegisteredOnHitPawn: 1;
@@ -187,6 +201,12 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     AFortPlayerPawn* GetAssociatedPlayerPawn() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void OnExternalDependencyActorDestroyed(AActor* OtherActor);
+    
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
+    void OnPawnUpdated();
     
 };
 

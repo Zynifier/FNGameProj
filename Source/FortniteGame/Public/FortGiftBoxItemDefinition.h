@@ -41,10 +41,19 @@ public:
     bool bReuseExistingBoxIfPossible;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bOverrideBackgroundMessage;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FText BackgroundMessageText;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UUserWidget> GiftBoxPreMessageWidgetRef;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UUserWidget> GiftBoxHeaderSubWidgetRef;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> CustomLeftsideContent;
     
     UFortGiftBoxItemDefinition(const FObjectInitializer& ObjectInitializer);
     UFUNCTION(BlueprintCallable)

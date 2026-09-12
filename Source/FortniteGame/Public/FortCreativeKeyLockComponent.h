@@ -6,6 +6,7 @@
 #include "KeyLockStateChangedDelegate.h"
 #include "LockEventDelegate.h"
 #include "RemainingKeysChangedDelegate.h"
+#include "KeysConsumedDelegate.h"
 #include "FortCreativeKeyLockComponent.generated.h"
 
 class APawn;
@@ -32,6 +33,9 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FRemainingKeysChanged OnRemainingKeysUpdated;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FKeysConsumed OnKeysConsumed;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_CurrentState, meta=(AllowPrivateAccess=true))

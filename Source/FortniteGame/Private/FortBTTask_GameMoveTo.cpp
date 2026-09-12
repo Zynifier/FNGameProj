@@ -7,5 +7,6 @@ UFortBTTask_GameMoveTo::UFortBTTask_GameMoveTo() {
     bEnableSlowdownAtGoal = false;
     bFinishMoveOnOverlap = true;
     bDeimosFlavor = false;
+    bStopAtGoal = false;
 }
 

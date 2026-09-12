@@ -1,5 +1,13 @@
 #include "FortGameData.h"
 
+TArray<FName> UFortGameData::GetHighlightParamProfileNames() {
+    return TArray<FName>();
+}
+
+TArray<FName> UFortGameData::GetHighlightStencilParamNames() {
+    return TArray<FName>();
+}
+
 UFortGameData::UFortGameData() {
     PickupSplineOffsetRange[0] = 1;
     PickupSplineOffsetRange[1] = 1;
@@ -18,11 +26,6 @@ UFortGameData::UFortGameData() {
     BuildingStructuralCollapseCellDistAdditiveDelay = 1;
     BuildingStructuralCollapseCellDistAdditiveDelayVariance = 1;
     EditModeCancelDistance = 1;
-    ResourceNames[0] = FText::FromString(TEXT("Wood"));
-    ResourceNames[1] = FText::FromString(TEXT("Wood"));
-    ResourceNames[2] = FText::FromString(TEXT("Wood"));
-    ResourceNames[3] = FText::FromString(TEXT("Wood"));
-    ResourceNames[4] = FText::FromString(TEXT("Wood"));
     BuildingTypeNames[0] = FText::FromString(TEXT("Wall"));
     BuildingTypeNames[1] = FText::FromString(TEXT("Wall"));
     BuildingTypeNames[2] = FText::FromString(TEXT("Wall"));
@@ -38,5 +41,6 @@ UFortGameData::UFortGameData() {
     CachedSurfaceRatioBySurfaceCategoryData = NULL;
     CachedSurfaceRatioByAffiliationData = NULL;
     ConversationSoundRange = 1;
+    CompositeDeathCauseData = NULL;
 }
 

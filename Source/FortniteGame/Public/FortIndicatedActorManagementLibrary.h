@@ -13,6 +13,7 @@
 #include "IndicatedActorScaleAndOpacityData.h"
 #include "StenciledActorData.h"
 #include "Templates/SubclassOf.h"
+#include "EFortTeamAffiliation.h"
 #include "FortIndicatedActorManagementLibrary.generated.h"
 
 class AActor;
@@ -47,22 +48,22 @@ public:
     static FIndicatedActorParticleSystemData MakeIndicatedActorParticleSystemData(UParticleSystem* ParticleSystem, FName ActorParamName, FVector Offset, FVector DBNOOffset, FName VectorParamName);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    static FIndicatedActorDataWithFilter MakeIndicatedActorDataWithFilter(FGameplayTagContainer IndicateActorTags, FGameplayTagQuery IndicatedActorTagQuery, TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes, TSubclassOf<AActor> ActorClassFilter, FIndicatedActorData IndicatedActorData, FStenciledActorData StenciledActorData, float OverlapRadius);
+    static FIndicatedActorDataWithFilter MakeIndicatedActorDataWithFilter(FGameplayTagContainer IndicateActorTags, FGameplayTagQuery IndicatedActorTagQuery, TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes, TSubclassOf<AActor> ActorClassFilter, TArray<TEnumAsByte<EFortTeamAffiliation::Type>>& InAffiliations, FIndicatedActorData IndicatedActorData, FStenciledActorData StenciledActorData, float OverlapRadius);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    static FIndicatedActorData MakeIndicatedActorData(const FString& GroupIdentifier, FIndicatedActorScaleAndOpacityData ScaleAndOpacityData, FIndicatedActorParticleSystemData ParticleSystemData, float Duration, float StepTime, FVector IndicatorOffset, EShareActorWith ShareActorWith, bool bClampToScreen, USoundBase* Sound, EIndicatorStateImage StateImageOverride);
+    static FIndicatedActorData MakeIndicatedActorData(const FString& GroupIdentifier, FIndicatedActorScaleAndOpacityData ScaleAndOpacityData, FIndicatedActorParticleSystemData ParticleSystemData, float Duration, float StepTime, FVector IndicatorOffset, FVector IndicatorDBNOOffset, EShareActorWith ShareActorWith, bool bClampToScreen, USoundBase* Sound, EIndicatorStateImage StateImageOverride);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static void AddActorsToStenciledList(AController* InstigatingController, TArray<AActor*> StenciledActors, FStenciledActorData StenciledActorData, const bool bAddAsUnique, const bool bReplaceExistingEntry);
+    static void AddActorsToStenciledList(AController* InstigatingController, TArray<AActor*> StenciledActors, FStenciledActorData StenciledActorData, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static void AddActorsToIndicatedList(AController* InstigatingController, TArray<AActor*> IndicatedActors, FIndicatedActorData IndicatedActorData, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry);
+    static void AddActorsToIndicatedList(AController* InstigatingController, TArray<AActor*> IndicatedActors, FIndicatedActorData IndicatedActorData, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static void AddActorsInRadiusToStenciledList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> StenciledActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry);
+    static void AddActorsInRadiusToStenciledList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> StenciledActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry, AActor* InstigatingActorOverride);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static void AddActorsInRadiusToIndicatedList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> IndicatedActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry);
+    static void AddActorsInRadiusToIndicatedList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> IndicatedActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry, AActor* InstigatingActorOverride);
     
 };
 

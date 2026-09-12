@@ -140,6 +140,18 @@ bool UFortWeaponItemDefinition::AllowSecondaryFireToInterruptPrimary() const {
     return false;
 }
 
+bool UFortWeaponItemDefinition::NoFireOnReleaseBeforeMinChargeTime() const {
+    return false;
+}
+
+bool UFortWeaponItemDefinition::ShouldEndAbilityOnChargeEnd() const {
+    return false;
+}
+
+bool UFortWeaponItemDefinition::ShouldUpdateLastFireTimeOnDischarge() const {
+    return false;
+}
+
 UFortWeaponItemDefinition::UFortWeaponItemDefinition(const FObjectInitializer& ObjectInitializer) 
     : Super(ObjectInitializer) {
 	/* FortWorldItemDefinition modified defaults */
@@ -190,5 +202,9 @@ UFortWeaponItemDefinition::UFortWeaponItemDefinition(const FObjectInitializer& O
     bPreventDefaultPreload = false;
     HitNotifyDuration = 0.00f;
     ItemType = EFortItemType::Weapon;
+    bRechargeAmmoToClip = false;
+    bNoFireOnReleaseBeforeMinChargeTime = false;
+    bEndAbilityOnChargeEnd = false;
+    bUpdateLastFireTimeOnDischarge = false;
 }
 

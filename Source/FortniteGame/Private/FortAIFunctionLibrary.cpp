@@ -16,6 +16,14 @@ UAthenaAISpawner* UFortAIFunctionLibrary::GetAISpawner(UObject* WorldContextObje
     return NULL;
 }
 
+UFortAthenaAIRuntimeParameters* UFortAIFunctionLibrary::GetOrCreateAIRuntimeParameters(const AAIController* AIController, const TSubclassOf<UFortAthenaAIRuntimeParameters> ParametersClass) {
+    return NULL;
+}
+
+bool UFortAIFunctionLibrary::IsConcealedByPerceptionModifiers(const UObject* WorldContextObject, FVector ObserverLocation, FVector TargetLocation, float& OutConcealment) {
+    return false;
+}
+
 UFortAIFunctionLibrary::UFortAIFunctionLibrary() {
 }
 

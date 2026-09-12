@@ -10,6 +10,7 @@
 #include "OnCreativeLinkDataLoadedDelegate.h"
 #include "OnCreativeLinkThumbnailUpdatedDelegate.h"
 #include "OnPortalLinkCodeLockStatusChangedDelegate.h"
+#include "OnPortalLinkLockExpiredDelegate.h"
 #include "FortPortalComponent.generated.h"
 
 class UTexture2DDynamic;
@@ -29,6 +30,9 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnPortalLinkCodeLockStatusChanged OnPortalLinkCodeLockStatusChanged;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPortalLinkLockExpired OnPortalLinkLockExpired;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_LoadedLinkData, meta=(AllowPrivateAccess=true))
     FCreativeLoadedLinkData LoadedLinkData;
@@ -51,9 +55,15 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_LinkCodeLockStatus, meta=(AllowPrivateAccess=true))
     EPortalLinkCodeLockStatus LinkCodeLockStatus;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bWindowLockedStartsLocked;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     bool bHasValidLinkData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    bool bLinkRequiresCreativeContent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     FDateTime LinkCodeLockExpirationTime;
@@ -68,7 +78,7 @@ private:
     
 public:
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    void ServerSetLinkCode(const FString& InLinkCode);
+    void ServerSetLinkCode(const FString& InLinkCode, bool bIgnoreCanSetLinkCode, bool bFromDAD);
     
 private:
     UFUNCTION(BlueprintCallable)
@@ -101,6 +111,30 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool CanSetLinkCode() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void ExpireLinkCodeLock();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool LinkRequiresCreativeContent();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetLockExpirationSecondsToNotOverrideCVar();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetLockOverrideExpirationSeconds(int32 NewExpirationSeconds);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetResetCodeAfterCooldown(bool bNewResetCodeAfterCooldown);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FString GetAccountIdOwnerOfIsland() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsWellKnownNameSupported() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FString MakeLinkCodeWithVersioning(const FString& LinkCode, int32 Version) const;
     
 };
 

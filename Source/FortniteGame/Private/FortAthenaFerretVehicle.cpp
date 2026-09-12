@@ -49,6 +49,13 @@ void AFortAthenaFerretVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProper
     DOREPLIFETIME(AFortAthenaFerretVehicle, MaxHealthToDestroyProp);
 }
 
+void AFortAthenaFerretVehicle::SpawnWingTrailParticles() {
+}
+
+float AFortAthenaFerretVehicle::GetBoostCharge() const {
+    return 0.0f;
+}
+
 AFortAthenaFerretVehicle::AFortAthenaFerretVehicle() {
     BoostParam = 1;
     MovementParam = 1;
@@ -85,5 +92,8 @@ AFortAthenaFerretVehicle::AFortAthenaFerretVehicle() {
     MaxHealthToDestroyPropWhileBoosting = 1;
     MaxHealthToDestroyPropWithDirectHit = 1;
     MaxHealthToDestroyProp = 1;
+    PS_TrailTop = NULL;
+    PS_TrailBottom = NULL;
+    bShowWingTrails = false;
 }
 

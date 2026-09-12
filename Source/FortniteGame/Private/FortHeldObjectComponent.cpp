@@ -106,6 +106,33 @@ void UFortHeldObjectComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProper
     DOREPLIFETIME(UFortHeldObjectComponent, HeldObjectState);
     DOREPLIFETIME(UFortHeldObjectComponent, OwningPawn);
     DOREPLIFETIME(UFortHeldObjectComponent, ObjectPickupRotation);
+    DOREPLIFETIME(UFortHeldObjectComponent, GuideProjectile);
+}
+
+void UFortHeldObjectComponent::DropObjectHeldInVehicle() {
+}
+
+void UFortHeldObjectComponent::GuideProjectileStopped(const FHitResult& ImpactResult) {
+}
+
+void UFortHeldObjectComponent::HandleGuideProjectileDestroyed(AActor* DestroyedActor) {
+}
+
+void UFortHeldObjectComponent::HoldObjectInVehicle() {
+}
+
+void UFortHeldObjectComponent::RemoveHeldObjectFromVehicle() {
+}
+
+void UFortHeldObjectComponent::ThrownObjectEnteredWater(AFortWaterBodyActor* WaterBody, UFortWaterInteractionComponent* WaterInteractionComponent, bool bIsFirstBody) {
+}
+
+bool UFortHeldObjectComponent::GetAllowObjectToBeHeldInVehicle() const {
+    return false;
+}
+
+bool UFortHeldObjectComponent::IsHeldInVehicle() const {
+    return false;
 }
 
 UFortHeldObjectComponent::UFortHeldObjectComponent() {
@@ -122,5 +149,8 @@ UFortHeldObjectComponent::UFortHeldObjectComponent() {
     PhysicsObjectComponent = NULL;
     ReferenceMeshComponent = NULL;
     PlacementPreviewActor = NULL;
+    bAllowObjectToBeHeldInVehicle = false;
+    GuideProjectileClass = NULL;
+    GuideProjectile = NULL;
 }
 

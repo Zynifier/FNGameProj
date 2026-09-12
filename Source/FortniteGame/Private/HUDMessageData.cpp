@@ -3,7 +3,8 @@
 FHUDMessageData::FHUDMessageData() {
     Placement = EHUDMessagePlacement::None;
     PlayerState = NULL;
-    MessageTargets = EHUDMessageMessageTargets::All;
+    MessageTargets = 0;
     TextTransformPolicy = ETextTransformPolicy::None;
+    DisableChannel = 0;
 }
 

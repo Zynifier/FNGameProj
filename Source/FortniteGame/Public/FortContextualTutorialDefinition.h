@@ -6,6 +6,7 @@
 #include "EFortContextualTutorialTypes.h"
 #include "HUDElementToHighlight.h"
 #include "Templates/SubclassOf.h"
+#include "GameplayTagContainer.h"
 #include "FortContextualTutorialDefinition.generated.h"
 
 class UFortContextualTutorial;
@@ -19,7 +20,7 @@ private:
     TSubclassOf<UFortContextualTutorial> ContextualTutorialClass;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
-    EFortContextualTutorialTypes TutorialType;
+    FGameplayTag TutorialType;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 Priority;
@@ -55,6 +56,12 @@ private:
     float LockedDelay;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float QueuedActivateDelay;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bQueueActivation;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 AccountLevelLimit;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -76,7 +83,10 @@ private:
     EFortContextualTutorialPlatform Platform;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
-    EFortContextualTutorialTypes ContextualTutorialDependency;
+    FGameplayTag ContextualTutorialDependency;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTagContainer AdditionalTutorialsToComplete;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FHUDElementToHighlight> HudElementsToHighlight;

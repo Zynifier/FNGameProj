@@ -6,6 +6,7 @@
 #include "FortUICameraFrameTargetBounds.h"
 #include "FortWeaponAdditionalData.h"
 #include "Templates/SubclassOf.h"
+#include "GameplayTagContainer.h"
 #include "FortWeaponAdditionalData_SingleWieldState.generated.h"
 
 class UAnimMontage;
@@ -17,6 +18,9 @@ class UFortWeaponAdditionalData_SingleWieldState : public UFortWeaponAdditionalD
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag AssociatedTagVariant;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UFortGameplayAbility> PrimaryFireAbility_InState;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -24,6 +28,15 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UAnimMontage> EquipMontage_InState;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHideOffhandMesh;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseWeaponHandSocketOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName WeaponHandSocketOverride;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUseSeparatePreviewOffsets;

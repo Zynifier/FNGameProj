@@ -9,6 +9,8 @@ class UFortAthenaAIBotMovementDigestedSkillSet;
 class UFortAthenaAIBotPerceptionDigestedSkillSet;
 class UFortAthenaAIBotRangeAttackDigestedSkillSet;
 
+class UFortAthenaAIBotAttackingDigestedSkillSet;
+
 UCLASS(Blueprintable)
 class UFortAthenaAIBotEvaluator_RangeAttack : public UFortAthenaAIBotEvaluator_Attack {
     GENERATED_BODY()
@@ -43,6 +45,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaAIBotMovementDigestedSkillSet* CacheMovementDigestedSkillSet;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIBotAttackingDigestedSkillSet* CacheAttackingDigestedSkillSet;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AActor* BlacklistReachingTarget;

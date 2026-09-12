@@ -118,5 +118,6 @@ AFortProjectileBase::AFortProjectileBase() {
     bResetOverlapRestrictionsOnBounce = false;
     MaxLifespanOnStop = 1;
     BulletWhipTrackerComponent = NULL;
+    LifespanOnHitDoNotExplode = 0.0f;
 }
 

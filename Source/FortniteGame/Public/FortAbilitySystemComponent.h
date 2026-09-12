@@ -17,6 +17,8 @@ class UAnimMontage;
 class UGameplayEffect;
 class UObject;
 
+class UAbilitySystemComponent;
+
 UCLASS(Blueprintable, EditInlineNew, MinimalAPI, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UFortAbilitySystemComponent : public UAbilitySystemComponent {
     GENERATED_BODY()
@@ -89,6 +91,15 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void BP_BlockAbilitiesWithTags(const FGameplayTagContainer& Tags);
+    
+    UFUNCTION(BlueprintCallable)
+    FActiveGameplayEffectHandle BP_FortApplyGameplayEffectSpecToTarget(const FGameplayEffectSpecHandle& GameplayEffectSpecHandle, UAbilitySystemComponent* TargetOfEffect, UObject* OptionalSourceObject, AActor* OptionalEffectCauser, AActor* OptionalDamageSource, FGameplayEffectContextHandle EffectContext);
+    
+    UFUNCTION(BlueprintCallable)
+    void StartOverrideReplicateMontageAnimPosition();
+    
+    UFUNCTION(BlueprintCallable)
+    void StopOverrideReplicateMontageAnimPosition();
     
 };
 

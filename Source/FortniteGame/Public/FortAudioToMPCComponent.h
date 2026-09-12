@@ -3,6 +3,7 @@
 #include "Components/ActorComponent.h"
 #include "Sound/SoundWave.h"
 #include "ChannelData.h"
+#include "Vector4ChannelData.h"
 #include "FortAudioToMPCComponent.generated.h"
 
 class UMaterialParameterCollection;
@@ -23,6 +24,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FChannelData> ChannelDataArray;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FVector4ChannelData> VectorChannelDataArray;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))

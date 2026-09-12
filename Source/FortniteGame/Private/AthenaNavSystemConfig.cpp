@@ -10,5 +10,6 @@ UAthenaNavSystemConfig::UAthenaNavSystemConfig() {
     bPrioritizeNavigationAroundSpawners = false;
     bResetDirtyAreasOnInitialBuildingRelease = true;
     bSupportRuntimeNavmeshDisabling = true;
+    bNavOctreeUnlockedByDefaultWhenNotPreloadingNavData = false;
 }
 

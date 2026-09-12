@@ -54,6 +54,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     AFortPlayerStartCreative* ClaimedPlayerStart;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, NotReplicated, Transient, meta=(AllowPrivateAccess=true))
+    bool bIsWaitingForPersistence;
+    
     FORTNITEGAME_API FMinigamePlayer();
 };
 

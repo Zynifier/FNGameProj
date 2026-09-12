@@ -11,5 +11,11 @@ public:
     UFUNCTION(BlueprintCallable, Exec)
     void SetAlwaysShowContrails(bool bEnabled);
     
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpAllOwnedTags();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpAllOwnedTagsForActor();
+    
 };
 

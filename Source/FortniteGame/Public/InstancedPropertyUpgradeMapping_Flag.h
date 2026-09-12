@@ -8,6 +8,9 @@ class UInstancedPropertyUpgradeMapping_Flag : public UInstancedPropertyUpgradeMa
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 Index_0;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 Index;
     
     UInstancedPropertyUpgradeMapping_Flag();

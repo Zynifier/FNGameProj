@@ -104,7 +104,7 @@ AFortVolume* AFortVolumeManager::GetVolumeForActor(const AActor* Actor) const {
     return NULL;
 }
 
-AFortMinigameSettingsBuilding* AFortVolumeManager::GetSettingsActorForVolume(const AFortVolume* ContextVolume) {
+AFortMinigameSettingsBuilding* AFortVolumeManager::GetSettingsActorForVolume(const AActor* ContextVolume) {
     return NULL;
 }
 
@@ -116,7 +116,7 @@ AFortMinigame* AFortVolumeManager::GetMinigameFromVolume(const AActor* Actor) co
     return NULL;
 }
 
-AFortMinigame* AFortVolumeManager::GetMinigameForVolume(const AFortVolume* Volume) {
+AFortMinigame* AFortVolumeManager::GetMinigameForVolume(const AActor* Volume) {
     return NULL;
 }
 
@@ -174,6 +174,9 @@ void AFortVolumeManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
     
     DOREPLIFETIME(AFortVolumeManager, VolumeActivePlayers);
     DOREPLIFETIME(AFortVolumeManager, bInSpawningStartup);
+}
+
+void AFortVolumeManager::HandleSpatialLoadingStateChanged(ESpatialLoadingState NewState, AFortVolume* Volume) {
 }
 
 AFortVolumeManager::AFortVolumeManager() {

@@ -8,5 +8,6 @@ UAthenaSkyDiveContrailItemDefinition::UAthenaSkyDiveContrailItemDefinition(const
     : Super(ObjectInitializer) {
     VelocityVectorParameterName = TEXT("User.FEVec");
     ParaGlideLeanParameterName = TEXT("User.ParaGlideLeanAlpha");
+    bWaitForFrontendSceneTransition = false;
 }
 

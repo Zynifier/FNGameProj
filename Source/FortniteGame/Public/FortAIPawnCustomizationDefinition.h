@@ -9,6 +9,8 @@
 class UAnimInstance;
 class USkeletalMesh;
 
+class UCustomCharacterPart;
+
 UCLASS(Blueprintable)
 class UFortAIPawnCustomizationDefinition : public UPrimaryDataAsset, public IAthenaMemoryBudgetInterface {
     GENERATED_BODY()
@@ -21,6 +23,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UAnimInstance> AnimationBP;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<UCustomCharacterPart*> CharacterParts;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer GameplayTags;

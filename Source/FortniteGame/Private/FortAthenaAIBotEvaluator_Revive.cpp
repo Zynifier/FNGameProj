@@ -8,5 +8,6 @@ UFortAthenaAIBotEvaluator_Revive::UFortAthenaAIBotEvaluator_Revive() {
     MaxDistanceToRevive = 1;
     CurrentReviveTarget = NULL;
     ReviveSkillSet = NULL;
+    ReviveBehaviorRuntimeParameters = NULL;
 }
 

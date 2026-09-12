@@ -19,6 +19,7 @@
 #include "McpVariantChannelInfo.h"
 #include "PlayerBannerInfo.h"
 #include "ReplicatedStatValues.h"
+#include "OnPlayerStatePawnDiedDelegate.h"
 #include "FortPlayerState.generated.h"
 
 class AActor;
@@ -127,7 +128,7 @@ protected:
     TEnumAsByte<EFortCustomBodyType::Type> LocalCharacterBodyType;
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCustomCharacterPart* LocalCharacterParts[6];
+    UCustomCharacterPart* LocalCharacterParts[7];
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UAthenaCharmItemDefinition* LocalCharacterCharms[4];
@@ -149,11 +150,11 @@ private:
     UCustomPlayerComponent* CustomPRIComponent;
     
     UPROPERTY(EditAnywhere, ReplicatedUsing=OnRep_AccessoryColorSwatches, meta=(AllowPrivateAccess=true))
-    UCustomColorSwatch* CharacterPartColorSwatches[6];
+    UCustomColorSwatch* CharacterPartColorSwatches[7];
     
 protected:
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCustomColorSwatch* LocalCharacterPartColorSwatches[6];
+    UCustomColorSwatch* LocalCharacterPartColorSwatches[7];
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_PlayerTeam, meta=(AllowPrivateAccess=true))
@@ -216,6 +217,10 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_InGhostMode, meta=(AllowPrivateAccess=true))
     bool bInGhostMode;
+    
+protected:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerStatePawnDied OnPawnDiedDelegate;
     
 public:
     AFortPlayerState();
@@ -332,7 +337,6 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
-    UFUNCTION()
     uint8 GetTeam() const override PURE_VIRTUAL(GetTeam, return 0;);
     
 };

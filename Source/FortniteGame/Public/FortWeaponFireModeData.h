@@ -23,10 +23,10 @@ public:
     bool bOverrideImpactSurfaceEffects;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UParticleSystem* ImpactPhysicalSurfaceEffects[26];
+    UParticleSystem* ImpactPhysicalSurfaceEffects[27];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TArray<TSoftObjectPtr<UNiagaraSystem>> ImpactNiagaraPhysicalSurfaceEffectAssets;
+    TArray<UNiagaraSystem*> ImpactNiagaraPhysicalSurfaceEffectAssets;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UParticleSystem* BeamParticleSystem;
@@ -38,7 +38,7 @@ public:
     bool bOverrideImpactSurfaceSounds;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    USoundBase* ImpactPhysicalSurfaceSounds[26];
+    USoundBase* ImpactPhysicalSurfaceSounds[27];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UParticleSystem* MuzzleParticleSystem;

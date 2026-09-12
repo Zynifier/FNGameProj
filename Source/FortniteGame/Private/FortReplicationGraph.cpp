@@ -14,5 +14,6 @@ UFortReplicationGraph::UFortReplicationGraph() {
     AlwaysRelevantNode = NULL;
     LiveSpectatorRelevancyNode = NULL;
     PlayerStateLimiterNode = NULL;
+    ReplayPlayerStateLimiterNode = NULL;
 }
 

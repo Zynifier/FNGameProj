@@ -629,7 +629,7 @@ void AFortPlayerController::PostHeroStatCollectionBookProgressMade(int32 LevelRe
 void AFortPlayerController::PlaySpatialSound(USoundBase* Sound, FVector Location) {
 }
 
-void AFortPlayerController::PlayEmoteItem(const UFortMontageItemDefinitionBase* EmoteAsset) {
+void AFortPlayerController::PlayEmoteItem(const UFortMontageItemDefinitionBase* EmoteAsset, EFortEmotePlayMode PlayMode) {
 }
 
 bool AFortPlayerController::OwnsIslandVolume(AFortVolume* Volume) const {
@@ -643,7 +643,7 @@ bool AFortPlayerController::OwnsCurrentIslandVolume() const {
 void AFortPlayerController::OpenVoteDialog() {
 }
 
-void AFortPlayerController::OpenInventory(int32 TargetTab) {
+void AFortPlayerController::OpenInventory(const FName InventoryTabId) {
 }
 
 void AFortPlayerController::OpenChoiceUI(FChoiceData ChoiceData) {
@@ -693,7 +693,7 @@ void AFortPlayerController::NotifyMeshNetPlayer(FName Tag) {
 void AFortPlayerController::MutePlayer(const FUniqueNetIdRepl& UniqueNetId) {
 }
 
-void AFortPlayerController::MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding) {
+void AFortPlayerController::MulticastClearWeakSpotData_Implementation(UObject* ParentBuilding) {
 }
 
 void AFortPlayerController::ModifyStat(FName StatName, int32 Amount, EStatMod ModType, bool bForceStatSave) {
@@ -1290,6 +1290,55 @@ void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     DOREPLIFETIME(AFortPlayerController, CameraPrototypeName);
     DOREPLIFETIME(AFortPlayerController, bFinalXPUpdateFailed);
     DOREPLIFETIME(AFortPlayerController, MeshParentIds);
+    DOREPLIFETIME(AFortPlayerController, bUseSmartBuild);
+    DOREPLIFETIME(AFortPlayerController, CurrentReplaySpotLight);
+}
+
+void AFortPlayerController::BroadcastOnPickupCreated(AFortPickup* PickUp) {
+}
+
+void AFortPlayerController::Cheat_ClientEquipBuildingItems_Implementation(UFortBuildingItemDefinition* WallItemDef, UFortBuildingItemDefinition* FloorItemDef, UFortBuildingItemDefinition* StairItemDef, UFortBuildingItemDefinition* RoofItemDef) {
+}
+
+void AFortPlayerController::PlayerRequestClearIslandData() {
+}
+
+void AFortPlayerController::RefreshHUDElementVisibilitiesToSettings() {
+}
+
+void AFortPlayerController::ServerPlayerRequestClearIslandData_Implementation() {
+}
+bool AFortPlayerController::ServerPlayerRequestClearIslandData_Validate() {
+    return true;
+}
+
+void AFortPlayerController::ServerReAimAllReplaySpotLights_Implementation(FVector NewLocation, FRotator NewRotation) {
+}
+
+void AFortPlayerController::ServerReAimCurrentReplaySpotLight_Implementation(FVector NewLocation, FRotator NewRotation) {
+}
+
+void AFortPlayerController::ServerSetCurrentReplaySpotLight_Implementation(AFortReplayMovableSpotLight* NewReplaySpotLight) {
+}
+
+void AFortPlayerController::ServerSetCurrentReplaySpotLightColor_Implementation(int32 R, int32 G, int32 B) {
+}
+
+void AFortPlayerController::ServerSetCurrentReplaySpotLightDebugDraw_Implementation(bool bEnabled) {
+}
+
+void AFortPlayerController::ServerSetReplaySpotLightGroupMoveLocked_Implementation(uint32 Number, bool bLocked) {
+}
+
+UAthenaMarkerComponent* AFortPlayerController::GetMarkerComponent() const {
+    return NULL;
+}
+
+USoundEffectSourcePresetChain* AFortPlayerController::GetVoiceInputEffectChain() const {
+    return NULL;
+}
+
+void AFortPlayerController::OnMinigameSpatialLoadingStateChanged(ESpatialLoadingState NewState, AFortVolume* Volume) {
 }
 
 AFortPlayerController::AFortPlayerController() {
@@ -1499,5 +1548,9 @@ AFortPlayerController::AFortPlayerController() {
     CollectionsComponent = CreateDefaultSubobject<UFortControllerComponent_Collections>(TEXT("CollectionsComp"));
     PendingExecuteInventoryItemDefinition = NULL;
     QuickHealItemPickerClass = NULL;
+    MiniMapInputComponent = NULL;
+    bPredictedBuildingWallsHaveNoCollision = false;
+    bUseSmartBuild = false;
+    CurrentReplaySpotLight = NULL;
 }
 

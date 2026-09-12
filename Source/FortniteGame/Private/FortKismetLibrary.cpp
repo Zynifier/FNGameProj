@@ -13,7 +13,7 @@ bool UFortKismetLibrary::ValidateOwnershipForGroupEmote(AFortPawn* Pawn, const U
     return false;
 }
 
-bool UFortKismetLibrary::UpgradeAllWeaponsVerticalToRarity(AFortPlayerController* PlayerController, EFortRarity NewRarity) {
+bool UFortKismetLibrary::UpgradeAllWeaponsVerticalToRarity(AFortPlayerController* PlayerController, EFortRarity NewRarity, bool bThrottle) {
     return false;
 }
 
@@ -67,7 +67,7 @@ AFortAreaOfEffectCloud* UFortKismetLibrary::SpawnAreaOfEffectCloud(TSubclassOf<A
     return NULL;
 }
 
-void UFortKismetLibrary::ShowSoundIndicatorLocalForTeam(UObject* WorldContextObject, AActor* TrackedActor, FVector Location, float MaxAudibleDistance, EFortSoundIndicatorTypes IndicatorType, uint8 Team, TArray<TEnumAsByte<EFortTeamAffiliation::Type>> Affiliations, const AActor* Instigator, FLinearColor Tint, UTexture* OverrideIcon) {
+void UFortKismetLibrary::ShowSoundIndicatorLocalForTeam(UObject* WorldContextObject, AActor* TrackedActor, FVector Location, float MaxAudibleDistance, EFortSoundIndicatorTypes IndicatorType, const TArray<AFortPlayerController*>& IgnoreOnControllers, uint8 Team, TArray<TEnumAsByte<EFortTeamAffiliation::Type>> Affiliations, const AActor* Instigator, FLinearColor Tint, UTexture* OverrideIcon) {
 }
 
 void UFortKismetLibrary::ShowSoundIndicatorLocal(UObject* WorldContextObject, AActor* TrackedActor, FVector Location, float MaxAudibleDistance, EFortSoundIndicatorTypes IndicatorType, const TArray<AFortPlayerController*>& IgnoreOnControllers, const AActor* Instigator, FLinearColor Tint, UTexture* OverrideIcon) {
@@ -239,7 +239,7 @@ void UFortKismetLibrary::MakeAllPlayersTalkToSelf(UObject* WorldContextObject, F
 void UFortKismetLibrary::KeepCGPathOptimizations(const AController* RequestedBy, int64 ExpectedBudget, float Duration) {
 }
 
-TArray<AFortPickup*> UFortKismetLibrary::K2_SpawnPickupInWorldWithLootTier(UObject* WorldContextObject, FName LootTierName, FVector position, int32 OverrideMaxStackCount, bool bToss, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source) {
+TArray<AFortPickup*> UFortKismetLibrary::K2_SpawnPickupInWorldWithLootTier(UObject* WorldContextObject, FName LootTierName, FVector Position, int32 OverrideMaxStackCount, bool bToss, bool bTossWithVelocity, FVector TossVelocity, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source) {
     return TArray<AFortPickup*>();
 }
 
@@ -459,7 +459,7 @@ bool UFortKismetLibrary::HasMultipleVisibleRewards(const FFortRewardInfo& Reward
     return false;
 }
 
-void UFortKismetLibrary::GiveItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer, int32 ItemLevel, int32 PickupInstigatorHandle) {
+void UFortKismetLibrary::GiveItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortWorldItemDefinition* ItemDefinition, int32 NumberToGive, bool bNotifyPlayer, int32 ItemLevel, int32 PickupInstigatorHandle, bool bUseItemPickupAnalyticEvent) {
 }
 
 bool UFortKismetLibrary::GetWeaponStatsRow(FDataTableRowHandle DataTableRowHandle, FFortBaseWeaponStats& OutRow) {
@@ -1150,6 +1150,92 @@ void UFortKismetLibrary::AddActorToClear(UObject* WorldContextObject, ABuildingA
 }
 
 void UFortKismetLibrary::ActivateQuickbarSlot(AFortPlayerPawn* PlayerPawn, EFortQuickBars InQuickBar, int32 Slot, float ActivateDelay, bool bUpdatePreviousFocusedSlot, bool bForceExecution) {
+}
+
+void UFortKismetLibrary::ApplyGameplayEffectSpecToActorsInRange(UObject* WorldContextObject, const FGameplayEffectSpecHandle& EffectSpecToApply, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, const FVector& SourcePosition, const float Range, const TArray<AActor*>& IgnoredActors, const bool bRequireLOS, UAbilitySystemComponent* InstigatorAbilitySystemComp) {
+}
+
+bool UFortKismetLibrary::BoxOverlapActors(const UObject* WorldContextObject, const FTransform& BoxTransform, const FVector& BoxExtent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, UClass* ActorClassFilter, const TArray<AActor*>& ActorsToIgnore, TArray<AActor*>& OutActors) {
+    return false;
+}
+
+bool UFortKismetLibrary::BoxOverlapComponents(const UObject* WorldContextObject, const FTransform& BoxTransform, const FVector& BoxExtent, const TArray<TEnumAsByte<EObjectTypeQuery>>& ObjectTypes, UClass* ComponentClassFilter, const TArray<AActor*>& ActorsToIgnore, TArray<UPrimitiveComponent*>& OutComponents) {
+    return false;
+}
+
+bool UFortKismetLibrary::CheckLineOfSightToActorWithChannel(const FVector& SourcePos, const AActor* Target, TEnumAsByte<ECollisionChannel> TargetFilterChannel, const AActor* Source) {
+    return false;
+}
+
+void UFortKismetLibrary::DeactivateAttachedParticleSystems(const AFortPlayerPawn* PlayerPawn, TArray<UFXSystemComponent*>& FXComponents, bool bOnlyActiveSystems) {
+}
+
+TArray<UActorComponent*> UFortKismetLibrary::FindAllComponents(const UObject* WorldContextObject, TSubclassOf<UActorComponent> ComponentClass) {
+    return TArray<UActorComponent*>();
+}
+
+void UFortKismetLibrary::FortBlueprintLog(const UObject* WorldContextObject, const FString& inString) {
+}
+
+FGuid UFortKismetLibrary::GenerateGuidFromObject(const UObject* InObject, bool bOnlyStrings) {
+    return FGuid{};
+}
+
+bool UFortKismetLibrary::GetCameraLookHitResult(FHitResult& OutHitResult, const AFortPlayerController* PlayerController, const float CameraForwardTraceDistance, const bool bTraceComplex) {
+    return false;
+}
+
+AFortPlayerPawn* UFortKismetLibrary::GetClosestFortPlayerPawnByTeamAffiliation(const UObject* WorldContextObject, const FVector& Position, const AActor* TeamAffiliationActor, const TEnumAsByte<EFortTeamAffiliation::Type> TeamAffiliation) {
+    return NULL;
+}
+
+AFortGameStateAthena* UFortKismetLibrary::GetGameStateAthenaFromContext(const UObject* WorldContextObject) {
+    return NULL;
+}
+
+UGameplayAbility* UFortKismetLibrary::GetPrimaryAbilityInstanceOfAbilitySystemComponent(UFortAbilitySystemComponent* AbilitySystemComponent, TSubclassOf<UFortGameplayAbility> AbilityClass) {
+    return NULL;
+}
+
+void UFortKismetLibrary::GetStaticMeshesForClass(const TSubclassOf<AActor> Class, TArray<UStaticMesh*>& OutStaticMeshes) {
+}
+
+TEnumAsByte<EFortTeamAffiliation::Type> UFortKismetLibrary::GetTeamAffiliationForActorToLocalPlayer(const AActor* Actor, bool bIncludeNonSpectators, bool bIncludeSpectators) {
+    return EFortTeamAffiliation::Friendly;
+}
+
+bool UFortKismetLibrary::IsBattleLabModePlaylist(const UObject* WorldContextObject) {
+    return false;
+}
+
+bool UFortKismetLibrary::IsCosmeticObjectDisplayedInFrontendContext(UObject* CosmeticObject) {
+    return false;
+}
+
+bool UFortKismetLibrary::IsLocationInSafeZone(UObject* WorldContextObject, const FVector& Location) {
+    return false;
+}
+
+bool UFortKismetLibrary::IsPapayaPlaylist(const UObject* WorldContextObject) {
+    return false;
+}
+
+AFortPickup* UFortKismetLibrary::K2_SpawnPickupInWorldWithClassAndLevel(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 WorldLevel, TSubclassOf<AFortPickup> PickupClass, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner) {
+    return NULL;
+}
+
+AFortPickup* UFortKismetLibrary::K2_SpawnPickupInWorldWithLevel(UObject* WorldContextObject, UFortWorldItemDefinition* ItemDefinition, int32 WorldLevel, int32 NumberToSpawn, FVector Position, FVector Direction, int32 OverrideMaxStackCount, bool bToss, bool bRandomRotation, bool bBlockedFromAutoPickup, int32 PickupInstigatorHandle, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source, AFortPlayerController* OptionalOwnerPC, bool bPickupOnlyRelevantToOwner) {
+    return NULL;
+}
+
+bool UFortKismetLibrary::OnSameSquad(const AFortPlayerPawnAthena* PlayerPawnA, const AFortPlayerPawnAthena* PlayerPawnB) {
+    return false;
+}
+
+void UFortKismetLibrary::RemoveItemFromInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortWorldItemDefinition* ItemDefinition) {
+}
+
+void UFortKismetLibrary::SetSceneCaptureShowFlags(USceneCaptureComponent2D* SceneCaptureComponent, const TArray<FEngineShowFlagsSetting>& ShowFlagSettings) {
 }
 
 UFortKismetLibrary::UFortKismetLibrary() {

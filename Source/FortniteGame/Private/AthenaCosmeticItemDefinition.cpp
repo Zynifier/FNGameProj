@@ -52,6 +52,17 @@ void UAthenaCosmeticItemDefinition::ApplyVariantsToComponent(UPrimitiveComponent
 void UAthenaCosmeticItemDefinition::ApplyVariants(AActor* InActor, const FFortAthenaLoadout& Loadout, const FApplyVariantsAdditionalParams& Params) const {
 }
 
+TArray<FString> UAthenaCosmeticItemDefinition::GetAllPossibleNativeMeshComponentNames() {
+    return TArray<FString>();
+}
+
+TArray<FFortCosmeticVariantPreview> UAthenaCosmeticItemDefinition::GetOrGenerateItemVariantPreviews(const AFortPlayerController* PlayerController) const {
+    return TArray<FFortCosmeticVariantPreview>();
+}
+
+void UAthenaCosmeticItemDefinition::UpdateLockedFloatSliderVariant(const AFortPlayerController* FortPC, FGameplayTag ChannelTag) const {
+}
+
 UAthenaCosmeticItemDefinition::UAthenaCosmeticItemDefinition(const FObjectInitializer& ObjectInitializer) 
     : Super(ObjectInitializer) {
     bIsShuffleTile = false;
@@ -63,5 +74,9 @@ UAthenaCosmeticItemDefinition::UAthenaCosmeticItemDefinition(const FObjectInitia
     bDynamicInstallBundlesComplete = false;
     DynamicInstallBundlesUpdateStartTime = 4294967295;
     VariantUnlockType = EVariantUnlockType::UnlockAll;
+    bDynamicInstallBundlesCancelled = false;
+    DynamicInstallBundleRequestRefCount = 0;
+    DynamicInstallBundleRequestRetryCount = 0;
+    ItemVariantPreviewGenerator = NULL;
 }
 

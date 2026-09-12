@@ -298,5 +298,8 @@ public:
     {
         return FPrimaryAssetId("WorldItem", GetFName());
     }
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    int32 GetInitialAmmo(const int32 ItemLevel) const;
+    
 };
 

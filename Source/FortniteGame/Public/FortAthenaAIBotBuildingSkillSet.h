@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
 #include "FortAthenaAIBotSkillSet.h"
+#include "AthenaFortAIBotWeightedBuildingList.h"
 #include "FortAthenaAIBotBuildingSkillSet.generated.h"
 
 UCLASS(Blueprintable, EditInlineNew)
@@ -16,7 +17,13 @@ protected:
     FScalableFloat DefensiveBuildingDelayDeviationBetweenBuilds;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat DelayBetweenBuildPieces;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat ForceEquipBuildToolDuration;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FAthenaFortAIBotWeightedBuildingList> WeightedBuildingLists;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat DefensiveBuildingTemplateWeights[5];

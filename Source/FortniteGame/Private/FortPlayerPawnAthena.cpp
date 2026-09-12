@@ -29,7 +29,7 @@ void AFortPlayerPawnAthena::SetMeshHeightAdjustAthena(float HeightAdjust) {
 void AFortPlayerPawnAthena::SetFallInstigator(AController* NewFallInstigator, FGameplayTagContainer NewFallingDamageTags) {
 }
 
-void AFortPlayerPawnAthena::SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue) {
+void AFortPlayerPawnAthena::SetDamageCameraShakeClass(TSubclassOf<UMatineeCameraShake> NewValue) {
 }
 
 bool AFortPlayerPawnAthena::SetCharacterBodyVisibilityForPossession(bool bVisible) {
@@ -137,7 +137,7 @@ void AFortPlayerPawnAthena::GameplayCue_Creative_PossessProp(TEnumAsByte<EGamepl
 void AFortPlayerPawnAthena::GamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep) {
 }
 
-void AFortPlayerPawnAthena::ForceReviveFromDBNO() {
+void AFortPlayerPawnAthena::ForceReviveFromDBNO(AController* EventInstigator) {
 }
 
 void AFortPlayerPawnAthena::FastSharedReplication_Implementation(const FSharedRepMovement& SharedRepMovement) {
@@ -172,6 +172,36 @@ void AFortPlayerPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     DOREPLIFETIME(AFortPlayerPawnAthena, FastReplicationMinimalReplicationTags);
     DOREPLIFETIME(AFortPlayerPawnAthena, EncryptedPawnReplayData);
     DOREPLIFETIME(AFortPlayerPawnAthena, bIsCreativeGhostModeActivated);
+    DOREPLIFETIME(AFortPlayerPawnAthena, bIsCreativeModeratorModeActivated);
+    DOREPLIFETIME(AFortPlayerPawnAthena, GravityAttributeReplicationProxy);
+}
+
+void AFortPlayerPawnAthena::ClientSetGravityJumpMultipliers_Implementation(float NewGravityVal, float NewVehicleGravityVal, float NewJumpZ, float NewJumpHorizontalAcceleration, float NewJumpHorizontalVelocity) {
+}
+
+void AFortPlayerPawnAthena::CreativeToggleInvulnerable() {
+}
+
+void AFortPlayerPawnAthena::OnRep_bEnableRenderCustomDepth() {
+}
+
+void AFortPlayerPawnAthena::OnRep_bIsCreativeModeratorModeActivated() {
+}
+
+void AFortPlayerPawnAthena::OnRep_GravityAttributeReplicationProxy() {
+}
+
+void AFortPlayerPawnAthena::ServerCreativeToggleInvulnerable_Implementation() {
+}
+bool AFortPlayerPawnAthena::ServerCreativeToggleInvulnerable_Validate() {
+    return true;
+}
+
+void AFortPlayerPawnAthena::SetEnableRenderCustomDepth(bool bInEnableRenderCustomDepth) {
+}
+
+float AFortPlayerPawnAthena::GetReviveFromDBNOTime() const {
+    return 0.0f;
 }
 
 AFortPlayerPawnAthena::AFortPlayerPawnAthena() {
@@ -250,5 +280,9 @@ AFortPlayerPawnAthena::AFortPlayerPawnAthena() {
     DamageForceFeedback = NULL;
     DamageCameraShakeClass = NULL;
     ConvertComponent = CreateDefaultSubobject<UFortPawnComponent_Convert>(TEXT("ConvertComp"));
+    CurrentPawnSquaredSpeed = 0.0f;
+    CurrentPawnSquaredSpeedXY = 0.0f;
+    bIsCreativeModeratorModeActivated = false;
+    AffiliationComponent = NULL;
 }
 

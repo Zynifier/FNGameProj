@@ -4,9 +4,6 @@
 void AFortAthenaMutator_Traverse::OnRep_CurrentPointIndex() {
 }
 
-void AFortAthenaMutator_Traverse::OnGamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep) {
-}
-
 void AFortAthenaMutator_Traverse::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     

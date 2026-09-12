@@ -37,6 +37,9 @@ public:
     bool bKillOnMaxTargetsTouched;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bSkipRecaptureSourceActorTagsOnTouch;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortGameplayEffectContainerSpec EffectContainerSpecToApplyOnExplode;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -182,6 +185,9 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic)
     void ForwardGameplayCueToParent() override PURE_VIRTUAL(ForwardGameplayCueToParent,);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnDisableForKill();
     
 };
 

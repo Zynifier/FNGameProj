@@ -84,6 +84,9 @@ protected:
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<TWeakObjectPtr<UFortQuestItem>> QuestsUpdated;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseNewQuestRewardProcess;
+    
 public:
     UFortPlayerControllerAthenaXPComponent();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -131,6 +134,10 @@ public:
     
     UFUNCTION(BlueprintCallable, Client, Reliable, WithValidation)
     void ClientMedalsRecived(const TArray<FAthenaAccolades>& Medals);
+    
+private:
+    UFUNCTION(BlueprintCallable, Server, Unreliable)
+    void ServerUpdateCurrentLevel(int32 NewCurrentLevel);
     
 };
 

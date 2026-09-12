@@ -14,5 +14,14 @@ public:
     FGameplayTag ActiveVariantTag;
     
     FORTNITEGAME_API FCosmeticVariantInfo();
+
+    // Needed as a TMap key (UAthenaCosmeticItemDefinition::ReactivePreviewDrivers)
+    bool operator==(const FCosmeticVariantInfo& Other) const {
+        return VariantChannelTag == Other.VariantChannelTag && ActiveVariantTag == Other.ActiveVariantTag;
+    }
+
+    friend uint32 GetTypeHash(const FCosmeticVariantInfo& Info) {
+        return HashCombine(GetTypeHash(Info.VariantChannelTag), GetTypeHash(Info.ActiveVariantTag));
+    }
 };
 

@@ -7,5 +7,8 @@ bool UFortAthenaAISpawnerDataComponent_AIBotAffiliation::GetSquadID_Implementati
 UFortAthenaAISpawnerDataComponent_AIBotAffiliation::UFortAthenaAISpawnerDataComponent_AIBotAffiliation() {
     bOverrideIsAnAthenaGameParticipant = false;
     bIsAnAthenaGameParticipant = false;
+    bForceAddToCollectionOnDamage = false;
+    NameSettingsAfterReveal = NULL;
+    DisguiseConversationComponent = NULL;
 }
 

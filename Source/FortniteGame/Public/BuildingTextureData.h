@@ -31,7 +31,7 @@ public:
     EFortResourceType ResourceType;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    float ResourceCost[5];
+    float ResourceCost[6];
     
     UBuildingTextureData();
 };

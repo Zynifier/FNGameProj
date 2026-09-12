@@ -16,6 +16,14 @@ void AFortAthenaMutator_Fill::GetLifetimeReplicatedProps(TArray<FLifetimePropert
     DOREPLIFETIME(AFortAthenaMutator_Fill, LavaFloor);
 }
 
+AAthenaFillFloor* AFortAthenaMutator_Fill::GetLavaFloor() const {
+    return NULL;
+}
+
+float AFortAthenaMutator_Fill::GetLavaSupportLevel() const {
+    return 0.0f;
+}
+
 AFortAthenaMutator_Fill::AFortAthenaMutator_Fill() {
     FloorActorClass = NULL;
     LavaFloor = NULL;

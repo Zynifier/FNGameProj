@@ -3,6 +3,7 @@
 #include "UObject/Object.h"
 #include "Sound/SoundSubmixSend.h"
 #include "Sound/SoundSubmixSend.h"
+#include "FortSubmixAnalyzerData.h"
 #include "AudioAnalysisSubmixAnalyzer.generated.h"
 
 class UFortAudioAnalysisSettings;
@@ -22,6 +23,9 @@ public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     USoundSubmix* Submix;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortSubmixAnalyzerData AnalyzerData;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortAudioAnalysisSettings* AnalysisSettings;

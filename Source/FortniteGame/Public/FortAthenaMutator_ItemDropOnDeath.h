@@ -33,6 +33,12 @@ protected:
     TArray<FItemsToDropOnDeath> ItemsToDrop;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat ShouldNonParticipantAIAlsoDropItems;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FName> LootTierGroupsToDrop;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bShouldNonParticipantAIAlsoDropItems;
     
 public:

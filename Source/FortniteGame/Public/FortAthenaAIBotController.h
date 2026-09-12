@@ -36,6 +36,9 @@
 #include "OnAlertLevelChangedEventDelegate.h"
 #include "OnStealthMeterChangedEventDelegate.h"
 #include "Templates/SubclassOf.h"
+#include "EFortPawnStasisMode.h"
+#include "GameplayTagContainer.h"
+#include "OnPlayerPawnAISpawnedDelegate.h"
 #include "FortAthenaAIBotController.generated.h"
 
 class AActor;
@@ -79,6 +82,17 @@ class UFortWorldItem;
 class UPrimitiveComponent;
 class UStatManager;
 
+class ABuildingWall;
+class AFortPickup;
+class UAthenaAIServicePlayerBots;
+class UCustomCharacterPart;
+class UFortActorComponent_Affiliation;
+class UFortAthenaAIBotRangeAttackDigestedSkillSet;
+class UFortAthenaAIBotUnstuckDigestedSkillSet;
+class UFortAthenaAIRuntimeParameters_AIBotRespawn;
+class UFortAthenaAIRuntimeParameters_Leash;
+class UFortGameStateComponent_AffiliationManager;
+
 UCLASS(Blueprintable, MinimalAPI, Config=Game)
 class AFortAthenaAIBotController : public AAIController, public IFortTeamActorInterface, public INavPathObserverInterface, public IFortInventoryOwnerInterface, public IFortAthenaMutator_EQSProviderInterface, public IFortAnalyticsControllerInterface, public ICosmeticLoadoutOwner {
     GENERATED_BODY()
@@ -112,6 +126,11 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortPlayerPawnAthena* PlayerBotPawn;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UAthenaAIServicePlayerBots* CachedAIServicePlayerBots;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortServerBotManagerAthena* CachedBotManager;
     
@@ -124,12 +143,22 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaAIRuntimeParametersComponent* CachedAIRuntimeParametersComponent;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIRuntimeParameters_Leash* CachedLeashRuntimeParameters;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaNpcPatrollingComponent* CachedPatrollingComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FBotDelayedStimulus> DelayedStimulus;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FFortBotThreatActorInfo> ObjectsThreatList;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FFortBotTargetHandler TargetHandler;
     
@@ -178,6 +207,11 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortAthenaLoadout CosmeticLoadoutBC;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<UCustomCharacterPart*> CustomCharacterPartOverridesBC;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortBotNameSettings* NameSettingsBC;
     
@@ -214,6 +248,14 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaAIBotPlayStyleDigestedSkillSet* CachePlayStyleSkillSet;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIBotUnstuckDigestedSkillSet* CacheUnstuckSkillSet;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIBotRangeAttackDigestedSkillSet* CacheRangeAttackSkillSet;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortInteractContextInfo* InteractContextInfo;
     
@@ -223,6 +265,14 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bCanBeDestroyedOnDeath: 1;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector LastDeathLocation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FRotator LastDeathRotation;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bCanBeRespawnedOnDeath: 1;
     
@@ -277,12 +327,22 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bForceUsingBuildingTool;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bForceHolsterWeapon;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortWorldItem* PendingEquipWeapon;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     APawn* PlayerToSpectateOnDeath;
     
+protected:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerPawnAISpawned OnPlayerPawnAISpawnedDelegate;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UAISenseConfig_Sight* AISenseConfig_SightOverride;
     
@@ -310,6 +370,14 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FVector LeashActorToFollowLocalOffset;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortGameStateComponent_AffiliationManager* CachedAffiliationManager;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortActorComponent_Affiliation* CachedAffiliationComponent;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TSubclassOf<UFortAthenaAISpawnerData> RespawnSpawnerDataClass;
     
@@ -318,6 +386,28 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bIsAffectedByMutatorHealthAndShieldModifiers;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bHasChangedPawnCullDistanceToAggroMode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaAIRuntimeParameters_AIBotRespawn* RespawnRuntimeParameters;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    ABuildingWall* CurrentBlockingDoor;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    APawn* FinisherPawn;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    EFortPawnStasisMode PreviousStasisMode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bPostponeGiveWeaponCheat;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UBehaviorTree* BTAssetToRunOnPawnAISpawned;
     
 public:
     AFortAthenaAIBotController();
@@ -446,6 +536,15 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION()
     uint8 GetTeam() const override PURE_VIRTUAL(GetTeam, return 0;);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void ChangeActiveVariantForCosmeticItem(FName ItemTemplateToChange, FGameplayTag VariantChannelToChange, FGameplayTag DesiredActiveVariant);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void NotifyPickupsSpawnedOnDeath(const TArray<AFortPickup*>& SpawnedPickups);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnKnockbacked(const FGameplayTag KnockbackTypeTag);
     
 };
 

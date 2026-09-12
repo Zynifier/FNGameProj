@@ -10,5 +10,6 @@ AFortAthenaMutator_GalileoEquipment::AFortAthenaMutator_GalileoEquipment() {
     StopDropsByApplyEffect = NULL;
     bShouldStopDropsAfterApplying = false;
     SlotToSwapToAfterGrant = 0;
+    SlotToSwapToAfterGrant_DEPRECATE = 0;
 }
 

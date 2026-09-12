@@ -88,7 +88,7 @@ bool AFortWeaponRanged::IsCachedIsProjectileWeapon_Implementation() const {
     return false;
 }
 
-void AFortWeaponRanged::InitializeBeamFX(UParticleSystemComponent* InBeamPSC) {
+void AFortWeaponRanged::InitializeBeamFX(UFXSystemComponent* InBeamPSC) {
 }
 
 bool AFortWeaponRanged::GetUseBeamParticles() const {
@@ -175,6 +175,14 @@ void AFortWeaponRanged::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
     DOREPLIFETIME(AFortWeaponRanged, TimeOverheatedBegan);
 }
 
+UNiagaraComponent* AFortWeaponRanged::GetBeamNiagaraComponent() const {
+    return NULL;
+}
+
+bool AFortWeaponRanged::ShouldDisplayAmmoCounterDuringSecondaryFire() const {
+    return false;
+}
+
 AFortWeaponRanged::AFortWeaponRanged() {
     TracerTemplate = NULL;
     bAllowAutomaticWeaponCatchup = true;
@@ -232,5 +240,8 @@ AFortWeaponRanged::AFortWeaponRanged() {
     TimeHeatWasLastAdded = 1;
     TimeOverheatedBegan = 1;
     bCacheAimPointOnFire = false;
+    bShouldDisplayAmmoCounterDuringSecondaryFire = false;
+    bShouldHideReserveAmmo = false;
+    bActivateRangeAbilityPerBurstShot = false;
 }
 

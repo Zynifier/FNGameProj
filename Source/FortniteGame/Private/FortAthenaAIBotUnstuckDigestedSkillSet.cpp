@@ -14,5 +14,10 @@ UFortAthenaAIBotUnstuckDigestedSkillSet::UFortAthenaAIBotUnstuckDigestedSkillSet
     TimeBetweenSampleToConsiderPathStuckOnGround = 1;
     ConsecutiveBlockedPathCountToConsiderPathStuck = 0;
     MaxSafeZoneIndexToAllowTeleport = 0;
+    TimeToBreakBlockingDoor = 0.0f;
+    TimeToCloseBlockingDoor = 0.0f;
+    RiverbedObstacleCollisionNormalThreshold = 0.0f;
+    MaxSteeringDirectionAttempts = 0;
+    SteeringAttemptDuration = 0.0f;
 }
 

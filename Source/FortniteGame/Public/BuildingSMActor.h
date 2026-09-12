@@ -67,6 +67,10 @@ class UStaticMeshComponent;
 class UTexture;
 class UTexture2D;
 
+class UFXSystemAsset;
+class UFortWeakPointComponent;
+class UNiagaraSystem;
+
 UCLASS(Abstract, Blueprintable)
 class FORTNITEGAME_API ABuildingSMActor : public ABuildingActor, public IFortAttachToActorInterface/*, public IAbilitySystemReplicationProxyInterface*/ {
     GENERATED_BODY()
@@ -262,6 +266,9 @@ protected:
     uint8 bDeriveCurieIdentifierFromResourceType: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bAllowCustomMaterial: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bUseSingleMeshCullDistance: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
@@ -314,6 +321,9 @@ private:
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UStaticMeshComponent* StaticMeshComponent;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortWeakPointComponent* WeakPointComponent;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UMaterialInterface* BaseMaterial;
     
@@ -347,8 +357,11 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UParticleSystem> DeathParticles;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UNiagaraSystem> DeathNiagaraSystemAsset;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UParticleSystem* DeathParticlesInst;
+    UFXSystemAsset* DeathParticlesInst;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName DeathParticleSocketName;
@@ -747,7 +760,7 @@ public:
     
 protected:
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    UParticleSystem* GetDeathParticles() const;
+    UFXSystemAsset* GetDeathParticles() const;
     
 public:
     UFUNCTION(BlueprintCallable, BlueprintPure=false)
@@ -835,6 +848,10 @@ public:
     
     UFUNCTION(BlueprintCallable)
     AActor* GetActorAttachedTo() const override PURE_VIRTUAL(GetActorAttachedTo, return NULL;);
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void SetBuildingTextureData(const int32 Index, UBuildingTextureData* NewBuildingTextureData);
     
 };
 

@@ -1,0 +1,8 @@
+#pragma once
+#include "CoreMinimal.h"
+#include "EMiniMapComponentDiscoverableVisibility.h"
+#include "MiniMapComponentDiscoverable_OnPlayerVisibilityChangedDelegate.generated.h"
+
+class AFortPlayerController;
+
+UDELEGATE(BlueprintCallable) DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMiniMapComponentDiscoverable_OnPlayerVisibilityChanged, AFortPlayerController*, PlayerController, EMiniMapComponentDiscoverableVisibility, NewVisibility);

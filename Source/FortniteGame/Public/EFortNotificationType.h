@@ -12,6 +12,12 @@ enum class EFortNotificationType : uint8 {
     VoiceChannel,
     FriendSubscriptionNudge,
     DonutChallenge,
+    HousepartyWelcome,
+    HousepartyFOMO,
+    HousepartyMic,
+    IncomingFriendRequest,
+    SocialNotification,
+    BattlePassPageUnlock,
     Max,
 };
 

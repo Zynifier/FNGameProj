@@ -3,5 +3,6 @@
 FAthenaExtendedXPCurveEntry::FAthenaExtendedXPCurveEntry() {
     XpPerLevel = 0;
     UntilLevel = 0;
+    RewardItemCountPerLevel = 0;
 }
 

@@ -119,9 +119,8 @@ protected:
     TSoftObjectPtr<UAnimMontage> ItemPreviewMontage_Female;
     
 public:
-#if WITH_EDITOR
     friend class UAthenaCharacterItemDefinition;
-#endif
+
     UFortHeroType(const FObjectInitializer& ObjectInitializer);
     UFUNCTION(BlueprintCallable, BlueprintPure)
     FText GetSubType() const;
@@ -134,5 +133,8 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     TSubclassOf<UFrontendAnimInstance> GetFrontendAnimClass() const;
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    void GetSpecializations(TArray<UFortHeroSpecialization*>& OutSpecializations) const;
+    
 };
 

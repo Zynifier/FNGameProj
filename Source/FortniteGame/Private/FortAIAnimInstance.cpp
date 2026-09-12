@@ -29,5 +29,11 @@ UFortAIAnimInstance::UFortAIAnimInstance() {
     bIsTargeting = false;
     bTransitionToIdle = false;
     WeaponCoreAnimation = EFortWeaponCoreAnimation::Melee;
+    bStartTurn = false;
+    TurnAngle = 0.0f;
+    TurnRate = 0.0f;
+    ForwardHeading = 0.0f;
+    MovementHeading = 0.0f;
+    HeadingDelta = 0.0f;
 }
 

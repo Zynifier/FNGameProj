@@ -6,6 +6,7 @@
 #include "AttributeSet.h"
 #include "FortVehicleConfigs.h"
 #include "Templates/SubclassOf.h"
+#include "FortPhysicsVehicleDamageOverrideConfigs.h"
 #include "FortPhysicsVehicleConfigs.generated.h"
 
 class AActor;
@@ -93,6 +94,9 @@ public:
     bool bInvertSteeringWhenReversing;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float InvertSteeringMinSpeedKmh;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MaxRestSpeed;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -148,6 +152,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float PlayerImpactDamageMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortPhysicsVehicleDamageOverrideConfigs> DamageOverrideList;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float VehicleFlipCooldown;
@@ -474,6 +481,12 @@ public:
     float PawnLaunchForwardVelocityScale;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float PawnLaunchMinVerticalVelocity;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float PawnLaunchMinForwardVelocity;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float PawnLaunchMaxSpeed;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -550,6 +563,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MaxWheelSpinWound;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseRechargeableFuel;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUseFuel;
@@ -630,6 +646,18 @@ public:
     float WaterBodyOverlapSphereCenterZOffset;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseBoxBasedWaterOverlapChecks;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector WaterBoxSizeForOverlaps;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector WaterBoxOffsetForOverlaps;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float MaxWaterDepth;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ImminentCollisDestructionAngle;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -637,6 +665,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ImminentCollisUpNormalMinProtected;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float DebasePlayerLaunchSpeed;
     
     UPROPERTY(Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat MetalOnHit;
@@ -650,6 +681,17 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<AActor> BoundsXYSplineClass;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat bEnableDormantOnSleep;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bApplyPawnSpeedOnEntry;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float MaxAppliedPawnSpeedOnEntry;
+    
+public:
     UFortPhysicsVehicleConfigs();
 };
 

@@ -24,6 +24,7 @@
 #include "Templates/SubclassOf.h"
 #include "UIExtension.h"
 #include "WinConditionScoreData.h"
+#include "EFortServerTickRate.h"
 #include "FortPlaylistAthena.generated.h"
 
 class AActor;
@@ -43,6 +44,10 @@ class UFortSupplyDropInfo;
 class USoundMix;
 class UTexture2D;
 class UUserWidget;
+
+class UFortAthenaHUDInfoDataAsset;
+class UFortCurieSettings;
+class UObject;
 
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UFortPlaylistAthena : public UFortPlaylist {
@@ -127,10 +132,16 @@ public:
     int32 MaxTeamScoreAllowedForBackfill;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 MinPlayersForPrivateServer;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MaxTeamScoreDiscrepancyPercent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUsePlayerRating;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableRatingUpdate;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bEnableDynamicBotBackfill;
@@ -158,6 +169,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bForceNewPlayerStateOnReconnect;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 DADTestValue;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EAthenaWinCondition WinConditionType;
@@ -212,6 +226,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat PawnForcedCullDistance;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat TransientMatchStartBonusCurrency;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FItemAndCount> InventoryItemsToGrant;
@@ -276,6 +293,9 @@ public:
     bool bRespawnInAir;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat RespawnLevelStreamDistanceToForceScreenFade;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat RespawnLevelStreamDistanceToForceSceenFade;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -283,6 +303,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bSkipAircraft;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowWarmupPlayerStartInSetupPhase;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float WarmupEarlyRequiredPlayerPercent;
@@ -342,6 +365,9 @@ public:
     TSoftObjectPtr<UFortPlaylistUIInfo> PlaylistUIData;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortAthenaHUDInfoDataAsset> HUDInfoDataAsset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UTexture2D* MissionIcon;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -349,6 +375,9 @@ public:
     
     UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bLimitedTimeMode;
+    
+    UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bDisable_ReportAPlayerReason_TeamingUpWithEnemies_WhileInGame;
     
     UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bDisplayScoreInHUD;
@@ -366,6 +395,9 @@ public:
     bool bEnforceFullSquadInUI;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShowEliminationIndicatorForSelf;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bShowEliminationIndicatorForSquadmates;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -373,6 +405,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bShowEliminationIndicatorForEnemies;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat EliminationIndicatorMaxDistance;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bLeaderboardDisplaysIndividuals;
@@ -388,6 +423,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat DisableReplays;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat EnableServerReplays;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat ShouldUseCustomGameChannel;
@@ -412,6 +450,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<AFortInGameMapManager> MapManagerClass;
+    
+    UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseAsyncPhysics;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortServerTickRate ServerMaxTickRate;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     ESafeZoneStartUp SafeZoneStartUp;
@@ -439,6 +483,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> UpgradeBenchData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UDataTable> AILootOnDeathData;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> HeroStats;
@@ -480,6 +527,9 @@ public:
     int32 NetActorDiscoveryBudgetInKBytesPerSec;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 NetDormancyNumFramesUntilObsolete;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bEnableCreativeMode: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -515,6 +565,12 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bActivateCurie;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortCurieSettings* CurieSettings;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FName> CurieManagerConfigOverrides;
+    
 protected:
     UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 PlaylistStatId;
@@ -544,6 +600,18 @@ public:
     
     UFUNCTION(BlueprintCallable, Exec)
     void CreateCalendarPayload_Enabling();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static int32 GetLastTeamNumber(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static int32 GetMaxNumberOfTeams(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static int32 GetMaxPlayerCount(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static int32 GetMaxTeamSize(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist);
     
 };
 

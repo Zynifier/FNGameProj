@@ -4,6 +4,7 @@
 #include "FortControllerComponent.h"
 #include "FortInterface_OverrideCanInteract.h"
 #include "Templates/SubclassOf.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "FortControllerComponent_Ghost.generated.h"
 
 class AFortPawn;
@@ -79,5 +80,9 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+protected:
+    UFUNCTION(BlueprintCallable)
+    void HandleAbilityEnded(const FAbilityEndedData& AbilityData);
+    
 };
 

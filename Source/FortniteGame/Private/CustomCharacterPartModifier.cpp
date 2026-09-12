@@ -25,8 +25,20 @@ EFortCustomPartType ACustomCharacterPartModifier::GetCharacterPartType() const {
 void ACustomCharacterPartModifier::ForceResetParticleSystems() {
 }
 
+void ACustomCharacterPartModifier::ApplyVariantsToTrackedComponents() {
+}
+
+FName ACustomCharacterPartModifier::GetIdleFXSocketName() const {
+    return NAME_None;
+}
+
+bool ACustomCharacterPartModifier::UsesIdleVFXNativeCustomAttachment() const {
+    return false;
+}
+
 ACustomCharacterPartModifier::ACustomCharacterPartModifier() {
     IdleVFX = NULL;
     PartType = EFortCustomPartType::NumTypes;
+    bAutoApplyVariants = false;
 }
 

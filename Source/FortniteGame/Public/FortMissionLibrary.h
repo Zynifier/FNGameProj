@@ -50,10 +50,10 @@ public:
     static bool UnregisterForMissionEvents(AActor* ActorToUnregister, FGuid MissionGuid);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static bool TeleportPlayerPawn(AFortPlayerPawn* PlayerPawn, FVector DestLocation, FRotator DestRotation, bool bIgnoreCollision, bool bIgnoreSupplementalKillVolumeSweep);
+    static bool TeleportPlayerPawn(const UObject* WorldContextObject, AFortPlayerPawn* PlayerPawn, FVector DestLocation, FRotator DestRotation, bool bIgnoreCollision, bool bIgnoreSupplementalKillVolumeSweep);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static void TeleportPawnNearLocation(AFortPawn* Pawn, FVector DestLocation);
+    static void TeleportPawnNearLocation(const UObject* WorldContextObject, AFortPawn* Pawn, FVector DestLocation);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, meta=(WorldContext="WorldContextObject"))
     static void StopAIEncounterAgainstActor(UObject* WorldContextObject, AActor* TargetActor);

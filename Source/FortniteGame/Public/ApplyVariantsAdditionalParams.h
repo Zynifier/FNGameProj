@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "CosmeticVariantInfo.h"
+#include "GameplayTagContainer.h"
 #include "ApplyVariantsAdditionalParams.generated.h"
 
 class AFortPlayerPawn;
@@ -36,6 +37,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bForbidParticleSwapping;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTagContainer MetaTags;
     
     FORTNITEGAME_API FApplyVariantsAdditionalParams();
 };

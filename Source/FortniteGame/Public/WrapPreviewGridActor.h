@@ -83,6 +83,9 @@ protected:
     int32 MaterialSectionMask;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FName> ComponentNameAllowList;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FDirectoryPath RangedWeaponPath;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -113,6 +116,10 @@ public:
     AWrapPreviewGridActor();
     UFUNCTION(BlueprintCallable)
     void SetWrap(UAthenaItemWrapDefinition* NewWrap);
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    static TArray<FName> GetMeshComponentNames();
     
 };
 

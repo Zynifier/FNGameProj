@@ -1,7 +1,7 @@
 #include "FortPlayerSurveyQuestionLegacy.h"
 
-EFortPlayerSurveyQuestionType UFortPlayerSurveyQuestionLegacy::GetQuestionType() const {
-    return EFortPlayerSurveyQuestionType::Invalid;
+EFortPlayerSurveyQuestionTypeLegacy UFortPlayerSurveyQuestionLegacy::GetQuestionType() const {
+    return EFortPlayerSurveyQuestionTypeLegacy::Invalid;
 }
 
 EFortPlayerSurveyQuestionPresentationStyle UFortPlayerSurveyQuestionLegacy::GetPresentationStyle() const {

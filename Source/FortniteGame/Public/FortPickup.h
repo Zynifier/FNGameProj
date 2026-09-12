@@ -30,6 +30,9 @@ class UFortWaterInteractionComponent;
 class UProjectileMovementComponent;
 class USoundBase;
 
+class USkeletalMeshComponent;
+class UStaticMeshComponent;
+
 UCLASS(Blueprintable, MinimalAPI, Config=Game)
 class AFortPickup : public AActor, public IFortInteractInterface, public IFortMarkableActorInterface {
     GENERATED_BODY()
@@ -282,6 +285,24 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION()
     bool ServerOnAttemptInteract(const FInteractionType& InteractType) override PURE_VIRTUAL(ServerOnAttemptInteract, return false;);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetDespawnTime(float InDespawnTime);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    AFortPickupEffect* GetPickupEffectBlueprint() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    USkeletalMeshComponent* GetPickupSkeletalMeshComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UStaticMeshComponent* GetPickupStaticMeshComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FGuid GetTrackerGuid() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsSkeletalMeshComponent() const;
     
 };
 

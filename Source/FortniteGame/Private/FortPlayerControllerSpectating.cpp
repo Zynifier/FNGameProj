@@ -111,10 +111,6 @@ bool AFortPlayerControllerSpectating::GetShowBusPathsOnMap() const {
     return false;
 }
 
-UAthenaMarkerComponent* AFortPlayerControllerSpectating::GetMarkerComponent() const {
-    return NULL;
-}
-
 bool AFortPlayerControllerSpectating::GetMapWeaponTracersEnabled() const {
     return false;
 }

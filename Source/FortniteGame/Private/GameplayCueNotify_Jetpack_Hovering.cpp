@@ -14,5 +14,6 @@ AGameplayCueNotify_Jetpack_Hovering::AGameplayCueNotify_Jetpack_Hovering() {
     UpwardVelocity = 1;
     FuelVolumeMultiplier = 1;
     bPlayedFuelWarning = false;
+    SoundOnFuelLowWarning = NULL;
 }
 

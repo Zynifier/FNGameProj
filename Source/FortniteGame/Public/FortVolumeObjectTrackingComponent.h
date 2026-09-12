@@ -6,6 +6,8 @@
 #include "FortCreativeBudgetTracker.h"
 #include "FortCreativeClassInstanceTracker.h"
 #include "ObjectTracker_Legacy.h"
+#include "VolumePerformanceMetrics.h"
+#include "FortCreativeGridCellBudget.h"
 #include "FortVolumeObjectTrackingComponent.generated.h"
 
 class AActor;
@@ -19,6 +21,9 @@ public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortVolume* ParentVolume;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    FVolumePerformanceMetrics VolumePerformanceMetrics;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     FFortCreativeClassInstanceTracker TransientTracker;
@@ -54,6 +59,9 @@ private:
     TArray<uint8> ObjectTrackingHeatmapHighPrecision;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    TArray<uint8> ObjectTrackingOverBudgetHeatmap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     int32 ThermalGroupMatrixSizeX;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
@@ -67,6 +75,15 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float TargetUpdateTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float CreativeHeatmapThermometerInfluenceDistanceMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FFortCreativeGridCellBudget> CreativeHeatmapThermometerBudgets;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    float CreativeHeatmapThermometerCellSize;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float SpatialInfluenceDistanceMultiplier;
@@ -97,6 +114,17 @@ private:
 public:
     UFUNCTION(BlueprintCallable)
     void AddActorAtLocation(AActor* Actor, const FVector& Location);
+    
+    UFUNCTION(BlueprintCallable)
+    void CalculateHeatmap();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnVolumePerformanceMetricsReplicated();
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsHeatmapEnabled() const;
     
 };
 

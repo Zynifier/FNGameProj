@@ -37,6 +37,9 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortCreativeBudget> BattleLabBudgets;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableInstanceTracking;
+    
     UFortCreativeBudgeterData();
 };
 

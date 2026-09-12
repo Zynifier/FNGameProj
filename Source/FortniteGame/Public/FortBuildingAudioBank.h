@@ -9,7 +9,7 @@ class UFortBuildingAudioBank : public UDataAsset {
     GENERATED_BODY()
 public:
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FFortBuildingSoundsPerResourceType Sounds[5];
+    FFortBuildingSoundsPerResourceType Sounds[6];
     
     UFortBuildingAudioBank();
 };

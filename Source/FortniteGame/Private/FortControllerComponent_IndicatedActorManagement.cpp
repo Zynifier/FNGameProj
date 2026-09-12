@@ -25,10 +25,10 @@ void UFortControllerComponent_IndicatedActorManagement::OnHardCoreBeaconPlayerPa
 void UFortControllerComponent_IndicatedActorManagement::OnHardCoreBeaconPlayerPawnDied(const FFortPlayerDeathReport& DeathReport) {
 }
 
-void UFortControllerComponent_IndicatedActorManagement::AddActorsToStenciledList(TArray<AActor*>& StenciledActors, FStenciledActorData Data, const bool bAddAsUnique, const bool bReplaceExistingEntry) {
+void UFortControllerComponent_IndicatedActorManagement::AddActorsToStenciledList(TArray<AActor*>& StenciledActors, FStenciledActorData Data, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry) {
 }
 
-void UFortControllerComponent_IndicatedActorManagement::AddActorsToIndicatedList(TArray<AActor*>& IndicatedActors, FIndicatedActorData Data, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry) {
+void UFortControllerComponent_IndicatedActorManagement::AddActorsToIndicatedList(TArray<AActor*>& IndicatedActors, FIndicatedActorData Data, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry) {
 }
 
 void UFortControllerComponent_IndicatedActorManagement::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {

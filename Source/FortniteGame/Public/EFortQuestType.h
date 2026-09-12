@@ -18,6 +18,7 @@ enum class EFortQuestType : uint8 {
     AthenaDailyQuest,
     AthenaEvent,
     AthenaChallengeBundleQuest,
+    AthenaTransientQuest,
     All,
 };
 

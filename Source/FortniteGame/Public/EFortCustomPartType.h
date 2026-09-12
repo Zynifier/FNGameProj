@@ -8,9 +8,11 @@ enum class EFortCustomPartType : uint8 {
         Body,
         Hat,
         Backpack,
-        Charm,
+        MiscOrTail,
         Face,
+        Gameplay,
         NumTypes,
+        Charm,
     };
 
 

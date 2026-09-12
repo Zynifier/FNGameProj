@@ -63,6 +63,13 @@ void AFortInGameMapManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     DOREPLIFETIME(AFortInGameMapManager, bClearAllFog);
 }
 
+UMaterialInstanceDynamic* AFortInGameMapManager::GetMapMaterialMID() {
+    return NULL;
+}
+
+void AFortInGameMapManager::SetMapMaterial(UMaterialInterface* InMapMaterial) {
+}
+
 AFortInGameMapManager::AFortInGameMapManager() {
     bClearAllFog = false;
     MapLayerSize = 0;
@@ -90,5 +97,9 @@ AFortInGameMapManager::AFortInGameMapManager() {
     HeatmapMask = NULL;
     MapWorldScale = 1;
     MobileMapLocationFontSizeOverride = 0;
+    bUseExplorationBasedFogOfWar = false;
+    bShareMapWithTeam = false;
+    bResetMapDataOnTeamSwitch = false;
+    bCanUpdateHeatmapMask = false;
 }
 

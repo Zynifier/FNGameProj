@@ -19,7 +19,10 @@ public:
     FVector UniqueWorldLocation;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bIsDynamic;
+    uint8 bIsDynamic: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bStartHidden: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     TMap<UStaticMesh*, UInstancedStaticMeshComponent*> ImposterComponents;

@@ -37,6 +37,8 @@
 #include "OnSelectionPropertyChangedDelegate.h"
 #include "OriginalAndSpawnedPair.h"
 #include "ValidPlacementPair.h"
+#include "OnMoveToolBuildingAsPropSettingChangedDelegate.h"
+#include "EBuildingAsPropSetting.h"
 #include "FortCreativeMoveTool.generated.h"
 
 class AActor;
@@ -51,6 +53,8 @@ class ULevelRecordSpawner;
 class UMeshComponent;
 class UObjectInteractionBehavior;
 class UPlaysetPreview;
+
+class AFortCreativeHeatmapThermometerPreview;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortCreativeMoveTool : public AFortWeapon {
@@ -141,6 +145,9 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnMoveToolRotationModified OnMoveToolRotationModified;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnMoveToolBuildingAsPropSettingChanged OnMoveToolBuildingAsPropSettingChanged;
     
 private:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -289,6 +296,10 @@ private:
     bool bAlwaysMoveFreely;
     
 protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_BuildingsAsPropsSnapToCenter, meta=(AllowPrivateAccess=true))
+    bool bBuildingsAsPropsSnapToCenter;
+    
+protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCreativeOptionVariableBase WantedAlwaysMoveFreely;
     
@@ -299,6 +310,11 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AActor* HoveredActor;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    AFortCreativeHeatmapThermometerPreview* CreativeHeatmapThermometerPreview;
+    
+public:
     AFortCreativeMoveTool();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
     
@@ -352,7 +368,7 @@ protected:
     void ServerSpawnActorWithTransform(AActor* ActorToSpawn, FTransform TargetTransform, const bool bAllowOverlap, const bool bAllowGravity, const bool bIgnoreStructuralIssues, const bool bForPreviewing);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
-    void ServerSetAlwaysMoveFreely(bool bNewValue);
+    void ServerSetAlwaysMoveFreely(EBuildingAsPropSetting NewSetting);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
     void ServerSetAllowGravity(bool bAllow);
@@ -734,6 +750,9 @@ protected:
     
     UFUNCTION(BlueprintCallable)
     void AdjustOptionsBasedOnSelectionProperty(ESelectionProperty UpdatedSelectionProperty);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_BuildingsAsPropsSnapToCenter();
     
 };
 

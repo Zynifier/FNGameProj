@@ -23,5 +23,6 @@ UFortGiftBoxItemDefinition::UFortGiftBoxItemDefinition(const FObjectInitializer&
     GiftWrapType = EFortGiftWrapType::System;
     SortPriority = 0;
     bReuseExistingBoxIfPossible = false;
+    bOverrideBackgroundMessage = false;
 }
 

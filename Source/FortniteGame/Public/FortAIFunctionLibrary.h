@@ -2,12 +2,16 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Templates/SubclassOf.h"
 #include "FortAIFunctionLibrary.generated.h"
 
 class AActor;
 class ABuildingActor;
 class UAthenaAISpawner;
 class UObject;
+
+class AAIController;
+class UFortAthenaAIRuntimeParameters;
 
 UCLASS(Blueprintable)
 class UFortAIFunctionLibrary : public UBlueprintFunctionLibrary {
@@ -28,6 +32,12 @@ public:
     
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
     static UAthenaAISpawner* GetAISpawner(UObject* WorldContextObject);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    static UFortAthenaAIRuntimeParameters* GetOrCreateAIRuntimeParameters(const AAIController* AIController, const TSubclassOf<UFortAthenaAIRuntimeParameters> ParametersClass);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static bool IsConcealedByPerceptionModifiers(const UObject* WorldContextObject, FVector ObserverLocation, FVector TargetLocation, float& OutConcealment);
     
 };
 

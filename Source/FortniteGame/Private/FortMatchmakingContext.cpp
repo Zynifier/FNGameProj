@@ -80,7 +80,7 @@ bool UFortMatchmakingContext::HasBroadcasterToken() const {
     return false;
 }
 
-FText UFortMatchmakingContext::GetMatchmakingFillText(bool bDesiredFill) {
+FText UFortMatchmakingContext::GetMatchmakingFillText(bool bDesiredFill) const {
     return FText::GetEmpty();
 }
 
@@ -96,7 +96,7 @@ FText UFortMatchmakingContext::GetLegacyNonInputBasedPlayAgainstText() {
     return FText::GetEmpty();
 }
 
-ECommonInputType UFortMatchmakingContext::GetInputBasedMatchmakingPool(bool& bIsDefaultPool, bool& bEntirePartyUsingTargetPoolInput) {
+ECommonInputType UFortMatchmakingContext::GetInputBasedMatchmakingPool(bool& bIsDefaultPool, bool& bEntirePartyUsingTargetPoolInput) const {
     return ECommonInputType::MouseAndKeyboard;
 }
 
@@ -117,6 +117,19 @@ void UFortMatchmakingContext::CheckRejoinStatus() {
 }
 
 void UFortMatchmakingContext::CancelMatchmaking() {
+}
+
+void UFortMatchmakingContext::RequestUtilityToCancelMatchmaking() {
+}
+
+void UFortMatchmakingContext::RequestUtilityToMatchmake() {
+}
+
+void UFortMatchmakingContext::RequestUtilityToToggleMatchmaking() {
+}
+
+bool UFortMatchmakingContext::IsMatchmakingRegionEnabled() const {
+    return false;
 }
 
 UFortMatchmakingContext::UFortMatchmakingContext() {

@@ -23,5 +23,19 @@ UFortAthenaAIBotEvasiveManeuversDigestedSkillSet::UFortAthenaAIBotEvasiveManeuve
     AvoidProjectilesReactionTimeMax = 1;
     AvoidProjectilesEvasiveDistanceMin = 1;
     AvoidProjectilesEvasiveDistanceMax = 1;
+    JetpackStrafeDelay = 0.0f;
+    JetpackStrafeRandomDeviationDelay = 0.0f;
+    JetpackStrafeOverlayWeight = 0.0f;
+    JetpackStrafeDistanceMax = 0.0f;
+    JetpackStrafeDistanceMin = 0.0f;
+    JetpackStrafeActivationTime = 0.0f;
+    JetpackStrafeActivationTimeRandomDeviation = 0.0f;
+    JetpackStrafeTime = 0.0f;
+    JetpackStrafeTimeRandomDeviation = 0.0f;
+    JetpackStrafeMaxDistanceSquared = 0.0f;
+    AvoidPhysicsObjectsReactionDistanceMin = 0.0f;
+    AvoidPhysicsObjectsReactionDistanceMax = 0.0f;
+    AvoidPhysicsObjectsSpeedMin = 0.0f;
+    AvoidPhysicsObjectsSpeedMax = 0.0f;
 }
 

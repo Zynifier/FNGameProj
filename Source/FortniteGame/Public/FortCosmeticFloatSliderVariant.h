@@ -5,6 +5,9 @@
 
 class UMaterialInterface;
 
+class UFXSystemAsset;
+class UFortChallengeBundleItemDefinition;
+
 UCLASS(Blueprintable, EditInlineNew)
 class FORTNITEGAME_API UFortCosmeticFloatSliderVariant : public UFortCosmeticVariant {
     GENERATED_BODY()
@@ -20,10 +23,19 @@ protected:
     float MaxParamValue;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortChallengeBundleItemDefinition> UnlockChallengeBundle;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName MaterialParamName;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName ParticleParamName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<TSoftObjectPtr<UMaterialInterface>> MaterialsToAlter;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<TSoftObjectPtr<UFXSystemAsset>> ParticleSystemsToAlter;
     
 public:
     UFortCosmeticFloatSliderVariant();

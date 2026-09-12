@@ -14,5 +14,6 @@ FFortPartyMemberRepData::FFortPartyMemberRepData() {
     CurrentInputType = ECommonInputType::MouseAndKeyboard;
     FeatDefinition = NULL;
     VoiceChatStatus = EPartyMemberVoiceChatStatus::Disabled;
+    SidekickStatus = EPartyMemberSidekickStatus::None;
 }
 

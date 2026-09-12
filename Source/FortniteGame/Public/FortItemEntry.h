@@ -5,6 +5,8 @@
 #include "GameplayAbilitySpec.h"
 #include "FortGiftingInfo.h"
 #include "FortItemEntryStateValue.h"
+#include "FortSavedWeaponModSlot.h"
+#include "FortWeaponModSlot.h"
 #include "FortItemEntry.generated.h"
 
 class AFortInventory;
@@ -45,11 +47,17 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, NotReplicated, SaveGame, meta=(AllowPrivateAccess=true))
     TArray<FString> AlterationDefinitions;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, NotReplicated, meta=(AllowPrivateAccess=true))
+    TArray<FFortSavedWeaponModSlot> SavedWeaponModSlots;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, NotReplicated, SaveGame, meta=(AllowPrivateAccess=true))
     FString ItemSource;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
     FGuid ItemGuid;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FGuid TrackerGuid;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 ControlOverride;
@@ -83,6 +91,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<UFortAlterationItemDefinition*> AlterationInstances;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FFortWeaponModSlot> WeaponModSlots;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UAthenaItemWrapDefinition> WrapOverride;

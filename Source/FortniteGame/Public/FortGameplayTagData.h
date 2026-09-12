@@ -52,6 +52,9 @@ private:
     FGameplayTag PawnHideTagCategory;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag ForceAutoRunOnTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTag DropHeldObjectOnPlacementInputTag;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))

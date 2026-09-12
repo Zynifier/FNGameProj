@@ -21,6 +21,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat PawnCullDistance;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat DefaultLifespanAfterDeath;
+    
 public:
     UFortAthenaAISpawnerDataComponent_AIGameplay();
 };

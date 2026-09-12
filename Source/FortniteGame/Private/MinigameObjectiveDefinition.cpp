@@ -1,7 +1,6 @@
 #include "MinigameObjectiveDefinition.h"
 
-UDEPRECATED_MinigameObjectiveDefinition::UDEPRECATED_MinigameObjectiveDefinition() {
+UMinigameObjectiveDefinition::UMinigameObjectiveDefinition() {
     StatEvent = EFortQuestObjectiveStatEvent::Kill;
     ItemEvent = EFortQuestObjectiveItemEvent::Craft;
 }
-

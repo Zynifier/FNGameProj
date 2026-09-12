@@ -15,6 +15,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EPlayspaceCreationType CreationType;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bSpawnAtPlayspaceSpawnActors;
+    
     FORTNITEGAME_API FFortPlayspaceConfigData();
 };
 

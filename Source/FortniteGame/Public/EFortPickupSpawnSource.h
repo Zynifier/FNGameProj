@@ -11,5 +11,8 @@ enum class EFortPickupSpawnSource : uint8 {
     AmmoBox,
     Drone,
     ItemSpawner,
+    BotElimination,
+    NPCElimination,
+    LootDrop,
 };
 

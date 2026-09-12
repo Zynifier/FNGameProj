@@ -1,0 +1,4 @@
+#include "FortAthenaMutator_CustomCharacterPartsByKills.h"
+
+AFortAthenaMutator_CustomCharacterPartsByKills::AFortAthenaMutator_CustomCharacterPartsByKills() {
+}

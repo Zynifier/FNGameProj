@@ -69,6 +69,16 @@ void UFortAbilitySystemComponent::GetLifetimeReplicatedProps(TArray<FLifetimePro
     DOREPLIFETIME(UFortAbilitySystemComponent, RepSharedAnimInfo);
 }
 
+FActiveGameplayEffectHandle UFortAbilitySystemComponent::BP_FortApplyGameplayEffectSpecToTarget(const FGameplayEffectSpecHandle& GameplayEffectSpecHandle, UAbilitySystemComponent* TargetOfEffect, UObject* OptionalSourceObject, AActor* OptionalEffectCauser, AActor* OptionalDamageSource, FGameplayEffectContextHandle EffectContext) {
+    return FActiveGameplayEffectHandle{};
+}
+
+void UFortAbilitySystemComponent::StartOverrideReplicateMontageAnimPosition() {
+}
+
+void UFortAbilitySystemComponent::StopOverrideReplicateMontageAnimPosition() {
+}
+
 UFortAbilitySystemComponent::UFortAbilitySystemComponent() {
 }
 

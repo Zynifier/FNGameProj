@@ -13,6 +13,11 @@ void ABuildingGameplayActorPlayerPropAttachment::CalcWorldSpaceBounds(AActor* Pr
 void ABuildingGameplayActorPlayerPropAttachment::AttachProp(AActor* PropActorToAttach) {
 }
 
+void ABuildingGameplayActorPlayerPropAttachment::LogState(const FString& CallingContext) const {
+}
+
 ABuildingGameplayActorPlayerPropAttachment::ABuildingGameplayActorPlayerPropAttachment() {
+    bClientAttachmentErrorCorrectionEnabled = false;
+    bUseTransformedCalcBounds = false;
 }
 

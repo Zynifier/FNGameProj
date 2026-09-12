@@ -9,6 +9,7 @@ UAthenaCharacterItemDefinition::UAthenaCharacterItemDefinition(const FObjectInit
     HeroDefinition = nullptr;
     DefaultBackpack = nullptr;
     ItemType = EFortItemType::AthenaCharacter;
+    PreviewPawnScale = 0.0f;
 }
 
 USkeletalMesh* UAthenaCharacterItemDefinition::GetPreviewBaseMesh() const

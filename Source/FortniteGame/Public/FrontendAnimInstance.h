@@ -11,17 +11,29 @@
 #include "FortAnimInput_RandomizeMontageSection.h"
 #include "FortPlayMontageForGameplayTagQueryInterface.h"
 #include "GameplayTagAnimations.h"
+#include "FortAnimInput_PlayerGliderAnimAsset.h"
+#include "FortAnimInput_Skydiving.h"
+#include "FortAnimInput_StandingPawnAnimAsset.h"
+#include "FortBaseAnimInstance.h"
 #include "FrontendAnimInstance.generated.h"
 
 class AFortPlayerPawn;
 class UAnimMontage;
 
+class AFortPlayerParachute;
+class AFortWeapon;
+class UAnimNotify;
+class UFortItemDefinition;
+
 UCLASS(Blueprintable, NonTransient)
-class FORTNITEGAME_API UFrontendAnimInstance : public UAnimInstance, public IFortPlayMontageForGameplayTagQueryInterface {
+class FORTNITEGAME_API UFrontendAnimInstance : public UFortBaseAnimInstance, public IFortPlayMontageForGameplayTagQueryInterface {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bIsSkydiving;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float ContrailDiveFactor;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bEnableHandIK;
@@ -120,6 +132,21 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagAnimations MaleGameplayTagAnimations;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_StandingPawnAnimAsset CurrentAnimSet;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_StandingPawnAnimAsset DefaultAnimSetMale;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_StandingPawnAnimAsset DefaultAnimSetFemale;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_PlayerGliderAnimAsset CurrentGliderAnimSet;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_Skydiving Skydiving;
+    
 public:
     UFrontendAnimInstance();
     UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -140,5 +167,16 @@ protected:
     
     
     // Fix for true pure virtual functions not being implemented
+public:
+    UFUNCTION(BlueprintCallable)
+    void AnimNotify_PlayFireFX(const UAnimNotify* Notify);
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsInLobby();
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnFocusedItemChanged(const UFortItemDefinition* FocusedItem, const AFortWeapon* EquippedWeapon, const AFortPlayerParachute* CurrentParachute);
+    
 };
 

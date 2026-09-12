@@ -191,5 +191,6 @@ AFortOctopusVehicle::AFortOctopusVehicle() {
     CacheAudioMovement = NULL;
     CacheAudioWind = NULL;
     CacheAudioTowCable = NULL;
+    FortOctopusConfigsClass = NULL;
 }
 

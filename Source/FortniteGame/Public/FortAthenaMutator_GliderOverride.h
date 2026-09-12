@@ -5,6 +5,8 @@
 
 class UAthenaGliderItemDefinition;
 
+class AFortPawn;
+
 UCLASS(Blueprintable)
 class AFortAthenaMutator_GliderOverride : public AFortAthenaMutator {
     GENERATED_BODY()
@@ -15,5 +17,9 @@ private:
     
 public:
     AFortAthenaMutator_GliderOverride();
+protected:
+    UFUNCTION(BlueprintCallable)
+    void PawnRespawned(AFortPawn* RespawnedPawn);
+    
 };
 

@@ -7,6 +7,8 @@
 class ULevelSaveRecord;
 class ULevelSaveRecordThumbnailGenerator;
 
+class UObject;
+
 UCLASS(Blueprintable, ClassGroup=Custom, Within=FortPlayerControllerAthena, meta=(BlueprintSpawnableComponent))
 class FORTNITEGAME_API UCreativeUserContentManager : public UActorComponent {
     GENERATED_BODY()
@@ -20,6 +22,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     ULevelSaveRecordThumbnailGenerator* ThumbnailGenerator;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> ThumbnailStageActorClassSoftClassPtr;
     
 public:
     UCreativeUserContentManager();

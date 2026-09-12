@@ -63,5 +63,6 @@ AFortMinigameSettingsBuilding::AFortMinigameSettingsBuilding() {
     JoinInProgress = 0;
     ShowResourceFeedOnElimination = 0;
     SettingsVolume = NULL;
+    MmsPrivacy = EMMSPrivacy::Public;
 }
 

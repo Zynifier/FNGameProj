@@ -9,6 +9,9 @@
 class UAthenaMapMarkerItemDefinition;
 class UStaticMeshComponent;
 
+class UCurveFloat;
+class UMaterialInstanceDynamic;
+
 UCLASS(Abstract, Blueprintable)
 class FORTNITEGAME_API AFortPlayerMarkerBase : public AActor {
     GENERATED_BODY()
@@ -21,7 +24,25 @@ protected:
     FLinearColor Color;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UMaterialInstanceDynamic* MID_Main;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UMaterialInstanceDynamic* MID_Target;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAthenaMapMarkerItemDefinition* CustomMarkerItemDefinition;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float SpawnMarkerAnimLength;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UCurveFloat* SpawnMarkerAnim_Opacity;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UCurveFloat* SpawnMarkerAnim_SpawnScale;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UCurveFloat* SpawnMarkerAnim_SpawnVerticalScale;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortWorldMarkerData CurrentMarkerData;
@@ -47,6 +68,19 @@ protected:
     
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void OnMarkerColorChanged(FLinearColor InColor);
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void SpawnMarkerAnimTimelineProgress_Opacity(float Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SpawnMarkerAnimTimelineProgress_SpawnScale(float Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SpawnMarkerAnimTimelineProgress_SpawnVerticalScale(float Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void StartSpawnMarkerAnim();
     
 };
 

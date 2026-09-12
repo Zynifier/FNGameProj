@@ -22,5 +22,6 @@ AAthenaWrapPreviewActor::AAthenaWrapPreviewActor() {
     ZoomedOutLargeWeaponCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ZoomedOutLargeWeaponCameraComponent"));
     ZoomedInLargeWeaponCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ZoomedInLargeWeaponCameraComponent"));
     PreviewSpawnPointComponent = CreateDefaultSubobject<USceneComponent>(TEXT("PreviewSpawnPointComponent"));
+    ItemWrapDef = NULL;
 }
 

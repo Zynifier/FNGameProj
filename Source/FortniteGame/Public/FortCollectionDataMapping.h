@@ -12,6 +12,9 @@ public:
     FString CollectionType;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnsureAllTaggedItemsAreInTheCollection;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortCollectionData> Collection;
     
     FORTNITEGAME_API FFortCollectionDataMapping();

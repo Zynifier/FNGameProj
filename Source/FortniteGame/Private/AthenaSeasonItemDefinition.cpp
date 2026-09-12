@@ -23,5 +23,14 @@ UAthenaSeasonItemDefinition::UAthenaSeasonItemDefinition(const FObjectInitialize
     SeasonalGlyphRewards = NULL;
     ChallengeSchedulePaid = NULL;
     bRemoveAllDailyQuestsAtSeasonEnd = false;
+    bCapFreeBattlePassLevels = false;
+    bUseSeasonCurveForBattlePassRewards = false;
+    BattlePassLevelOffer_MaxLevel = 0;
+    BattlePassLevelBundleOffer_MaxLevel = 0;
+    BattlePassLevelBundleOffer_NumLevels = 0;
+    NPCConversationQuests = NULL;
+    SharedQuests = NULL;
+    NPCConversationServices = NULL;
+    NPCConversationSalesInventory = NULL;
 }
 

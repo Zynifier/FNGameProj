@@ -5,11 +5,12 @@
 #include "FortAthenaSKMotorVehicle.h"
 #include "Templates/SubclassOf.h"
 #include "VehicleSpecificUIDetails.h"
+#include "TurretCosmeticData.h"
 #include "FortMountedTurret.generated.h"
 
 class AFortPlayerPawn;
 class UFortMountedTurretConfigs;
-class UCameraShake;
+class UMatineeCameraShake;
 
 UCLASS(Blueprintable)
 class AFortMountedTurret : public AFortAthenaSKMotorVehicle {
@@ -37,13 +38,16 @@ public:
     float RumbleIntensity;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* DriverCameraShake;
+    UMatineeCameraShake* DriverCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* PassengerCameraShake;
+    UMatineeCameraShake* PassengerCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortPlayerPawn* LocalPlayerPawn;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FTurretCosmeticData TurretCosmeticData;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -71,6 +75,18 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool IsLocalPlayerRiding() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void NativeUpdateOverheatCosmetics(const AFortPlayerPawn* InDriverPawn, float InReplicateOverheatOf20, UPARAM(Ref) FRotator& OutTurretRotation);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetManned(bool bInIsManned);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetOverheating(bool bInIsOverheating);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float NativeCurrentOverheatScalar(float InReplicateOverheatOf20) const;
     
 };
 

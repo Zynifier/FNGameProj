@@ -25,5 +25,9 @@ UAthenaDanceItemDefinition::UAthenaDanceItemDefinition(const FObjectInitializer&
     GroupEmoteFollowerRotationYawOffset = 1;
     ItemType = EFortItemType::AthenaDance;
     WalkForwardSpeed = 300.00f;
+    bUsesSecondaryFireInput = false;
+    GroupSyncAnimOffset = 0.0f;
+    GroupEmotePositionOffsetTolerance = 0.0f;
+    GroupEmoteFollowDistance = 0.0f;
 }
 

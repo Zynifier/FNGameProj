@@ -16,6 +16,8 @@ class UGameplayEffect;
 class UParticleSystem;
 class USoundBase;
 
+class AFortPlayerPawn;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API ABuildingGameplayActorConsumable : public ABuildingGameplayActor {
     GENERATED_BODY()
@@ -53,6 +55,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAnimMontage* SearchAnim;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bReplicateLongInteractionDetails;
     
 public:
     ABuildingGameplayActorConsumable();
@@ -94,6 +99,12 @@ protected:
     
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
     TSubclassOf<UGameplayEffect> DetermineOnConsumeGameplayEffect() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnServerNotifyEndLongUse(AFortPlayerPawn* InteractingPawn);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnServerNotifyStartLongUse(AFortPlayerPawn* InteractingPawn);
     
 };
 

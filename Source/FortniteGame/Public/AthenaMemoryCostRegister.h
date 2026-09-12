@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "TotalResKBIncAssetCostPair.h"
 #include "AthenaMemoryCostRegister.generated.h"
 
 class UCustomCharacterPart;
@@ -14,7 +15,7 @@ private:
     TArray<TSoftObjectPtr<UCustomCharacterPart>> ExtraCharacterParts;
     
     UPROPERTY(EditAnywhere, SimpleDisplay, meta=(AllowPrivateAccess=true))
-    TMap<FName, uint32> TotalResKBIncPerAsset;
+    TArray<FTotalResKBIncAssetCostPair> TotalResKBIncPerAsset;
     
 public:
     UAthenaMemoryCostRegister();

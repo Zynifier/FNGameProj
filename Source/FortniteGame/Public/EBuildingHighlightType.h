@@ -9,6 +9,7 @@ namespace EBuildingHighlightType {
         Interact,
         WillBeDestroyed,
         Quest,
+        AuxiliaryInterestPoint,
         MAX_None,
     };
 }

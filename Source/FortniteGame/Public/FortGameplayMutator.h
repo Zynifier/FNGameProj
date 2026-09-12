@@ -15,6 +15,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_bMutatorActive, meta=(AllowPrivateAccess=true))
     uint8 bMutatorActive: 1;
     
+    UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint32 MutatorEnabledMinigameStates;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bNetworkDormantWhenDeactivated;
     

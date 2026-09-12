@@ -14,9 +14,18 @@ void USynchronizedTeleportPlayerComponent::GetLifetimeReplicatedProps(TArray<FLi
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
     DOREPLIFETIME(USynchronizedTeleportPlayerComponent, bIsServerWaitingForClientToCancelRespawn);
+    DOREPLIFETIME(USynchronizedTeleportPlayerComponent, FadeOutData);
+}
+
+void USynchronizedTeleportPlayerComponent::HandleTeleportScreenStatusChanged(AFortPlayerControllerAthena* PlayerController, bool bEnableLoadScreen, FText HUDReasonText) {
+}
+
+void USynchronizedTeleportPlayerComponent::OnRep_FadeOutData() {
 }
 
 USynchronizedTeleportPlayerComponent::USynchronizedTeleportPlayerComponent() {
     bIsServerWaitingForClientToCancelRespawn = false;
+    TeleportScreenMusicCue = NULL;
+    TeleportScreenFadeoutTime = 0.0f;
 }
 

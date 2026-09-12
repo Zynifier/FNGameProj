@@ -41,5 +41,7 @@ void AFortPlayerControllerFrontEnd::CloseEmotePicker() {
 
 AFortPlayerControllerFrontEnd::AFortPlayerControllerFrontEnd() {
     bUnlockAllZones = false;
+    DiscoverabilityComponent = NULL;
+    MarkerComponent = NULL;
 }
 

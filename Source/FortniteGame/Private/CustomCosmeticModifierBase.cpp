@@ -57,6 +57,9 @@ AFortPlayerPawn* ACustomCosmeticModifierBase::GetAssociatedPlayerPawn() const {
     return NULL;
 }
 
+void ACustomCosmeticModifierBase::OnExternalDependencyActorDestroyed(AActor* OtherActor) {
+}
+
 ACustomCosmeticModifierBase::ACustomCosmeticModifierBase() {
     EnteredVehicleSeatsToCareAbout = EVehicleEnteredCosmeticReaction::Driver;
     bUsesDayPhaseChange = false;
@@ -78,5 +81,9 @@ ACustomCosmeticModifierBase::ACustomCosmeticModifierBase() {
     bRegisteredForNewWeapons = false;
     bRegisteredForEnterVehicle = false;
     bRegisteredOnHitPawn = false;
+    bUsesExitVehicle = false;
+    bUsesOnBeginSkydiving = false;
+    bUsesOnEndSkydiving = false;
+    bRegisteredForExitVehicle = false;
 }
 

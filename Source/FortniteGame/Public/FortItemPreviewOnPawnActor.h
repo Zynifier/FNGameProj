@@ -12,6 +12,8 @@ class UCameraComponent;
 class UChildActorComponent;
 class UFXSystemComponent;
 
+class UAnimMontage;
+
 UCLASS(Abstract, Blueprintable)
 class AFortItemPreviewOnPawnActor : public AFortItemPreviewMultiAngleActor, public ICosmeticPreviewInterface {
     GENERATED_BODY()
@@ -69,10 +71,22 @@ protected:
     UCameraComponent* ZoomedInDualPickaxeCameraComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UCameraComponent* ZoomedOutDoubleWristPickaxeCameraComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UCameraComponent* ZoomedInDoubleWristPickaxeCameraComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UCameraComponent* ZoomedOutPersonalGliderCameraComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UCameraComponent* ZoomedInPersonalGliderCameraComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UCameraComponent* ZoomedOutCharacterCustomizerCameraComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UCameraComponent* ZoomedInCharacterCustomizerCameraComponent;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
@@ -111,5 +125,9 @@ protected:
     
     
     // Fix for true pure virtual functions not being implemented
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnMontageStopped(UAnimMontage* Montage, bool bInterrupted);
+    
 };
 

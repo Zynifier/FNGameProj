@@ -9,6 +9,9 @@ FVector AFortItemPreviewOnPawnActor::GetPawnLocation() const {
     return FVector{};
 }
 
+void AFortItemPreviewOnPawnActor::OnMontageStopped(UAnimMontage* Montage, bool bInterrupted) {
+}
+
 AFortItemPreviewOnPawnActor::AFortItemPreviewOnPawnActor() {
     ZoomedInBodyCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ZoomedInBodyCameraComponent"));
     ZoomedOutTallBodyCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("ZoomedOutTallBodyCameraComponent"));
@@ -37,5 +40,9 @@ AFortItemPreviewOnPawnActor::AFortItemPreviewOnPawnActor() {
     EmotePlayDelay = 1;
     EmoteFXDuration = 1;
     FXSystemComponent = NULL;
+    ZoomedOutDoubleWristPickaxeCameraComponent = NULL;
+    ZoomedInDoubleWristPickaxeCameraComponent = NULL;
+    ZoomedOutCharacterCustomizerCameraComponent = NULL;
+    ZoomedInCharacterCustomizerCameraComponent = NULL;
 }
 

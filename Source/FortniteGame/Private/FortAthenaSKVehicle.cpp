@@ -46,5 +46,6 @@ AFortAthenaSKVehicle::AFortAthenaSKVehicle() {
     WheelSpinVelocityBL = 1;
     WheelSpinDampingPerSecond = 1;
     bShouldDealDamage = true;
+    AxleOffsetZ_B = 0.0f;
 }
 

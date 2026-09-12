@@ -10,14 +10,13 @@ class UFortAthenaAISpawnerDataComponent_GameplayAbilityBase;
 class UFortAthenaAISpawnerDataComponent_InventoryBase;
 class UFortAthenaAISpawnerDataComponent_SkillsetBase;
 
+class UFortAthenaAISpawnerDataComponent_VehicleBase;
+
 UCLASS(Blueprintable, MinimalAPI)
 class UFortAthenaAIBotSpawnerData : public UFortAthenaAISpawnerData {
     GENERATED_BODY()
 public:
 private:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UFortAthenaAISpawnerDataComponent_CosmeticBase> CosmeticComponent;
-    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UFortAthenaAISpawnerDataComponent_GameplayAbilityBase> GameplayAbilityComponent;
     
@@ -29,6 +28,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UFortAthenaAISpawnerDataComponent_ConstructionBase> ConstructionComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortAthenaAISpawnerDataComponent_VehicleBase> VehicleComponent;
     
 public:
     UFortAthenaAIBotSpawnerData();
@@ -42,10 +44,10 @@ public:
     UFortAthenaAISpawnerDataComponent_GameplayAbilityBase* GetGameplayAbilityComponent() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    UFortAthenaAISpawnerDataComponent_CosmeticBase* GetCosmeticComponent() const;
+    UFortAthenaAISpawnerDataComponent_ConstructionBase* GetConstructionComponent() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    UFortAthenaAISpawnerDataComponent_ConstructionBase* GetConstructionComponent() const;
+    UFortAthenaAISpawnerDataComponent_VehicleBase* GetVehicleComponent() const;
     
 };
 

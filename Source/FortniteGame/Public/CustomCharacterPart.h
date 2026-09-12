@@ -17,6 +17,7 @@
 #include "EFortCustomGender.h"
 #include "EFortCustomPartType.h"
 #include "Templates/SubclassOf.h"
+#include "CharacterPartAttachmentParams.h"
 #include "CustomCharacterPart.generated.h"
 
 class AActor;
@@ -29,6 +30,8 @@ class UMaterialInterface;
 class UNiagaraSystem;
 class UParticleSystem;
 class USkeletalMesh;
+
+class UFortPlayerSkydiveAnimSet;
 
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UCustomCharacterPart : public UPrimaryDataAsset, public IAthenaMemoryBudgetInterface {
@@ -46,6 +49,12 @@ public:
     // TODO: Eventually this should be eliminated, with "GameplayTags" replacing it (along with adding other functionality).
     UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part")
     EFortCustomPartType CharacterPartType;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTagContainer BoneSetsToHide;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShouldHideBonesForThisPart;
     
 private:
     //Gameplay tags to associate with this character part.  Can be used to label specific special-case usage such as ProhibitShadowStanceEffects.  Eventually should be used to label which part(s) of the body this part IS as well.  Will replace CharacterPartType (above) Examples: PartType.Body, PartType.Head, PartType.Hat, PartType.Backpack, etc.  Subtypes are also allowed, such as PartType.Hat.Helmet, etc.
@@ -90,6 +99,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part|Animation")
     TSoftObjectPtr<UAnimMontage> FrontendAnimMontageIdleOverride;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortPlayerSkydiveAnimSet> SkydiveAnimSet;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part|Animation")
     float FrontEndBackPreviewRotationOffset;
     
@@ -131,12 +143,18 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part|Art")
     TArray<FCustomPartVectorParameter> VectorParameters;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<int32> IgnoredMaterialOverrideIndices;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part|Art")
     TArray<TSubclassOf<UFoleySoundLibrary>> FoleyLibraries;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part|Art")
     int32 MaterialOverrideFlags;
 
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 IgnoredMaterialOverrideFlags;
+    
     //Cascade Idle Effect
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part|Effect")
     TSoftObjectPtr<UParticleSystem> IdleEffect;
@@ -147,6 +165,15 @@ private:
     //// Socket to attach the Cascade or Niagara IdleFX. This socket is generally used by blueprint attachment logic
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Character Part|Effect")
     FName IdleFXSocketName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseIdleFXNativeCustomAttachmentParams;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FCharacterPartAttachmentParams IdleFXNativeCustomAttachmentParams;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAutoActivate;
     
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, Instanced, NoClear, meta=(AllowPrivateAccess=true), Category = "Character Part|Art")
     UMarshalledVFX_AuthoredDataConfig* AuthoredData;
@@ -189,5 +216,23 @@ public:
         }
     }
 #endif
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    EFortCustomPartType GetCharacterPartType() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TSoftObjectPtr<UParticleSystem> GetEffectCascade() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TSoftObjectPtr<UNiagaraSystem> GetEffectNiagara() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FName GetIdleFXSocketName() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    EFortCustomPartType GetPartType() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldAutoActivate() const;
+    
 };
 

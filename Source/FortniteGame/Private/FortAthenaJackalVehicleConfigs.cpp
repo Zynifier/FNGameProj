@@ -89,5 +89,9 @@ UFortAthenaJackalVehicleConfigs::UFortAthenaJackalVehicleConfigs() {
     TurnInPlaceDrag2CoefficientMultiplier = 1;
     VehicleAirCameraYawStrength = 1;
     MaxPitchForCameraSteer = 1;
+    AsyncTurnInPlaceSpeed = 0.0f;
+    LandTopSpeedMultiplier = 0.0f;
+    TurnInPlaceDragCoefficient = 0.0f;
+    TurnInPlaceDrag2Coefficient = 0.0f;
 }
 

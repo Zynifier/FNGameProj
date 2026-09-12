@@ -14,6 +14,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FText FailureReason;
     
+    UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
+    TEnumAsByte<EPartyReservationResult::Type> LastBeaconResponse;
+    
   //  UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
 //    TEnumAsByte<EPartyReservationResult::Type> LastBeaconResponse;
     

@@ -54,5 +54,8 @@ UFortVehicleSeatWeaponComponent::UFortVehicleSeatWeaponComponent() {
     ShotsFired = 0;
     bWeaponOverheatDataHasBeenCached = false;
     bSaveAndRestoreWeaponData = false;
+    WeaponSklMeshComponent = NULL;
+    AttachmentAngleOffsetYaw = 0.0f;
+    bIsStandaloneComponent = false;
 }
 

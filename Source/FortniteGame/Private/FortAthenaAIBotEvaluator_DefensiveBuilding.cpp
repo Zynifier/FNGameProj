@@ -4,5 +4,7 @@ UFortAthenaAIBotEvaluator_DefensiveBuilding::UFortAthenaAIBotEvaluator_Defensive
     DefensiveBuildTypeName = TEXT("AIEvaluator_DefensiveBuilding_Type");
     DefensiveBuildGridCoordName = TEXT("AIEvaluator_DefensiveBuilding_GridCoord");
     CacheBuildingDigestedSkillSet = NULL;
+    CachedBuildingDigestedSkillSet = NULL;
+    CachedBuildingComponent = NULL;
 }
 

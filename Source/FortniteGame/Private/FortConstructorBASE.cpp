@@ -36,6 +36,5 @@ void AFortConstructorBASE::AddNeighborToBaseOnFinishedConstruction(ABuildingSMAc
 AFortConstructorBASE::AFortConstructorBASE() {
     NodesToAffect = 0;
     BaseLevel = 0;
-    DamageAttributeSet = NULL;
 }
 

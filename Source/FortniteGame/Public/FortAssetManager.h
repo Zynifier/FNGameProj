@@ -9,6 +9,8 @@ class UGameDataCosmetics;
 class UGameDataSTW;
 class UObject;
 
+class UFortReleaseVersionManager;
+
 UCLASS(Blueprintable, Config=Game)
 class FORTNITEGAME_API UFortAssetManager : public UAssetManager {
     GENERATED_BODY()
@@ -22,6 +24,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FName> PlatformBundleState;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortReleaseVersionManager* FortReleaseVersionManager;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortGameData* GameDataCommon;

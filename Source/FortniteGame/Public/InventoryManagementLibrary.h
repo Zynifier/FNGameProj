@@ -15,6 +15,8 @@ class UFortControllerComponent_InventoryNetworkManagement;
 class UFortItemDefinition;
 class UFortWorldItem;
 
+class UFortItem;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UInventoryManagementLibrary : public UBlueprintFunctionLibrary {
     GENERATED_BODY()
@@ -45,10 +47,13 @@ public:
     static UFortControllerComponent_InventoryNetworkManagement* GetInventoryNetworkComponent(AFortPlayerController* Owner);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static void AddItems(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, TArray<FItemAndCount> Items);
+    static TArray<UFortWorldItem*> AddItems(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, TArray<FItemAndCount> Items);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    static bool AddItem(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortItemDefinition* ItemDefinition, int32 Count);
+    static UFortWorldItem* AddItem(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortItemDefinition* ItemDefinition, int32 Count);
+    
+    UFUNCTION(BlueprintCallable)
+    static UFortItem* FindExistingItemForDefinition(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, const UFortItemDefinition* ItemDefinition, bool bInStorageVault);
     
 };
 

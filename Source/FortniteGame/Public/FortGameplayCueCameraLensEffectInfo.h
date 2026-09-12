@@ -6,12 +6,14 @@
 
 class AEmitterCameraLensEffectBase;
 
+class AActor;
+
 USTRUCT(BlueprintType)
 struct FFortGameplayCueCameraLensEffectInfo {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<AEmitterCameraLensEffectBase> CameraLensEffect;
+    TSubclassOf<AActor> CameraLensEffect;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortGameplayCueAOEInfo Falloff;

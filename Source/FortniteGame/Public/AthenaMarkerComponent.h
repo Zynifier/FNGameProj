@@ -7,6 +7,9 @@
 #include "FortWorldMarkerContainer.h"
 #include "MarkerID.h"
 #include "Templates/SubclassOf.h"
+#include "UObject/NoExportTypes.h"
+#include "OnAddMapMarkerOnServerDelegate.h"
+#include "OnRemoveMapMarkerOnServerDelegate.h"
 #include "AthenaMarkerComponent.generated.h"
 
 class AActor;
@@ -14,11 +17,19 @@ class AFortPlayerMarkerBase;
 class UFortWorldMarker;
 class UUserWidget;
 
+class AFortPlayerStateAthena;
+
 UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class FORTNITEGAME_API UAthenaMarkerComponent : public UActorComponent {
     GENERATED_BODY()
 public:
 private:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnAddMapMarkerOnServer OnAddMapMarkerOnServerEvent;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnRemoveMapMarkerOnServer OnRemoveMapMarkerOnServerEvent;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UUserWidget> MarkerWidgetClass;
     
@@ -84,6 +95,13 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void CancelAllMarkers();
+    
+    UFUNCTION(BlueprintCallable)
+    FVector GetMarkerCurrentPosition(FMarkerID MarkerID);
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void HandleServerSquadChange(AFortPlayerStateAthena* InPlayerState, const uint8 PreviousSquadId);
     
 };
 

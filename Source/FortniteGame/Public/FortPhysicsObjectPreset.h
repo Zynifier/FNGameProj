@@ -3,12 +3,15 @@
 #include "UObject/NoExportTypes.h"
 #include "Engine/CollisionProfile.h"
 #include "Engine/DataAsset.h"
-#include "BuoyancyData.h"
+#include "BuoyancyComponent.h"
 #include "EFortPhysicsObjectNetworkPolicy.h"
 #include "FortPhysicsObjectPreset.generated.h"
 
 class UFortPhysicsObjectCollisionEffectsData;
 class UPhysicalMaterial;
+
+class UFortPhysicsObjectBuoyancyData;
+class UFortPhysicsObjectImpactDamageData;
 
 UCLASS(Blueprintable)
 class UFortPhysicsObjectPreset : public UDataAsset {
@@ -27,7 +30,13 @@ public:
     uint8 bCanInteractWithVehicles: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortPhysicsObjectBuoyancyData* BuoyancyAsset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bCanInteractWithWater: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bRestorePreviousCollisionProfileOnDeactivate: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bImpulseOnPlayerInteraction: 1;
@@ -46,6 +55,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FBuoyancyData BuoyancyData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bStartActive: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float PlayerImpulseMagnitude;
@@ -102,7 +114,22 @@ public:
     float MinDamageToImpulse;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortPhysicsObjectImpactDamageData* ImpactDamageData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UPhysicalMaterial* PhysicalMaterialOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float SleepLinearVelocity;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float SleepAngularVelocity;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float TimeToSleep;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float TimeToDeactivate;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortPhysicsObjectCollisionEffectsData* EffectsData;

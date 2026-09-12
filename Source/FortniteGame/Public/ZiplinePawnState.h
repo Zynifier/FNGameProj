@@ -5,18 +5,23 @@
 
 class AFortAthenaZipline;
 
+class AFortAthenaZiplineBase;
+
 USTRUCT(BlueprintType)
 struct FZiplinePawnState {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    AFortAthenaZipline* Zipline;
+    AFortAthenaZiplineBase* Zipline;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIsZiplining;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bJumped;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bReachedEnd;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 AuthoritativeValue;

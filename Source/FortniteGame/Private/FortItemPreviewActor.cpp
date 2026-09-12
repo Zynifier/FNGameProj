@@ -9,6 +9,10 @@ bool AFortItemPreviewActor::ArePreviewVisualsReady() const {
     return false;
 }
 
+bool AFortItemPreviewActor::IsSceneTransitioning() const {
+    return false;
+}
+
 AFortItemPreviewActor::AFortItemPreviewActor() {
     SpecialEventMaterial = NULL;
     ItemPreviewRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("ItemPreviewRootComponent"));

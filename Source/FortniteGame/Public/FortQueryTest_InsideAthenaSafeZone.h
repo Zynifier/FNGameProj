@@ -8,6 +8,9 @@ UCLASS(Blueprintable)
 class UFortQueryTest_InsideAthenaSafeZone : public UEnvQueryTest {
     GENERATED_BODY()
 public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseCurrentSafeZoneIndicatorRadius;
+    
     UPROPERTY( EditAnywhere, meta=(AllowPrivateAccess=true))
     FAIDataProviderIntValue SafeZoneIndex;
     

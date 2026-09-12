@@ -133,6 +133,9 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MaxPitchForCameraInPlaceSteer;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float SpringLengthMutliplierWater;
+    
     UFortMeatballVehicleConfigs();
 };
 

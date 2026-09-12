@@ -20,5 +20,8 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     bool IsValidPlacement();
     
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    bool HasAdditionalValidPlacementLogic();
+    
 };
 

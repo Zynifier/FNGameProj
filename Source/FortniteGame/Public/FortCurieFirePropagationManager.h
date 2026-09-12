@@ -6,15 +6,25 @@
 #include "AttributeSet.h"
 #include "FortCurieFireEntry.h"
 #include "FortCurieFirePropagationManagerTickFunction.h"
+#include "FortCurieManagerComponent.h"
+#include "FortCurieActorFireEntry.h"
 #include "FortCurieFirePropagationManager.generated.h"
 
+class UFortCurieFirePropagationManagerConfig;
+
 UCLASS(Blueprintable, Config=Game)
-class UFortCurieFirePropagationManager : public UObject {
+class UFortCurieFirePropagationManager : public UFortCurieManagerComponent {
     GENERATED_BODY()
 public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortCurieFirePropagationManagerTickFunction PrimaryTickFunction;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortCurieActorFireEntry> ActiveActorFires;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortCurieFirePropagationManagerConfig* InternalManagerConfig;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortCurieFireEntry> ActiveFires;

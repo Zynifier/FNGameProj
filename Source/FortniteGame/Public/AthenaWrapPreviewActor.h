@@ -8,6 +8,8 @@
 class UCameraComponent;
 class USceneComponent;
 
+class UAthenaItemWrapDefinition;
+
 UCLASS(Abstract, Blueprintable)
 class AAthenaWrapPreviewActor : public AFortItemPreviewMultiAngleActor, public ICosmeticPreviewInterface {
     GENERATED_BODY()
@@ -37,6 +39,9 @@ protected:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     USceneComponent* PreviewSpawnPointComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UAthenaItemWrapDefinition* ItemWrapDef;
     
 public:
     AAthenaWrapPreviewActor();

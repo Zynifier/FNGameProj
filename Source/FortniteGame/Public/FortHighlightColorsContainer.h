@@ -13,6 +13,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortHighlightColors InvalidHighlight;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName ParamProfileName;
+    
     FORTNITEGAME_API FFortHighlightColorsContainer();
 };
 

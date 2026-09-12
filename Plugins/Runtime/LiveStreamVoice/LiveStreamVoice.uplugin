@@ -30,10 +30,6 @@
 		{
 			"Name": "FacialAnimSystem",
 			"Enabled": true
-		},
-		{
-			"Name": "ForwardingChannels",
-			"Enabled": true
 		}
 	]
 }

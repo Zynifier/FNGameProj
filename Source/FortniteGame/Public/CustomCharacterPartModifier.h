@@ -17,6 +17,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName ChildComponentTag;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAutoApplyVariants;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFXSystemComponent* IdleVFX;
     
@@ -55,5 +58,14 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+    void ApplyVariantsToTrackedComponents();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FName GetIdleFXSocketName() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool UsesIdleVFXNativeCustomAttachment() const;
+    
 };
 

@@ -6,5 +6,6 @@ UFortAthenaAIBotEvaluator_ReachBeacon::UFortAthenaAIBotEvaluator_ReachBeacon() {
     ReachBeaconTargetKeyName = TEXT("AIEvaluator_ReachBeacon_Target");
     CurrentBeacon = NULL;
     CachedServerManager = NULL;
+    CachedAIServicePlayerBots = NULL;
 }
 

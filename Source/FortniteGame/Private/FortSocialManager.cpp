@@ -6,5 +6,7 @@ UFortSocialManager::UFortSocialManager() {
     bLeftLastPartyFromGameDisconnect = false;
     LocalTeam = NULL;
     CurrentJoinAndSpectateTarget = NULL;
+    bEnablePartyJoinReturnToMainMenu = false;
+    PendingQueryPartyJoinabilityResultTimeout = 0.0;
 }
 

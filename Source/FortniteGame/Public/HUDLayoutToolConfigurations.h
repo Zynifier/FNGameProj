@@ -25,6 +25,9 @@ private:
     FGameplayTag DefaultHUDProfilePresetTag;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag ActiveHUDPresetContainer;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer ActiveHUDPresetContainers;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))

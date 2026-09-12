@@ -8,12 +8,17 @@
 
 class ABuildingSMActor;
 
+class UObject;
+
 UCLASS(Blueprintable)
 class ABuildingWeakSpot : public AFortClientOnlyActor, public IFortTeamActorInterface {
     GENERATED_BODY()
 public:
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TWeakObjectPtr<ABuildingSMActor> ParentBuilding;
+    
+    UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TWeakObjectPtr<UObject> ParentObject;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bHit: 1;

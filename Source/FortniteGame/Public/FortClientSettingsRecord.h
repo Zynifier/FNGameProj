@@ -34,7 +34,11 @@
 #include "HUDLayoutData.h"
 #include "PlayerLastSelectedPreferredProvider.h"
 #include "UserActionBindings.h"
+#include "EFortPreferredItemSlotItemType.h"
+#include "FortUserInputSettingsPerMode.h"
 #include "FortClientSettingsRecord.generated.h"
+
+class UFortWorldItemDefinition;
 
 UCLASS(Blueprintable, Within=FortLocalPlayer)
 class FORTNITEGAME_API UFortClientSettingsRecord : public UFortGenericRecord {
@@ -42,6 +46,9 @@ class FORTNITEGAME_API UFortClientSettingsRecord : public UFortGenericRecord {
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FFortGamepadUserOptions LocalGamepadUserOptions;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHighResTexturesReminderEnabled;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -138,6 +145,9 @@ protected:
     EFortMotionYawAxis MotionYawAxis;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortMotionYawAxis MotionYawAxisMobile;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float GyroSensitivity;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -181,6 +191,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortActionKeyMapping> CustomGamepadActionBindings;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FName, FFortUserInputSettingsPerMode> UserInputSettingsPerMode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FName InputConfigName;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bInvertedLook;
@@ -252,6 +268,18 @@ protected:
     bool bForceFeedbackEnabled;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bTriggerHapticsEnabled;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bTriggerPullUsesHapticThreshold;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 TriggerHapticStrength;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 TriggerHapticStartPosition;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bDeviceFeedbackBlockedWithAttachedController;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -288,6 +316,9 @@ protected:
     bool bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bDisablePreEditsWhenPlacingBuilding;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bTurboBuild;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -315,6 +346,9 @@ protected:
     bool bAutoPickupWeaponsConsolePC;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnablePreferredItemSlots;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAutoSortConsumablesToRight;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -336,6 +370,9 @@ protected:
     TMap<FGameplayTag, bool> UserHUDDefaultMappings;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<int32, EFortPreferredItemSlotItemType> UserHUDQuickbarSlotPreferredItemTypes;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EPartyType LastPartyType;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -352,6 +389,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float SoundFXVolume;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float PIPVolume;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float DialogVolume;
@@ -390,6 +430,9 @@ protected:
     bool bCanVoiceChatWithUnknowns;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableHousepartyCasting;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bEnablePeripheralLighting;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -400,6 +443,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAnonymousCharacterMode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShowSeasonLevel;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bHideOtherPlayerNames;
@@ -439,6 +485,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bInitialAutoPickupWeaponsConsolePC;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bInitialEnablePreferredItemSlots;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bInitialAutoSortConsumablesToRight;
@@ -561,6 +610,15 @@ protected:
     bool bAutoJoinGameServerChannel;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnablePartyVoiceChannel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableGameVoiceChannel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowSidekickFeature1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bShowVoiceIndicatorsNotifications;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -570,7 +628,13 @@ protected:
     TMap<int32, int32> ContextTutorialSeenCount;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FGameplayTag, int32> ContextTutorialSeenCountGameplayTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bHasCompletedGuidedTutorial;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 CapMipsExperimentVersion;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bHasCompletedHUDLayoutToolV2Tutorial;
@@ -622,6 +686,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FPlayerLastSelectedPreferredProvider> LastPlayerSelectedPreferredProvider;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 QuestListSortType;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag QuestScreenTabGameplayTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 InZoneMapScreenTab;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSet<int32> AttendingRTTimeSlotIds;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAutoExposureEnabled;
@@ -1458,7 +1534,7 @@ public:
     bool GetLocalNotificationsEnabled() const;
     
     UFUNCTION(BlueprintCallable)
-    ELicensedAudioTreatment GetLicensedAudioTreatment() const;
+    ELicensedAudioTreatment GetLicensedAudioTreatment(bool bIgnoreGameStreamingCheck) const;
     
     UFUNCTION(BlueprintCallable)
     bool GetLargeTeamReplayRecordingEnabled() const;
@@ -1624,6 +1700,135 @@ public:
     
     UFUNCTION(BlueprintCallable)
     bool GetAimAssistEnabled() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void ForceToggleHousepartyCastingEnabled();
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetAttendingRiftTour(int32 TimeSlotId);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetAllowSidekickFeature1(bool bNewValue);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetAttendingRiftTour(int32 TimeSlotId, bool bAttending);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetDisablePreEditsWhenPlacingBuilding(bool InDisablePreEditsWhenPlacingBuilding);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetEnableGameVoiceChannel(bool bNewValue);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetEnablePartyVoiceChannel(bool bNewValue);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetEnablePreferredItemSlots(const bool bNewValue);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetHighResTexturesReminderEnabled(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetHousepartyCastingEnabled(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetPIPVolume(float InVolume);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetShowSeasonLevel(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTriggerHapticsEnabled(bool bNewTriggerHapticsEnabled);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTriggerHapticsStartPosition(uint8 NewTriggerHapticStartPosition);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTriggerHapticsStrength(uint8 NewTriggerHapticStrength);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTriggerHapticsUseThreshold(bool bNewTriggerPullUsesHapticThreshold);
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetAllowSidekickFeature1() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetChatDisabledForPlatform() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetDisablePreEditsWhenPlacingBuilding() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetEnableGameVoiceChannel() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetEnablePartyVoiceChannel() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetHighResTexturesReminderEnabled() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetHousepartyCastingEnabled() const;
+    
+    UFUNCTION(BlueprintCallable)
+    ELicensedAudioTreatment GetLicensedAudioTreatmentInternal() const;
+    
+    UFUNCTION(BlueprintCallable)
+    float GetPIPVolume() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void GetPreferredSlotIndicesFromDefinition(const UFortWorldItemDefinition* WorldItemDefinition, TArray<int32>& OutIndices) const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetShowSeasonLevel() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetTriggerHapticsEnabled() const;
+    
+    UFUNCTION(BlueprintCallable)
+    uint8 GetTriggerHapticsStartPosition() const;
+    
+    UFUNCTION(BlueprintCallable)
+    uint8 GetTriggerHapticsStrength() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetTriggerHapticsUseThreshold() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool IsPreferredItemSlotsEnabled() const;
+    
+    UFUNCTION(BlueprintCallable)
+    EFortPreferredItemSlotItemType GetPreferredItemTypeSlotIndex_1();
+    
+    UFUNCTION(BlueprintCallable)
+    EFortPreferredItemSlotItemType GetPreferredItemTypeSlotIndex_2();
+    
+    UFUNCTION(BlueprintCallable)
+    EFortPreferredItemSlotItemType GetPreferredItemTypeSlotIndex_3();
+    
+    UFUNCTION(BlueprintCallable)
+    EFortPreferredItemSlotItemType GetPreferredItemTypeSlotIndex_4();
+    
+    UFUNCTION(BlueprintCallable)
+    EFortPreferredItemSlotItemType GetPreferredItemTypeSlotIndex_5();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetPreferredItemTypeSlotIndex_1(const EFortPreferredItemSlotItemType ItemType);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetPreferredItemTypeSlotIndex_2(const EFortPreferredItemSlotItemType ItemType);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetPreferredItemTypeSlotIndex_3(const EFortPreferredItemSlotItemType ItemType);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetPreferredItemTypeSlotIndex_4(const EFortPreferredItemSlotItemType ItemType);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetPreferredItemTypeSlotIndex_5(const EFortPreferredItemSlotItemType ItemType);
+    
+    UFUNCTION(BlueprintCallable)
+    void GetPreferredSlotIndices(const EFortPreferredItemSlotItemType ItemType, TArray<int32>& OutIndices) const;
     
 };
 

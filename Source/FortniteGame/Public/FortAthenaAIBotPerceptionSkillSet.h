@@ -4,6 +4,7 @@
 #include "FortAthenaAIBotSkillSet.h"
 #include "PerceptionStateSettings.h"
 #include "SoundPerceptionSetting.h"
+#include "SightReactionSpecialization.h"
 #include "FortAthenaAIBotPerceptionSkillSet.generated.h"
 
 class UFortAthenaAIBotAlertLevelConfig;
@@ -21,6 +22,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat SightRandomAddition;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSightReactionSpecialization> SightReactionSpecializations;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat LoseSightTime;
@@ -141,6 +145,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat StealthMeterAllowSharedTarget;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat bStealthMeterForceLKPWhenDamagedAndThreatened;
     
 public:
     UFortAthenaAIBotPerceptionSkillSet();

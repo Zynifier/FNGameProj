@@ -19,10 +19,13 @@ public:
     APlayerState* PlayerState;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    EHUDMessageMessageTargets MessageTargets;
+    int32 MessageTargets;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     ETextTransformPolicy TextTransformPolicy;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 DisableChannel;
     
     FORTNITEGAME_API FHUDMessageData();
 };

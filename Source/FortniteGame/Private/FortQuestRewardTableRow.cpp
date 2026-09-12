@@ -5,5 +5,6 @@ FFortQuestRewardTableRow::FFortQuestRewardTableRow() {
     Hidden = false;
     Feature = false;
     Selectable = false;
+    Exportable = false;
 }
 

@@ -88,6 +88,9 @@
 #include "Templates/SubclassOf.h"
 #include "TotalPlayers.h"
 #include "UpdateNamedPoiColorDelegateDelegate.h"
+#include "OnNewContentUpdateMessageRecievedDelegate.h"
+#include "OnWarmupCountdownEndTimeUpdatedDelegate.h"
+#include "DBNOCustomSettings.h"
 #include "FortGameStateAthena.generated.h"
 
 class AActor;
@@ -128,6 +131,18 @@ class USoundCue;
 class USoundMix;
 class USplatterGridSystem;
 
+class AFortMissionStormShield;
+class AFortWeapon;
+class UCurveTable;
+class UCustomCharacterPart;
+class UFortGameStateComponent_AffiliationManager;
+class UFortGameStateComponent_Quests;
+class UFortGameStateComponent_RadiusTracker;
+class UFortGameStateComponent_TimeDilation;
+class UFortHermesLoadContext;
+class UFortPlaylistAthena;
+class UFortSanitizationService;
+
 UCLASS(Blueprintable, MinimalAPI)
 class AFortGameStateAthena : public AFortGameStateZone, public IGameplayMutatorObserverInterface, public IFortMutatorOwner, public IFortSafeZoneInterface, public IFortTimeWidgetInterface {
     GENERATED_BODY()
@@ -140,6 +155,14 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bBlockBuildOnWaterGlobal;
     
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnNewContentUpdateMessageRecieved OnNewContentUpdateMessageRecieved;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UCurveTable* AthenaGameDataTable;
+    
+public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_AdditionalGameFeaturePlugins, meta=(AllowPrivateAccess=true))
     TArray<FString> ReplicatedAdditionalGameFeaturePluginURLs;
     
@@ -300,6 +323,9 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FUpdateNamedPoiColorDelegate UpdateNamedPoiColorDelegate;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnWarmupCountdownEndTimeUpdated OnWarmupCountdownEndTimeUpdated;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bSkipWinnerAnnounced;
@@ -522,6 +548,18 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UMaterialInterface* MiniMapNextCircleDrawingMaterial;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UMaterialInterface* MiniMapRadiusTrackerCircleDrawingMaterial;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName RadiusTrackerCircleCenterAndRadiusParameterName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName RadiusTrackerCircleColorParameterName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FDynamicLandData> DynamicShadows;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FDynamicLandData> DynamicLands;
     
@@ -563,6 +601,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     bool bGameModeWillSkipAircraft;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_SafeZoneDamage, meta=(AllowPrivateAccess=true))
+    float SafeZoneDamage;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_SafeZonePhase, meta=(AllowPrivateAccess=true))
     uint8 SafeZonePhase;
@@ -623,6 +664,18 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortGameStateComponent_ActiveEventManager* ActiveEventManager;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortGameStateComponent_Quests* FortGameStateComponent_Quests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortGameStateComponent_RadiusTracker* FortGameStateComponent_RadiusTracker;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortGameStateComponent_AffiliationManager* AffiliationManager;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortGameStateComponent_TimeDilation* FortGameStateComponent_TimeDilation;
+    
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     float DefaultGliderRedeployCanRedeploy;
@@ -660,9 +713,6 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     float StormCNDamageVulnerabilityLevel3;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
-    bool bFishingCollectionEnabled;
-    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_MeshNetworkStatus, meta=(AllowPrivateAccess=true))
     FMeshNetworkStatus MeshNetworkStatus;
     
@@ -679,6 +729,12 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     AFortLocalizationService* LocalizationService;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortSanitizationService* SanitizationService;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortHermesLoadContext* HermesLoadContext;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat ResurrectionEnabledRow;
     
@@ -690,6 +746,15 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     FSpawnMachineRepDataArray SpawnMachineRepData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat SafeZoneDamageAttribute;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FSlateBrush EliminationSelfIconBrush;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FSlateBrush EliminationSelfClampedIconBrush;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FSlateBrush EliminationSquadmateIconBrush;
@@ -747,6 +812,11 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float SmoothedWorldTimeSecondsDrift;
     
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    FGameplayTagContainer RolledLootGroupTags;
+    
+protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_CosmeticUsage, meta=(AllowPrivateAccess=true))
     FCosmeticUsageReport CosmeticUsageReport;
     
@@ -761,12 +831,32 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     TArray<FAthenaStreamIdOverride> ReticulatedSplineIds;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<AFortMissionStormShield*> StormShields;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     bool bDamageComboHUDEnabled;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     int32 DamageComboHUDMinHits;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableMatchesProxy;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    FString MatchesProxyMatchId;
+    
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat DelayMovementInput;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    float DelayMovementInputReplicated;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    bool bCraftingEnabled;
     
 public:
     AFortGameStateAthena();
@@ -990,7 +1080,7 @@ protected:
     void OnRep_AdditionalGameFeaturePlugins();
     
     UFUNCTION(BlueprintCallable)
-    void OnLoadedAllAdditionalContent();
+    void OnLoadedAllAdditionalContent(bool bSuccess);
     
 public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1051,7 +1141,7 @@ public:
     bool HasValidFocalPointActor() const;
     
     UFUNCTION(BlueprintCallable)
-    void HandleHideGameModeMessageRequest(const EAthenaGameMsgType MsgType, const bool bInstantHide, const bool bClearQueue);
+    void HandleHideGameModeMessageRequest(const EAthenaGameMsgType MsgType, const bool bInstantHide, const bool bClearQueue, int32 MessageChannel);
     
     UFUNCTION(BlueprintCallable)
     void HandleGameModeShowMarker(int32 PlayerId, int32 InstanceID);
@@ -1153,7 +1243,7 @@ public:
     int32 GetDamageComboHUDMinHits() const;
     
     UFUNCTION(BlueprintCallable)
-    FName GetCurrentPlaylistName();
+    FName GetCurrentPlaylistName() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     UAthenaBattleBusItemDefinition* GetBattleBusForPlayer(AFortPlayerControllerAthena* PC) const;
@@ -1207,6 +1297,58 @@ public:
     
     UFUNCTION(BlueprintCallable)
     FVector GetSafeZoneNextCenter() const override PURE_VIRTUAL(GetSafeZoneNextCenter, return FVector{};);
+    
+    UFUNCTION(BlueprintCallable)
+    void GatherCustomCharacterPartOverridesFromMutator(AFortPlayerController* FortPC, TArray<UCustomCharacterPart*>& OutOverrides);
+    
+    UFUNCTION(BlueprintCallable)
+    bool HasInfiniteWarmup();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void InitializeAnimationSharing(const UFortPlaylistAthena* FortAthenaPlaylist);
+    
+public:
+    UFUNCTION(BlueprintCallable, NetMulticast, Reliable)
+    void MulticastAdditionalGameFeaturePluginLoaded();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_SafeZoneDamage();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    bool ShouldAllowKeepPlayingTogether();
+    
+    UFUNCTION(BlueprintCallable)
+    bool ShouldAllowSquadSizeTracking();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsAsyncPhysicsPlaylist() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsBattleRoyalePlaylist() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsPapayaPlaylist() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsPlayerClearPersistanceIslandDataAllowed(const APawn* SwitchingPawn) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsTherePersistenceDevices(const APawn* SwitchingPawn) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsWeaponReticleWidgetVisible(const AFortPlayerController* Controller, const AFortWeapon* Weapon) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldBlockTrapPlacement(const APawn* Pawn) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldPlayDeathSoundEffects(const AActor* Victim) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool EvaluateDBNOMutator(const AFortPlayerState* PS, FDBNOCustomSettings& OutDBNOSetting) const;
     
 };
 

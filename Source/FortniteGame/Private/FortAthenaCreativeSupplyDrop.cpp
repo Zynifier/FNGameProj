@@ -10,6 +10,9 @@ void AFortAthenaCreativeSupplyDrop::GetLifetimeReplicatedProps(TArray<FLifetimeP
     DOREPLIFETIME(AFortAthenaCreativeSupplyDrop, SpawnItems);
 }
 
+void AFortAthenaCreativeSupplyDrop::ValidateSpawnItems() {
+}
+
 AFortAthenaCreativeSupplyDrop::AFortAthenaCreativeSupplyDrop() {
 }
 

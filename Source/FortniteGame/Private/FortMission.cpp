@@ -236,7 +236,7 @@ UFortAIEncounterSequence* AFortMission::CreateEncounterSequence(const FGameplayT
     return NULL;
 }
 
-EAssignmentCreationResult AFortMission::CreateEncounterAssignment(const FGameplayTagContainer AssignmentTags, const UFortAIEncounterInfo* Encounter, UFortAIAssignmentSettings* AssignmentSettings, TSubclassOf<UFortAIGoalProvider> GoalProvider, FFortAIAssignmentIdentifier AssignmentIdentifier) {
+EAssignmentCreationResult AFortMission::CreateEncounterAssignment(const FGameplayTagContainer& AssignmentTags, const UFortAIEncounterInfo* Encounter, UFortAIAssignmentSettings* AssignmentSettings, TSubclassOf<UFortAIGoalProvider> GoalProvider, FFortAIAssignmentIdentifier& AssignmentIdentifier) {
     return EAssignmentCreationResult::AssignmentNotFoundOrCreated;
 }
 
@@ -304,6 +304,9 @@ void AFortMission::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
     DOREPLIFETIME(AFortMission, StartingDay);
     DOREPLIFETIME(AFortMission, ChosenRewardIdx);
     DOREPLIFETIME(AFortMission, PotentialBadgesArray);
+}
+
+void AFortMission::FindGoalLocationsForEncounterAssignment(const FFortAIAssignmentIdentifier& AssignmentIdentifier, const UFortAIEncounterInfo* Encounter, TArray<FVector>& OutGoalLocations) {
 }
 
 AFortMission::AFortMission() {

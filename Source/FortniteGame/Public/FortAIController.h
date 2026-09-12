@@ -10,6 +10,8 @@
 #include "FortAIEncounterInfoOwnerInterface.h"
 #include "FortTeamActorInterface.h"
 #include "Templates/SubclassOf.h"
+#include "OnPlayerControllerComponentAttachedDelegate.h"
+#include "OnTeamSetDelegateDelegate.h"
 #include "FortAIController.generated.h"
 
 class AActor;
@@ -19,6 +21,8 @@ class AFortAIPawn;
 class UAIGoalComponent;
 class UFortAIEncounterInfo;
 class UFortPathFollowingComponent;
+
+class UBehaviorTree;
 
 UCLASS(Blueprintable, MinimalAPI, Config=Game)
 class AFortAIController : public AAIController, public IFortTeamActorInterface, public INavPathObserverInterface, public IFortAIEncounterInfoOwnerInterface {
@@ -64,8 +68,18 @@ public:
     AFortAIPawn* MyFortPawn;
     
 protected:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnTeamSetDelegate OnTeamSetDelegate;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerControllerComponentAttached OnControllerComponentAttachedEvent;
+    
+protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UAIGoalComponent* AIGoalComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UBehaviorTree* BTAssetToRunOnPawnAISpawned;
     
 public:
     AFortAIController();

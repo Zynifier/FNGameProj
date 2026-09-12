@@ -49,6 +49,9 @@ bool ABuildingGameplayActor::AcceptsEmoteSprays_Implementation() const {
     return false;
 }
 
+void ABuildingGameplayActor::OverrideMarkerDisplayInfo(const FMarkedActorDisplayInfo& NewDisplayInfo) {
+}
+
 ABuildingGameplayActor::ABuildingGameplayActor() {
     AbilitySet = NULL;
     InherentAbilitySets[0] = NULL;
@@ -66,5 +69,8 @@ ABuildingGameplayActor::ABuildingGameplayActor() {
     bShowInteractKeybind = true;
     RegisteredTouchComponent = NULL;
     PostProcessOverlapBlendWeight = 1;
+    bCanBeMarked = false;
+    bBlockMarking = false;
+    CustomInteractionWidget = NULL;
 }
 

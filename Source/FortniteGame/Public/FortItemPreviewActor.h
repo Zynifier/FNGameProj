@@ -3,6 +3,7 @@
 #include "GameFramework/Actor.h"
 #include "CharacterDisplaySettings.h"
 #include "FortUICameraPositionTargetInterface.h"
+#include "UObject/NoExportTypes.h"
 #include "FortItemPreviewActor.generated.h"
 
 class UMaterialInstance;
@@ -29,6 +30,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ZoomLevel;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FRotator PedestalRotationOffset;
+    
 public:
     AFortItemPreviewActor();
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
@@ -36,7 +40,7 @@ public:
     
 protected:
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-    void OnPreviewVisualsSpawned();
+    void OnPreviewVisualsSpawned(const bool bUseSecondaryTransitionEffects, const bool bShowFloor);
     
 public:
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
@@ -50,5 +54,9 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsSceneTransitioning() const;
+    
 };
 

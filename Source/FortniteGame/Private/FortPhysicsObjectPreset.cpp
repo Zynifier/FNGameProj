@@ -29,5 +29,13 @@ UFortPhysicsObjectPreset::UFortPhysicsObjectPreset() {
     MinDamageToImpulse = 1;
     PhysicalMaterialOverride = NULL;
     EffectsData = NULL;
+    BuoyancyAsset = NULL;
+    bRestorePreviousCollisionProfileOnDeactivate = false;
+    bStartActive = false;
+    SleepLinearVelocity = 0.0f;
+    SleepAngularVelocity = 0.0f;
+    TimeToSleep = 0.0f;
+    TimeToDeactivate = 0.0f;
+    ImpactDamageData = NULL;
 }
 

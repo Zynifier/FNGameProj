@@ -82,5 +82,8 @@ AFortAthenaJackalVehicle::AFortAthenaJackalVehicle() {
     CacheAudioBoost = NULL;
     CacheAudioWind = NULL;
     BoostingAnimClass = NULL;
+    PendingJumpCharge = 0.0f;
+    bBoosting = false;
+    bShouldCorrectYaw = false;
 }
 

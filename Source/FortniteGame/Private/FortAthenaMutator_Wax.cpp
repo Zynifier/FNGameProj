@@ -30,10 +30,10 @@ bool AFortAthenaMutator_Wax::IsPlayerInPodium(AFortPlayerStateAthena* Player) co
     return false;
 }
 
-void AFortAthenaMutator_Wax::GetWaxUI_Info(float& MyPercent, float& Enemy1Pct, float& Enemy2Pct, float& Enemy3Pct, int32& MyRank) {
+void AFortAthenaMutator_Wax::GetWaxUI_Info(float& MyPercent, float& Enemy1Pct, float& Enemy2Pct, float& Enemy3Pct, int32& MyRank) const {
 }
 
-int32 AFortAthenaMutator_Wax::GetTokensToWinBP() {
+int32 AFortAthenaMutator_Wax::GetTokensToWinBP() const {
     return 0;
 }
 
@@ -72,6 +72,9 @@ void AFortAthenaMutator_Wax::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
     DOREPLIFETIME(AFortAthenaMutator_Wax, PlayerData);
 }
 
+void AFortAthenaMutator_Wax::SendTokenStats() {
+}
+
 AFortAthenaMutator_Wax::AFortAthenaMutator_Wax() {
     TokenClass = AFortAthena_WaxToken::StaticClass();
     TokenPickupClass = AFortGameModePickup_Wax::StaticClass();
@@ -80,5 +83,8 @@ AFortAthenaMutator_Wax::AFortAthenaMutator_Wax() {
     FirstPlaceIfAboveThreshold = NULL;
     SecondPlaceIfAboveThreshold = NULL;
     ThirdPlaceIfAboveThreshold = NULL;
+    RespawnSound = NULL;
+    GameEndMusicSound = NULL;
+    GameEndMusicAudioComponent = NULL;
 }
 

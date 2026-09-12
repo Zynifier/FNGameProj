@@ -343,7 +343,8 @@ void UFortCheatManager::StartLavaMovement() {
 void UFortCheatManager::StartFillFloorMovement() {
 }
 
-void UFortCheatManager::SpawnVehicle(const FString& CarName, int32 ForcedMaterialVariantIndex) {
+AActor* UFortCheatManager::SpawnVehicle(const FString& VehicleName, int32 ForcedMaterialVariantIndex) {
+    return NULL;
 }
 
 AFortPlayerPawn* UFortCheatManager::SpawnSimplePawn() {
@@ -361,7 +362,7 @@ AFortPlayerPawn* UFortCheatManager::SpawnScriptedPawn(const FString& ProfileName
     return NULL;
 }
 
-void UFortCheatManager::SpawnReplaySpotLightEx(float X, float Y, float Z, float Yaw, float Pitch, bool bDebugDrawOn, int32 R, int32 G, int32 B, float InnerAngle, float OuterAngle, float Intensity, float Temp) {
+void UFortCheatManager::SpawnReplaySpotLightEx(float X, float Y, float Z, float Yaw, float Pitch, int32 R, int32 G, int32 B, float InnerAngle, float OuterAngle, float Intensity, float Radius, float Temp) {
 }
 
 void UFortCheatManager::SpawnReplaySpotLight() {
@@ -992,7 +993,7 @@ void UFortCheatManager::JoinFriendGameAsSpectator(const FString& FriendDisplayNa
 void UFortCheatManager::JoinFriendGame(const FString& FriendId) {
 }
 
-void UFortCheatManager::Island_MMS(const FString& IslandCode) {
+void UFortCheatManager::Island_MMS(const FString& IslandCode, FName TargetPlaylistName) {
 }
 
 void UFortCheatManager::Island_Destroy(const FString& Island_ItemId) {
@@ -1552,6 +1553,150 @@ void UFortCheatManager::AddAllScores(int32 Amount) {
 }
 
 void UFortCheatManager::AcceptEULA() {
+}
+
+void UFortCheatManager::AddWeaponModToCurrentWeapon(const FString& WeaponModName, bool bIsDynamic) {
+}
+
+void UFortCheatManager::Collection_CollectNpc(const FString& TagMatch, bool bFromQuest, int32 LocationIndex) {
+}
+
+void UFortCheatManager::Collection_CollectNpcAllLocations(const FString& TagMatch, bool bFromQuest) {
+}
+
+void UFortCheatManager::Collection_CollectNpcIndex(int32 Index, bool bFromQuest, int32 LocationIndex) {
+}
+
+void UFortCheatManager::Collection_MarkAllFishSeen() {
+}
+
+void UFortCheatManager::Collection_MarkOneFishSeen(const FString& Species) {
+}
+
+void UFortCheatManager::Collection_NpcBulkUpdateCollections(const FString& TagMatch) {
+}
+
+void UFortCheatManager::Collection_ShowNpcCount() {
+}
+
+void UFortCheatManager::DebugPhysicsObjects() {
+}
+
+void UFortCheatManager::DisableAllReplaySpotLights() {
+}
+
+void UFortCheatManager::DisableReplaySpotLight() {
+}
+
+void UFortCheatManager::DumpQuickbarItemTags() {
+}
+
+void UFortCheatManager::DumpServerAIProfilingReport() {
+}
+
+void UFortCheatManager::DuplicateReplaySpotLight() {
+}
+
+void UFortCheatManager::EnableAllReplaySpotLights() {
+}
+
+void UFortCheatManager::EnableCsvCategory(const FString& CategoryName) {
+}
+
+void UFortCheatManager::EnableReplaySpotLight() {
+}
+
+void UFortCheatManager::EnableServerAIProfiling(const bool bEnable) {
+}
+
+void UFortCheatManager::EnableServerAIProfilingVerbose(const bool bEnable) {
+}
+
+void UFortCheatManager::GiveBars(int32 Amount) {
+}
+
+void UFortCheatManager::GiveBotGE(const FString& GEtoApply, const FString& BotCommand) {
+}
+
+void UFortCheatManager::GiveGlobalCurrency(int32 Amount) {
+}
+
+void UFortCheatManager::GiveMultiItem(const FString& MultiItemName, int32 RequestedLevel, int32 Count) {
+}
+
+void UFortCheatManager::ListBuildingProps(const FString& PropName) {
+}
+
+void UFortCheatManager::LoadAndActivateGameFeaturePlugin(const FString& GameFeaturePluginURL) {
+}
+
+void UFortCheatManager::LoadAndActivateGameFeaturePluginViaFeatureName(const FString& GameFeatureName) {
+}
+
+void UFortCheatManager::LogItemQuantityForTemplate(const FString& TemplateId) {
+}
+
+void UFortCheatManager::PilotReplaySpotLight() {
+}
+
+void UFortCheatManager::PrintValidWeaponMods() {
+}
+
+void UFortCheatManager::PrintWeaponModsOnCurrentWeapon() {
+}
+
+void UFortCheatManager::ReleaseAIPawn() {
+}
+
+void UFortCheatManager::RemoveBars(int32 Amount) {
+}
+
+void UFortCheatManager::RemoveGlobalCurrency(int32 Amount) {
+}
+
+void UFortCheatManager::RemoveWeaponModFromCurrentWeapon(const FString& WeaponModName) {
+}
+
+void UFortCheatManager::RemoveWeaponModFromCurrentWeaponAtSlot(int32 Index) {
+}
+
+void UFortCheatManager::ResetItemShopSeenOffers() {
+}
+
+void UFortCheatManager::SelectPrevSpotLight() {
+}
+
+void UFortCheatManager::SelectSpotLightByNumber(uint32 Number) {
+}
+
+void UFortCheatManager::SetEnableRenderCustomDepthOnAllPlayerPawns(bool bEnable) {
+}
+
+void UFortCheatManager::SetPartyLocation(EFortPartyMemberLocation NewLocation) {
+}
+
+void UFortCheatManager::SetReplaySpotLightRadius(float Radius) {
+}
+
+void UFortCheatManager::SetVehicleFuel(float FuelAmount) {
+}
+
+void UFortCheatManager::SetWeaponModToCurrentWeaponAtSlot(const FString& WeaponModName, int32 Index) {
+}
+
+void UFortCheatManager::SpawnGroupOfScriptedPawnOnGrid(int32 Rows, int32 Columns, float RowPadding, float ColumnPadding, const FString& ProfileName, const float X, const float Y, const float Z, const float Pitch, const float Yaw, const float Roll) {
+}
+
+void UFortCheatManager::SpawnPhysicsProp(const FString& PropName, int32 Count, bool bSpawnAwake, bool bCanBeDamaged) {
+}
+
+void UFortCheatManager::TakeoverAIPawn() {
+}
+
+void UFortCheatManager::ToggleSmartBuild() {
+}
+
+void UFortCheatManager::ListMultiItems() const {
 }
 
 UFortCheatManager::UFortCheatManager() {

@@ -144,6 +144,35 @@ void AFortTimeOfDayManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     DOREPLIFETIME(AFortTimeOfDayManager, DirectOverrides);
 }
 
+void AFortTimeOfDayManager::InhibitorDevicePlaced(AActor* NewInhibitor) {
+}
+
+void AFortTimeOfDayManager::InhibitorDeviceRemoved(AActor* OldInhibitor) {
+}
+
+void AFortTimeOfDayManager::SetDirectionalLightComponentRotation(const FQuat& NewQuat, bool bInEditor, float DeltaTime) {
+}
+
+FLinearColor AFortTimeOfDayManager::GetDirectOverrideFogColor() const {
+    return FLinearColor{};
+}
+
+float AFortTimeOfDayManager::GetDirectOverrideFogDensity() const {
+    return 0.0f;
+}
+
+TArray<AActor*> AFortTimeOfDayManager::GetEnabledInhibitors() const {
+    return TArray<AActor*>();
+}
+
+float AFortTimeOfDayManager::GetSafeZoneGamePhaseTimeRemaining() const {
+    return 0.0f;
+}
+
+bool AFortTimeOfDayManager::IsThereAnyInhibitor() const {
+    return false;
+}
+
 AFortTimeOfDayManager::AFortTimeOfDayManager() {
     TimeOfDay = 1;
     TimeOfDayReplicated = 1;
@@ -207,5 +236,6 @@ AFortTimeOfDayManager::AFortTimeOfDayManager() {
     StarMapMID = NULL;
     StormStrength = 1;
     WeatherComponent = NULL;
+    DisableGlobalWeatherEvents = false;
 }
 

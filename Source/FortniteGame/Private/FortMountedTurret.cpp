@@ -15,6 +15,19 @@ void AFortMountedTurret::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
     DOREPLIFETIME(AFortMountedTurret, TeamIndex);
 }
 
+void AFortMountedTurret::NativeUpdateOverheatCosmetics(const AFortPlayerPawn* InDriverPawn, float InReplicateOverheatOf20, UPARAM(Ref) FRotator& OutTurretRotation) {
+}
+
+void AFortMountedTurret::SetManned(bool bInIsManned) {
+}
+
+void AFortMountedTurret::SetOverheating(bool bInIsOverheating) {
+}
+
+float AFortMountedTurret::NativeCurrentOverheatScalar(float InReplicateOverheatOf20) const {
+    return 0.0f;
+}
+
 AFortMountedTurret::AFortMountedTurret() {
     TeamIndex = 0;
     bConstrainVerticalRotationOnly = true;

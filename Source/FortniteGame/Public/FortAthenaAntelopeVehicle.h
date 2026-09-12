@@ -4,6 +4,7 @@
 #include "UObject/NoExportTypes.h"
 #include "FortAthenaSKMotorVehicle.h"
 #include "Templates/SubclassOf.h"
+#include "ENaturalSlideState.h"
 #include "FortAthenaAntelopeVehicle.generated.h"
 
 class ABuildingActor;
@@ -12,7 +13,7 @@ class UCurveFloat;
 class UFortAntelopeVehicleConfigs;
 class UFortVehicleAudioVoice;
 class UMaterialInstanceDynamic;
-class UCameraShake;
+class UMatineeCameraShake;
 class UParticleSystem;
 class UParticleSystemComponent;
 class UStaticMeshComponent;
@@ -25,6 +26,9 @@ public:
     FVector LeanPositionBack;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector LeanPositionTargetBack;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVector LeanPositionFront;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -32,6 +36,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float LeanPositionFrontLagCoefficient;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector BackLeanSocketPosition;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float LeanImpulseScaleBack;
@@ -67,10 +74,10 @@ public:
     bool bLocalPlayerADS;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* DriverCameraShake;
+    UMatineeCameraShake* DriverCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* PassengerCameraShake;
+    UMatineeCameraShake* PassengerCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortPlayerPawn* LocalPlayerPawn;
@@ -158,6 +165,16 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UStaticMeshComponent* WheelBlur_FR;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIsBoosting;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    ENaturalSlideState NaturalSlideState;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float BounceForceBack;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))

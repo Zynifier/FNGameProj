@@ -2,7 +2,6 @@
 
 UFortContextualTutorialDefinition::UFortContextualTutorialDefinition() {
     ContextualTutorialClass = NULL;
-    TutorialType = EFortContextualTutorialTypes::AllSeen;
     Priority = 0;
     AmountOfRecallMatches = 0;
     TriggerActivationDelay = 1;
@@ -19,11 +18,12 @@ UFortContextualTutorialDefinition::UFortContextualTutorialDefinition() {
     bCanSetMessagingSystemOnCooldown = true;
     bCanBeShownWhileDBNO = false;
     Platform = EFortContextualTutorialPlatform::Any;
-    ContextualTutorialDependency = EFortContextualTutorialTypes::AllSeen;
     bRequireSquad = false;
     bRequireSolo = false;
     bActivateInBR = true;
     bActivateInCreative = false;
     bIsEnabled = true;
+    QueuedActivateDelay = 0.0f;
+    bQueueActivation = false;
 }
 

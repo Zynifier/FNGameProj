@@ -16,6 +16,9 @@ public:
     TMap<EFortWorldMarkerType, FMarkedActorDisplayInfo> DefaultMarker;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<EFortWorldMarkerType, FName> MarkerTypeToIdMap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<TSoftClassPtr<AActor>, FMarkedActorDisplayInfo> DetailsForClass;
     
     UFortMarkerDetailsTable();

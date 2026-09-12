@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
 #include "EFortSoundIndicatorTypes.h"
+#include "EFortTeamAffiliation.h"
 #include "FortAnimNotify_GenericSoundIndicator.generated.h"
 
 class USoundBase;
@@ -22,6 +23,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIgnoreForLocalPlayer;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<TEnumAsByte<EFortTeamAffiliation::Type>> ShowAffiliations;
     
 public:
     UFortAnimNotify_GenericSoundIndicator();

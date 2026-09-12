@@ -1,0 +1,7 @@
+#include "FortContextualTutorial_AbilityCancelledInformative.h"
+
+void UFortContextualTutorial_AbilityCancelledInformative::HandleStartSkydivingForActivation() {
+}
+
+UFortContextualTutorial_AbilityCancelledInformative::UFortContextualTutorial_AbilityCancelledInformative() {
+}

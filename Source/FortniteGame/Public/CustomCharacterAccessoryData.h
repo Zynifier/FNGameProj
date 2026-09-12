@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "CustomCharacterPartData.h"
+#include "UObject/NoExportTypes.h"
 #include "CustomCharacterAccessoryData.generated.h"
 
 class UAnimInstance;
@@ -14,6 +15,9 @@ public:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Accessory")
     FName AttachSocketName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector AttachOffset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Accessory")
     UCustomAccessoryAttachmentData* AttachmentOverrideData;

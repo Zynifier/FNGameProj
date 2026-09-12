@@ -8,6 +8,7 @@
 #include "FortPartyMatchmakingInfo.h"
 #include "FortPartySquadAssignment.h"
 #include "PlaylistData.h"
+#include "FortCreativeDiscoverySurfaceRevision.h"
 #include "FortPartyRepData.generated.h"
 
 USTRUCT(BlueprintType)
@@ -49,10 +50,16 @@ protected:
     FFortPartyMatchmakingInfo PartyMatchmakingInfo;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortCreativeDiscoverySurfaceRevision> CreativeDiscoverySurfaceRevisions;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString CustomMatchKey;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FPlaylistData PlaylistData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString ActivityName;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool AllowJoinInProgress;

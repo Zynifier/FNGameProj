@@ -6,5 +6,6 @@ FFortQuestObjectiveStatXPTableRow::FFortQuestObjectiveStatXPTableRow() {
     MaxCount = 0;
     bOnceOnly = false;
     bIsCached = false;
+    XPPropagationRule = EFortXPPropagationRule::Self;
 }
 

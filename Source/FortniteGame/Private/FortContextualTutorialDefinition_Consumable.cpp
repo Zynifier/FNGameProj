@@ -8,5 +8,6 @@ UFortContextualTutorialDefinition_Consumable::UFortContextualTutorialDefinition_
     ShieldRequirements = 1;
     bUseCommitedCallback = true;
     bUseActivatedCallback = false;
+    bOnlyInterruptibleHealingItem = false;
 }
 

@@ -37,6 +37,13 @@ void UAthenaMarkerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
     DOREPLIFETIME(UAthenaMarkerComponent, MarkerStream);
 }
 
+FVector UAthenaMarkerComponent::GetMarkerCurrentPosition(FMarkerID MarkerID) {
+    return FVector{};
+}
+
+void UAthenaMarkerComponent::HandleServerSquadChange(AFortPlayerStateAthena* InPlayerState, const uint8 PreviousSquadId) {
+}
+
 UAthenaMarkerComponent::UAthenaMarkerComponent() {
     MarkerWidgetClass = NULL;
     MarkerActorClass = NULL;

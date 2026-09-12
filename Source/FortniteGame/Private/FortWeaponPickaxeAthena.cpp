@@ -87,5 +87,6 @@ AFortWeaponPickaxeAthena::AFortWeaponPickaxeAthena() {
     bCandyCaneKillReaction = false;
     CQCEnemyAudio = NULL;
     CachedCosmeticItemDefinition = NULL;
+    PickaxeHarvestingMontage = NULL;
 }
 

@@ -16,5 +16,8 @@ private:
 public:
     UInteractionTypeContext();
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TInteractionType GetInteractionType() const;
+    
 };
 

@@ -51,6 +51,9 @@
 #include "VehicleSeatEventDelegate.h"
 #include "VehicleSpringInfo.h"
 #include "VehicleTargetOrientation.h"
+#include "PredictionReplicationProxy_AP.h"
+#include "PredictionReplicationProxy_SP.h"
+#include "VehicleToggleablePart.h"
 #include "FortAthenaVehicle.generated.h"
 
 class AActor;
@@ -101,15 +104,33 @@ class USplineComponent;
 class UTexture;
 class UWeaponHitNotifyAudioBank;
 
+class AFortPlayerPawnAthena;
+class UFortAthenaTrackableAIObjectComponent;
+class UFortPhysicsVehicleConfigs;
+class UFortVehicleInteractionOverrideComponent;
+class UFortVehicleNavModifierComponent;
+
 UCLASS(Blueprintable, MinimalAPI)
 class AFortAthenaVehicle : public AFortPhysicsPawn, public IFortInteractInterface, public IFortDamageableActorInterface/*, public IFortAbilitySystemInterface*/, public IGameplayCueInterface, public IGameplayTagAssetInterface, public IFortMarkableActorInterface, public IFortVehicleInterface, public IFortAutoFireTargetInterface, public IFortCurieInterface {
     GENERATED_BODY()
 public:
+    UPROPERTY(EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    FMinimalGameplayCueReplicationProxy SimulatedProxyMinimalReplicationGameplayCues;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    FPredictionReplicationProxy_AP NetPredictionProxy_AP;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    FPredictionReplicationProxy_SP NetPredictionProxy_SP;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_OverrideWrap, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UAthenaItemWrapDefinition> SoftOverrideItemWrap;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UAthenaItemWrapDefinition* OverrideItemWrap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TSet<AFortPlayerPawnAthena*> PlayersBasedOnVehicle;
     
 protected:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -117,6 +138,28 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     USplineComponent* BoundsXYSplineComponent;
+    
+public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bDisableUpdateForcedDebugInput: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bDisableUpdateAutoRun: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bDisableUpdateHonk: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bDisableUpdateIgnoredBuildingActors: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bDisableUpdateIngoredPawnsForDamage: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bDisableUpdateSafeTeleport: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bUseForceHeading: 1;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -155,8 +198,53 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_PendingDeath, meta=(AllowPrivateAccess=true))
     uint8 bPendingDeath: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bForceDeath: 1;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     uint8 bHasDriver: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bHasPassengers: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCanSleepWhileNotTouchingAnything: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsTouchingAnything: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsInWater: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsInWaterBody: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsOverlappingWaterBody: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsFullyInWaterBody: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCanDriveOnIncline: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCanCoastOnIncline: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bWheelsOnGround: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bAnyWheelsOnGround: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsTouchingDrivableGround: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsTouchingGroundWithoutWheels: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bUseGravity: 1;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -174,6 +262,15 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bEnableCurieMaterial: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_bEnforceTeamRestriction, meta=(AllowPrivateAccess=true))
+    uint8 bEnforceTeamRestriction: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bEnforceTeamRestrictionForMiniGame: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_TeamID, meta=(AllowPrivateAccess=true))
+    uint8 TeamId;
+    
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVehicleSeatEvent OnPawnEnteredVehicleAtSeat;
     
@@ -186,8 +283,20 @@ protected:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVehicleSeatEvent OnPawnExitedVehicleFromSeat;
     
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVehicleSeatEvent OnPawnFinishEnteringVehicle;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bWaitingForSleep: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bAttemptAsyncOrientationCorrection: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bIsAsyncCorrectingOrientation: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bAlwaysCreateNavComponent: 1;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -239,6 +348,9 @@ public:
     TArray<AFortPawn*> PawnsToIgnoreForCollision;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<AFortPawn*> IgnoredPawnsPendingTeleport;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float LastPropImpactImpulseTime;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -263,6 +375,39 @@ public:
     FFortAthenaVehicleInputState EmptyDriverInputState;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector AverageSpringNormal;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float TopSpeedCurrentMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float PushForceCurrentMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float SteeringAngle;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float FrontLateralFrictionRuntimeMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float RearLateralFrictionRuntimeMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector LocalRearFrictionPt;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector LocalFrontFrictionPt;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float FrontMassRatio;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float RearMassRatio;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float TotalBrakingDelta;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TEnumAsByte<EPhysicalSurface> PrimarySurfaceType;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -281,6 +426,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortRechargingActionTimer FuelCharge;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortPhysicsVehicleConfigs* FortPhysicsVehicleConfigs;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVehicleReachedChargeThreshold OnFuelAboveThreshold;
@@ -331,6 +479,9 @@ public:
     float CameraAssistRampUp;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowAutoCamera;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float TimeToAutoCamera;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -367,6 +518,9 @@ public:
     UPrimitiveComponent* WaterOverlapComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float WaterLevel;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float VehicleMinHorSpeedToDamage;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -383,6 +537,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ImpulseResponseZBias;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float TargetingZOffset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float BrakeAboveTopSpeedDelta;
@@ -493,11 +650,17 @@ protected:
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortVehicleSeatComponent* VehicleSeatComponent;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortVehicleInteractionOverrideComponent* VehicleInteractionOverrideComponent;
+    
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortSkyTubePhysicsComponent* SkyTubePhysicsComponent;
     
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortVehiclePontoonsComponent* PontoonsComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortAthenaTrackableAIObjectComponent* TrackableAIObjectComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FAthenaCarPlayerSlot> PlayerSlots;
@@ -524,6 +687,11 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_DamageableParts, meta=(AllowPrivateAccess=true))
     TArray<FVehicleDamageablePart> DamageableParts;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FVehicleToggleablePart> ToggledParts;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_CorrectTargetOrientation, meta=(AllowPrivateAccess=true))
     FVehicleTargetOrientation CorrectTargetOrientation;
     
@@ -562,6 +730,15 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVehicleCosmeticInfo VehicleCosmeticInfo;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortVehicleNavModifierComponent* NavModifierComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    bool bShouldSleepAtSpawn;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AActor* ImpactInstigator;
     
 public:
     AFortAthenaVehicle();
@@ -1199,6 +1376,115 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void AddVehicleActionNamesAndLabels(AFortPlayerPawn* FortPlayerPawn, UPARAM(Ref) TArray<FName>& SeatActionNames, UPARAM(Ref) TArray<FText>& SeatActionLabels) override PURE_VIRTUAL(AddVehicleActionNamesAndLabels,);
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable)
+    void ClientBroadcastAbilityImpactAtLocation(UObject* WorldContextObject, USoundBase* InSound, UObject* InInstigator, const FVector& Position, float Radius, FName Tag, const bool bSubtractLocalNoise);
+    
+    UFUNCTION(BlueprintCallable)
+    void ForceSeatPawns(TArray<AFortPlayerPawn*> PawnsToSeat);
+    
+    UFUNCTION(BlueprintCallable)
+    bool ForceSeatSinglePawn(AFortPlayerPawn* PawnToSeat, int32 SeatIndex);
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void ManageSpeedDamageMutlipliers();
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
+    void OnCollisionHitEffects(const FVector& HitLocation, const FVector& HitNormalImpulse, const FVector& HitFrictionImpulse, const FVector& HitNormal, AActor* HitActor, EPhysicalSurface HitSurfaceType);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnGearShiftDown();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnGearShiftUp();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnPrimitiveComponentSleep(UPrimitiveComponent* WakingComponent, FName BoneName);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnPrimitiveComponentWake(UPrimitiveComponent* WakingComponent, FName BoneName);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_bEnforceTeamRestriction();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_NetPrediction_AP();
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_NetPrediction_SP();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_TeamID();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnSurfaceTypeVehicleIsOnChanged(EPhysicalSurface SurfaceTypeVehicleIsOn);
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    void OnWaterTooDeep();
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void ReleaseVehicleControlledExternalyInternal();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void RepairAllDamageableParts(const float NewHealth);
+    
+    UFUNCTION(BlueprintCallable)
+    void RepairDamageablePart(const FName ShapeName);
+    
+public:
+    UFUNCTION(BlueprintCallable, Server, Unreliable)
+    void ServerReceiveInputCmd(int32 ClientFrameNumber, const TArray<uint8>& Data);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetEnforceTeamRestriction(const bool bNewEnforceTeamRestriction);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetForceInfiniteFuel(const bool bNewForceInfiniteFuel);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetStaticPhysics(const bool bStatic);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetSupportCosmeticWrap(const bool bNewSupportCosmeticWrap);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTeamID(const uint8 NewTeamID);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool CanForcePawnToSeat(AFortPlayerPawn* PawnToSeat, const int32 SeatIndex) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetPontoonRadius(const int32 PontoonIndex) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    uint8 GetTeamID() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsDriverSplitScreen() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsDriverTeamRestricted(const AFortPlayerPawn* PlayerPawn) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsEnforcingTeamRestriction() const;
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsOutOfRechargeableFuel() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsRechargeableFuelBelowThreshold() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_ToggleableParts(const TArray<FVehicleToggleablePart>& PrevToggleableParts);
     
 };
 

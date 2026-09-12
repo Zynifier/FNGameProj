@@ -1,0 +1,4 @@
+#include "FortAthenaMutator_ControlOnVictoryTimeDilation.h"
+
+AFortAthenaMutator_ControlOnVictoryTimeDilation::AFortAthenaMutator_ControlOnVictoryTimeDilation() {
+}

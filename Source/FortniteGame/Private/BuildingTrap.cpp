@@ -150,6 +150,13 @@ void ABuildingTrap::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
     DOREPLIFETIME(ABuildingTrap, AttachedTo);
     DOREPLIFETIME(ABuildingTrap, TrapLevel);
     DOREPLIFETIME(ABuildingTrap, OriginalTrapLevel);
+    DOREPLIFETIME(ABuildingTrap, bTrapRecharging);
+}
+
+void ABuildingTrap::OnRep_bTrapRecharging() {
+}
+
+void ABuildingTrap::TriggerOverlapEnd(AActor* OtherActor) {
 }
 
 ABuildingTrap::ABuildingTrap() {
@@ -161,7 +168,6 @@ ABuildingTrap::ABuildingTrap() {
     bShouldAffectAllPawnsInMinigames = true;
     bTriggerAbilityOnEndoverlap = false;
     AbilitySet = NULL;
-    DamageAttributeSet = NULL;
     AttachedTo = NULL;
     bTargetWithAttachedTo = true;
     LastAttachedTo = NULL;
@@ -175,5 +181,6 @@ ABuildingTrap::ABuildingTrap() {
     StimSourceComponent = CreateDefaultSubobject<UAthenaTrapAIPerceptionStimuliSourceComponent>(TEXT("Trap AI Perception Stimuli Source Component"));
     TrapLevel = 0;
     OriginalTrapLevel = 0;
+    bTrapRecharging = false;
 }
 

@@ -7,5 +7,7 @@ UFortWeaponAdditionalData_SingleWieldState::UFortWeaponAdditionalData_SingleWiel
     LiveAbility = NULL;
     LiveAnimSet = NULL;
     LiveMontage = NULL;
+    bHideOffhandMesh = false;
+    bUseWeaponHandSocketOverride = false;
 }
 

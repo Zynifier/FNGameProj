@@ -1,6 +1,6 @@
 #include "FortGameUserSettings.h"
 
-void UFortGameUserSettings::ToggleScalabilityMode(EFortScalabilityMode Mode, bool bEnabled, bool bForceApply) {
+void UFortGameUserSettings::ToggleScalabilityMode(EFortScalabilityMode Mode, bool bEnabled, bool bForceApply, bool bApplyImmediately) {
 }
 
 void UFortGameUserSettings::SetUserInterfaceContrast(float InContrast) {
@@ -132,8 +132,8 @@ float UFortGameUserSettings::GetResolutionFraction() const {
     return 0.0f;
 }
 
-int32 UFortGameUserSettings::GetRenderingAPI() const {
-    return 0;
+ERHIType UFortGameUserSettings::GetRenderingAPI() const {
+    return ERHIType::D3D11;
 }
 
 bool UFortGameUserSettings::GetRayTracingShadowsQuality() const {
@@ -194,6 +194,59 @@ float UFortGameUserSettings::GetDisplayGamma() const {
 
 int32 UFortGameUserSettings::GetCachedPlayerLevel() const {
     return 0;
+}
+
+void UFortGameUserSettings::SetAudioOutputDeviceId(const FString& InAudioOutputDeviceId) {
+}
+
+void UFortGameUserSettings::SetAutoDownloadHighResTextures(bool bValue) {
+}
+
+void UFortGameUserSettings::SetCachedAlienStylePoints(int32 Value) {
+}
+
+void UFortGameUserSettings::SetCachedBattleStars(int32 Value) {
+}
+
+void UFortGameUserSettings::SetCachedHighestBattlePassUnlockedPage(int32 Value) {
+}
+
+void UFortGameUserSettings::SetMeshQuality(int32 Value) {
+}
+
+FString UFortGameUserSettings::GetAudioOutputDeviceId() const {
+    return TEXT("");
+}
+
+bool UFortGameUserSettings::GetAutoDownloadHighResTextures() const {
+    return false;
+}
+
+int32 UFortGameUserSettings::GetCachedAlienStylePoints() const {
+    return 0;
+}
+
+int32 UFortGameUserSettings::GetCachedBattleStars() const {
+    return 0;
+}
+
+int32 UFortGameUserSettings::GetCachedHighestBattlePassUnlockedPage() const {
+    return 0;
+}
+
+int32 UFortGameUserSettings::GetMeshQuality() const {
+    return 0;
+}
+
+bool UFortGameUserSettings::IsInPerformanceMode() const {
+    return false;
+}
+
+void UFortGameUserSettings::SetRenderingAPISelection(ERHIType InRenderingAPI) {
+}
+
+ERHIType UFortGameUserSettings::GetRenderingAPISelection() const {
+    return ERHIType::D3D11;
 }
 
 UFortGameUserSettings::UFortGameUserSettings() {
@@ -295,5 +348,13 @@ UFortGameUserSettings::UFortGameUserSettings() {
     GooglePlayRatingDelayedOccurences = 0;
     bShowTemperature = false;
     LastYearForcedDisplayWinterfestInfoButton = 0;
+    CachedBattleStars = 0;
+    CachedAlienStylePoints = 0;
+    CachedHighestBattlePassUnlockedPage = 0;
+    b120FpsMode = false;
+    bAutoDownloadHighResTextures = false;
+    LastAutoDownloadHighResTextureReminder = 0;
+    bHasSeenSidekickWelcomePopup = false;
+    bPCMigratedToNextGenScalability = false;
 }
 

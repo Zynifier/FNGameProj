@@ -8,5 +8,6 @@ enum class EQuickHealingRequirementFlags : uint8 {
     NeedsHealing,
     NeedsShields,
     NeedsBoth,
+    Invalid,
 };
 

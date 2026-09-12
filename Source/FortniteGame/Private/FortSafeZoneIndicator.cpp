@@ -71,6 +71,10 @@ void AFortSafeZoneIndicator::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
     DOREPLIFETIME(AFortSafeZoneIndicator, ForceUpdateCount);
 }
 
+float AFortSafeZoneIndicator::GetSafeZoneShrinkSpeedRelativeTo(float DistanceToTravel) {
+    return 0.0f;
+}
+
 AFortSafeZoneIndicator::AFortSafeZoneIndicator() {
     MinimapComp = NULL;
     LastRadius = 1;
@@ -117,5 +121,6 @@ AFortSafeZoneIndicator::AFortSafeZoneIndicator() {
     TimeRemainingWhenPhasePaused = 1;
     ForceUpdateCount = 0;
     FutureReplicator = NULL;
+    AudioDopplerInterpSpeed = 0.0f;
 }
 

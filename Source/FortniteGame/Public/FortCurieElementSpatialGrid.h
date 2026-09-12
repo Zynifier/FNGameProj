@@ -7,16 +7,18 @@
 class AActor;
 class UFortCurieFireNavRelevantObject;
 
+class UFortCurieDangerousNavRelevantObject;
+
 USTRUCT(BlueprintType)
 struct FFortCurieElementSpatialGrid : public FFortCurieSpatialGrid {
     GENERATED_BODY()
 public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TMap<FIntPoint, UFortCurieFireNavRelevantObject*> NavRelevantObjectMap;
+    TMap<FIntPoint, UFortCurieDangerousNavRelevantObject*> NavRelevantObjectMap;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TArray<UFortCurieFireNavRelevantObject*> NavRelevantPool;
+    TArray<UFortCurieDangerousNavRelevantObject*> NavRelevantPool;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSet<AActor*> PendingVoxelizationActors;

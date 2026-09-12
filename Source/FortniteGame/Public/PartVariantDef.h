@@ -12,6 +12,8 @@
 #include "ScriptedActionVariant.h"
 #include "SocketTransformVariant.h"
 #include "VariantParticleSystemInitializerData.h"
+#include "MeshVariant.h"
+#include "SoundVariant.h"
 #include "PartVariantDef.generated.h"
 
 class UCustomCharacterPart;
@@ -45,6 +47,9 @@ public:
     TArray<FManagedParticleParamVariant> VariantAlteredParticleParams;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSoundVariant> VariantSounds;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFoleySoundVariant> VariantFoley;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -52,6 +57,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FScriptedActionVariant> VariantActions;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FMeshVariant> VariantMeshes;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCosmeticMetaTagContainer MetaTags;

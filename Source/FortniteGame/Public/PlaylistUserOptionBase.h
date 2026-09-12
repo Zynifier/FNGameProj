@@ -12,6 +12,8 @@
 class UMaterial;
 class UUserWidget;
 
+class UPlaylistUserOptionsFilter;
+
 UCLASS(Abstract, Blueprintable)
 class FORTNITEGAME_API UPlaylistUserOptionBase : public UDataAsset, public IFortUserOptionProvider, public IFortCreativeToyOptionInterface, public ICreativeEditablePropertyInterface {
     GENERATED_BODY()
@@ -42,6 +44,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TEnumAsByte<UFortMatchmakingKnobsDataSource::Type> MenuListType;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UPlaylistUserOptionBase* OverridenBy;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 WeightOffset;
@@ -52,10 +57,10 @@ protected:
 public:
     UPlaylistUserOptionBase();
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    FString GetOptionValueNameFromValue(const FString& OptionValue, bool bAllowNoOverride) const;
+    FString GetOptionValueNameFromValue(const FString& OptionValue, bool bAllowNoOverride, const UPlaylistUserOptionsFilter* Filter) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    FString GetOptionKey(bool bWithScoping) const;
+    FString GetOptionKey(bool bWithScoping, const UPlaylistUserOptionsFilter* Filter) const;
     
     
     // Fix for true pure virtual functions not being implemented

@@ -129,5 +129,8 @@ AFortAthenaAntelopeVehicle::AFortAthenaAntelopeVehicle() {
     BoostFXStrengthCurve = NULL;
     BoostFXRumbleStrengthCurve = NULL;
     FortAntelopeVehicleConfigs = NULL;
+    bIsBoosting = false;
+    NaturalSlideState = ENaturalSlideState::None;
+    BounceForceBack = 0.0f;
 }
 

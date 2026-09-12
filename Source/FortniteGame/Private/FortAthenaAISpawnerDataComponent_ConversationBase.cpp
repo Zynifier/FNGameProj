@@ -1,0 +1,4 @@
+#include "FortAthenaAISpawnerDataComponent_ConversationBase.h"
+
+UFortAthenaAISpawnerDataComponent_ConversationBase::UFortAthenaAISpawnerDataComponent_ConversationBase() {
+}

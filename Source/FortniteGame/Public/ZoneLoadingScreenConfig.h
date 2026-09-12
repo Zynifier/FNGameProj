@@ -6,6 +6,8 @@
 class UFortTips;
 class UTexture2D;
 
+class USoundBase;
+
 USTRUCT(BlueprintType)
 struct FZoneLoadingScreenConfig {
     GENERATED_BODY()
@@ -24,6 +26,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<UFortTips*> LoadingTips;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundBase* LoadingMusic;
     
     FORTNITEGAME_API FZoneLoadingScreenConfig();
 };

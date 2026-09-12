@@ -11,6 +11,10 @@ class UReplicationGraphNode_ActorList;
 class UReplicationGraphNode_FortVolumeGrid;
 class UReplicationGraphNode_GridSpatialization2D;
 
+class UClass;
+class UFortReplicationGraphNode_Custom;
+class UFortReplicationGraphNode_PlayerStateFrequencyLimiter;
+
 UCLASS(Blueprintable, NonTransient)
 class UFortReplicationGraph : public UReplicationGraph {
     GENERATED_BODY()
@@ -28,11 +32,17 @@ public:
     UFortReplicationGraphNode_LiveSpectator* LiveSpectatorRelevancyNode;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    UFortReplicationGraphNode_PlayerStateFrequencyLimiterV2* PlayerStateLimiterNode;
+    UFortReplicationGraphNode_PlayerStateFrequencyLimiter* PlayerStateLimiterNode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortReplicationGraphNode_PlayerStateFrequencyLimiter* ReplayPlayerStateLimiterNode;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<UReplicationGraphNode_FortVolumeGrid*> FortVolumeGrids;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<UClass*, UFortReplicationGraphNode_Custom*> ClassToNodetoRouteTo;
     
 public:
     UFortReplicationGraph();

@@ -41,6 +41,10 @@ void UFortTimeOfDayWeatherComponent::GetLifetimeReplicatedProps(TArray<FLifetime
     DOREPLIFETIME(UFortTimeOfDayWeatherComponent, CurrentWeatherEventIntensity);
 }
 
+EGlobalWeatherState UFortTimeOfDayWeatherComponent::GetWeatherState() const {
+    return EGlobalWeatherState::Inactive;
+}
+
 UFortTimeOfDayWeatherComponent::UFortTimeOfDayWeatherComponent() {
     bWeatherDisabled = false;
     GamePhaseToStart = EAthenaGamePhase::None;

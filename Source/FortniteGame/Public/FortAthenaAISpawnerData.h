@@ -3,6 +3,7 @@
 #include "UObject/Object.h"
 #include "GameplayTagContainer.h"
 #include "Templates/SubclassOf.h"
+#include "FortAthenaSpawnerDataBase.h"
 #include "FortAthenaAISpawnerData.generated.h"
 
 class UFortAthenaAISpawnerData;
@@ -16,13 +17,16 @@ class UFortAthenaAISpawnerDataComponent_GameplayBase;
 class UFortAthenaAISpawnerDataComponent_LODBase;
 class UFortAthenaAISpawnerDataComponent_SpawnParamsBase;
 
+class UFortAthenaAISpawnerDataComponent_ChanceEncounterBase;
+class UFortAthenaAISpawnerDataComponent_ConversationBase;
+class UFortAthenaAISpawnerDataComponent_CosmeticBase;
+class UFortAthenaAISpawnerDataComponent_OptimBase;
+class UFortAthenaAISpawnerDataComponent_VoiceBase;
+
 UCLASS(Abstract, Blueprintable, MinimalAPI)
-class UFortAthenaAISpawnerData : public UObject {
+class UFortAthenaAISpawnerData : public UFortAthenaSpawnerDataBase {
     GENERATED_BODY()
 public:
-    UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    FGameplayTagContainer DescriptorTag;
-    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<UFortAthenaAISpawnerDataComponent*> ClassComponentList;
@@ -47,6 +51,21 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UFortAthenaAISpawnerDataComponent_GameplayBase> GameplayComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortAthenaAISpawnerDataComponent_ConversationBase> ConversationComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortAthenaAISpawnerDataComponent_VoiceBase> VoiceComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortAthenaAISpawnerDataComponent_CosmeticBase> CosmeticComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortAthenaAISpawnerDataComponent_ChanceEncounterBase> ChanceEncounterComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortAthenaAISpawnerDataComponent_OptimBase> OptimizationComponent;
     
 public:
     UFortAthenaAISpawnerData();
@@ -76,6 +95,21 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     UFortAthenaAISpawnerDataComponentList* CreateComponentList(UObject* OuterObject) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortAthenaAISpawnerDataComponent_ChanceEncounterBase* GetChanceEncounterComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortAthenaAISpawnerDataComponent_ConversationBase* GetConversationComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortAthenaAISpawnerDataComponent_CosmeticBase* GetCosmeticComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortAthenaAISpawnerDataComponent_OptimBase* GetOptimizationComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortAthenaAISpawnerDataComponent_VoiceBase* GetVoiceComponent() const;
     
 };
 

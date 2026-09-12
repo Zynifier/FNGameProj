@@ -12,6 +12,7 @@
 #include "FortAnimInstance.h"
 #include "FortPlayMontageForGameplayTagQueryInterface.h"
 #include "GameplayTagAnimations.h"
+#include "ESlotEnvironmentExposure.h"
 #include "CustomCharacterPartAnimInstance.generated.h"
 
 class AFortPlayerPawn;
@@ -80,6 +81,9 @@ protected:
     uint8 bIsUsingJetpack: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bGoopJumpExecuted;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsSlopeSliding: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -107,6 +111,12 @@ protected:
     uint8 bIsInVehicle: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsValetDriver: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsValetPassenger: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsInShoppingCart: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -114,6 +124,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsTargeting: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsTargetingConsumableThrow: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsCrouchSprinting: 1;
@@ -177,6 +190,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bOverrideRBANSimSpaceInFrontEnd: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    ESlotEnvironmentExposure VehicleSlotExposure;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagAnimations GameplayTagAnimations;
@@ -305,7 +321,7 @@ public:
     void CheckForTail(bool& bHasTail) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    void CheckForBackbling(bool& bIsWearingBackbling, bool& bIsBackblingLong, float LongBackblingThreshold) const;
+    void CheckForBackbling(bool& bIsWearingBackbling, bool& bIsBackblingACape, bool& bIsBackblingLong, float LongBackblingThreshold) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool CharacterItemDefinitionHasAnyMetaTag(const TArray<FGameplayTag>& Tags);

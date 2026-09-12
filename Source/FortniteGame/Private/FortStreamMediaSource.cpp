@@ -8,8 +8,8 @@ bool UFortStreamMediaSource::ShouldStreamBePlaying(const UObject* WorldContextOb
     return false;
 }
 
-FString UFortStreamMediaSource::ShouldProtectPlayerFromContent() const {
-    return TEXT("");
+TEnumAsByte<UCPTypes::Type> UFortStreamMediaSource::ShouldProtectPlayerFromContent() const {
+    return UCPTypes::UCPAudio;
 }
 
 void UFortStreamMediaSource::SetPlaybackStartTime(float StartTime) {
@@ -34,6 +34,12 @@ int32 UFortStreamMediaSource::GetCDNNumber() {
 }
 
 void UFortStreamMediaSource::DisableSharing() {
+}
+
+void UFortStreamMediaSource::SetLocalizedOverlays(UFortDownloadLocalizedOverlays* InOverlays) {
+}
+
+void UFortStreamMediaSource::SetUrl(UPARAM(Ref) FString& InURL) {
 }
 
 UFortStreamMediaSource::UFortStreamMediaSource() {

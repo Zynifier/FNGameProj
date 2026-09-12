@@ -12,7 +12,7 @@ public:
     AFortAthenaMutator_FactionCustomCharacterParts();
 protected:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-    uint8 GetFactionForPlayer(const AFortPlayerControllerAthena* PlayerController);
+    uint8 GetFactionForPlayer(const AFortPlayerControllerAthena* PlayerController) const;
     
 };
 

@@ -4,5 +4,6 @@ UFortAthenaAIBotEvaluator_CharacterLaunched::UFortAthenaAIBotEvaluator_Character
     CharacterLaunchedExecutionStatusKeyName = TEXT("AIEvaluator_CharacterLaunched_ExecutionStatus");
     SteerDirectionKeyName = TEXT("AIEvaluator_CharacterLaunched_SteerDirection");
     CachedMovementSkillSet = NULL;
+    bSteerInSameDirectionAsLaunchVelocity = false;
 }
 

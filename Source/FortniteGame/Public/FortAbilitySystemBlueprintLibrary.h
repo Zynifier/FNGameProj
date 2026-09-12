@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "GameplayTagContainer.h"
 #include "Templates/SubclassOf.h"
+#include "Abilities/GameplayAbilityTypes.h"
 #include "FortAbilitySystemBlueprintLibrary.generated.h"
 
 class AActor;
@@ -49,6 +50,18 @@ public:
     
     UFUNCTION(BlueprintCallable)
     static void AssignActiveGameplayEffectSetByCallerMagnitude(FActiveGameplayEffectHandle ActiveHandle, FName DataName, float Magnitude);
+    
+    UFUNCTION(BlueprintCallable)
+    static void GrantAndActivateAbilityOnSelfWithParams(UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UGameplayAbility>& AbilityToGrant, UObject* ContextObject, const FGameplayEventData GameplayEventData);
+    
+    UFUNCTION(BlueprintCallable)
+    static bool IsGameplayCueActive(AActor* Actor, const FGameplayTag& GameplayCueTag);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool IsGameplayEffectContextAbilityChildOf(const FGameplayEffectContextHandle& GameplayEffectContextHandle, const TSubclassOf<UGameplayAbility> AbilityClass);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool IsGameplayEffectContextAbilityInstance(const FGameplayEffectContextHandle& GameplayEffectContextHandle, const UGameplayAbility* AbilityInstance);
     
 };
 

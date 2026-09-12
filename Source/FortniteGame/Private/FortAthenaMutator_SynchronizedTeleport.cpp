@@ -8,10 +8,13 @@ void AFortAthenaMutator_SynchronizedTeleport::GetLifetimeReplicatedProps(TArray<
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
     DOREPLIFETIME(AFortAthenaMutator_SynchronizedTeleport, bTeleportComplete);
+    DOREPLIFETIME(AFortAthenaMutator_SynchronizedTeleport, InProgressTeleportPlayerIDs);
 }
 
 AFortAthenaMutator_SynchronizedTeleport::AFortAthenaMutator_SynchronizedTeleport() {
     HidePawnGameplayEffectClass = NULL;
     bTeleportComplete = true;
+    CustomTeleportPlayerComponentClass = NULL;
+    bAutoEquipPickAxe = false;
 }
 

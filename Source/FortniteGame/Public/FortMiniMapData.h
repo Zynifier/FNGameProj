@@ -3,22 +3,28 @@
 #include "UObject/NoExportTypes.h"
 #include "UObject/NoExportTypes.h"
 #include "UObject/NoExportTypes.h"
+#include "FortMiniMapIconMaterialParameterData.h"
 #include "FortMiniMapData.generated.h"
 
 class UTexture2D;
+
+class UObject;
 
 USTRUCT(BlueprintType)
 struct FFortMiniMapData {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
-    UTexture2D* MiniMapIcon;
+    UObject* MiniMapIcon;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
     FVector2D IconScale;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
     uint8 bUseIconSize: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
+    FVector2D IconMaterialSize;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
     uint8 bIsVisible: 1;
@@ -79,6 +85,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
     uint8 Team;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, SaveGame, meta=(AllowPrivateAccess=true))
+    TArray<FFortMiniMapIconMaterialParameterData> MiniMapIconMaterialParameterDataList;
     
     FORTNITEGAME_API FFortMiniMapData();
 };

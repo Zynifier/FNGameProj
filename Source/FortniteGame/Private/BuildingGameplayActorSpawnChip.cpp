@@ -14,6 +14,9 @@ void ABuildingGameplayActorSpawnChip::GetLifetimeReplicatedProps(TArray<FLifetim
     DOREPLIFETIME(ABuildingGameplayActorSpawnChip, SquadId);
 }
 
+void ABuildingGameplayActorSpawnChip::PickUp(AFortPlayerControllerAthena* PickingUpController) {
+}
+
 ABuildingGameplayActorSpawnChip::ABuildingGameplayActorSpawnChip() {
     OwnerPlayerController = NULL;
     OwnerPlayerState = NULL;

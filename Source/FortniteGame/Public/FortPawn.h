@@ -77,6 +77,8 @@
 #include "PawnUpdatedDecisionWindowStackSignatureDelegate.h"
 #include "RecordedGunshot.h"
 #include "Templates/SubclassOf.h"
+#include "OnPawnComponentAttachedDelegate.h"
+#include "SoundIndicatorTypePicker.h"
 #include "FortPawn.generated.h"
 
 class AActor;
@@ -126,6 +128,9 @@ class USoundBase;
 class USoundEffectSourcePresetChain;
 class UTexture;
 class UWeaponHitNotifyAudioBank;
+
+class UFortAnimInputEvent;
+class UNiagaraComponent;
 
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortPawn : public ACharacter, public IFortTeamActorInterface, public IGameplayTagAssetInterface, public IFortDamageableActorInterface, public IFortSpottableActorInterface/*, public IFortAbilitySystemInterface*/, public IGameplayCueInterface, public IFortTargetSelectionInterface, public IFortAIEncounterInfoOwnerInterface, public IVisualLoggerDebugSnapshotInterface, public IFortHealthRegenInterface, public IAISightTargetInterface, public IFortAutoFireTargetInterface, public IFortLockOnTargetInterface/*, public IAbilitySystemReplicationProxyInterface*/, public IFortCurieInterface {
@@ -194,6 +199,12 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_WeaponActivated, meta=(AllowPrivateAccess=true))
     uint8 bWeaponActivated: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsInGoop: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_ReplicatedIsInGoop, meta=(AllowPrivateAccess=true))
+    uint8 bReplicatedIsInGoop: 1;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bSkipAnalogJump: 1;
     
@@ -203,8 +214,22 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TEnumAsByte<EFortFootstepSurfaceType::Type> FootstepSurfaceType;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortSoundIndicatorTypes DefaultSoundIndicatorType;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSoundIndicatorTypePicker> SoundIndicatorTypeOverrides;
+    
+public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UTexture* FootstepIconOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FLinearColor SoundIndicatorTintOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float SoundIndicatorMaxDistance;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -250,6 +275,12 @@ protected:
     uint8 bCachedIsInAthena: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    uint8 bShouldUseCharacterMovementIdleFastPath: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsLocalViewTarget: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     TEnumAsByte<EFortMovementStyle::Type> CurrentMovementStyle;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -275,6 +306,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     EFortPawnPushSize PushSize;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float LastSurfaceTraceTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector LastSurfaceTraceLocation;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_PawnUniqueID, meta=(AllowPrivateAccess=true))
@@ -363,6 +400,9 @@ protected:
     
     UPROPERTY(BlueprintAssignable, BlueprintCallable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnDBNOStateChangedEvent OnDBNOStateChanged;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float DefaultLifespanAfterDeath;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -706,8 +746,19 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     FClientAILODSettings ClientAILODSettings;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    FGameplayTag FallbackTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    FString DebugType;
+    
+private:
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TMap<uint32, FRecordedGunshot> RecordedGunshots;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPawnComponentAttached OnPawnComponentAttachedEvent;
     
 public:
     AFortPawn();
@@ -923,7 +974,7 @@ public:
     void OnRep_MovingEmote();
     
     UFUNCTION(BlueprintCallable)
-    void OnRep_LastReplicatedEmoteExecuted();
+    void OnRep_LastReplicatedEmoteExecuted(const UFortItemDefinition* PreviousValue);
     
     UFUNCTION(BlueprintCallable)
     void OnRep_LandingFlashCount();
@@ -1112,7 +1163,7 @@ public:
     void InitializeDeathHitSocket(FVector WorldLocation, FVector WorldNormal);
     
     UFUNCTION(BlueprintCallable)
-    void HideBodyOnDeath();
+    void HideBodyOnDeath(bool bDeathAnimationPlayed);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool HasCurrentMontage() const;
@@ -1251,7 +1302,7 @@ public:
     void ForceKill(FGameplayTag DeathReason, AController* KillerController, AActor* KillerActor);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    AFortWeapon* EquipWeaponDefinition(const UFortWeaponItemDefinition* WeaponData, FGuid ItemEntryGuid);
+    AFortWeapon* EquipWeaponDefinition(const UFortWeaponItemDefinition* WeaponData, FGuid ItemEntryGuid, FGuid TrackerGuid, bool bDisableEquipAnimation);
     
     UFUNCTION(BlueprintCallable)
     bool EquipBestWeapon();
@@ -1345,6 +1396,41 @@ public:
     
     UFUNCTION(BlueprintCallable)
     UGameplayEffect* GetHealthRegenDelayGameplayEffect() const override PURE_VIRTUAL(GetHealthRegenDelayGameplayEffect, return NULL;);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnAnimInputEvent(const UFortAnimInputEvent* AnimInputEvent);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_bIsInvulnerable();
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_ClientAILODSettings();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_ReplicatedIsInGoop();
+    
+    UFUNCTION(BlueprintCallable)
+    void PooledCascadeCameraLensEffectCompleted(UParticleSystemComponent* FinishedComponent);
+    
+    UFUNCTION(BlueprintCallable)
+    void PooledNiagaraCameraLensEffectCompleted(UNiagaraComponent* FinishedComponent);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetIsInGoop(const bool bNewValue);
+    
+    UFUNCTION(BlueprintCallable)
+    void TriggerAnimInputEvent(const UFortAnimInputEvent* AnimInputEvent);
+    
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, BlueprintPure)
+    EFortSoundIndicatorTypes GetPreferredSoundIndicatorType() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsInGoop() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsLocallyViewed() const;
     
 };
 

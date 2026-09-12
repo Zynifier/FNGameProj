@@ -10,6 +10,11 @@ UCLASS(Blueprintable, ClassGroup=Custom, Config=Game, meta=(BlueprintSpawnableCo
 class UFortControllerComponent_TriggerHaptics : public UControllerComponent {
     GENERATED_BODY()
 public:
+private:
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bTriggerHapticsAvailable: 1;
+    
+public:
     UFortControllerComponent_TriggerHaptics();
 private:
     UFUNCTION(BlueprintCallable)

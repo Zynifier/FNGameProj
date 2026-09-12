@@ -6,6 +6,8 @@
 #include "QuickHealPriority.h"
 #include "QuickHealItemPicker.generated.h"
 
+class AFortPlayerPawn;
+
 UCLASS(Abstract, Blueprintable, MinimalAPI)
 class UQuickHealItemPicker : public UObject {
     GENERATED_BODY()
@@ -30,7 +32,7 @@ private:
     void HandlePlayerHealthOrShieldChanged();
     
     UFUNCTION(BlueprintCallable)
-    void HandleOnSafeZoneOccupancyChanged(bool bIsInSafeZone);
+    void HandleOnSafeZoneOccupancyChanged(AFortPlayerPawn* PlayerPawn, bool bIsInSafeZone);
     
 };
 

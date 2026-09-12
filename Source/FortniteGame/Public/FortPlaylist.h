@@ -8,6 +8,8 @@
 #include "EDBNOType.h"
 #include "EFortGameType.h"
 #include "EFriendlyFireType.h"
+#include "FortPlaylistBaseCurveTableOverride.h"
+#include "FortPlaylistBaseDataTableOverride.h"
 #include "FortPlaylist.generated.h"
 
 class AFortTimeOfDayManager;
@@ -20,6 +22,8 @@ class UFortSharedAssetGroup;
 class UPlaylistUserOptions;
 class USoundBase;
 class UWorld;
+
+class UExternalContent;
 
 UCLASS(Blueprintable, PerObjectConfig, Config=Game)
 class FORTNITEGAME_API UFortPlaylist : public UPrimaryDataAsset {
@@ -101,6 +105,12 @@ public:
     FName RichPresenceAssetName;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowKeepPlayingTogether;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowSquadSizeTracking;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UWorld> PreloadPersistentLevel;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -111,6 +121,15 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FString> BuiltInGameFeaturePluginsToLoad;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UExternalContent* RootExternalContent;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FString OverrideGameFeaturePluginToDownload;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString GameFeaturePluginToActivateUntilDownloadedContentIsPresent;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString DownloadGameFeaturePluginToLoad;
@@ -184,6 +203,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UDataTable> LootPackages;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortPlaylistBaseCurveTableOverride> BaseCurveTableOverrides;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortPlaylistBaseDataTableOverride> BaseDataTablesOverride;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

@@ -14,10 +14,13 @@ namespace EFortCustomMovement {
         Hover,
         RemoteControl_Flying,
         Ziplining,
+        ZipliningOnSpline,
         Ballooning,
         SurfaceSwimming,
         DBNOCarried,
         Floating,
+        Goop,
+        Count,
     };
 }
 

@@ -30,5 +30,11 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool IsTeleporterBlocked(const AActor* ActorToTeleport, const FRotator& InPawnTeleportedRotation) const;
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsLocationBlocked(const AActor* ActorToTeleport, FVector LocationToTeleport, const FRotator& InPawnTeleportedRotation) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsPortalDebuggingEnabled() const;
+    
 };
 

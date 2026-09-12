@@ -6,6 +6,8 @@
 #include "TaggedPOIList.h"
 #include "FortAthenaMutator_CenterSafezonesOnPOIs.generated.h"
 
+class AFortPoiVolume;
+
 UCLASS(Blueprintable)
 class AFortAthenaMutator_CenterSafezonesOnPOIs : public AFortAthenaMutator {
     GENERATED_BODY()
@@ -22,6 +24,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<int32, FLocationPOIList> CenterSafezonesOnLiteralLocation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<AFortPoiVolume*> SafezonePOITaggedVolumes;
     
 public:
     AFortAthenaMutator_CenterSafezonesOnPOIs();

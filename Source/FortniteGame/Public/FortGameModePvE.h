@@ -3,6 +3,7 @@
 #include "EFortIdleDetectionState.h"
 #include "FortGameModeZone.h"
 #include "Templates/SubclassOf.h"
+#include "UObject/NoExportTypes.h"
 #include "FortGameModePvE.generated.h"
 
 class AActor;
@@ -58,6 +59,16 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bUseHighPerkSlotValues: 1;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableBigBenPvE;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FDateTime BigBenPvE;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float BigBenPvEAdjust;
     
 public:
     AFortGameModePvE();

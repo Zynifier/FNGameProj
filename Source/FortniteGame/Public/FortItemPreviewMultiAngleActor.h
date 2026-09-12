@@ -7,6 +7,8 @@ class UCameraComponent;
 class UCurveFloat;
 class USceneComponent;
 
+class UMaterialInstance;
+
 UCLASS(Blueprintable)
 class AFortItemPreviewMultiAngleActor : public AFortItemPreviewActor {
     GENERATED_BODY()
@@ -17,6 +19,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UCameraComponent* PrimaryCameraComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UMaterialInstance* AutotestFloorMaterial;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -30,5 +35,9 @@ private:
     
 public:
     AFortItemPreviewMultiAngleActor();
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnUpdateFloorMaterial(bool bEnableAutotestBackground);
+    
 };
 

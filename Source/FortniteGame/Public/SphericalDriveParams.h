@@ -60,6 +60,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float TractionMultiplier;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float BounceForce;
+    
     FORTNITEGAME_API FSphericalDriveParams();
 };
 

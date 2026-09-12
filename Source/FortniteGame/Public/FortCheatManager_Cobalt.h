@@ -14,5 +14,8 @@ public:
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
     void EndCobaltRound();
     
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void AwardCobaltTeamPoints(uint8 TeamToAward, int32 PointsToAward);
+    
 };
 

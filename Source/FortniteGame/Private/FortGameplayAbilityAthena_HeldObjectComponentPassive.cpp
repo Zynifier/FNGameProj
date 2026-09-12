@@ -1,0 +1,4 @@
+#include "FortGameplayAbilityAthena_HeldObjectComponentPassive.h"
+
+UFortGameplayAbilityAthena_HeldObjectComponentPassive::UFortGameplayAbilityAthena_HeldObjectComponentPassive() {
+}

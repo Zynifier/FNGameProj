@@ -14,6 +14,8 @@ UFortAnimNotifyState_SpawnProp::UFortAnimNotifyState_SpawnProp() {
     PropId = 0;
     bApplyVariantsToSpawnedItems = false;
     bTrackComponentPropInGC = true;
+    bUseAttachParentBound = false;
+    bSyncMontage = false;
 }
 
 void UFortAnimNotifyState_SpawnProp::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)

@@ -10,5 +10,8 @@ UFortCreativeRealEstatePlotItemDefinition::UFortCreativeRealEstatePlotItemDefini
     bIsCreativeHeatmapEnabled = false;
     SpatialInfluenceDistanceMultiplier = 1;
     SpatialThermometerCellSizeMultiplier = 0;
+    bCreativeHeatmapThermometerEnabled = false;
+    CreativeHeatmapThermometerInfluenceDistanceMultiplier = 0.0f;
+    CreativeHeatmapThermometerCellSizeMultiplier = 0;
 }
 

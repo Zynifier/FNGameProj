@@ -131,9 +131,6 @@ private:
     void OnRep_DadBroCodeState();
     
 protected:
-    UFUNCTION(BlueprintCallable)
-    void OnGamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep);
-    
 private:
     UFUNCTION(BlueprintCallable)
     void ListenedPawnLanded(const FHitResult& Hit);

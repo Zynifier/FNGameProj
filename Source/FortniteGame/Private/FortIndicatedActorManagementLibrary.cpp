@@ -25,24 +25,24 @@ FIndicatedActorParticleSystemData UFortIndicatedActorManagementLibrary::MakeIndi
     return FIndicatedActorParticleSystemData{};
 }
 
-FIndicatedActorDataWithFilter UFortIndicatedActorManagementLibrary::MakeIndicatedActorDataWithFilter(FGameplayTagContainer IndicateActorTags, FGameplayTagQuery IndicatedActorTagQuery, TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes, TSubclassOf<AActor> ActorClassFilter, FIndicatedActorData IndicatedActorData, FStenciledActorData StenciledActorData, float OverlapRadius) {
+FIndicatedActorDataWithFilter UFortIndicatedActorManagementLibrary::MakeIndicatedActorDataWithFilter(FGameplayTagContainer IndicateActorTags, FGameplayTagQuery IndicatedActorTagQuery, TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes, TSubclassOf<AActor> ActorClassFilter, TArray<TEnumAsByte<EFortTeamAffiliation::Type>>& InAffiliations, FIndicatedActorData IndicatedActorData, FStenciledActorData StenciledActorData, float OverlapRadius) {
     return FIndicatedActorDataWithFilter{};
 }
 
-FIndicatedActorData UFortIndicatedActorManagementLibrary::MakeIndicatedActorData(const FString& GroupIdentifier, FIndicatedActorScaleAndOpacityData ScaleAndOpacityData, FIndicatedActorParticleSystemData ParticleSystemData, float Duration, float StepTime, FVector IndicatorOffset, EShareActorWith ShareActorWith, bool bClampToScreen, USoundBase* Sound, EIndicatorStateImage StateImageOverride) {
+FIndicatedActorData UFortIndicatedActorManagementLibrary::MakeIndicatedActorData(const FString& GroupIdentifier, FIndicatedActorScaleAndOpacityData ScaleAndOpacityData, FIndicatedActorParticleSystemData ParticleSystemData, float Duration, float StepTime, FVector IndicatorOffset, FVector IndicatorDBNOOffset, EShareActorWith ShareActorWith, bool bClampToScreen, USoundBase* Sound, EIndicatorStateImage StateImageOverride) {
     return FIndicatedActorData{};
 }
 
-void UFortIndicatedActorManagementLibrary::AddActorsToStenciledList(AController* InstigatingController, TArray<AActor*> StenciledActors, FStenciledActorData StenciledActorData, const bool bAddAsUnique, const bool bReplaceExistingEntry) {
+void UFortIndicatedActorManagementLibrary::AddActorsToStenciledList(AController* InstigatingController, TArray<AActor*> StenciledActors, FStenciledActorData StenciledActorData, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry) {
 }
 
-void UFortIndicatedActorManagementLibrary::AddActorsToIndicatedList(AController* InstigatingController, TArray<AActor*> IndicatedActors, FIndicatedActorData IndicatedActorData, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry) {
+void UFortIndicatedActorManagementLibrary::AddActorsToIndicatedList(AController* InstigatingController, TArray<AActor*> IndicatedActors, FIndicatedActorData IndicatedActorData, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry) {
 }
 
-void UFortIndicatedActorManagementLibrary::AddActorsInRadiusToStenciledList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> StenciledActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry) {
+void UFortIndicatedActorManagementLibrary::AddActorsInRadiusToStenciledList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> StenciledActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry, AActor* InstigatingActorOverride) {
 }
 
-void UFortIndicatedActorManagementLibrary::AddActorsInRadiusToIndicatedList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> IndicatedActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry) {
+void UFortIndicatedActorManagementLibrary::AddActorsInRadiusToIndicatedList(AController* InstigatingController, TArray<FIndicatedActorDataWithFilter> IndicatedActorFilterDatas, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry, AActor* InstigatingActorOverride) {
 }
 
 UFortIndicatedActorManagementLibrary::UFortIndicatedActorManagementLibrary() {

@@ -86,5 +86,6 @@ AFortGameplayEffectDeliveryActor::AFortGameplayEffectDeliveryActor() {
     NavAreaClass = NULL;
     CollisionComponent = NULL;
     bDoExplosionReentrancyGuard = false;
+    bSkipRecaptureSourceActorTagsOnTouch = false;
 }
 

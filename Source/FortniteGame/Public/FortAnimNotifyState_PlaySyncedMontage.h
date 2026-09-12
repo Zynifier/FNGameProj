@@ -3,6 +3,7 @@
 #include "Animation/AnimNotifies/AnimNotifyState.h"
 #include "EFortCustomPartType.h"
 #include "EMontageSyncTargetType.h"
+#include "SyncedMontageParams.h"
 #include "FortAnimNotifyState_PlaySyncedMontage.generated.h"
 
 class UAnimMontage;
@@ -11,6 +12,9 @@ UCLASS(Blueprintable, CollapseCategories, EditInlineNew)
 class UFortAnimNotifyState_PlaySyncedMontage : public UAnimNotifyState {
     GENERATED_BODY()
 public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSyncedMontageParams> MontageParamsList;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAnimMontage* SyncedMontage;
     

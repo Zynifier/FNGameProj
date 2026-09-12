@@ -4,6 +4,7 @@
 #include "FortCuriePackedGrassDataArray.h"
 #include "FortCurieSpatialCellIndex.h"
 #include "FortStaticReplicatedActor.h"
+#include "FortSpatialCellIndex.h"
 #include "FortCurieGrassFireReplicator.generated.h"
 
 UCLASS(Blueprintable)
@@ -15,10 +16,10 @@ private:
     FFortCuriePackedGrassDataArray PackedDataArray;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_MinGrassGridIndex, meta=(AllowPrivateAccess=true))
-    FFortCurieSpatialCellIndex MinGrassGridIndex;
+    FFortSpatialCellIndex MinGrassGridIndex;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_MaxGrassGridIndex, meta=(AllowPrivateAccess=true))
-    FFortCurieSpatialCellIndex MaxGrassGridIndex;
+    FFortSpatialCellIndex MaxGrassGridIndex;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_GrassGridOrigin, meta=(AllowPrivateAccess=true))
     FVector GrassGridOrigin;

@@ -28,5 +28,8 @@ FAthenaCarPlayerSlot::FAthenaCarPlayerSlot() {
     WeaponComponent = NULL;
     CameraPitchConstraint = 1;
     CameraYawConstraint = 1;
+    bIsMountedWeaponOnlySeat = false;
+    bReserved = false;
+    EnvironmentExposure = ESlotEnvironmentExposure::Unknown;
 }
 

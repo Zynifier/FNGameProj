@@ -6,5 +6,6 @@ UENUM()
 enum class EFortAnalyticsEventBlacklistPlaylistKey : int32 {
     PlaylistType,
     PlaylistName,
+    All,
 };
 

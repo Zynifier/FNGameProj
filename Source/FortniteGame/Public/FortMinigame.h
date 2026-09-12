@@ -58,6 +58,9 @@
 #include "SimpleMinigameDelegateDelegate.h"
 #include "Templates/SubclassOf.h"
 #include "UIExtension.h"
+#include "OnPrePlayerJoinInProgressDelegate.h"
+#include "ESpatialLoadingState.h"
+#include "MinigamePlayerPersistentStartPoint.h"
 #include "FortMinigame.generated.h"
 
 class AActor;
@@ -110,6 +113,15 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnPlayerChanged PlayerAddedDelegate;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPrePlayerJoinInProgress OnPrePlayerJoinInProgress;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerChanged PlayerAddedPostResetDelegate;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerChanged PlayerLastChanceToSave;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnPlayerChanged PlayerRemovedDelegate;
@@ -287,6 +299,9 @@ protected:
     TSubclassOf<UFortMinigameStatFilter> ScoreStatFilter;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortMinigameStatFilter> RaceProgressStatFilter;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TSubclassOf<UFortMinigameStatFilter> LapTimeStatFilter;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -325,6 +340,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     TArray<UFortMinigamePlayerStartComponent*> PlayerStartComponents;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Export, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortMinigamePlayerStartComponent*> CheckpointPlayerStartComponent;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortCreativeCreatureManagerComponent* CreatureManagerComponent;
     
@@ -335,7 +353,7 @@ protected:
     UCreativePlayerHealthInfoComponent* CreativePlayerHealthComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_Volume, meta=(AllowPrivateAccess=true))
-    AFortVolume* Volume;
+    AActor* Volume;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     bool bSortScoreboardEntries;
@@ -415,6 +433,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     bool bAllowFriendlyFire;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    bool bVehiclesDamageObjectsMinigame;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     int32 NumMinigameComponentsServer;
@@ -430,6 +451,12 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer OldUIExtensionTags;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FMinigamePlayerPersistentStartPoint> PlayerPersistentStartPoints;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    int32 PersistenceRequiredDevices;
     
 public:
     AFortMinigame();
@@ -681,7 +708,7 @@ public:
     void MoveMinigamePlayerToSpectate(AFortPlayerState* PlayerState);
     
     UFUNCTION(BlueprintCallable)
-    void LTMFlowDisableMatchmakingBackfillAndJoinInProgress();
+    void LTMFlowDisableMatchmakingBackfillAndJoinInProgress(bool bDisableBeaconRequests);
     
 protected:
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
@@ -1112,6 +1139,44 @@ public:
     
     UFUNCTION()
     void MatchStarted() override PURE_VIRTUAL(MatchStarted,);
+    
+    UFUNCTION(BlueprintCallable)
+    void AddPersistenceRequirement();
+    
+    UFUNCTION(BlueprintCallable)
+    void RemovePersistenceRequirement();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetMinigameNumTeams(int32 InNumTeams);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void SetRaceProgressStat(AFortPlayerController* PlayerController, const float NormalizedRaceProgress);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetVehiclesDamageObjectsMiniGame(const bool bInVehiclesDamageObjectsMinigame);
+    
+    UFUNCTION(BlueprintCallable)
+    void UpdateAutoStartByMatchmakingPortalIslandOwner(const FString& IslandOwnerId);
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void WarmupCountdownEndTimeUpdated(float NewCountdownEndTime);
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    int32 GetMinigameNumTeams() const;
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    void GetTeamMembers(uint8 TeamIndex, TArray<AFortPlayerState*>& OutTeamMembers) const;
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool GetVehiclesDamageObjectsMiniGame() const;
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void PostGameReset_Guard(ESpatialLoadingState NewState, AFortVolume* ChangedVolume);
     
 };
 

@@ -17,6 +17,8 @@ class UFortAIAssignmentSettings;
 class UFortAIGoalProvider;
 class UObject;
 
+class AActor;
+
 UCLASS(Blueprintable)
 class AFortAIGoalManager : public AActor, public IFortInitializationInterface {
     GENERATED_BODY()
@@ -58,19 +60,19 @@ public:
     static void RemoveGoalFromWorldAssignment(UObject* WorldContextObject, const FFortAIAssignmentIdentifier& AssignmentIdentifier, const FFortAIGoalInfo GoalInfo);
     
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
-    static void MakeGoalsFromLocationsAndActor(TArray<FFortAIGoalInfo> Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations, const AActor* GoalActor);
+    static void MakeGoalsFromLocationsAndActor(TArray<FFortAIGoalInfo>& Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations, const AActor* GoalActor);
     
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
-    static void MakeGoalsFromLocations(TArray<FFortAIGoalInfo> Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations);
+    static void MakeGoalsFromLocations(TArray<FFortAIGoalInfo>& Goals, const UObject* WorldContextObject, const TArray<FVector>& GoalLocations);
     
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
-    static void MakeGoalsFromActors(TArray<FFortAIGoalInfo> Goals, const UObject* WorldContextObject, const TArray<AActor*>& GoalActors, bool bActorsAlwaysPerceived, bool bGoalActorsAllowUndermining);
+    static void MakeGoalsFromActors(TArray<FFortAIGoalInfo>& Goals, const UObject* WorldContextObject, const TArray<AActor*>& GoalActors, bool bActorsAlwaysPerceived, bool bGoalActorsAllowUndermining);
     
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
-    static void MakeGoalFromLocation(FFortAIGoalInfo Goal, const UObject* WorldContextObject, const FVector& GoalLocation);
+    static void MakeGoalFromLocation(FFortAIGoalInfo& Goal, const UObject* WorldContextObject, const FVector& GoalLocation);
     
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
-    static void MakeGoalFromActor(FFortAIGoalInfo Goal, const UObject* WorldContextObject, AActor* GoalActor, bool bActorAlwaysPerceived, bool bGoalActorAllowsUndermining);
+    static void MakeGoalFromActor(FFortAIGoalInfo& Goal, const UObject* WorldContextObject, AActor* GoalActor, bool bActorAlwaysPerceived, bool bGoalActorAllowsUndermining);
     
     UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
     static void CreateWorldAssignment(UObject* WorldContextObject, FFortAIAssignmentIdentifier WorldAssignmentIdentifier, UFortAIAssignmentSettings* AssignmentSettings, TSubclassOf<UFortAIGoalProvider> GoalProvider, FFortAIAssignmentIdentifier& AssignmentIdentifier, EAssignmentCreationResult& CreationResult);

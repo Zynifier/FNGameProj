@@ -4,5 +4,6 @@ UFortContextualTutorialDefinition_ItemTag::UFortContextualTutorialDefinition_Ite
     RequirementsCheckDelay = 1;
     bUseCommitedCallback = true;
     bUseActivatedCallback = false;
+    bRequireItemEquipped = false;
 }
 

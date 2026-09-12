@@ -68,6 +68,7 @@ void UFortPlayerSettingsComponentBase::GetLifetimeReplicatedProps(TArray<FLifeti
     DOREPLIFETIME(UFortPlayerSettingsComponentBase, CreativeBossHealthDisplayMode);
     DOREPLIFETIME(UFortPlayerSettingsComponentBase, AbilitySetOptionData);
     DOREPLIFETIME(UFortPlayerSettingsComponentBase, EnabledSettings);
+    DOREPLIFETIME(UFortPlayerSettingsComponentBase, bVehiclesDamageObjects);
 }
 
 UFortPlayerSettingsComponentBase::UFortPlayerSettingsComponentBase() {
@@ -123,5 +124,6 @@ UFortPlayerSettingsComponentBase::UFortPlayerSettingsComponentBase() {
     NameplateDisplayMode = EIndicatorDisplayMode::Default;
     PlayerHealthIndicatorDisplayMode = EPlayerIndicatorDisplayMode::DontOverride;
     CreativeBossHealthDisplayMode = ECreativeBossDisplayMode::DontOverride;
+    bVehiclesDamageObjects = false;
 }
 

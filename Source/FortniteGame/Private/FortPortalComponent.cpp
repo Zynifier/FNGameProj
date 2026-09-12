@@ -4,7 +4,7 @@
 void UFortPortalComponent::ServerSetLinkCode_Complete(bool bSuccess, const FString& ErrorMessage, const FCreativeLoadedLinkData& InLinkData) {
 }
 
-void UFortPortalComponent::ServerSetLinkCode(const FString& InLinkCode) {
+void UFortPortalComponent::ServerSetLinkCode(const FString& InLinkCode, bool bIgnoreCanSetLinkCode, bool bFromDAD) {
 }
 
 void UFortPortalComponent::OnRep_LoadedLinkData() {
@@ -50,6 +50,35 @@ void UFortPortalComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
     DOREPLIFETIME(UFortPortalComponent, LinkCodeLockStatus);
     DOREPLIFETIME(UFortPortalComponent, bHasValidLinkData);
     DOREPLIFETIME(UFortPortalComponent, LinkCodeLockExpirationTime);
+    DOREPLIFETIME(UFortPortalComponent, bLinkRequiresCreativeContent);
+}
+
+void UFortPortalComponent::ExpireLinkCodeLock() {
+}
+
+bool UFortPortalComponent::LinkRequiresCreativeContent() {
+    return false;
+}
+
+void UFortPortalComponent::SetLockExpirationSecondsToNotOverrideCVar() {
+}
+
+void UFortPortalComponent::SetLockOverrideExpirationSeconds(int32 NewExpirationSeconds) {
+}
+
+void UFortPortalComponent::SetResetCodeAfterCooldown(bool bNewResetCodeAfterCooldown) {
+}
+
+FString UFortPortalComponent::GetAccountIdOwnerOfIsland() const {
+    return TEXT("");
+}
+
+bool UFortPortalComponent::IsWellKnownNameSupported() const {
+    return false;
+}
+
+FString UFortPortalComponent::MakeLinkCodeWithVersioning(const FString& LinkCode, int32 Version) const {
+    return TEXT("");
 }
 
 UFortPortalComponent::UFortPortalComponent() {
@@ -59,5 +88,7 @@ UFortPortalComponent::UFortPortalComponent() {
     LinkCodeLockMode = EPortalLinkCodeLockMode::NeverLocked;
     LinkCodeLockStatus = EPortalLinkCodeLockStatus::Unlocked_NotSet;
     bHasValidLinkData = false;
+    bWindowLockedStartsLocked = false;
+    bLinkRequiresCreativeContent = false;
 }
 

@@ -12,6 +12,9 @@ class AFortPlayerController;
 class UFortMiniMapIndicator;
 class UTexture2D;
 
+class UObject;
+class UTexture;
+
 UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UFortMiniMapComponent : public UFortVisibilityComponent {
     GENERATED_BODY()
@@ -70,7 +73,7 @@ public:
     void SetMiniMapIconColor(FLinearColor InColor);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    void SetMiniMapIcon(UTexture2D* MiniMapIcon);
+    void SetMiniMapIcon(UObject* MiniMapIcon);
     
     UFUNCTION(BlueprintCallable)
     void OverrideLocalMiniMapIndicatorIsVisible(bool bVisible);
@@ -85,6 +88,16 @@ private:
 protected:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
     bool IsVisibleToPlayer(const AFortPlayerController* PC) const;
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void SetMiniMapIconMaterialScalarParameterValue(const FName ParameterName, const float Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetMiniMapIconMaterialTextureParameterValue(const FName ParameterName, UTexture* Value);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetMiniMapIconMaterialVectorParameterValue(const FName ParameterName, const FLinearColor Value);
     
 };
 

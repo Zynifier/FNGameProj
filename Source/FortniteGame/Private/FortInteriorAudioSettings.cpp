@@ -9,14 +9,14 @@ UFortInteriorAudioSettings::UFortInteriorAudioSettings() {
     InteriorSoundMix = NULL;
     PartialInteriorSoundMix = NULL;
     AmbientEntryPriority = 0;
-    AmbientBanks[0] = NULL;
-    AmbientBanks[1] = NULL;
-    AmbientBanks[2] = NULL;
-    AmbientBanks[3] = NULL;
-    AmbientBanks[4] = NULL;
     SourceBusAsset = NULL;
     SourceBusFadeInTime = 1;
     SourceBusFadeOutTime = 1;
     SourceBusCrossfadeTime = 1;
+    TotalBuildingCountRequiredForPartialExterior = 0;
+    TotalCeilingCountRequiredAlongHorizontalScan = 0;
+    HorizontalLineTraceDistance = 0;
+    VerticalLineTraceDistance = 0;
+    PartialExteriorSoundMix = NULL;
 }
 

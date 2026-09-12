@@ -106,5 +106,11 @@ public:
     UFUNCTION(BlueprintCallable)
     bool GetAllowedToAcquire() const;
     
+    UFUNCTION(BlueprintCallable)
+    void SetCanCastHouseparty(bool bInValue);
+    
+    UFUNCTION(BlueprintCallable)
+    bool GetCanCastHouseparty() const;
+    
 };
 

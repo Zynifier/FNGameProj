@@ -14,6 +14,10 @@ void AFortAthenaMutator_AddBarrier::GetLifetimeReplicatedProps(TArray<FLifetimeP
     DOREPLIFETIME(AFortAthenaMutator_AddBarrier, BigBaseWall);
 }
 
+bool AFortAthenaMutator_AddBarrier::IsBarrierUp() const {
+    return false;
+}
+
 AFortAthenaMutator_AddBarrier::AFortAthenaMutator_AddBarrier() {
     BigBaseWallClass = NULL;
     bStartTimerAtSafeZone = false;

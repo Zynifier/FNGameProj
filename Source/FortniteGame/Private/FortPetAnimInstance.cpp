@@ -77,5 +77,7 @@ UFortPetAnimInstance::UFortPetAnimInstance() {
     bEmotePlaying_WhereHappyIsBest = false;
     bResponse_ShouldBeHappy = false;
     LastObservedFrontEndEmote = NULL;
+    bIsPlayingMeleeAnim = false;
+    bIsInFrontEnd = false;
 }
 

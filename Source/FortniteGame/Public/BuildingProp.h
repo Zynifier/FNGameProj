@@ -5,6 +5,7 @@
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "BuildingTimeOfDayLights.h"
+#include "MarkedActorDisplayInfo.h"
 #include "BuildingProp.generated.h"
 
 class AActor;
@@ -15,7 +16,7 @@ class FORTNITEGAME_API ABuildingProp : public ABuildingTimeOfDayLights {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bDoNotBlockMarkerTraceWhenOverlappingPlayer;
+    uint8 bDoNotBlockMarkerTraceWhenOverlappingPlayer: 1;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -23,6 +24,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bSuppressSimpleInteractionWidgetForTouch: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCanBeMarked: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bBlockMarking: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FMarkedActorDisplayInfo MarkerDisplay;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector MarkerPositionOffset;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bKeepWhenUnderwater: 1;

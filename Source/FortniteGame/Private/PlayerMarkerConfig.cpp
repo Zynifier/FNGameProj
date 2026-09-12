@@ -28,5 +28,6 @@ FPlayerMarkerConfig::FPlayerMarkerConfig() {
     MaxEliminationMarkers = 0;
     MaxSpecialLocalMarkers = 0;
     MaxSpecialServerMarkers = 0;
+    SelfEliminationMarkerTTL = 0.0f;
 }
 

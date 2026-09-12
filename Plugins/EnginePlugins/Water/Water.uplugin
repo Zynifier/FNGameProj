@@ -1,10 +1,10 @@
 {
-	"FileVersion": 3,
+	"FileVersion": 1,
 	"Version": 1,
-	"VersionName": "1.0",
+	"VersionName": "0.1",
 	"FriendlyName": "Water",
-	"Description": "Water",
-	"Category": "Misc",
+	"Description": "Full suite of water tools and rendering techniques to easily add oceans, river, lakes or custom water bodies that carve landscape and interacts with gameplay",
+	"Category": "Water",
 	"CreatedBy": "Epic Games, Inc.",
 	"CreatedByURL": "http://epicgames.com",
 	"DocsURL": "",
@@ -12,14 +12,18 @@
 	"SupportURL": "",
 	"EnabledByDefault": false,
 	"CanContainContent": true,
-	"IsBetaVersion": false,
-	"IsExperimentalVersion": false,
+	"IsExperimentalVersion": true,
 	"Installed": false,
 	"Modules": [
 		{
 			"Name": "Water",
 			"Type": "Runtime",
 			"LoadingPhase": "PostConfigInit"
+		},
+		{
+			"Name": "WaterEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit"
 		}
 	],
 	"Plugins": [
@@ -33,6 +37,10 @@
 		},
 		{
 			"Name": "GeometryProcessing",
+			"Enabled": true
+		},
+		{
+			"Name": "BlueprintMaterialTextureNodes",
 			"Enabled": true
 		}
 	]

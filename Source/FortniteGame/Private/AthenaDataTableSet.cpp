@@ -7,5 +7,6 @@ FAthenaDataTableSet::FAthenaDataTableSet() {
     GameData = NULL;
     ResourceRates = NULL;
     VehicleData = NULL;
+    AILootOnDeathData = NULL;
 }
 

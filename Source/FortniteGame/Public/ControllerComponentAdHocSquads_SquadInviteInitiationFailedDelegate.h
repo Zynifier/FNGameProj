@@ -1,0 +1,6 @@
+#pragma once
+#include "CoreMinimal.h"
+#include "EAdHocSquads_SquadUpResult.h"
+#include "ControllerComponentAdHocSquads_SquadInviteInitiationFailedDelegate.generated.h"
+
+UDELEGATE(BlueprintCallable) DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FControllerComponentAdHocSquads_SquadInviteInitiationFailed, const EAdHocSquads_SquadUpResult, FailureReason);

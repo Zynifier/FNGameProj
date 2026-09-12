@@ -53,10 +53,10 @@ private:
     
 public:
     UFUNCTION(BlueprintCallable)
-    void AddActorsToStenciledList(TArray<AActor*>& StenciledActors, FStenciledActorData Data, const bool bAddAsUnique, const bool bReplaceExistingEntry);
+    void AddActorsToStenciledList(TArray<AActor*>& StenciledActors, FStenciledActorData Data, const bool bAddAsUnique, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry);
     
     UFUNCTION(BlueprintCallable)
-    void AddActorsToIndicatedList(TArray<AActor*>& IndicatedActors, FIndicatedActorData Data, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry);
+    void AddActorsToIndicatedList(TArray<AActor*>& IndicatedActors, FIndicatedActorData Data, const bool bAddAsUnique, const bool bAllowOwningPlayer, const bool bReplaceExistingEntry, const bool bRefreshExistingEntry);
     
 };
 

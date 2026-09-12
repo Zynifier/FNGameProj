@@ -17,6 +17,13 @@ void UFortServerBotManagerAthena::KillBots(bool bKillPlayers, bool bKillNonePart
 void UFortServerBotManagerAthena::JoinTeam(const AController* SourceTeamController, AController* DestinationTeamController) {
 }
 
+bool UFortServerBotManagerAthena::IsWeaponSupported(AFortWeapon* FortWeapon) {
+    return false;
+}
+
+void UFortServerBotManagerAthena::NotifyAllAIServicesStarted() {
+}
+
 UFortServerBotManagerAthena::UFortServerBotManagerAthena() {
     CachedGameMode = NULL;
     CachedGameState = NULL;
@@ -30,5 +37,6 @@ UFortServerBotManagerAthena::UFortServerBotManagerAthena() {
     CurrentFillingTeam = NULL;
     CurrentBotControllerUID = 0;
     CachedAIPopulationTracker = NULL;
+    CachedAIServicePlayerBots = NULL;
 }
 

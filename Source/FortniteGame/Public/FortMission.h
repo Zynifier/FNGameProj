@@ -448,7 +448,7 @@ public:
     UFortAIEncounterSequence* CreateEncounterSequence(const FGameplayTagContainer SequenceTags);
     
     UFUNCTION(BlueprintCallable)
-    EAssignmentCreationResult CreateEncounterAssignment(const FGameplayTagContainer AssignmentTags, const UFortAIEncounterInfo* Encounter, UFortAIAssignmentSettings* AssignmentSettings, TSubclassOf<UFortAIGoalProvider> GoalProvider, FFortAIAssignmentIdentifier AssignmentIdentifier);
+    EAssignmentCreationResult CreateEncounterAssignment(const FGameplayTagContainer& AssignmentTags, const UFortAIEncounterInfo* Encounter, UFortAIAssignmentSettings* AssignmentSettings, TSubclassOf<UFortAIGoalProvider> GoalProvider, FFortAIAssignmentIdentifier& AssignmentIdentifier);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, BlueprintPure)
     FFortMissionWeightedReward ChooseRandomReward();
@@ -505,5 +505,8 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable)
+    void FindGoalLocationsForEncounterAssignment(const FFortAIAssignmentIdentifier& AssignmentIdentifier, const UFortAIEncounterInfo* Encounter, TArray<FVector>& OutGoalLocations);
+    
 };
 

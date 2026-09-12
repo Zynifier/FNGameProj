@@ -69,6 +69,9 @@ void UFortPlayerControllerAthenaXPComponent::GetLifetimeReplicatedProps(TArray<F
     DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, InMatchProfileVer);
 }
 
+void UFortPlayerControllerAthenaXPComponent::ServerUpdateCurrentLevel_Implementation(int32 NewCurrentLevel) {
+}
+
 UFortPlayerControllerAthenaXPComponent::UFortPlayerControllerAthenaXPComponent() {
     RestXP = 0;
     bRegisteredWithQuestManager = false;
@@ -84,5 +87,6 @@ UFortPlayerControllerAthenaXPComponent::UFortPlayerControllerAthenaXPComponent()
     ChallengeXp = 0;
     HasBRMatchReportCompletedProfileVer = 0;
     InMatchProfileVer = 0;
+    bUseNewQuestRewardProcess = false;
 }
 

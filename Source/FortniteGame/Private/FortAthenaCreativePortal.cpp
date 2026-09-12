@@ -39,7 +39,7 @@ void AFortAthenaCreativePortal::OnVolumeManagerUserGeneratedContentRestrictionsC
 void AFortAthenaCreativePortal::OnUserGeneratedContentRestrictionsChanged(bool bRestrictionEnabled) {
 }
 
-void AFortAthenaCreativePortal::OnUnloadPlotComplete(const FAsyncTaskResult& Result) {
+void AFortAthenaCreativePortal::OnUnloadPlotComplete() {
 }
 
 
@@ -179,6 +179,17 @@ void AFortAthenaCreativePortal::GetLifetimeReplicatedProps(TArray<FLifetimePrope
     DOREPLIFETIME(AFortAthenaCreativePortal, bIsPublishedPortal);
     DOREPLIFETIME(AFortAthenaCreativePortal, TeleportLocation);
     DOREPLIFETIME(AFortAthenaCreativePortal, bPortalOpen);
+    DOREPLIFETIME(AFortAthenaCreativePortal, MaxAvailablePopulation);
+}
+
+void AFortAthenaCreativePortal::LogIslandTeleportation() {
+}
+
+void AFortAthenaCreativePortal::OnRep_MaxAvailablePopulationChanged() {
+}
+
+EMMSPrivacy AFortAthenaCreativePortal::GetPrivacy() const {
+    return EMMSPrivacy::Public;
 }
 
 AFortAthenaCreativePortal::AFortAthenaCreativePortal() {
@@ -198,5 +209,6 @@ AFortAthenaCreativePortal::AFortAthenaCreativePortal() {
     CachedOwningPlayerState = NULL;
     ThumbnailTexture = NULL;
     bForceUpdateInteraction = false;
+    MaxAvailablePopulation = 0;
 }
 

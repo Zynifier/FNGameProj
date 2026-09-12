@@ -42,6 +42,8 @@
 #include "WeaponEventDelegateDelegate.h"
 #include "WeaponHudData.h"
 #include "WeaponHudKeyActionVisibility.h"
+#include "FortEquippedWeaponModSlot.h"
+#include "FortWeaponModSlot.h"
 #include "FortWeapon.generated.h"
 
 class ACustomItemWrapModifier;
@@ -66,7 +68,7 @@ class UFortWeaponFireModeData;
 class UFortWeaponItemDefinition;
 class UFortWorldItemDefinition;
 class UMaterialInterface;
-class UCameraShake;
+class UMatineeCameraShake;
 class UNiagaraSystem;
 class UParticleSystem;
 class USceneComponent;
@@ -74,6 +76,8 @@ class USkeletalMeshComponentBudgeted;
 class USoundBase;
 class UTexture2D;
 class UWeaponHitNotifyAudioBank;
+
+class UFortWeaponAdditiveAnimSet;
 
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortWeapon : public AActor, public IGameplayCueInterface, public IFortDamageSourceInterface, public IFortAnalyticsInterface {
@@ -97,6 +101,11 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     bool bIsChargingWeapon;
     
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    bool bDisableEquipAnimation;
+    
+public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIsAimingConsumable;
     
@@ -279,16 +288,16 @@ protected:
     float PrimaryFireSoundFadeOutTime;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    USoundBase* ImpactPhysicalSurfaceSounds[26];
+    USoundBase* ImpactPhysicalSurfaceSounds[27];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UParticleSystem* ImpactPhysicalSurfaceEffects[26];
+    UParticleSystem* ImpactPhysicalSurfaceEffects[27];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TArray<TSoftObjectPtr<UNiagaraSystem>> ImpactNiagaraPhysicalSurfaceEffectAssets;
+    TArray<UNiagaraSystem*> ImpactNiagaraPhysicalSurfaceEffectAssets;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> ImpactCameraShake;
+    TSubclassOf<UMatineeCameraShake> ImpactCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UForceFeedbackEffect* PrimaryForceFeedbackEffect;
@@ -409,7 +418,13 @@ protected:
     int32 TraceThroughBuildingsLimit;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 TraceThroughLandscapeLimit;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUseProjectileTrace;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseVariableFocalDistanceTargeting;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUseWeaponTraceForReticle;
@@ -428,6 +443,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     FGuid ItemEntryGuid;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    FGuid TrackerGuid;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     int32 WeaponLevel;
@@ -452,6 +470,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTag MaxChargeGameplayCue;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag OutOfAmmoTextOverrideFailTag;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag NoSpareAmmoToReloadTextOverrideFailTag;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 CurrentShotLogIndex;
@@ -480,6 +504,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bShouldFullyApplyVariantsOnEquip: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bSecondaryFireAlwaysCancelSwimSprint: 1;
+    
     UPROPERTY(EditAnywhere, ReplicatedUsing=OnRep_ChargeStatusPack, meta=(AllowPrivateAccess=true))
     int16 ChargeStatusPack;
     
@@ -501,6 +528,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     FGameplayAbilitySpecHandle ImpactAbilitySpecHandle;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    FGameplayAbilitySpecHandle ReticleTraceOverrideSpecHandle;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FGameplayAbilitySpecHandle> EquippedAbilityHandles;
     
@@ -509,6 +539,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_ReplicatedAppliedAlterations, meta=(AllowPrivateAccess=true))
     TArray<UFortAlterationItemDefinition*> AppliedAlterations;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_ReplicatedWeaponModSlots, meta=(AllowPrivateAccess=true))
+    TArray<FFortWeaponModSlot> WeaponModSlots;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FFortEquippedWeaponModSlot> EquippedWeaponModSlots;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FCosmeticVariantCache PreviousWeaponVariants;
@@ -558,6 +594,9 @@ protected:
     UAnimMontage* PrimaryAbilityAnimation;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UAnimMontage* SecondaryAbilityAnimation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAnimMontage* WeaponEquipMontage;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -568,6 +607,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAnimMontage* WeaponPrimaryAbilityMontage;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UAnimMontage* WeaponSecondaryAbilityMontage;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAnimSequence* PoseOffsetAnimSequence;
@@ -583,6 +625,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UAnimInstance> WeaponPawnAnimLayerOverlayClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortWeaponAdditiveAnimSet* WeaponAdditiveAnimSet;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortWeaponAnimSet* WeaponPawnAnimsetOverride;
@@ -683,7 +728,7 @@ protected:
     void SetShouldDrawNativeReticle(bool bInShouldDrawReticle);
     
     UFUNCTION(BlueprintCallable)
-    void SetHudKeyActionVisibility(int32 Index, bool bVisible);
+    bool SetHudKeyActionVisibility(int32 Index, bool bVisible);
     
     UFUNCTION(BlueprintCallable)
     void SetHudKeyActionsVisibility(const TArray<FWeaponHudKeyActionVisibility>& IndexVisibilityArray);
@@ -1092,6 +1137,46 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION(BlueprintCallable, BlueprintCosmetic)
     void ForwardGameplayCueToParent() override PURE_VIRTUAL(ForwardGameplayCueToParent,);
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnPlayImpactFX(const FHitResult& HitResult, EPhysicalSurface ImpactPhysicalSurface, UFXSystemComponent* SpawnedPSC);
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_ReplicatedWeaponModSlots();
+    
+    UFUNCTION(BlueprintCallable)
+    bool SetHudKeyActionDescription(int32 Index, FText InActionDescription);
+    
+    UFUNCTION(BlueprintCallable)
+    bool SetHudKeyActionDescriptionByID(const FString& KeyActionId, FText InActionDescription);
+    
+    UFUNCTION(BlueprintCallable)
+    bool SetHudKeyActionVisibilityByID(const FString& KeyActionId, bool bVisible);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetTraceThroughLandscapeLimit(int32 NewTraceThroughTerrainLimit);
+    
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+    USoundBase* GetChargedWeaponFireSound(EFortWeaponSoundState::Type Channel, const bool bSecondaryFire) const;
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetChargeToAutoDischarge() const;
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    int32 GetTraceThroughLandscapeLimit() const;
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FGuid GetTrackerGuid() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortWeaponAdditiveAnimSet* GetWeaponAdditiveAnimSet() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsGauntlet() const;
     
 };
 

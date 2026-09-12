@@ -9,5 +9,6 @@ enum class EHeldObjectState : uint8 {
     Thrown,
     Placed,
     Dropped,
+    HeldInVehicle,
 };
 

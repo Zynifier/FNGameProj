@@ -15,6 +15,7 @@ namespace EFortFootstepSurfaceType {
         Lava,
         Dirt,
         Grass,
+        Sand,
         Max_None,
     };
 }

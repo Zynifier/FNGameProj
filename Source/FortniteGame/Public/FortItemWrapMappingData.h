@@ -23,6 +23,9 @@ public:
     TSoftObjectPtr<UMaterialInterface> MasterWeaponMaterial;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UMaterialInterface> MasterCharacterMaterial;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTag DoNotApplyWrapsTag;
     
     UFortItemWrapMappingData();

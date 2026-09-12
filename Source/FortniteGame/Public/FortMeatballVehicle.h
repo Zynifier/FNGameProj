@@ -10,6 +10,7 @@
 #include "FortRechargingActionTimer.h"
 #include "Templates/SubclassOf.h"
 #include "VehicleSpecificUIDetails.h"
+#include "EVehicleFuelState.h"
 #include "FortMeatballVehicle.generated.h"
 
 class ABuildingActor;
@@ -20,9 +21,11 @@ class UFortCameraMode;
 class UFortMeatballVehicleConfigs;
 class UFortVehicleAudioVoice;
 class UMaterialInstanceDynamic;
-class UCameraShake;
+class UMatineeCameraShake;
 class UNiagaraComponent;
 class UParticleSystemComponent;
+
+class AFortPlayerPawn;
 
 UCLASS(Blueprintable)
 class AFortMeatballVehicle : public AFortAthenaSKVehicle {
@@ -52,6 +55,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortVehicleAudioVoice* CacheAudioScrape;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortVehicleAudioVoice* CacheAudioEngineOutOfFuel;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UMaterialInstanceDynamic* BoostMID;
     
@@ -71,16 +77,16 @@ public:
     APlayerController* DrivingPlayerController;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* LandCameraShake;
+    UMatineeCameraShake* LandCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> LandCameraShakeClass;
+    TSubclassOf<UMatineeCameraShake> LandCameraShakeClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    UCameraShake* DriverCameraShake;
+    UMatineeCameraShake* DriverCameraShake;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UCameraShake> DriverCameraShakeClass;
+    TSubclassOf<UMatineeCameraShake> DriverCameraShakeClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float LandRumbleIntensity;
@@ -129,7 +135,14 @@ private:
     TSubclassOf<UFortCameraMode> BoostingCamera;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortCameraMode> VehicleCameraOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat WaterSkiEnabled;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_VehicleFuelSystemState, meta=(AllowPrivateAccess=true))
+    EVehicleFuelState VehicleFuelSystemState;
     
 protected:
     UPROPERTY(EditAnywhere, ReplicatedUsing=OnRep_IsUsingNewFuelSystemState, meta=(AllowPrivateAccess=true))
@@ -210,7 +223,15 @@ public:
     void CachePSCPointers(UParticleSystemComponent* InCacheBoostReadyLFx, UParticleSystemComponent* InCacheBoostReadyRFx, UParticleSystemComponent* InCacheDirtCascade, UNiagaraComponent* InCacheSnowLandscapeComponent);
     
     UFUNCTION(BlueprintCallable)
-    void CacheAudioPointers(UFortVehicleAudioVoice* InAudioEngineUp, UFortVehicleAudioVoice* InAudioEngineDown, UFortVehicleAudioVoice* InAudioWakeTurn, UFortVehicleAudioVoice* InAudioWakeSpeed, UFortVehicleAudioVoice* InAudioScrape);
+    void CacheAudioPointers(UFortVehicleAudioVoice* InAudioEngineUp, UFortVehicleAudioVoice* InAudioEngineDown, UFortVehicleAudioVoice* InAudioWakeTurn, UFortVehicleAudioVoice* InAudioWakeSpeed, UFortVehicleAudioVoice* InAudioScrape, UFortVehicleAudioVoice* InAudioEngineOutOfFuel);
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_VehicleFuelSystemState();
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void ShowCooldownCue(AFortPlayerPawn* Pawn, float Duration);
     
 };
 

@@ -49,6 +49,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<USkeletalMesh> PreviewSkeletalMesh;
     
+    UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FString> SpawnVehicleNames;
+    
 public:
     UFortVehicleItemDefinition(const FObjectInitializer& ObjectInitializer);
 };

@@ -6,6 +6,8 @@
 class UFortAthenaBeaconComponent;
 class UFortServerBotManagerAthena;
 
+class UAthenaAIServicePlayerBots;
+
 UCLASS(Blueprintable)
 class UFortAthenaAIBotEvaluator_ReachBeacon : public UFortAthenaAIBotEvaluator_Movement {
     GENERATED_BODY()
@@ -22,6 +24,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaBeaconComponent* CurrentBeacon;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UAthenaAIServicePlayerBots* CachedAIServicePlayerBots;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortServerBotManagerAthena* CachedServerManager;

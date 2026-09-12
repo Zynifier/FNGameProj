@@ -2,5 +2,6 @@
 
 UFortUserOptionProxy::UFortUserOptionProxy() {
     ItemOption = NULL;
+    OptionFilter = NULL;
 }
 

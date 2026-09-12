@@ -1,5 +1,6 @@
 #include "FortAthenaAISpawnerDataComponent_CosmeticLoadout.h"
 
 UFortAthenaAISpawnerDataComponent_CosmeticLoadout::UFortAthenaAISpawnerDataComponent_CosmeticLoadout() {
+    bCanShowDefaultSkin = false;
 }
 

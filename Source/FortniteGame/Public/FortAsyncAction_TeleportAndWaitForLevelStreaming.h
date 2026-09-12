@@ -26,6 +26,12 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FRotator TeleportRotation;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIgnoreCollision;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIgnoreSupplementalKillVolumeSweep;
+    
 public:
     UFortAsyncAction_TeleportAndWaitForLevelStreaming();
 protected:
@@ -34,7 +40,7 @@ protected:
     
 public:
     UFUNCTION(BlueprintCallable)
-    static UFortAsyncAction_TeleportAndWaitForLevelStreaming* CreateTeleportAndWaitForLevelStreaming(AFortPlayerPawn* InPlayerPawn, const FVector& InTeleportLocation, const FRotator& InTeleportRotation);
+    static UFortAsyncAction_TeleportAndWaitForLevelStreaming* CreateTeleportAndWaitForLevelStreaming(AFortPlayerPawn* InPlayerPawn, const FVector& InTeleportLocation, const FRotator& InTeleportRotation, const bool NewBIgnoreCollision, const bool NewBIgnoreSupplementalKillVolumeSweep);
     
 };
 

@@ -90,9 +90,6 @@ private:
     
 public:
     UFUNCTION(BlueprintCallable)
-    void SetCanStreamBuildingFoundationsIn(bool bCanStream);
-    
-    UFUNCTION(BlueprintCallable)
     void SetAllowTimeDilation(bool bAllow);
     
     UFUNCTION(BlueprintCallable, Exec)

@@ -5,14 +5,17 @@
 #include "FortCurieElementSpatialGrid.h"
 #include "FortCurieGrassGrid.h"
 #include "FortCurieSpatialManagerTickFunction.h"
+#include "FortCurieManagerComponent.h"
 #include "FortCurieSpatialManager.generated.h"
 
 class UBuildingStructuralSupportSystem;
 class UFoliageType;
 class UPhysicalMaterial;
 
+class UFortCurieSpatialManagerConfig;
+
 UCLASS(Blueprintable, Config=Game)
-class UFortCurieSpatialManager : public UObject {
+class UFortCurieSpatialManager : public UFortCurieManagerComponent {
     GENERATED_BODY()
 public:
 protected:
@@ -48,6 +51,10 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortCurieGrassGrid GrassGrid;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortCurieSpatialManagerConfig* InternalManagerConfig;
     
 public:
     UFortCurieSpatialManager();

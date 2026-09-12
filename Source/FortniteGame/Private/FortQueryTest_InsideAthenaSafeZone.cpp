@@ -2,5 +2,6 @@
 
 UFortQueryTest_InsideAthenaSafeZone::UFortQueryTest_InsideAthenaSafeZone() {
     bNextSafeZone = false;
+    bUseCurrentSafeZoneIndicatorRadius = false;
 }
 

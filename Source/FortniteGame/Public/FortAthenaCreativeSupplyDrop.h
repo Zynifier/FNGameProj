@@ -20,5 +20,8 @@ protected:
     UFUNCTION(BlueprintCallable)
     void SpawnLoot(AFortPawn* Pawn);
     
+    UFUNCTION(BlueprintCallable)
+    void ValidateSpawnItems();
+    
 };
 

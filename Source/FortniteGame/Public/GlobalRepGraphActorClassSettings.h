@@ -3,6 +3,7 @@
 #include "UObject/Object.h"
 #include "RepGraphActorClassSettings.h"
 #include "RepGraphActorTemplateSettings.h"
+#include "RepGraphClassTracking.h"
 #include "GlobalRepGraphActorClassSettings.generated.h"
 
 UCLASS(Blueprintable, Config=Engine)
@@ -16,6 +17,9 @@ private:
 public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FRepGraphActorClassSettings> ClassSettings;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FRepGraphClassTracking> ExplicitCSVTracking;
     
     UGlobalRepGraphActorClassSettings();
 };

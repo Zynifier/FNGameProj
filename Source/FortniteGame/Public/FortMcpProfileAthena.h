@@ -68,7 +68,7 @@ public:
     bool GetSeasonLevelUpReward(int32 SeasonLevel, FFortItemInstanceQuantityPair& Reward, int32& RewardLevel);
     
     UFUNCTION(BlueprintCallable)
-    FAthenaSeasonRewardLevelInfo GetSeasonLevelInfo(int32 SeasonLevel);
+    FAthenaSeasonRewardLevelInfo GetSeasonLevelInfo(const int32 SeasonLevel) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     int32 GetSeasonFriendMatchXpBoost() const;

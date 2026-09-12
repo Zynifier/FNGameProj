@@ -17,6 +17,15 @@
 #include "OnQuestsGrantedDelegate.h"
 #include "OnQuestsUpdatedDelegate.h"
 #include "OnXpDeltasUpdatedDelegate.h"
+#include "OnInitQuests_PrepareDelegate.h"
+#include "OnTransientQuestRemovedDelegate.h"
+#include "OnTransientQuestStartedDelegate.h"
+#include "OnUrgentTransientQuestCompletedDelegate.h"
+#include "OnUrgentTransientQuestFailedDelegate.h"
+#include "OnUrgentTransientQuestStartedDelegate.h"
+#include "FortDisplayQuestUpdateData.h"
+#include "GameFramework/OnlineReplStructs.h"
+#include "SharedQuestData.h"
 #include "FortQuestManager.generated.h"
 
 class AFortPlayerController;
@@ -31,6 +40,8 @@ class UFortMcpProfileSubgame;
 class UFortQuestCategory;
 class UFortQuestItem;
 class UFortQuestItemDefinition;
+
+class UFortQuestManagerComponent;
 
 UCLASS(Blueprintable, MinimalAPI, Config=Game)
 class UFortQuestManager : public UObject {
@@ -64,14 +75,47 @@ public:
     FOnDisplayDynamicQuestUpdate OnDisplayDynamicQuestUpdate;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnTransientQuestStarted OnTransientQuestStarted;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnTransientQuestRemoved OnTransientQuestRemoved;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnUrgentTransientQuestStarted OnUrgentTransientQuestStarted;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnUrgentTransientQuestCompleted OnUrgentTransientQuestCompleted;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnUrgentTransientQuestFailed OnUrgentTransientQuestFailed;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnObjectiveStatXPGranted OnObjectiveStatXPGranted;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnXpDeltasUpdated OnXpValueDeltasUpdate;
     
+    UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnInitQuests_Prepare OnInitQuests_Prepare;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<UFortQuestItem*> CurrentQuests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortQuestItem*> CurrentFeats;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortQuestItem*> ActiveTransientQuests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortQuestItem*> CompletedTransientQuests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortQuestItem*> RemovedTransientQuests;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortQuestItem*> ActiveNPCInteractableQuests;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<UFortQuestItem*> CurrentTransientQuests;
@@ -102,6 +146,10 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FFortAbilitySetHandle> EquippedQuestAbilities;
+    
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TMap<FUniqueNetIdRepl, FSharedQuestData> SquadSharedQuestData;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -160,6 +208,15 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TSet<UFortFeatItemDefinition*> FeatsCompletedThisSession;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bEnableObjectiveConditionHandling;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FFortDisplayQuestUpdateData> DisplayQuestUpdateData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortQuestManagerComponent*> Components;
     
 public:
     UFortQuestManager();
@@ -341,6 +398,24 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic)
     void AppendTemporaryRelevancyTags(const FGameplayTagContainer& SourceTags, const FGameplayTagContainer& ContextTags, const FGameplayTagContainer& TargetTags);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerRemoveTransientQuestItemFromDefinition(const UFortQuestItemDefinition* QuestItemDef);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool CanGrantSharedQuests() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    void GetSharedQuests(TArray<UFortQuestItem*>& OutSharedQuests) const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool HasCompletedTransientQuest(const UFortQuestItemDefinition* Definition) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TMap<FUniqueNetIdRepl, FSharedQuestData> GetSquadSharedQuestData() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool GetSquadSharedQuestDataForPlayer(const FUniqueNetIdRepl& PlayerID, FSharedQuestData& OutData) const;
     
 };
 

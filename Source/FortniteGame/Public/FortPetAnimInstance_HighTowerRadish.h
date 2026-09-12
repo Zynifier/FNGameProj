@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "FortPetAnimInstance.h"
+#include "FortPetOffsets.h"
 #include "FortPetAnimInstance_HighTowerRadish.generated.h"
 
 class UFortPlayerAnimInstance;
@@ -73,9 +74,39 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float InVehicle;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIsSkydivingFE;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bSlowDownInterp;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bPetUnderWaterAndNotTargeting;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIsOwnerPlayingMeleeAnim;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIsSkydivingInGameOrIsParachuteOpen;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortPetOffsets BodyOffsetsFromPlayer;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector BodyOffsetWhenSkydivingFE;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector BodyOffsetWhenNotSkydivingFE;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float BodyOffsetSpringMass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector BodyOffsetSpringLagFactor;
+    
     UFortPetAnimInstance_HighTowerRadish();
     UFUNCTION(BlueprintCallable)
-    void UpdateBodyOffsetWithSpring(float Mass, FVector LagFactor, FVector BackpackOffset, float OwnerRootYawOffsetFractioned, bool bSlowDownInterp);
+    void UpdateBodyOffsetWithSpring(float Mass, FVector LagFactor, FVector BackpackOffset, float OwnerRootYawOffsetFractioned, bool NewBSlowDownInterp);
     
 protected:
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)

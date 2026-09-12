@@ -130,5 +130,6 @@ AUnicornDriver::AUnicornDriver() {
     SocialComponent = CreateDefaultSubobject<UUnicornSocialComponent>(TEXT("UnicornSocial"));
     WebAPIComponent = CreateDefaultSubobject<UUnicornWebAPIComponent>(TEXT("UnicornWeb"));
     bShouldUploadHighlightsPayload = true;
+    bEnsureChronologicalHighlights = false;
 }
 

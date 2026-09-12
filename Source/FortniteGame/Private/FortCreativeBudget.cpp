@@ -7,5 +7,6 @@ FFortCreativeBudget::FFortCreativeBudget() {
     bCritical = false;
     BudgetLowend = 0;
     FixedInstanceCost = 0;
+    PreviewBudget = 0;
 }
 

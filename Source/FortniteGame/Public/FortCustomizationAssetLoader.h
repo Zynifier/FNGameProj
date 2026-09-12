@@ -4,6 +4,9 @@
 #include "FortCustomizationAssetsToLoad.h"
 #include "FortCustomizationAssetLoader.generated.h"
 
+class AFortPlayerPawn;
+class UFortItemDefinition;
+
 UCLASS(Blueprintable)
 class UFortCustomizationAssetLoader : public UObject {
     GENERATED_BODY()
@@ -16,7 +19,13 @@ private:
     FFortCustomizationAssetsToLoad PendingAssetsToLoad;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortItemDefinition*> CurrentContentOnDemandItemDefs;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<UObject*> AllLoadedAssets;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AFortPlayerPawn* PawnForOnDemandContentRelevance;
     
 public:
     UFortCustomizationAssetLoader();

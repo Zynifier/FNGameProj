@@ -1,10 +1,6 @@
 #include "FortAthenaZipline.h"
 #include "Net/UnrealNetwork.h"
 
-bool AFortAthenaZipline::UseInteractToEnterZipline() const {
-    return false;
-}
-
 void AFortAthenaZipline::Initialize(const FVector& NewStartPosition, const FVector& NewEndPosition) {
 }
 

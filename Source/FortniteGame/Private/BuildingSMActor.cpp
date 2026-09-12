@@ -203,7 +203,7 @@ FName ABuildingSMActor::GetDestructionLootTierGroup() const {
     return NAME_None;
 }
 
-UParticleSystem* ABuildingSMActor::GetDeathParticles() const {
+UFXSystemAsset* ABuildingSMActor::GetDeathParticles() const {
     return NULL;
 }
 
@@ -315,6 +315,9 @@ void ABuildingSMActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
     DOREPLIFETIME(ABuildingSMActor, ProxyGameplayCueDamage);
 }
 
+void ABuildingSMActor::SetBuildingTextureData(const int32 Index, UBuildingTextureData* NewBuildingTextureData) {
+}
+
 ABuildingSMActor::ABuildingSMActor() {
     TextureData[0] = NULL;
     TextureData[1] = NULL;
@@ -423,5 +426,7 @@ ABuildingSMActor::ABuildingSMActor() {
     DamagerOwner = NULL;
     RelevantBASE = NULL;
     LastRelevantBASE = NULL;
+    bAllowCustomMaterial = false;
+    WeakPointComponent = NULL;
 }
 

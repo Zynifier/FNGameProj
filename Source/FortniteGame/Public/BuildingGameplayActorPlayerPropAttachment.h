@@ -11,6 +11,12 @@ UCLASS(Blueprintable)
 class ABuildingGameplayActorPlayerPropAttachment : public ABuildingGameplayActor {
     GENERATED_BODY()
 public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bClientAttachmentErrorCorrectionEnabled;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bUseTransformedCalcBounds;
+    
     ABuildingGameplayActorPlayerPropAttachment();
     UFUNCTION(BlueprintCallable)
     void InitProp(AActor* PropActorToAttach);
@@ -25,6 +31,9 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void AttachProp(AActor* PropActorToAttach);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure=false)
+    void LogState(const FString& CallingContext) const;
     
 };
 

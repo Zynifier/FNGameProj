@@ -16,6 +16,9 @@ FText AFortAthenaMutator_GameModeBase::GetPOINameForTag(const FGameplayTag& POIT
     return FText::GetEmpty();
 }
 
+void AFortAthenaMutator_GameModeBase::OnGamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep) {
+}
+
 AFortAthenaMutator_GameModeBase::AFortAthenaMutator_GameModeBase() {
     bAutomaticallyFinishInitialization = true;
     StingerAudioComponent = NULL;

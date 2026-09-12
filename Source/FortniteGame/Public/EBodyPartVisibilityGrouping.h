@@ -8,5 +8,8 @@ enum class EBodyPartVisibilityGrouping : uint8 {
     AllButHead,
     OnlyBackBling,
     BackBlingAndCharm,
+    OnlyBody,
+    OnlyHead,
+    OnlyTail,
 };
 

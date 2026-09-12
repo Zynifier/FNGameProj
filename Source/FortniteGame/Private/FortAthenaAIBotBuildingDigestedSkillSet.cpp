@@ -17,5 +17,6 @@ UFortAthenaAIBotBuildingDigestedSkillSet::UFortAthenaAIBotBuildingDigestedSkillS
     StealWallBuildingTemplateWeights[2] = 1;
     StealWallBuildingTemplateWeights[3] = 1;
     StealWallBuildingTemplateWeights[4] = 1;
+    DelayBetweenBuildPieces = 0.0f;
 }
 

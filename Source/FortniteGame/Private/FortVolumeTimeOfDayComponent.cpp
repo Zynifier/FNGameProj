@@ -32,6 +32,13 @@ void UFortVolumeTimeOfDayComponent::GetLifetimeReplicatedProps(TArray<FLifetimeP
     DOREPLIFETIME(UFortVolumeTimeOfDayComponent, TimeOfDayConfig);
 }
 
+AFortTimeOfDayManager* UFortVolumeTimeOfDayComponent::TryGetTimeOfDayManager(AFortVolume* FortVolume) {
+    return NULL;
+}
+
+void UFortVolumeTimeOfDayComponent::ApplyTimeOfDayComponentSettings() {
+}
+
 UFortVolumeTimeOfDayComponent::UFortVolumeTimeOfDayComponent() {
     bUseEditorOverrideData = false;
     TimeOverride = 1;

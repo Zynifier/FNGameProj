@@ -3,6 +3,8 @@
 #include "UObject/NoExportTypes.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "InteriorAudioPlayerInfo.h"
+#include "OnRoofStateChangedDelegate.h"
+#include "OnInteriorStateChangedDelegate.h"
 #include "FortInteriorAudioSubsystem.generated.h"
 
 class AFortPlayerController;
@@ -19,6 +21,12 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortInteriorAudioSettings* Settings;
     
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnInteriorStateChanged OnInteriorStateChanged;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnRoofStateChanged OnRoofStateChanged;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortPlayerController* FPC;
@@ -33,6 +41,9 @@ public:
     UFortInteriorAudioSubsystem();
     UFUNCTION(BlueprintCallable)
     void SetEnabled(bool bNewEnabled);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FInteriorAudioPlayerInfo GetPlayerInfo() const;
     
 };
 

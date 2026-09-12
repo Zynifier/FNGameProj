@@ -105,6 +105,22 @@ void UFortniteAutomationBlueprintLibrary::ClearAllAnimInstances(AActor* Actor) {
 void UFortniteAutomationBlueprintLibrary::ApplyItemWrapToActor(UAthenaItemWrapDefinition* wrap, AActor* Actor, EItemWrapMaterialType MaterialType) {
 }
 
+TArray<UFortPlaysetItemDefinition*> UFortniteAutomationBlueprintLibrary::GetAllPlaysetItemDefinitions() {
+    return TArray<UFortPlaysetItemDefinition*>();
+}
+
+TArray<AActor*> UFortniteAutomationBlueprintLibrary::SpawnAthenaBackpackPawn(UAthenaBackpackItemDefinition* ItemDefinition, const FTransform SpawnTransform, const TArray<FMcpVariantChannelInfo> VariantChannelInfos, const bool ClearAnimations) {
+    return TArray<AActor*>();
+}
+
+TArray<AActor*> UFortniteAutomationBlueprintLibrary::SpawnAthenaCharacterSkinPawn(UAthenaCharacterItemDefinition* ItemDefinition, const FTransform SpawnTransform, const TArray<FMcpVariantChannelInfo> VariantChannelInfos, const bool ClearAnimations, UClass* MannequinClass) {
+    return TArray<AActor*>();
+}
+
+AFortPlayerController* UFortniteAutomationBlueprintLibrary::SpawnCosmeticPlayerPawn(const FTransform SpawnTransform) {
+    return NULL;
+}
+
 UFortniteAutomationBlueprintLibrary::UFortniteAutomationBlueprintLibrary() {
 }
 

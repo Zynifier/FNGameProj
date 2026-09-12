@@ -26,6 +26,12 @@ void UDestinationTrackerPawnComponent::GetLifetimeReplicatedProps(TArray<FLifeti
     DOREPLIFETIME(UDestinationTrackerPawnComponent, Destination);
 }
 
+void UDestinationTrackerPawnComponent::ClearDestination() {
+}
+
+void UDestinationTrackerPawnComponent::SetDestination(const FVector& InDestination) {
+}
+
 UDestinationTrackerPawnComponent::UDestinationTrackerPawnComponent() {
     DistanceSquared = 1;
 }

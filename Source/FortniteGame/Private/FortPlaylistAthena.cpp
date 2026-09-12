@@ -6,6 +6,22 @@ void UFortPlaylistAthena::CreateCalendarPayload_RegionalOverride() {
 void UFortPlaylistAthena::CreateCalendarPayload_Enabling() {
 }
 
+int32 UFortPlaylistAthena::GetLastTeamNumber(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist) {
+    return 0;
+}
+
+int32 UFortPlaylistAthena::GetMaxNumberOfTeams(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist) {
+    return 0;
+}
+
+int32 UFortPlaylistAthena::GetMaxPlayerCount(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist) {
+    return 0;
+}
+
+int32 UFortPlaylistAthena::GetMaxTeamSize(const UObject* InWorldContext, const UFortPlaylistAthena* InPlaylist) {
+    return 0;
+}
+
 UFortPlaylistAthena::UFortPlaylistAthena() {
     bRewardsTrackPlacement = true;
     bRewardsAllowXPProgression = true;
@@ -121,5 +137,15 @@ UFortPlaylistAthena::UFortPlaylistAthena() {
     bEnableStatsV2Stats = true;
     AISettings = NULL;
     ServerBotManagerClass = NULL;
+    MinPlayersForPrivateServer = 0;
+    bEnableRatingUpdate = false;
+    DADTestValue = 0;
+    bAllowWarmupPlayerStartInSetupPhase = false;
+    bDisable_ReportAPlayerReason_TeamingUpWithEnemies_WhileInGame = false;
+    bShowEliminationIndicatorForSelf = false;
+    bUseAsyncPhysics = false;
+    NetDormancyNumFramesUntilObsolete = 0;
+    CurieSettings = NULL;
+    ServerMaxTickRate = EFortServerTickRate::UseDefault;
 }
 

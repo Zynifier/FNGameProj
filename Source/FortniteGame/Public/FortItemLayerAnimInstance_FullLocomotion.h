@@ -55,6 +55,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     EFortCardinalDirection PostPivotCardinalDirection;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bIsSprinting;
+    
     UFortItemLayerAnimInstance_FullLocomotion();
 };
 

@@ -8,5 +8,6 @@ enum class EPlayerIndicatorFlags : uint8 {
     Minimap,
     WorldArrow,
     WorldName = 0x4,
+    DBNOCountDown = 0x8,
 };
 

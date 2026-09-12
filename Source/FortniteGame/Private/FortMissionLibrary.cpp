@@ -5,11 +5,11 @@ bool UFortMissionLibrary::UnregisterForMissionEvents(AActor* ActorToUnregister, 
     return false;
 }
 
-bool UFortMissionLibrary::TeleportPlayerPawn(AFortPlayerPawn* PlayerPawn, FVector DestLocation, FRotator DestRotation, bool bIgnoreCollision, bool bIgnoreSupplementalKillVolumeSweep) {
+bool UFortMissionLibrary::TeleportPlayerPawn(const UObject* WorldContextObject, AFortPlayerPawn* PlayerPawn, FVector DestLocation, FRotator DestRotation, bool bIgnoreCollision, bool bIgnoreSupplementalKillVolumeSweep) {
     return false;
 }
 
-void UFortMissionLibrary::TeleportPawnNearLocation(AFortPawn* Pawn, FVector DestLocation) {
+void UFortMissionLibrary::TeleportPawnNearLocation(const UObject* WorldContextObject, AFortPawn* Pawn, FVector DestLocation) {
 }
 
 void UFortMissionLibrary::StopAIEncounterAgainstActor(UObject* WorldContextObject, AActor* TargetActor) {

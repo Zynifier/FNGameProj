@@ -53,5 +53,12 @@ protected:
     UFUNCTION(BlueprintCallable)
     void OnGamePhaseChanged(EAthenaGamePhase GamePhase);
     
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    AAthenaFillFloor* GetLavaFloor() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    float GetLavaSupportLevel() const;
+    
 };
 

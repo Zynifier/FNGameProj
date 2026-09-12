@@ -14,6 +14,9 @@ class ACustomItemWrapModifier : public ACustomCosmeticModifierBase {
 public:
 protected:
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TWeakObjectPtr<AActor> GenericActorPtr;
+    
+    UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TWeakObjectPtr<AActor> VehiclePtr;
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -38,6 +41,9 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     AActor* GetVehicle() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TArray<UMeshComponent*> GetWrappedMeshComponents() const;
     
 };
 

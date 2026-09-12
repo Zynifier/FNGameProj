@@ -5,5 +5,7 @@ FFortGameFeatureOptionalInstallStatus::FFortGameFeatureOptionalInstallStatus() {
     bContentReady = false;
     bIsUsingBackgroundDownloads = false;
     bIsProgressPaused = false;
+    BundlesToInstall = 0;
+    bEnoughFreeSpace = false;
 }
 

@@ -12,6 +12,7 @@
 #include "FortQuestPackInfo.h"
 #include "PartnerPcbInfo.h"
 #include "SubGameInfo.h"
+#include "FortHighlightParamProfile.h"
 #include "FortGameData.generated.h"
 
 class ABuildingWeakSpot;
@@ -71,6 +72,10 @@ class UStaticMesh;
 class UTexture2D;
 class UWorld;
 
+class UFortPhysicsObjectAssetSetupData;
+class UFortPreferredItemSlotSettings;
+class UObject;
+
 UCLASS(Blueprintable, MinimalAPI)
 class UFortGameData : public UPrimaryDataAsset {
     GENERATED_BODY()
@@ -99,8 +104,11 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FLinearColor InvalidEditPatternColor;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortHighlightParamProfile> HighlightParamProfiles;
+    
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FFortHighlightColorsContainer HighlightColors[4];
+    FFortHighlightColorsContainer HighlightColors[5];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVector MobileInteractionIconScale;
@@ -239,40 +247,40 @@ private:
     float EditModeCancelDistance;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingCostHandles[5];
+    FCurveTableRowHandle BuildingCostHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingDeconCostMultHandles[5];
+    FCurveTableRowHandle BuildingDeconCostMultHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle PlayerBuildingDeconCostMultHandles[5];
+    FCurveTableRowHandle PlayerBuildingDeconCostMultHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingInitialHealthPercentHandles[5];
+    FCurveTableRowHandle BuildingInitialHealthPercentHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle AthenaBuildingInitialHealthPercentHandles[5];
+    FCurveTableRowHandle AthenaBuildingInitialHealthPercentHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle AthenaBuildingDropPercentHandles[5];
+    FCurveTableRowHandle AthenaBuildingDropPercentHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingRepairCostMultiplierHandles[5];
+    FCurveTableRowHandle BuildingRepairCostMultiplierHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingBreakAnimDurationHandles[5];
+    FCurveTableRowHandle BuildingBreakAnimDurationHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingDestroyAnimDurationHandles[5];
+    FCurveTableRowHandle BuildingDestroyAnimDurationHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingPlacementAnimDurationHandles[5];
+    FCurveTableRowHandle BuildingPlacementAnimDurationHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingCritDamagePctHandles[5];
+    FCurveTableRowHandle BuildingCritDamagePctHandles[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FCurveTableRowHandle BuildingCritDestroyAnimScaleCapHandles[5];
+    FCurveTableRowHandle BuildingCritDestroyAnimScaleCapHandles[6];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortBuildingAudioBank> BuildingAudioBank;
@@ -281,7 +289,7 @@ private:
     TSoftObjectPtr<UMaterialParameterCollection> StencilDefinitionCollection;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    FText ResourceNames[5];
+    FText ResourceNames[6];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     FText BuildingTypeNames[12];
@@ -327,6 +335,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortMissionCSVEventMap> MissionCSVEventMap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortPreferredItemSlotSettings> PreferredItemSlotSettings;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortGamepadSettings> GamepadSettingsDefault;
@@ -436,6 +447,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortDeathCauseData> FortDeathCauseData;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortDeathCauseData* CompositeDeathCauseData;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortSurfaceTypeToSurfaceTypeTagMapping> SurfaceTypeToSurfaceTypeTagMapping;
     
@@ -459,6 +473,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UFortUINotification> FriendNotificationClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> BattlePassPageUnlockNotificationClass;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<UFortUINotification> TwitchNotificationClass;
@@ -529,11 +546,23 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UWorld> DefaultLobbyBackgroundLevel;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortPhysicsObjectAssetSetupData> PhysicsObjectAssetSetupData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> PhysicsObjectImpactDamageTemplateGE;
+    
 public:
     UFortGameData();
     virtual FPrimaryAssetId GetPrimaryAssetId() const override
     {
         return FPrimaryAssetId("FortGameData", GetFName());
     }
+    UFUNCTION(BlueprintCallable)
+    static TArray<FName> GetHighlightParamProfileNames();
+    
+    UFUNCTION(BlueprintCallable)
+    static TArray<FName> GetHighlightStencilParamNames();
+    
 };
 

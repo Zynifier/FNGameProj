@@ -36,6 +36,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_CurrentLockState, meta=(AllowPrivateAccess=true))
     ELockState CurrentLockState;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    uint8 HideInteractionWhenLocked;
+    
 public:
     ABuildingProp_LockDevice();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

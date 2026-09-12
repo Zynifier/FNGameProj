@@ -21,5 +21,6 @@ void AFortGameplayMutator::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 AFortGameplayMutator::AFortGameplayMutator() {
     bMutatorActive = false;
     bNetworkDormantWhenDeactivated = false;
+    MutatorEnabledMinigameStates = 0;
 }
 

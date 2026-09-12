@@ -72,7 +72,7 @@ USkeletalMeshComponent* UCustomCharacterPartAnimInstance::FindChildCommponentFro
 void UCustomCharacterPartAnimInstance::CheckForTail(bool& bHasTail) const {
 }
 
-void UCustomCharacterPartAnimInstance::CheckForBackbling(bool& bIsWearingBackbling, bool& bIsBackblingLong, float LongBackblingThreshold) const {
+void UCustomCharacterPartAnimInstance::CheckForBackbling(bool& bIsWearingBackbling, bool& bIsBackblingACape, bool& bIsBackblingLong, float LongBackblingThreshold) const {
 }
 
 bool UCustomCharacterPartAnimInstance::CharacterItemDefinitionHasAnyMetaTag(const TArray<FGameplayTag>& Tags) {
@@ -135,5 +135,10 @@ UCustomCharacterPartAnimInstance::UCustomCharacterPartAnimInstance() {
     CurrentLOD = 0;
     bRegisteredForDayPhaseChange = false;
     PartType = EFortCustomPartType::NumTypes;
+    bGoopJumpExecuted = false;
+    bIsValetDriver = false;
+    bIsValetPassenger = false;
+    bIsTargetingConsumableThrow = false;
+    VehicleSlotExposure = ESlotEnvironmentExposure::Unknown;
 }
 

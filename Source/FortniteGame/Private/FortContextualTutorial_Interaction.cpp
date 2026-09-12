@@ -4,5 +4,6 @@ void UFortContextualTutorial_Interaction::HandleInteractSuccessTrigger(const FGa
 }
 
 UFortContextualTutorial_Interaction::UFortContextualTutorial_Interaction() {
+    InstigatingActor = NULL;
 }
 

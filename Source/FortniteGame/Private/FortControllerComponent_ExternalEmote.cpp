@@ -15,6 +15,17 @@ void UFortControllerComponent_ExternalEmote::GetLifetimeReplicatedProps(TArray<F
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
     DOREPLIFETIME(UFortControllerComponent_ExternalEmote, ExternalEmotes);
+    DOREPLIFETIME(UFortControllerComponent_ExternalEmote, UncategorizedEmotes);
+}
+
+void UFortControllerComponent_ExternalEmote::OnRep_UncategorizedEmotes(TArray<FEmoteActionBinding>& PreviousUncategorizedEmotes) {
+}
+
+void UFortControllerComponent_ExternalEmote::PlayUncategorizedEmoteAtIndex(const int32 EmoteIndex) {
+}
+
+TArray<FEmoteActionBinding> UFortControllerComponent_ExternalEmote::GetUncategorizedEmotes() const {
+    return TArray<FEmoteActionBinding>();
 }
 
 UFortControllerComponent_ExternalEmote::UFortControllerComponent_ExternalEmote() {

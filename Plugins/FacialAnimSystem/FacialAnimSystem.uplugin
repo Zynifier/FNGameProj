@@ -24,10 +24,6 @@
 	],
 	"Plugins": [
 		{
-			"Name": "SpeechGraphics",
-			"Enabled": true
-		},
-		{
 			"Name": "LiveLink",
 			"Enabled": true
 		}

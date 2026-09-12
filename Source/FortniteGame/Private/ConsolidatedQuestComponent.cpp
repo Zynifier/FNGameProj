@@ -23,9 +23,14 @@ TArray<FName> UConsolidatedQuestComponent::Editor_GetValidObjectives() const {
 void UConsolidatedQuestComponent::DelayBeginPlay() {
 }
 
+UFortQuestItemDefinition* UConsolidatedQuestComponent::GetQuestItemDefinition() const {
+    return NULL;
+}
+
 UConsolidatedQuestComponent::UConsolidatedQuestComponent() {
     ComponentResponse = EQuestVisibilityResponse::Hide;
     UpdateType = EQuestUpdateType::ObjectiveCompleted;
     bIsInteractable = false;
+    QuestItemDefinition = NULL;
 }
 

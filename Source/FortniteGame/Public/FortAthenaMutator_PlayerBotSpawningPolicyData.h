@@ -13,6 +13,8 @@ class UFortAthenaAIBotInventoryItems;
 class UFortAthenaAIBotSkillSet;
 class UFortAthenaAISpawnerData;
 
+class UObject;
+
 UCLASS(Blueprintable, EditInlineNew)
 class UFortAthenaMutator_PlayerBotSpawningPolicyData : public UFortAthenaMutator_SpawningPolicyData {
     GENERATED_BODY()
@@ -61,7 +63,7 @@ private:
     TSoftObjectPtr<UDataTable> CosmeticLibraryWeightRegionOverride;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSubclassOf<UFortAthenaAISpawnerData> AISpawnerData;
+    TSoftClassPtr<UFortAthenaAISpawnerData> AISpawnerData;
     
 public:
     UFortAthenaMutator_PlayerBotSpawningPolicyData();

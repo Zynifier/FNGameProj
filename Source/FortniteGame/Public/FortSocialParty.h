@@ -26,6 +26,9 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bPromoteMemberWhenBackgrounding;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableBootToGroup;
+    
 public:
     UFortSocialParty();
 };

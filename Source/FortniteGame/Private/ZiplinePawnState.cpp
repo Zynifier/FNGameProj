@@ -7,5 +7,6 @@ FZiplinePawnState::FZiplinePawnState() {
     AuthoritativeValue = 0;
     TimeZipliningBegan = 1;
     TimeZipliningEndedFromJump = 1;
+    bReachedEnd = false;
 }
 

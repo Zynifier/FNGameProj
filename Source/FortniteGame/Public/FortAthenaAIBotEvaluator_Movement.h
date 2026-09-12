@@ -46,10 +46,22 @@ private:
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName UndermineLocationImpactName;
     
+protected:
+    UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName UnstuckSteerExecutionStatusKeyName;
+    
+    UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName UnstuckSteerDirectionKeyName;
+    
+private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAthenaAIBotUnstuckDigestedSkillSet* UnstuckSkillSet;
     
 public:
     UFortAthenaAIBotEvaluator_Movement();
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnCurrentUnstuckSteeringAttemptFinished();
+    
 };
 

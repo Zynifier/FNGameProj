@@ -10,6 +10,13 @@ void AFortAthenaRiftPortal::TeleportVehicle(AActor* Vehicle, const FVector& Tele
 void AFortAthenaRiftPortal::NotifyTeleportedVehicle_Implementation(AActor* VehicleActor) {
 }
 
+void AFortAthenaRiftPortal::AddIgnoredActor(const AActor* Actor) {
+}
+
+bool AFortAthenaRiftPortal::IsIgnoredActor(const AActor* QueryActor) const {
+    return false;
+}
+
 AFortAthenaRiftPortal::AFortAthenaRiftPortal() {
 }
 

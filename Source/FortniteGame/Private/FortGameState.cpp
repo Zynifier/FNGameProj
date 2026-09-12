@@ -133,6 +133,20 @@ void AFortGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
     DOREPLIFETIME(AFortGameState, PendingTeamChangeRequests);
     DOREPLIFETIME(AFortGameState, TreasureChestInfos);
     DOREPLIFETIME(AFortGameState, AmmoBoxInfos);
+    DOREPLIFETIME(AFortGameState, bFishingCollectionEnabled);
+    DOREPLIFETIME(AFortGameState, bCharacterCollectionEnabled);
+}
+
+FString AFortGameState::GetGameSessionID() const {
+    return TEXT("");
+}
+
+FGameplayTagContainer AFortGameState::GetHUDElementsToHide(const APawn* Pawn) const {
+    return FGameplayTagContainer{};
+}
+
+FGameplayTagContainer AFortGameState::GetHUDElementsToShow(const APawn* Pawn) const {
+    return FGameplayTagContainer{};
 }
 
 AFortGameState::AFortGameState() {
@@ -170,5 +184,7 @@ AFortGameState::AFortGameState() {
     UnplayableHitchThresholdInMs = 1;
     MaxUnplayableHitchesToTolerate = 0;
     CreativeQuestManager = NULL;
+    bFishingCollectionEnabled = false;
+    bCharacterCollectionEnabled = false;
 }
 

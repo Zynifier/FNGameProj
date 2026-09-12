@@ -19,5 +19,6 @@ UGameDataCosmetics::UGameDataCosmetics() {
     CameraPositionTransitionDuration = 1;
     CameraPositionTargetMaxLerpDistance = 1;
     MinPanelSizeForFraming = 1;
+    MetaTagToPreviewActorAsset = NULL;
 }
 

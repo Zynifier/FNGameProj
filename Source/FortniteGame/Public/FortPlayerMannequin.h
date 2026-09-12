@@ -25,6 +25,8 @@ class USceneComponent;
 class USkeletalMesh;
 class USkeletalMeshComponent;
 
+class UAudioComponent;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortPlayerMannequin : public ASkeletalMeshActor, public ICustomCharacterPartOwnerInterface, public ICustomizationItemInterface {
     GENERATED_BODY()
@@ -41,8 +43,12 @@ public:
     UAthenaBackpackItemDefinition* AthenaBackBling;
     
 protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Export, meta=(AllowPrivateAccess=true))
+    TMap<FName, UAudioComponent*> EmoteAudioCompsMap;
+    
+protected:
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UCustomCharacterPart* CharacterParts[7];
+    UCustomCharacterPart* CharacterParts[8];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FLightingChannels MannequinLightingChannels;
@@ -57,19 +63,19 @@ protected:
     bool bMannequinCastsHiddenShadow;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UCustomCharacterPart* CharacterPartList[6];
+    UCustomCharacterPart* CharacterPartList[7];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FMcpVariantChannelInfo> OverrideVariants;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UCustomColorSwatch* CharacterPartColorSwatches[7];
+    UCustomColorSwatch* CharacterPartColorSwatches[8];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UCustomColorSwatch* ColorSwatchesForCharacterParts[6];
+    UCustomColorSwatch* ColorSwatchesForCharacterParts[7];
     
     UPROPERTY(EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
-    UCustomColorComponent* AccessoryColorSwatchHandler[6];
+    UCustomColorComponent* AccessoryColorSwatchHandler[7];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     UCustomColorSwatch* ColorSwatches[2];
@@ -175,6 +181,23 @@ public:
     
     UFUNCTION(BlueprintCallable)
     UAthenaCosmeticItemDefinition* GetCustomizationCosmeticItem() const override PURE_VIRTUAL(GetCustomizationCosmeticItem, return NULL;);
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void ChoosePartsForHeroType(UFortHeroType* HeroType, const TArray<FMcpVariantChannelInfo> InOverrideVariants, const bool bClearOldParts);
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    TArray<UCustomCharacterPart*> GetCustomCharacterParts();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void HandleReInitializeComplete();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UAthenaCharacterItemDefinition* GetAthenaCharacterItemDefinition() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UAudioComponent* GetEmoteAudioComponent(const FName InSoundId) const;
     
 };
 

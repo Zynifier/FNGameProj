@@ -135,6 +135,14 @@ bool UFortQuestItem::CanPinQuest() const {
     return false;
 }
 
+int32 UFortQuestItem::GetBarsRewardValue() const {
+    return 0;
+}
+
+bool UFortQuestItem::HasCompletedAllObjectives(const bool bCheckForTurnInObjective) const {
+    return false;
+}
+
 UFortQuestItem::UFortQuestItem() {
     LastNotifiedQuestCount = 0;
     quest_state = EFortQuestState::Inactive;
@@ -146,5 +154,7 @@ UFortQuestItem::UFortQuestItem() {
     CurrentStage = 0;
     xp_reward_scalar = 1;
     PlayerLevel = 0;
+    quest_rarity = EFortRarity::Common;
+    bIsManuallyGrantedQuest = false;
 }
 

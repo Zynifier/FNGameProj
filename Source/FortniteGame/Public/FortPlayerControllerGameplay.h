@@ -32,6 +32,10 @@
 #include "TriggerSetupVehicleFuelWidgetDelegate.h"
 #include "VehicleFuelAddedDelegate.h"
 #include "VehicleTrickInfo.h"
+#include "EVehicleSeats.h"
+#include "OnCreativeInvulnerableChangedDelegate.h"
+#include "SimpleVisibilityResponseDelegateDelegate.h"
+#include "EPlayerControllerFollow.h"
 #include "FortPlayerControllerGameplay.generated.h"
 
 class AActor;
@@ -45,6 +49,9 @@ class UFortCreativeOption;
 class UFortCreativeOptionsBundle;
 class UFortWorldItemDefinition;
 class UInputComponent;
+
+class AFortAthenaVehicle;
+class UFortControllerComponent_SpawnedVehicle;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortPlayerControllerGameplay : public AFortPlayerController {
@@ -67,6 +74,15 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnCreativeGhostChanged OnCreativeGhostEnabledDelegate;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FTimerHandle VerifyAllowModeratorModeTimerHandle;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FTimerHandle VerifyAllowedToBeInvulnerableTimerHandle;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnCreativeInvulnerableChanged OnCreativeInvulnerableEnabledDelegate;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnCreativeHeatmapToggled OnCreativeHeatmapToggledDelegate;
@@ -141,6 +157,9 @@ protected:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnCreativeFlyChanged OnCreativeFlyChangedDelegate;
     
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FSimpleVisibilityResponseDelegate OnHUDElementVisibilityRefreshedDelegate;
+    
     UPROPERTY(EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     uint16 ServerNumNPCs;
     
@@ -171,6 +190,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UInputComponent* CreativeModeInGameReadyCheckInputComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UInputComponent* CreativeModeratorModeInputComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<float> FlyingModifiers;
@@ -208,6 +230,12 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsCreativeIslandExporterEnabled: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsCreativeModeratorModeEnabled: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_IsCreativeModeratorModeActive, meta=(AllowPrivateAccess=true))
+    uint8 bIsCreativeModeratorModeActive: 1;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<TSubclassOf<UCameraModifier>> DefaultCameraModifierClasses;
     
@@ -222,6 +250,9 @@ private:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCreativeOptionVariableBase WantsToGhostMode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FCreativeOptionVariableBase WantsToBeInvulnerable;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCreativeOptionVariableBase WantedFlightSpeed;
@@ -241,6 +272,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<FGameplayTag, FGameplayAbilitySpecHandle> AbilityActivatedByInputSpecHandleMap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UFortControllerComponent_SpawnedVehicle* SpawnedVehicleComponent;
     
 public:
     AFortPlayerControllerGameplay();
@@ -304,9 +338,6 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void ResetHUDElementVisibilityToSettings(const FGameplayTagContainer& HUDElementTags);
-    
-    UFUNCTION(BlueprintCallable)
-    void RefreshHUDElementVisibilitiesToSettings();
     
     UFUNCTION(BlueprintCallable)
     void QuickTimeEventFeedbackWidget(EFortQuickTimeEventResult Result);
@@ -479,6 +510,55 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void ActivateCreativePreviewScreenshot(bool bActivate);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void ExitSpawnedVehicle();
+    
+private:
+    UFUNCTION(BlueprintCallable)
+    void OnRep_IsCreativeModeratorModeActive();
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnVerifyAllowedToBeInvulnerable();
+    
+    UFUNCTION(BlueprintCallable)
+    void OnVerifyAllowModeratorMode();
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OnWantsToBeInvulnerableChanged(UFortCreativeOption* CreativeOption, uint8 IndexValue);
+    
+public:
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerCreativeStartInvulnerable();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerCreativeStopInvulnerable();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerSetCreativeModeratorModeActive(bool bActive);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetCanStreamBuildingFoundationsIn(bool bCanStream);
+    
+    UFUNCTION(BlueprintCallable)
+    void SimulatedSetCreativeModeratorModeActive(bool bActive);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    AFortAthenaVehicle* SpawnVehicleAndEnter(TSubclassOf<AFortAthenaVehicle> VehicleClass, const bool bHidePawn, const bool bSetPawnAsVehicleOwner, const EVehicleSeats SeatToEnter, const bool bIgnoreDBNOCheck, const bool bCheckForNonBlockingSpawnPosition, const bool bForceToWaterSurfaceOnSpawn);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool CanFollowAPlayer(const bool bOnlyCheckTeammates) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsCreativeModeratorModeActive() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsCreativeModeratorModeEnabled() const;
+    
+    UFUNCTION(BlueprintCallable)
+    bool FollowPlayer(const EPlayerControllerFollow Follow);
     
 };
 

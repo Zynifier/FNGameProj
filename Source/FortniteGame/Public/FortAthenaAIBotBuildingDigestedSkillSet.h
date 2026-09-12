@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "FortAthenaAIBotDigestedSkillSet.h"
+#include "AthenaFortAIBotDigestedWeightedBuildingList.h"
 #include "FortAthenaAIBotBuildingDigestedSkillSet.generated.h"
 
 UCLASS(Blueprintable, NonTransient)
@@ -13,6 +14,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float DefensiveBuildingDelayDeviationBetweenBuilds;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float DelayBetweenBuildPieces;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float ForceEquipBuildToolDuration;
@@ -31,6 +35,9 @@ protected:
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float StealWallBuildingTemplateWeights[5];
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FAthenaFortAIBotDigestedWeightedBuildingList> WeightedBuildingLists;
     
 public:
     UFortAthenaAIBotBuildingDigestedSkillSet();

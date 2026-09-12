@@ -43,7 +43,7 @@ public:
     void Empty();
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
-    bool AddItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner);
+    bool AddItemToInventoryOwner(TScriptInterface<IFortInventoryOwnerInterface> InventoryOwner, bool bUseItemPickupAnalyticEvent);
     
 };
 

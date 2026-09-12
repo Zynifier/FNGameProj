@@ -5,9 +5,19 @@
 #include "BuildingTrapFloor.h"
 #include "BuildingMusicSequencer.generated.h"
 
+class AController;
+
 UCLASS(Blueprintable)
 class ABuildingMusicSequencer : public ABuildingTrapFloor {
     GENERATED_BODY()
+public:
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AController* TriggerInstigator;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AController* CachedTriggerInstigator;
+    
 public:
     ABuildingMusicSequencer();
 protected:

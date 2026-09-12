@@ -81,5 +81,6 @@ AFortAIController::AFortAIController() {
     GoalVisibilityPersistanceTime = 1;
     MyFortPawn = NULL;
     AIGoalComponent = NULL;
+    BTAssetToRunOnPawnAISpawned = NULL;
 }
 

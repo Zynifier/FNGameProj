@@ -1,6 +1,6 @@
 #include "FortAthenaMutator_CustomCharacterParts.h"
 
-bool AFortAthenaMutator_CustomCharacterParts::GetPartOverridesForPlayer_Implementation(TArray<FPartOverrideData>& OutOverrideParts, uint8 PayloadData) const {
+bool AFortAthenaMutator_CustomCharacterParts::GetPartOverridesForPlayer_Implementation(TArray<FPartOverrideData>& OutOverrideParts, const AFortPlayerController* FortPlayerController) const {
     return false;
 }
 

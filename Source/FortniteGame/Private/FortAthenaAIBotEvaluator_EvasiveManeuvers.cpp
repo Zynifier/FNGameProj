@@ -13,5 +13,9 @@ UFortAthenaAIBotEvaluator_EvasiveManeuvers::UFortAthenaAIBotEvaluator_EvasiveMan
     bDoJumping = true;
     bDoJumpingDistanceCheck = true;
     CacheEMDigestedSkillSet = NULL;
+    bDoJetpackStrafing = false;
+    bDoJetpackStrafingDistanceCheck = false;
+    JetpackStrafingRequiredFuelPercent = 0.0f;
+    JetpackStrafeNavPadding = 0.0f;
 }
 

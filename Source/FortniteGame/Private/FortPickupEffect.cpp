@@ -10,6 +10,10 @@ UMaterialInstanceDynamic* AFortPickupEffect::ApplyCosmeticOverridesToMaterial(UM
     return NULL;
 }
 
+UFortItem* AFortPickupEffect::GetPickupDummyItem() const {
+    return NULL;
+}
+
 AFortPickupEffect::AFortPickupEffect() {
     StaticMesh = NULL;
     SkeletalMesh = NULL;
@@ -20,5 +24,6 @@ AFortPickupEffect::AFortPickupEffect() {
     bOwnedByPlayer = false;
     bRandomRotation = false;
     PickupByNearbyPawnSound = NULL;
+    ParentPickupActor = NULL;
 }
 

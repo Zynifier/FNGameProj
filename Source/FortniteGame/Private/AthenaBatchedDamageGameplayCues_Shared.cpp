@@ -13,5 +13,6 @@ FAthenaBatchedDamageGameplayCues_Shared::FAthenaBatchedDamageGameplayCues_Shared
     NonPlayerbIsFatal = false;
     NonPlayerbIsCritical = false;
     bIsValid = false;
+    bIsBeam = false;
 }
 

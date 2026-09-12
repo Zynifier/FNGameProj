@@ -5,5 +5,6 @@ FCachedRechargeAmmoData::FCachedRechargeAmmoData() {
     ChargeRate = 1;
     AmountToRecharge = 0;
     ItemLevel = 0;
+    bShouldRechargeAmmoToClip = false;
 }
 

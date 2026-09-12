@@ -4,6 +4,10 @@ bool UFortInteractContextInfo::HasValidContextOverride() const {
     return false;
 }
 
+bool UFortInteractContextInfo::HasValidSecondContextOverride() const {
+    return false;
+}
+
 UFortInteractContextInfo::UFortInteractContextInfo() {
     ContextOverrideWidget = NULL;
     ReceivingActor = NULL;
@@ -21,5 +25,8 @@ UFortInteractContextInfo::UFortInteractContextInfo() {
     bDisplayTextOnly = false;
     bSuppressInteractionWidget = false;
     bSuppressSimpleInteractionWidgetForTouch = true;
+    SecondContextOverrideWidget = NULL;
+    bHasCustomInteractionWidget = false;
+    InteractContextInfoType = EFortInteractContextInfoType::Standard;
 }
 

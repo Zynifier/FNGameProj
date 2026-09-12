@@ -41,6 +41,10 @@
 #include "FortAnimInstance.h"
 #include "FortPlayMontageForGameplayTagQueryInterface.h"
 #include "GameplayTagAnimations.h"
+#include "ESlotEnvironmentExposure.h"
+#include "FortAnimInput_PlayerSkydiveAnimAsset.h"
+#include "FortAnimInput_Ragdoll.h"
+#include "FortAnimInput_WeaponAdditiveAnimAsset.h"
 #include "FortPlayerAnimInstance.generated.h"
 
 class AFortPlayerController;
@@ -51,6 +55,9 @@ class UAnimNotify;
 class UAnimSequence;
 class UFortPlayerGliderAnimSet;
 class UFortWeaponAnimSet;
+
+class UFortPlayerSkydiveAnimSet;
+class UFortWeaponAdditiveAnimSet;
 
 UCLASS(Blueprintable, NonTransient)
 class FORTNITEGAME_API UFortPlayerAnimInstance : public UFortAnimInstance, public IFortPlayMontageForGameplayTagQueryInterface {
@@ -117,6 +124,9 @@ public:
     FFortAnimInput_Zipline ZiplineInput;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_Ragdoll RagdollInput;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortAnimInput_JackalVehicle JackalVehicleInput;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -170,6 +180,12 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FVector TurnPelvisTranslationOffset;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector EmoteAnimOffset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector WholeAnimOffset;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortAnimInput_AdjustedAim AdjustedAimBase;
     
@@ -219,6 +235,9 @@ public:
     float SnapWeapon_LHandAlpha;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float SnapWeapon_LHandAlphaSwitch;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float LegIKAlpha;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -229,6 +248,18 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FFortAnimInput_Skydiving Skydiving;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FRotator FreeFall_PelvisModRot;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float FreeFall_AimPitch;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float FreeFall_DiveAngleInterpSpeed;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bFreeFall_UseDiveAngleMod;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bIsSlopeSliding;
@@ -268,6 +299,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FFortAnimInput_PlayerGliderAnimAsset CurrentGliderAnimSet;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_PlayerSkydiveAnimAsset CurrentSkydiveAnimSet;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FFortAnimInput_WeaponAdditiveAnimAsset CurrentWeaponAdditiveAnimSet;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FName> BonesHiddenByAnimSet;
@@ -367,6 +404,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsTargeting: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsTargetingConsumableThrow: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bPlayUpperBodyTargeting: 1;
@@ -510,10 +550,28 @@ public:
     uint8 bIsUsingJetpack: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsFreeFloating: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsGoopSwimming: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bGoopExitJetPack: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    bool bGoopJumpExecuted;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsUsingRemoteControlPawn: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsInVehicle: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsValetDriver: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bIsValetPassenger: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bIsOstrichDriver: 1;
@@ -815,11 +873,17 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortWeaponAnimSet* WeaponOverrideAnimSet;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortWeaponAdditiveAnimSet* WeaponAdditiveAnimSet;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortWeaponAnimSet* WeaponAnimSetForEmptyHands;
     
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TWeakObjectPtr<UFortPlayerGliderAnimSet> CurrentGliderAnimSetDataAsset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortPlayerSkydiveAnimSet* DefaultSkydiveAnimSet;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     EFortCardinalDirection PreviousFrameLocomotionCardinalDirection;
@@ -1022,6 +1086,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bIsPatrolling: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bUsingDoubleJumpAbility: 1;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName HeadTrackingReticleSocketName;
     
@@ -1180,6 +1247,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     uint8 bSupressJogStartAdditiveForLiveEvent: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector Ragdoll_InitialImpact_ThrowVelocity;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    ESlotEnvironmentExposure VehicleSlotEnvironmentExposure;
     
     UFortPlayerAnimInstance();
     UFUNCTION(BlueprintCallable)

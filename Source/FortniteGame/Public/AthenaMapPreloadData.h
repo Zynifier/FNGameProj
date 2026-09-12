@@ -10,6 +10,14 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FName> PackageNames;
     
+private:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<int32> PackageCountToMemLookup;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 PackageCountStepSize;
+    
+public:
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<int16> MemoryLookup;
     

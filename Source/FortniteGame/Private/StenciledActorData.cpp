@@ -7,5 +7,7 @@ FStenciledActorData::FStenciledActorData() {
     Sound = NULL;
     FriendlyStencilIndex = 0;
     EnemyStencilIndex = 0;
+    ShareActorWithMask = 0;
+    DisplayTeamOverride = 0;
 }
 

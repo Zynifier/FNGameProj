@@ -115,6 +115,20 @@ void AFortVolume::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
     DOREPLIFETIME(AFortVolume, VolumeState);
     DOREPLIFETIME(AFortVolume, BoundsCollisionSetting);
     DOREPLIFETIME(AFortVolume, bUserGeneratedContentRestricted);
+    DOREPLIFETIME(AFortVolume, IslandResourceManagerComponent);
+    DOREPLIFETIME(AFortVolume, FortVolumePersistenceOptions);
+}
+
+FString AFortVolume::GetAccountIdOwnerOfIsland() const {
+    return TEXT("");
+}
+
+UFortVolumePersistenceOptions* AFortVolume::GetFortVolumePersistenceOptions() const {
+    return NULL;
+}
+
+UFortVolumeObjectTrackingComponent* AFortVolume::GetObjectTrackingComponent() const {
+    return NULL;
 }
 
 AFortVolume::AFortVolume() {
@@ -129,7 +143,7 @@ AFortVolume::AFortVolume() {
     bDestroyingActors = false;
     bForceBoundsToBlock = false;
     CurrentPlayset = NULL;
-    VolumeState = EVolumeState::Uninitialized;
+    VolumeState = ESpatialLoadingState::Uninitialized;
     TaskQueue = NULL;
     AIGroupEncounterID = 0;
     MaxActiveAI = 0;
@@ -138,5 +152,12 @@ AFortVolume::AFortVolume() {
     BoundsShape = EVolumeShape::Sphere;
     BoundsCollisionSetting = ECollisionEnabled::NoCollision;
     bUserGeneratedContentRestricted = false;
+    DevicesDataTrackingComponent = NULL;
+    bShouldTrackObjects = false;
+    bAdjustNavInvokerSizeToVolume = false;
+    bCreateNavOctreeInclusionBound = false;
+    IslandResourceManagerComponent = NULL;
+    PlayerSaveComponent = NULL;
+    FortVolumePersistenceOptions = NULL;
 }
 

@@ -57,5 +57,8 @@ public:
     UFUNCTION(BlueprintCallable)
     UFortClientSettingsRecord* GetClientSettings() const;
     
+    UFUNCTION(BlueprintCallable)
+    UFortContentControlsManager* GetContentControlsManagerEvenIfUninitialized() const;
+    
 };
 

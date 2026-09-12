@@ -29,5 +29,8 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     static float GetValue(const FScalableFloat& Input);
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static bool GetValueAsBool(const FScalableFloat& Input, float Level);
+    
 };
 

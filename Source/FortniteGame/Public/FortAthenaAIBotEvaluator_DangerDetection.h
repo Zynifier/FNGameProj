@@ -20,6 +20,9 @@ private:
     float TimeToCheckForDangerAfterValidQuery;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float MaxRadiusToSearchForSafePlace;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UNavigationQueryFilter> SafeLocationFilterClass;
     
 protected:

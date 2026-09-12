@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "BuildingGameplayActor.h"
+#include "UObject/NoExportTypes.h"
 #include "FortPhysicsBall.generated.h"
 
 class UFortVehicleAudioVoice;
@@ -94,6 +95,12 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintCosmetic)
     void UpdateDirectionAndRotation(float DeltaSeconds);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void AuthTriggerTargetHit(FVector StartPos, FVector EndPos);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnHitTarget(FVector StartPos, FVector EndPos);
     
 };
 

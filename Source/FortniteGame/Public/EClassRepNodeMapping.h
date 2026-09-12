@@ -7,6 +7,7 @@ enum EClassRepNodeMapping {
     NotRouted,
     RelevantAllConnections,
     RelevantAllInsideFortVolume,
+    Custom,
     Spatialize_Static,
     Spatialize_Dynamic,
     Spatialize_Dormancy,

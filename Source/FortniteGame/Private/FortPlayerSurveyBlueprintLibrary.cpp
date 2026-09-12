@@ -16,8 +16,8 @@ FFortPlayerSurveyAnswerFreeFormText UFortPlayerSurveyBlueprintLibrary::GetFreeFo
     return FFortPlayerSurveyAnswerFreeFormText{};
 }
 
-EFortPlayerSurveyQuestionType UFortPlayerSurveyBlueprintLibrary::GetAnswerType(const FFortPlayerSurveyAnswer& Answer) {
-    return EFortPlayerSurveyQuestionType::Invalid;
+EFortPlayerSurveyQuestionTypeLegacy UFortPlayerSurveyBlueprintLibrary::GetAnswerType(const FFortPlayerSurveyAnswer& Answer) {
+    return EFortPlayerSurveyQuestionTypeLegacy::Invalid;
 }
 
 FFortPlayerSurveyAnswerBase UFortPlayerSurveyBlueprintLibrary::GetAnswerBase(const FFortPlayerSurveyAnswer& Answer) {

@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "CreativeIslandMatchmakingSettings.h"
 #include "LocalizedStringPair.h"
+#include "EMMSPrivacy.h"
 #include "CreativeLoadedLinkData.generated.h"
 
 USTRUCT(BlueprintType)
@@ -16,6 +17,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString Mnemonic;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EMMSPrivacy Privacy;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 Version;
@@ -52,6 +56,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCreativeIslandMatchmakingSettings MatchmakingSettings;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FString> PlaylistOptions;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString LinkType;
     
     FCreativeLoadedLinkData();
 };

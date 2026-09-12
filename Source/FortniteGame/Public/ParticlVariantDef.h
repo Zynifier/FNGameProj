@@ -8,6 +8,7 @@
 #include "ParticleParamterVariant.h"
 #include "ParticleVariant.h"
 #include "VariantParticleSystemInitializerData.h"
+#include "SoundVariant.h"
 #include "ParticlVariantDef.generated.h"
 
 USTRUCT(BlueprintType)
@@ -31,6 +32,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FManagedParticleParamVariant> VariantAlteredParticleParams;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FSoundVariant> VariantSounds;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FCosmeticMetaTagContainer MetaTags;

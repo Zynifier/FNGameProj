@@ -6,6 +6,7 @@
 #include "FortPlayerSurveyAnswerBase.h"
 #include "FortPlayerSurveyAnswerFreeFormText.h"
 #include "FortPlayerSurveyAnswerMultipleChoice.h"
+#include "EFortPlayerSurveyQuestionTypeLegacy.h"
 #include "FortPlayerSurveyBlueprintLibrary.generated.h"
 
 UCLASS(Blueprintable)
@@ -26,7 +27,7 @@ public:
     static FFortPlayerSurveyAnswerFreeFormText GetFreeFormTextAnswer(const FFortPlayerSurveyAnswer& Answer, bool& bIsValid);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    static EFortPlayerSurveyQuestionType GetAnswerType(const FFortPlayerSurveyAnswer& Answer);
+    static EFortPlayerSurveyQuestionTypeLegacy GetAnswerType(const FFortPlayerSurveyAnswer& Answer);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     static FFortPlayerSurveyAnswerBase GetAnswerBase(const FFortPlayerSurveyAnswer& Answer);

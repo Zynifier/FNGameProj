@@ -20,16 +20,25 @@ protected:
     TArray<FTurnTransitionData> TransitionPriorityList;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bPickedTurnTransitionUsesMontage;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName PickedMontageSectionName;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float PickedTurnYawRotationRate;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float StartingDesiredRotationYawDelta;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float PickedTurnTime;
+    
 public:
     UFortGameplayAbility_AITurnTransition();
 protected:
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    void GetTurnTransitionMontageSectionNameAndYawRotationRate(FName MontageSectionName, float& TurnYawRotationRate) const;
+    void GetTurnTransitionMontageSectionNameAndYawRotationRate(FName& MontageSectionName, float& TurnYawRotationRate, float& DesiredRotationYawDelta, float& TurnTime, bool& bTurnTransitionUsesMontage) const;
     
 };
 

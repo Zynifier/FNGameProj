@@ -23,8 +23,5 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
     FText BlueprintGetInteractionString(const AFortPawn* InteractingPawn) const;
     
-    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, BlueprintPure)
-    bool BlueprintCanInteract(const AFortPawn* InteractingPawn) const;
-    
 };
 

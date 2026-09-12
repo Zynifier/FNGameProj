@@ -49,11 +49,13 @@ void ABuildingProp_LockDevice::GetLifetimeReplicatedProps(TArray<FLifetimeProper
     
     DOREPLIFETIME(ABuildingProp_LockDevice, LockableObject);
     DOREPLIFETIME(ABuildingProp_LockDevice, CurrentLockState);
+    DOREPLIFETIME(ABuildingProp_LockDevice, HideInteractionWhenLocked);
 }
 
 ABuildingProp_LockDevice::ABuildingProp_LockDevice() {
     SearchAreaSize = 1;
     LockableObject = NULL;
     CurrentLockState = ELockState::INVALID;
+    HideInteractionWhenLocked = 0;
 }
 

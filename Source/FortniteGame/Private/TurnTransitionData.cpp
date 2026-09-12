@@ -7,5 +7,6 @@ FTurnTransitionData::FTurnTransitionData() {
     PriorityLevel = 0;
     bEnableSpeedConstraint = false;
     bSkipTransitionInCrowd = false;
+    bUseMontageForTurnTransition = false;
 }
 

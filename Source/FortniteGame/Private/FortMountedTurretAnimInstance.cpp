@@ -6,5 +6,6 @@ UFortMountedTurretAnimInstance::UFortMountedTurretAnimInstance() {
     AimingYaw = 1;
     AimingPitch = 1;
     PedalScaler = 1;
+    TurnRate = 0.0f;
 }
 

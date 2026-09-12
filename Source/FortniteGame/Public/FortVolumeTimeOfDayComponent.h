@@ -98,5 +98,12 @@ private:
     UFUNCTION(BlueprintCallable)
     void BindToVolumeMangerClientEnterExit();
     
+public:
+    UFUNCTION(BlueprintCallable)
+    static AFortTimeOfDayManager* TryGetTimeOfDayManager(AFortVolume* FortVolume);
+    
+    UFUNCTION(BlueprintCallable)
+    void ApplyTimeOfDayComponentSettings();
+    
 };
 

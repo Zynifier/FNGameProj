@@ -119,6 +119,15 @@ void AFortAthenaAIBotController::GetLifetimeReplicatedProps(TArray<FLifetimeProp
     DOREPLIFETIME(AFortAthenaAIBotController, Inventory);
 }
 
+void AFortAthenaAIBotController::ChangeActiveVariantForCosmeticItem(FName ItemTemplateToChange, FGameplayTag VariantChannelToChange, FGameplayTag DesiredActiveVariant) {
+}
+
+void AFortAthenaAIBotController::NotifyPickupsSpawnedOnDeath(const TArray<AFortPickup*>& SpawnedPickups) {
+}
+
+void AFortAthenaAIBotController::OnKnockbacked(const FGameplayTag KnockbackTypeTag) {
+}
+
 AFortAthenaAIBotController::AFortAthenaAIBotController() {
     bIsAnAthenaGameParticipant = true;
     bNeutralBecomeHostileOnBump = false;
@@ -173,5 +182,19 @@ AFortAthenaAIBotController::AFortAthenaAIBotController() {
     RespawnSpawnerDataClass = NULL;
     CachedAffiliationService = NULL;
     bIsAffectedByMutatorHealthAndShieldModifiers = true;
+    CachedAIServicePlayerBots = NULL;
+    CachedLeashRuntimeParameters = NULL;
+    CacheUnstuckSkillSet = NULL;
+    CacheRangeAttackSkillSet = NULL;
+    bForceHolsterWeapon = false;
+    CachedAffiliationManager = NULL;
+    CachedAffiliationComponent = NULL;
+    bHasChangedPawnCullDistanceToAggroMode = false;
+    RespawnRuntimeParameters = NULL;
+    CurrentBlockingDoor = NULL;
+    FinisherPawn = NULL;
+    PreviousStasisMode = EFortPawnStasisMode::None;
+    bPostponeGiveWeaponCheat = false;
+    BTAssetToRunOnPawnAISpawned = NULL;
 }
 

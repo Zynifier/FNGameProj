@@ -7,5 +7,6 @@ UFortCurieFirePropagationManager::UFortCurieFirePropagationManager() {
     bUseConnectivityPointsForFireSpread = true;
     DefaultConnectivityPoints = 0;
     HalfAngleForUpwardMobilityCalculation = 1;
+    InternalManagerConfig = NULL;
 }
 

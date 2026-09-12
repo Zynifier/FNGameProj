@@ -287,6 +287,17 @@ bool UFortItem::AllowedToBeLockedInInventory() const {
     return false;
 }
 
+void UFortItem::BroadcastOnItemChanged(bool bItemChanged, bool bAmmoChanged, bool bIngredientsChanged, bool bLogBroadcasts) const {
+}
+
+FGuid UFortItem::GetTrackerGuid() const {
+    return FGuid{};
+}
+
+bool UFortItem::UsesPhantomReserveAmmo() const {
+    return false;
+}
+
 UFortItem::UFortItem() {
     bLoadedFromSave = false;
     bTemporaryItemOwningController = false;

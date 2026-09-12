@@ -8,5 +8,7 @@ enum class EFortQuestSubtype : uint8 {
     WeeklyChallenge,
     PunchCard,
     QuickChallenge,
+    Milestone,
+    UrgentQuest,
 };
 

@@ -23,6 +23,10 @@ TArray<FFortItemQuantityPair> UFortAccountItem::GetRecyclingRefunds() const {
     return TArray<FFortItemQuantityPair>();
 }
 
+FDateTime UFortAccountItem::GetCreationTime() const {
+    return FDateTime{};
+}
+
 UFortAccountItem::UFortAccountItem() {
     Level = 0;
     XP = 0;

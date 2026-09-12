@@ -29,6 +29,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TEnumAsByte<EClassRepNodeMapping> ClassNodeMapping;
     
+    UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
+    FClassReplicationInfo ClassRepInfo;
+    
     //UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
   //  FClassReplicationInfo ClassRepInfo;
     

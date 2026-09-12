@@ -20,6 +20,7 @@
 #include "FortOnItemDefinitionCountChangedDelegateDelegate.h"
 #include "FortTooltipInterface.h"
 #include "Templates/SubclassOf.h"
+#include "Engine/DataTable.h"
 #include "FortItemDefinition.generated.h"
 
 class AActor;
@@ -160,6 +161,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Display")
     FSoftObjectPath DisplayAssetPath;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FDataTableRowHandle PopupDetailsTag;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Display")
     UFortItemSeriesDefinition* Series;
     
@@ -293,6 +297,9 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const override PURE_VIRTUAL(GetOwnedGameplayTags,);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    EFortItemTier GetTier() const;
     
 };
 

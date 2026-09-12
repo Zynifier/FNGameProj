@@ -6,5 +6,6 @@ FFortPickupRequestInfo::FFortPickupRequestInfo() {
     bIsAutoPickup = false;
     bUseRequestedSwap = false;
     bTrySwapWithWeapon = false;
+    bIsVisualOnlyPickup = false;
 }
 

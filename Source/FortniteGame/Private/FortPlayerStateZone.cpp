@@ -72,6 +72,14 @@ void AFortPlayerStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
     DOREPLIFETIME(AFortPlayerStateZone, QuickbarEquippedItems);
 }
 
+bool AFortPlayerStateZone::HasEverSkydivedFromBus() const {
+    return false;
+}
+
+bool AFortPlayerStateZone::HasEverSkydivedFromBusAndLanded() const {
+    return false;
+}
+
 AFortPlayerStateZone::AFortPlayerStateZone() {
     SpectatingTarget = NULL;
     KickedFromSessionReason = EFortKickReason::NotKicked;

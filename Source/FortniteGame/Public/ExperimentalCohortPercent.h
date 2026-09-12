@@ -12,6 +12,9 @@ public:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 CohortPercent;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString Name;
+    
     FORTNITEGAME_API FExperimentalCohortPercent();
 };
 

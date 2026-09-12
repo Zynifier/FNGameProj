@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "FortAthenaAISpawnerDataComponent.h"
 #include "FortAthenaLoadout.h"
+#include "GameplayTagContainer.h"
 #include "FortAthenaAISpawnerDataComponent_CosmeticBase.generated.h"
 
 class UAthenaDanceItemDefinition;
@@ -12,10 +13,7 @@ class UFortAthenaAISpawnerDataComponent_CosmeticBase : public UFortAthenaAISpawn
 public:
     UFortAthenaAISpawnerDataComponent_CosmeticBase();
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-    void GetLoadout(FFortAthenaLoadout& OutLoadout);
-    
-    UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
-    void GetDances(TArray<UAthenaDanceItemDefinition*>& Dances);
+    void GetFallbackTag(FGameplayTag& OutFallbackTag);
     
 };
 

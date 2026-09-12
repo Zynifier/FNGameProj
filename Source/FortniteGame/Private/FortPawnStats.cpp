@@ -37,5 +37,6 @@ FFortPawnStats::FFortPawnStats() {
     KnockbackThreshold = 1;
     bAllowChainStun = false;
     ControlRecoveryBehavior = EFortControlRecoveryBehavior::DefaultControl;
+    PawnDamagedTeamNotificationDistance = 0.0f;
 }
 

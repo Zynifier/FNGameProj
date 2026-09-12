@@ -22,6 +22,7 @@
 #include "SubGameAccess.h"
 #include "VoiceChatLogSubmitOptions.h"
 #include "XPEventEntryHotfix.h"
+#include "UObject/NoExportTypes.h"
 #include "FortGlobals.generated.h"
 
 class AActor;
@@ -172,6 +173,12 @@ public:
     float FlyVerificationInterval;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float InvulnerableVerificationInterval;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float ModeratorModeVerificationInterval;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString CreativeModeLimitedAccessEndTime;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -263,6 +270,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bEnableQuestContentCheckOnSave;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bEnableSeasonalQuestline;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bTwitchHeartbeatEnabled;
@@ -400,6 +410,9 @@ public:
     int32 MaxElectraVerticalResolutionOf60fpsVideos;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float MaxElectraFpsVideos;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 MaxElectraVerticalResolutionOfWindowsSWD;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -410,6 +423,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bElectraLiveUseConservativePresentationOffset;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bElectraUseDedicatedMediaSegmentDownloadThreads;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAllowElectraForReplayCinematic;
@@ -479,6 +495,12 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float GlobalSnowAltitude;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float GlobalSnowRadius;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector GlobalSnowOrigin;
     
 private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -701,6 +723,21 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     static bool AllowContainersInCreativeItemLists();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static FVector GetGlobalSnowOrigin();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    static float GetGlobalSnowRadius();
+    
+    UFUNCTION(BlueprintCallable)
+    static void SetGlobalSnowOrigin(FVector Origin);
+    
+    UFUNCTION(BlueprintCallable)
+    static void SetGlobalSnowRadius(float Radius);
+    
+    UFUNCTION(BlueprintCallable)
+    static void UpdateAllGameFeaturesOnPauseChanged();
     
 };
 

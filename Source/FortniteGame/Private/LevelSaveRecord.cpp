@@ -19,5 +19,6 @@ ULevelSaveRecord::ULevelSaveRecord() {
     TaskQueue = NULL;
     CreativeAssetPathRedirects.AddDefaulted(227);
     bRequiresGridPlacement = false;
+    PlayerPersistenceUserWipeNumber = 0;
 }
 

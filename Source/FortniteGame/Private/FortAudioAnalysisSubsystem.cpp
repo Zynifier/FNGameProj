@@ -6,7 +6,7 @@ void UFortAudioAnalysisSubsystem::UnRegisterSubmix(USoundSubmix* InSubmix) {
 void UFortAudioAnalysisSubsystem::UnRegisterDefaultSubmix() {
 }
 
-void UFortAudioAnalysisSubsystem::RegisterSubmix(USoundSubmix* InSubmix) {
+void UFortAudioAnalysisSubsystem::RegisterSubmix(USoundSubmix* InSubmix, FFortSubmixAnalyzerData InAnalyzerData) {
 }
 
 void UFortAudioAnalysisSubsystem::RegisterDefaultSubmix() {

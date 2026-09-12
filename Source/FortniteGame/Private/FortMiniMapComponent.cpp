@@ -38,7 +38,7 @@ void UFortMiniMapComponent::SetMiniMapIconColorPulsesPerSecond(float ColorPulses
 void UFortMiniMapComponent::SetMiniMapIconColor(FLinearColor InColor) {
 }
 
-void UFortMiniMapComponent::SetMiniMapIcon(UTexture2D* MiniMapIcon) {
+void UFortMiniMapComponent::SetMiniMapIcon(UObject* MiniMapIcon) {
 }
 
 void UFortMiniMapComponent::OverrideLocalMiniMapIndicatorIsVisible(bool bVisible) {
@@ -58,6 +58,15 @@ void UFortMiniMapComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     
     DOREPLIFETIME(UFortMiniMapComponent, MiniMapData);
+}
+
+void UFortMiniMapComponent::SetMiniMapIconMaterialScalarParameterValue(const FName ParameterName, const float Value) {
+}
+
+void UFortMiniMapComponent::SetMiniMapIconMaterialTextureParameterValue(const FName ParameterName, UTexture* Value) {
+}
+
+void UFortMiniMapComponent::SetMiniMapIconMaterialVectorParameterValue(const FName ParameterName, const FLinearColor Value) {
 }
 
 UFortMiniMapComponent::UFortMiniMapComponent() {

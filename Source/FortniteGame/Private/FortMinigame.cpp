@@ -225,7 +225,7 @@ void AFortMinigame::NativeEnteredVolumeEvent(AFortPlayerState* PlayerState) {
 void AFortMinigame::MoveMinigamePlayerToSpectate(AFortPlayerState* PlayerState) {
 }
 
-void AFortMinigame::LTMFlowDisableMatchmakingBackfillAndJoinInProgress() {
+void AFortMinigame::LTMFlowDisableMatchmakingBackfillAndJoinInProgress(bool bDisableBeaconRequests) {
 }
 
 
@@ -756,6 +756,42 @@ void AFortMinigame::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
     DOREPLIFETIME(AFortMinigame, bVolumeNavigationHasBuilt);
     DOREPLIFETIME(AFortMinigame, RoundWinHistory);
     DOREPLIFETIME(AFortMinigame, PlayerBuckets);
+    DOREPLIFETIME(AFortMinigame, bVehiclesDamageObjectsMinigame);
+}
+
+void AFortMinigame::AddPersistenceRequirement() {
+}
+
+void AFortMinigame::RemovePersistenceRequirement() {
+}
+
+void AFortMinigame::SetMinigameNumTeams(int32 InNumTeams) {
+}
+
+void AFortMinigame::SetRaceProgressStat(AFortPlayerController* PlayerController, const float NormalizedRaceProgress) {
+}
+
+void AFortMinigame::SetVehiclesDamageObjectsMiniGame(const bool bInVehiclesDamageObjectsMinigame) {
+}
+
+void AFortMinigame::UpdateAutoStartByMatchmakingPortalIslandOwner(const FString& IslandOwnerId) {
+}
+
+void AFortMinigame::WarmupCountdownEndTimeUpdated(float NewCountdownEndTime) {
+}
+
+int32 AFortMinigame::GetMinigameNumTeams() const {
+    return 0;
+}
+
+void AFortMinigame::GetTeamMembers(uint8 TeamIndex, TArray<AFortPlayerState*>& OutTeamMembers) const {
+}
+
+bool AFortMinigame::GetVehiclesDamageObjectsMiniGame() const {
+    return false;
+}
+
+void AFortMinigame::PostGameReset_Guard(ESpatialLoadingState NewState, AFortVolume* ChangedVolume) {
 }
 
 AFortMinigame::AFortMinigame() {
@@ -824,5 +860,8 @@ AFortMinigame::AFortMinigame() {
     bAllowFriendlyFire = false;
     NumMinigameComponentsServer = 0;
     bVolumeNavigationHasBuilt = false;
+    RaceProgressStatFilter = NULL;
+    bVehiclesDamageObjectsMinigame = false;
+    PersistenceRequiredDevices = 0;
 }
 

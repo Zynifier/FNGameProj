@@ -66,6 +66,12 @@
 #include "QuickBarData.h"
 #include "Templates/SubclassOf.h"
 #include "TimeStampedPhysicsPawnState.h"
+#include "FortPlayerControllerAthenaOnPickupProjectileCreatedDelegate.h"
+#include "BuildingStats.h"
+#include "CompositeBool.h"
+#include "FortDisplayQuestUpdateData.h"
+#include "GiftUINotificationInfo.h"
+#include "QuickBarEquippedItemGuids.h"
 #include "FortPlayerControllerAthena.generated.h"
 
 class AActor;
@@ -124,6 +130,10 @@ class UInputComponent;
 class UObject;
 class USoundBase;
 
+class UFortControllerComponent_InventoryService;
+class UFortControllerComponent_RadiusTracker;
+class UFortControllerComponent_TransientQuests;
+
 UCLASS(Blueprintable, MinimalAPI)
 class AFortPlayerControllerAthena : public AFortPlayerControllerZone {
     GENERATED_BODY()
@@ -136,6 +146,10 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnAircraftStateChange OnAircraftStateChange;
+    
+protected:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnItemDropSpawned OnItemDropSpawnedDelegate;
     
 protected:
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -159,6 +173,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAllowPlayersCreditOnLeave;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bLockingOnFocalPoint;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_FocalPoint, meta=(AllowPrivateAccess=true))
     AActor* FocalPoint;
@@ -189,6 +206,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_SkydiveLeader, meta=(AllowPrivateAccess=true))
     AFortPlayerState* SkydiveLeader;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortPlayerControllerAthenaOnPickupProjectileCreated OnPickupProjectileCreatedDelegate;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, ReplicatedUsing=OnRep_TrackedVictimsShared, meta=(AllowPrivateAccess=true))
     AFortPlayerStateAthena* LastDownedVictim;
@@ -281,6 +301,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FRotator RespawnCamera_InitialRotOffset_OnGround;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float RespawnCamera_OffsetFromHit;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     bool bNextRespawnInAir;
@@ -487,6 +510,9 @@ protected:
     UInputComponent* SubscriptionNudgeInputComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UInputComponent* SocialNotificationInputComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UInputComponent* BattleLabInputComponent;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -544,6 +570,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     float BuildingActionDoneLastAtTime;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FBuildingStats BuildingMatchStats;
+    
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FBuildingEditAnalyticEvent> BuildingAnalyticsArray;
@@ -585,10 +614,10 @@ protected:
     FText ClientTravelToCreativeHubText;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    TArray<AFortVolume*> VolumesLoading;
+    TArray<AActor*> VolumesLoading;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    TArray<AFortVolume*> VolumesUnloading;
+    TArray<AActor*> VolumesUnloading;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UAthenaMarkerComponent* MarkerComponent;
@@ -604,6 +633,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortControllerComponent_MapDiscoverability* DiscoverabilityComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortControllerComponent_TransientQuests* TransientQuestsComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortControllerComponent_SkydiveFeedback* SkydiveFeedback;
@@ -623,6 +655,12 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UFortControllerComponent_RechargeWeapons* RechargingWeaponsComponent;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortControllerComponent_InventoryService* InventoryServiceComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortControllerComponent_RadiusTracker* RadiusTrackerComponent;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
     UFortControllerComponent_MinigameActivity* MinigameActivityComponent;
     
@@ -633,6 +671,10 @@ private:
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     double TimeSinceLastCreativeSpawn;
     
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FCompositeBool IgnoreSignifanceBasedCustomDepthRendering;
+    
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIgnoreSignifanceBasedCustomDepthRendering;
@@ -640,6 +682,9 @@ public:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Replicated, meta=(AllowPrivateAccess=true))
     UCreativeUserContentManager* CreativeUserContentManager;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> CreativeUserContentManagerClassSoftClassPtr;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Replicated, meta=(AllowPrivateAccess=true))
     UFortCreativeObjectTrackingComponent* CreativeObjectTrackingComponent;
@@ -651,6 +696,10 @@ public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortWorldItem* CreativeItemToRemoveWhenAddingInventoryItem;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FQuickBarEquippedItemGuids PrimaryQuickBarSlotItemGuids;
     
 public:
     AFortPlayerControllerAthena();
@@ -679,7 +728,7 @@ public:
     void UpdateCreativeIslandDescriptionTags(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
-    void TellServer_ClientReceivedPlaysetDataForVolume(FFortPlaysetStreamingData PlaysetData, AFortVolume* Volume);
+    void TellServer_ClientReceivedPlaysetDataForVolume(FFortPlaysetStreamingData PlaysetData, AActor* Volume);
     
     UFUNCTION(BlueprintCallable)
     void StopRecordingHighlights();
@@ -688,10 +737,10 @@ public:
     void StartRespawnLoading();
     
     UFUNCTION(BlueprintCallable)
-    void StartMatchmakingByLinkCode(const FString& LinkCode);
+    void StartMatchmakingByLinkCode(const FString& LinkCode, FName PlaylistName, bool bIsPrivateMatch);
     
     UFUNCTION(BlueprintCallable)
-    void StartCreativeMatchmakingReadyCheck(const FString& LinkCode, bool& OutDidStartMatchmakingImmediately);
+    void StartCreativeMatchmakingReadyCheck(const FString& LinkCode, FName PlaylistName, bool& OutDidStartMatchmakingImmediately, bool isPrivateMatch);
     
     UFUNCTION(BlueprintCallable)
     void ShowHighlightSummary();
@@ -704,9 +753,6 @@ public:
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
     void SetFocalPoint(AActor* InFocalPoint, FVector InFocalPointOffset, float InFocalPointFOV);
-    
-    UFUNCTION(BlueprintCallable)
-    void SetCanStreamBuildingFoundationsIn(bool bCanStream);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
     void ServerUpdateUserCameraPreview();
@@ -750,13 +796,13 @@ public:
     void ServerStopSavingCreativePlot();
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
-    void ServerStartUnloadingVolume(AFortVolume* VolumeToUnload);
+    void ServerStartUnloadingVolume(AActor* VolumeToUnload);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
     void ServerStartMinigame();
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
-    void ServerStartLoadingVolume(AFortVolume* VolumeToLoad);
+    void ServerStartLoadingVolume(AActor* VolumeToLoad);
     
     UFUNCTION(BlueprintCallable, Reliable, Server)
     void ServerStartInteractWithIslandPortal(AFortAthenaCreativePortal* Portal);
@@ -862,13 +908,13 @@ public:
     void ServerGenerateMockMatchReport();
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
-    void ServerEndUnloadingVolume(AFortVolume* VolumeToUnload);
+    void ServerEndUnloadingVolume(AActor* VolumeToUnload);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
     void ServerEndMinigame(bool bAbandon);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
-    void ServerEndLoadingVolume(AFortVolume* VolumeToLoad);
+    void ServerEndLoadingVolume(AActor* VolumeToLoad);
     
 protected:
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
@@ -1123,9 +1169,6 @@ public:
     UAthenaPlayerMatchReport* GetMatchReport();
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    UAthenaMarkerComponent* GetMarkerComponent() const;
-    
-    UFUNCTION(BlueprintCallable, BlueprintPure)
     int32 GetInventorySpace() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1307,13 +1350,13 @@ public:
     void ClientAddProfileGoCollection(const FString& CollectionName, const TArray<FProfileGoScenario>& NewScenarios);
     
     UFUNCTION(BlueprintCallable, Client, Unreliable)
-    void Client_DisplayQuestUpdate(FFortUpdatedObjectiveStat ObjectiveUpdated, const AFortPlayerState* QuestOwner, const AFortPlayerState* AssistingPlayer);
+    void Client_DisplayQuestUpdate(const TArray<FFortDisplayQuestUpdateData>& UpdateData);
     
     UFUNCTION(BlueprintCallable)
     void ClearInventorySpaces(int32 NumSpaces);
     
     UFUNCTION(BlueprintCallable)
-    void ClearDroppableItems();
+    void ClearDroppableItems(bool bAllowShouldDropItemOverride);
     
     UFUNCTION(BlueprintCallable)
     void CheckIfSafeToTurnOnCamera();
@@ -1346,6 +1389,76 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void ApplyOverrideWrapToVehicle(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void BroadcastOnPickupProjectileCreated(UFortItemDefinition* ItemDefinition);
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable)
+    void ClientAlertForcedOffIsland();
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable, WithValidation)
+    void ClientDownloadContentForLinkCodeResult(bool bSuccess);
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable)
+    void ClientReportPhaseFound(const FString& Phase);
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable, WithValidation)
+    void ClientResolveHermesLinkCodeResult(const FString& LinkCode, bool bSuccess);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    float GetCurrentBuildingCostModifier();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    float GetCurrentBuildingSpeedModifier();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool GetIgnoreSignifanceBasedCustomDepthRendering();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerAlertForceOthersOffIsland();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerEnteredCameraMode();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerEnteredCursorMode();
+    
+protected:
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerFriendGameMemberAdded(AFortPlayerStateAthena* FriendPSA);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerFriendGameMemberRemoved(AFortPlayerStateAthena* FriendPSA);
+    
+public:
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerRequestHermesDownloadForIsland(const FString& LinkCode);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerRequestVkModuleVersionFromLinkCode(const FString& LinkCode);
+    
+protected:
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerShowSeasonLevel();
+    
+public:
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerUpdateHeatmapBoundsForCurrentVolume();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetIgnoreSignifanceBasedCustomDepthRendering(bool bValue, UObject* ModifyingObject);
+    
+    UFUNCTION(BlueprintCallable)
+    void TeleportToPlaygroundLobbyIsland();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortControllerComponent_TransientQuests* GetTransientQuestsComponent() const;
+    
+    UFUNCTION(BlueprintCallable, Client, Unreliable)
+    void Client_DisplayReceivedMultipleInstanceLoot(const TArray<FGiftUINotificationInfo>& ItemsReceived);
+    
+    UFUNCTION(BlueprintCallable, Server, Unreliable)
+    void ServerUpdatePrimaryQuickBarSlots(const FQuickBarEquippedItemGuids& SlotItemGuids);
     
 };
 

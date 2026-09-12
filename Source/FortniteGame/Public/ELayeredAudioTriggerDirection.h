@@ -8,5 +8,6 @@ enum class ELayeredAudioTriggerDirection : uint8 {
     Forwards,
     Sideways,
     Backwards,
+    Count,
 };
 

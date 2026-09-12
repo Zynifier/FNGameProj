@@ -12,7 +12,7 @@ class UStaticMesh;
 class UTextureRenderTarget2D;
 
 UCLASS(Blueprintable, Config=Game)
-class UFortCurieFXSettings : public UPrimaryDataAsset {
+class UFortCurieFXSettings : public UDataAsset {
     GENERATED_BODY()
 public:
 private:
@@ -26,25 +26,25 @@ private:
     FNativeCurieFXTypeSettings CharredNativeFXTypeSettings;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TArray<TSoftObjectPtr<UStaticMesh>> ElectricityArcMeshes;
+    TArray<UStaticMesh*> ElectricityArcMeshes;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftObjectPtr<UNiagaraSystem> ElectricityArcImpactSystem;
+    UNiagaraSystem* ElectricityArcImpactSystem;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftObjectPtr<USoundBase> ElectricityArcSound;
+    USoundBase* ElectricityArcSound;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftObjectPtr<USoundBase> ElectricityAmbientSound;
+    USoundBase* ElectricityAmbientSound;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftObjectPtr<UNiagaraSystem> PlayerWorldFireSystem;
+    UNiagaraSystem* PlayerWorldFireSystem;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftObjectPtr<USoundBase> FireAmbientSound;
+    USoundBase* FireAmbientSound;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftObjectPtr<UTextureRenderTarget2D> LandscapeCharRenderTarget;
+    UTextureRenderTarget2D* LandscapeCharRenderTarget;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FName PlayerWorldFireSystemLightScalabilityParamName;

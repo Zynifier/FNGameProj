@@ -20,6 +20,7 @@
 #include "OnProximityEffectsAppliedDelegate.h"
 #include "OnProximityPrePulseDelegate.h"
 #include "OnProximityPulseDelegate.h"
+#include "MarkedActorDisplayInfo.h"
 #include "BuildingGameplayActor.generated.h"
 
 class AActor;
@@ -28,6 +29,8 @@ class UFortAbilitySet;
 class UFortDamageSet;
 class UFortGameplayAbility;
 class UPrimitiveComponent;
+
+class UWidget;
 
 UCLASS(Blueprintable)
 class FORTNITEGAME_API ABuildingGameplayActor : public ABuildingActor, public IFortTargetSelectionInterface, public IFortDamageSourceInterface, public IFortProjectileMovementInterface, public IFortAnalyticsInterface {
@@ -83,6 +86,18 @@ protected:
     uint8 bUseSimpleActorTouchSetupForAbilityBuckets: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCanBeMarked: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bBlockMarking: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FMarkedActorDisplayInfo MarkerDisplay;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector MarkerPositionOffset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bShowInteractKeybind: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
@@ -93,6 +108,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float PostProcessOverlapBlendWeight;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
+    UWidget* CustomInteractionWidget;
     
 public:
     ABuildingGameplayActor();
@@ -153,6 +171,10 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION(BlueprintCallable)
     FTransform GetTargetingTransform(EFortAbilityTargetingSource Source, UFortGameplayAbility* SourceAbility) const override PURE_VIRTUAL(GetTargetingTransform, return FTransform{};);
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void OverrideMarkerDisplayInfo(const FMarkedActorDisplayInfo& NewDisplayInfo);
     
 };
 

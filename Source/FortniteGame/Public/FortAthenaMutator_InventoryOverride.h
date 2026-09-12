@@ -12,6 +12,8 @@
 
 class AFortPlayerController;
 
+class UFortItemDefinition;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortAthenaMutator_InventoryOverride : public AFortAthenaMutator {
     GENERATED_BODY()
@@ -66,6 +68,15 @@ protected:
     FItemLoadoutContainer AlwaysGiveLoadout;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat bPreventPickaxe;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat bPreventAllDefaultItems;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<UFortItemDefinition*> PreventDefaultItems;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 InventoryLoadoutIndex;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -76,6 +87,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FScalableFloat bKeepUnchangedItemsOnReset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    int32 InventoryAutoEquipSlot;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bForceInventoryAutoEquip;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

@@ -10,6 +10,9 @@ void AFortAthenaTutorial_Ambush::HandleOnPlayerDamaged(AActor* DamagedActor, flo
 void AFortAthenaTutorial_Ambush::HandleOnAIDummyDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum) {
 }
 
+void AFortAthenaTutorial_Ambush::OnAmbushBotSpawned(AFortPawn* Pawn) {
+}
+
 AFortAthenaTutorial_Ambush::AFortAthenaTutorial_Ambush() {
     ReachAmbushLocationMarker = NULL;
     AmbushTriggerBox = NULL;

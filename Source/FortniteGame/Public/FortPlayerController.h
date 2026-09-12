@@ -89,6 +89,12 @@
 #include "QueuedItemsToDropViaPickup.h"
 #include "RecentlyRemovedQuickbarInfo.h"
 #include "Templates/SubclassOf.h"
+#include "FortPlayerControllerOnPickupCreatedDelegate.h"
+#include "OnFortPawnChangedDelegate.h"
+#include "OnPlayerControllerComponentAttachedDelegate.h"
+#include "OnVehicleAbilitiesRemovedDelegate.h"
+#include "EFortEmotePlayMode.h"
+#include "ESpatialLoadingState.h"
 #include "FortPlayerController.generated.h"
 
 class AActor;
@@ -165,6 +171,14 @@ class USoundMix;
 class UStatManager;
 class UUserWidget;
 
+class AController;
+class AFortPickup;
+class AFortReplayMovableSpotLight;
+class UAthenaMarkerComponent;
+class UFortBuildingItemDefinition;
+class UFortMiniMapInputComponent;
+class UObject;
+
 UCLASS(Blueprintable, MinimalAPI)
 class AFortPlayerController : public APlayspacePlayerController, public IFortTeamActorInterface, public IFortInventoryOwnerInterface, public IFortAnalyticsControllerInterface, public ICosmeticLoadoutOwner {
     GENERATED_BODY()
@@ -173,11 +187,20 @@ public:
     FOnPlayerPawnPossessed OnPlayerPawnPossessed;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortPlayerControllerOnPickupCreated OnPickupCreated;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnNotifyInputFiltered OnInputFiltered;
     
 protected:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAllowPcbBenefits;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnFortPawnChanged OnFortPawnChangedEvent;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnPlayerControllerComponentAttached OnControllerComponentAttachedEvent;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -186,6 +209,9 @@ private:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UInputComponent* AircraftInputComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortMiniMapInputComponent* MiniMapInputComponent;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
@@ -244,7 +270,7 @@ protected:
     AFortPlayerPawn* MyFortPawnBeforeTakeoverOfScriptedPawn;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    AFortPlayerController* ScriptedPawnControllerBeforeTakeover;
+    AController* ScriptedPawnControllerBeforeTakeover;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bHasClientFinishedLoading;
@@ -360,6 +386,9 @@ protected:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnExitVehicle OnFullyExitVehicle;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FOnVehicleAbilitiesRemoved OnVehicleAbilitiesRemoved;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FOnTetherChanged OnTetherChanged;
@@ -519,6 +548,9 @@ public:
     bool bRegisterPredictedBuildingActorsWithGrid;
     
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bPredictedBuildingWallsHaveNoCollision;
+    
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     float PredictedActorLifespan;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -585,6 +617,9 @@ protected:
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     uint8 bBuildFree: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bUseSmartBuild: 1;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
@@ -683,19 +718,19 @@ protected:
     AFortInventory* ViewTargetInventory;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bHasInitializedWorldInventory;
+    uint8 bHasInitializedWorldInventory: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bHasInitializedHeroInventory;
+    uint8 bHasInitializedHeroInventory: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bAccountInventoryWasUpdated;
+    uint8 bAccountInventoryWasUpdated: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bForceWorldInventoryUpdate;
+    uint8 bForceWorldInventoryUpdate: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bIsSavingGadgetLoadout;
+    uint8 bIsSavingGadgetLoadout: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortClientPilot_Base* BotPilot;
@@ -752,6 +787,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<FVector> AnalyticsBuildingWallTooLowLocations;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TSet<AFortPlayerPawn*> NearbyEmotingPawns;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TMap<FName, int32> NearbyEmotingPawnCount;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -841,6 +882,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     int32 OverriddenBackpackSize;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
+    AFortReplayMovableSpotLight* CurrentReplaySpotLight;
     
     UPROPERTY(Config, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
     uint32 AimHelpMode;
@@ -1445,7 +1489,7 @@ public:
     void PlaySpatialSound(USoundBase* Sound, FVector Location);
     
     UFUNCTION(BlueprintCallable, Exec)
-    void PlayEmoteItem(const UFortMontageItemDefinitionBase* EmoteAsset);
+    void PlayEmoteItem(const UFortMontageItemDefinitionBase* EmoteAsset, EFortEmotePlayMode PlayMode);
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool OwnsIslandVolume(AFortVolume* Volume) const;
@@ -1457,7 +1501,7 @@ public:
     void OpenVoteDialog();
     
     UFUNCTION(BlueprintCallable)
-    void OpenInventory(int32 TargetTab);
+    void OpenInventory(const FName InventoryTabId);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
     void OpenChoiceUI(FChoiceData ChoiceData);
@@ -1519,7 +1563,7 @@ public:
     void MutePlayer(const FUniqueNetIdRepl& UniqueNetId);
     
     UFUNCTION(BlueprintCallable, NetMulticast, Reliable)
-    void MulticastClearWeakSpotData(ABuildingSMActor* ParentBuilding);
+    void MulticastClearWeakSpotData(UObject* ParentBuilding);
     
     UFUNCTION(BlueprintCallable)
     void ModifyStat(FName StatName, int32 Amount, EStatMod ModType, bool bForceStatSave);
@@ -2021,6 +2065,48 @@ public:
     // Fix for true pure virtual functions not being implemented
     UFUNCTION()
     uint8 GetTeam() const override PURE_VIRTUAL(GetTeam, return 0;);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void BroadcastOnPickupCreated(AFortPickup* PickUp);
+    
+    UFUNCTION(BlueprintCallable, Client, Reliable)
+    void Cheat_ClientEquipBuildingItems(UFortBuildingItemDefinition* WallItemDef, UFortBuildingItemDefinition* FloorItemDef, UFortBuildingItemDefinition* StairItemDef, UFortBuildingItemDefinition* RoofItemDef);
+    
+    UFUNCTION(BlueprintCallable)
+    void PlayerRequestClearIslandData();
+    
+    UFUNCTION(BlueprintCallable)
+    void RefreshHUDElementVisibilitiesToSettings();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
+    void ServerPlayerRequestClearIslandData();
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerReAimAllReplaySpotLights(FVector NewLocation, FRotator NewRotation);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerReAimCurrentReplaySpotLight(FVector NewLocation, FRotator NewRotation);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerSetCurrentReplaySpotLight(AFortReplayMovableSpotLight* NewReplaySpotLight);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerSetCurrentReplaySpotLightColor(int32 R, int32 G, int32 B);
+    
+    UFUNCTION(BlueprintCallable, Reliable, Server)
+    void ServerSetCurrentReplaySpotLightDebugDraw(bool bEnabled);
+    
+    UFUNCTION(Reliable, Server)
+    void ServerSetReplaySpotLightGroupMoveLocked(uint32 Number, bool bLocked);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UAthenaMarkerComponent* GetMarkerComponent() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    USoundEffectSourcePresetChain* GetVoiceInputEffectChain() const;
+    
+    UFUNCTION(BlueprintCallable)
+    void OnMinigameSpatialLoadingStateChanged(ESpatialLoadingState NewState, AFortVolume* Volume);
     
 };
 

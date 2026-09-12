@@ -10,13 +10,13 @@ struct FSafeZoneRoute {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bIsEnabled;
+    FScalableFloat bIsEnabled;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bUsePOIStartLocation;
+    FScalableFloat bUsePOIStartLocation;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    bool bUsePOINameOverride;
+    FScalableFloat bUsePOINameOverride;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FText POINameOverride;

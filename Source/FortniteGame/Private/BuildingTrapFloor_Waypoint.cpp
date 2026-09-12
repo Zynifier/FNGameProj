@@ -21,6 +21,7 @@ void ABuildingTrapFloor_Waypoint::GetLifetimeReplicatedProps(TArray<FLifetimePro
     
     DOREPLIFETIME(ABuildingTrapFloor_Waypoint, Index);
     DOREPLIFETIME(ABuildingTrapFloor_Waypoint, WaypointGroup);
+    DOREPLIFETIME(ABuildingTrapFloor_Waypoint, Index_0);
 }
 
 ABuildingTrapFloor_Waypoint::ABuildingTrapFloor_Waypoint() {

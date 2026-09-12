@@ -25,6 +25,9 @@ private:
     EFocusingBehavior FocusingBehavior;
     
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFocusingBehavior NoRangedWeaponFocusBehavior;
+    
+    UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bPrioritizeThreatOverCurrentTarget;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))

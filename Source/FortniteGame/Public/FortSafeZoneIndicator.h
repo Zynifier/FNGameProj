@@ -105,6 +105,12 @@ protected:
     UCurveFloat* ClockTickingAudioPitchCurve;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector2D SafeZoneAudioSpeedRange;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float AudioDopplerInterpSpeed;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UMaterialParameterCollection* MaterialCollection;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -118,6 +124,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FVector ViewTargetLocation;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FVector SafeZoneAudioLocation;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bIsViewTargetPawnOutside;
@@ -240,6 +249,16 @@ protected:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     void GetClockTickingAudioCurveValues(float Time, float& VolumeModValue, float& PitchModValue) const;
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    float GetSafeZoneShrinkSpeedRelativeTo(float DistanceToTravel);
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnForceResetCloudStartingBias();
+    
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnForceStopStormFadeTimer();
     
 };
 

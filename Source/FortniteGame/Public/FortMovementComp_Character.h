@@ -9,6 +9,7 @@
 #include "WaterControlParams.h"
 #include "WaterJumpParams.h"
 #include "WaterSprintBoostParams.h"
+#include "GoopControlParams.h"
 #include "FortMovementComp_Character.generated.h"
 
 class AFortPawn;
@@ -98,6 +99,12 @@ public:
     FAirControlParams ParachuteControlParamsGliderRedeploy;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FAirControlParams GoopAirControlParams;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGoopControlParams GoopControlParams;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FAirControlParams BalloonControlParams;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -185,6 +192,18 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TScriptInterface<IFortAthenaAILODSettings> CachedLODSettingsManager;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float CustomMeshHeightAdjust;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float CustomMeshHeightAdjustLerpTarget;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float CustomMeshHeightAdjustLerpSpeed;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    float CustomMeshHeightAdjustTotalApplied;
+    
 public:
     UFortMovementComp_Character();
     UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -194,13 +213,13 @@ public:
     bool IsPassivelyParachuting() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    bool IsActivelyStrafingInAir() const;
+    bool IsActivelyStrafingInAir(const bool bCheckMovementMode) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool IsActivelySkydivingUpInVortex() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    bool IsActivelySkydiving() const;
+    bool IsActivelySkydiving(const bool bCheckMovementMode) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool IsActivelyParachuting() const;

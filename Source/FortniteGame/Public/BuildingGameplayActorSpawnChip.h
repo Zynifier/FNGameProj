@@ -66,5 +66,8 @@ protected:
     UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
     void OnDestroyPickup();
     
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void PickUp(AFortPlayerControllerAthena* PickingUpController);
+    
 };
 

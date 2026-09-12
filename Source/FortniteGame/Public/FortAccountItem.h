@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "FortItemQuantityPair.h"
 #include "FortPersistableItem.h"
+#include "UObject/NoExportTypes.h"
 #include "FortAccountItem.generated.h"
 
 UCLASS(Blueprintable)
@@ -28,6 +29,9 @@ protected:
     FString inventory_overflow_date;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FDateTime creation_time;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bIsPendingBeingMarkedAsSeen;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -52,6 +56,9 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     TArray<FFortItemQuantityPair> GetRecyclingRefunds() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    FDateTime GetCreationTime() const;
     
 };
 

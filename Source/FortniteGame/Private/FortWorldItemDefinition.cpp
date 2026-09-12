@@ -20,6 +20,10 @@ bool UFortWorldItemDefinition::CanBeDisassembled() const {
     return false;
 }
 
+int32 UFortWorldItemDefinition::GetInitialAmmo(const int32 ItemLevel) const {
+    return 0;
+}
+
 UFortWorldItemDefinition::UFortWorldItemDefinition(const FObjectInitializer& ObjectInitializer) 
     : Super(ObjectInitializer) {
     DropBehavior = EWorldItemDropBehavior::DropAsPickup;

@@ -12,6 +12,7 @@ namespace EFortMovementStyle {
         PersonalVehicle,
         Flying,
         Tethered,
+        Burrowing,
     };
 }
 

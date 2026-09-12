@@ -3,6 +3,7 @@
 #include "AttributeSet.h"
 #include "EDBNOPlayStyle.h"
 #include "FortAthenaAIBotDigestedSkillSet.h"
+#include "PlaystyleSwitchToAggressiveDataDigested.h"
 #include "FortAthenaAIBotPlayStyleDigestedSkillSet.generated.h"
 
 UCLASS(Blueprintable, NonTransient)
@@ -24,6 +25,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     EDBNOPlayStyle DBNOPlayStyle;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<FPlaystyleSwitchToAggressiveDataDigested> ChangeToAggressiveData;
     
 public:
     UFortAthenaAIBotPlayStyleDigestedSkillSet();

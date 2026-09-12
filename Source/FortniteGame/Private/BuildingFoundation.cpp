@@ -66,6 +66,15 @@ void ABuildingFoundation::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
     DOREPLIFETIME(ABuildingFoundation, DynamicFoundationRepData);
 }
 
+void ABuildingFoundation::HideHLODProxies() {
+}
+
+void ABuildingFoundation::ShowHLODProxies() {
+}
+
+void ABuildingFoundation::UpdateMinimapDetailsLocation(const FVector& InLocation) {
+}
+
 ABuildingFoundation::ABuildingFoundation() {
     bConditionalFoundation = false;
     bServerStreamedInLevel = false;
@@ -84,5 +93,8 @@ ABuildingFoundation::ABuildingFoundation() {
     ParentFoundation = NULL;
     ProxyMeshMaxDrawDistanceMultiplier = 1;
     LevelStreamInfo = NULL;
+    bFlipXAxis = false;
+    bFlipYAxis = false;
+    bShadowLayer = false;
 }
 

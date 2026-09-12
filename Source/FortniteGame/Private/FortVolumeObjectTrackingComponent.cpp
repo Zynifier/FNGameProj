@@ -32,6 +32,19 @@ void UFortVolumeObjectTrackingComponent::GetLifetimeReplicatedProps(TArray<FLife
     DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ThermalGroupMatrixSizeY);
     DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ThermalGroupCostMatrix);
     DOREPLIFETIME(UFortVolumeObjectTrackingComponent, SpatialThermometerCellSize);
+    DOREPLIFETIME(UFortVolumeObjectTrackingComponent, VolumePerformanceMetrics);
+    DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ObjectTrackingOverBudgetHeatmap);
+    DOREPLIFETIME(UFortVolumeObjectTrackingComponent, CreativeHeatmapThermometerCellSize);
+}
+
+void UFortVolumeObjectTrackingComponent::CalculateHeatmap() {
+}
+
+void UFortVolumeObjectTrackingComponent::OnVolumePerformanceMetricsReplicated() {
+}
+
+bool UFortVolumeObjectTrackingComponent::IsHeatmapEnabled() const {
+    return false;
 }
 
 UFortVolumeObjectTrackingComponent::UFortVolumeObjectTrackingComponent() {
@@ -47,5 +60,7 @@ UFortVolumeObjectTrackingComponent::UFortVolumeObjectTrackingComponent() {
     TargetUpdateTime = 1;
     SpatialInfluenceDistanceMultiplier = 1;
     SpatialThermometerCellSize = 1;
+    CreativeHeatmapThermometerInfluenceDistanceMultiplier = 0.0f;
+    CreativeHeatmapThermometerCellSize = 0.0f;
 }
 

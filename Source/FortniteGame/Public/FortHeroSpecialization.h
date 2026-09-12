@@ -43,5 +43,8 @@ public:
     UFortHeroSpecialization();
     friend class UAthenaCharacterItemDefinition;
     friend class UFortHeroType;
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TArray<TSoftObjectPtr<UCustomCharacterPart>> GetCharacterPartPtrs() const;
+    
 };
 

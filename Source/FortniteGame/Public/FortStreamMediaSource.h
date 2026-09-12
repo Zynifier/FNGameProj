@@ -4,6 +4,7 @@
 #include "MediaPlayerOptions.h"
 #include "MetaDataFailureDelegate.h"
 #include "OnRetrieveVideoUrlResultDelegate.h"
+#include "UCPTypes.h"
 #include "FortStreamMediaSource.generated.h"
 
 class APlayerController;
@@ -56,6 +57,9 @@ public:
     TArray<float> CDNDistribution;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString mimetype;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAutoClearCDNDistribution;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -69,6 +73,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortDownloadLocalizedOverlays* FortDownloadLocalizedOverlays;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FString ProtectUserFromAVSettings;
     
     UPROPERTY(AssetRegistrySearchable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString StreamID;
@@ -87,7 +94,7 @@ public:
     bool ShouldStreamBePlaying(const UObject* WorldContextObject, const UPrimitiveComponent* PrimitiveComponent, float CullRadius) const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    FString ShouldProtectPlayerFromContent() const;
+    TEnumAsByte<UCPTypes::Type> ShouldProtectPlayerFromContent() const;
     
     UFUNCTION(BlueprintCallable)
     void SetPlaybackStartTime(float StartTime);
@@ -109,6 +116,12 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void DisableSharing();
+    
+    UFUNCTION(BlueprintCallable)
+    void SetLocalizedOverlays(UFortDownloadLocalizedOverlays* InOverlays);
+    
+    UFUNCTION(BlueprintCallable)
+    void SetUrl(UPARAM(Ref) FString& InURL);
     
 };
 

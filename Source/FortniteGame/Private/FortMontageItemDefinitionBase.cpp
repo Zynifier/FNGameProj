@@ -69,5 +69,6 @@ UFortMontageItemDefinitionBase::UFortMontageItemDefinitionBase(const FObjectInit
     bSwitchToHarvestingToolOnUse = false;
     bHolsterWeapon = true;
     bHolsterWeaponIfDualWieldPickaxe = false;
+    bIncludeAudioWithAnimDuration = false;
 }
 

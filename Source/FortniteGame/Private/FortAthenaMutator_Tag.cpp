@@ -1,9 +1,6 @@
 #include "FortAthenaMutator_Tag.h"
 #include "Net/UnrealNetwork.h"
 
-void AFortAthenaMutator_Tag::OnGamePhaseChanged(EAthenaGamePhase NewPhase) {
-}
-
 void AFortAthenaMutator_Tag::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     

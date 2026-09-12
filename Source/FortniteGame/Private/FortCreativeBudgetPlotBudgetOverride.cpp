@@ -5,5 +5,8 @@ FFortCreativeBudgetPlotBudgetOverride::FFortCreativeBudgetPlotBudgetOverride() {
     bIsHeatmapEnabled = false;
     SpatialThermometerCellSize = 1;
     SpatialInfluenceDistanceMultiplier = 1;
+    bCreativeHeatmapThermometerEnabled = false;
+    CreativeHeatmapThermometerCellSize = 0.0f;
+    CreativeHeatmapThermometerInfluenceDistanceMultiplier = 0.0f;
 }
 

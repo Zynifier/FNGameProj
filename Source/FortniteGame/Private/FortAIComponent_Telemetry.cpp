@@ -13,5 +13,6 @@ UFortAIComponent_Telemetry::UFortAIComponent_Telemetry() {
     PossessedPawn = NULL;
     CachedAIController = NULL;
     DeathInstigator = NULL;
+    AnalyticRuntimeParameters = NULL;
 }
 

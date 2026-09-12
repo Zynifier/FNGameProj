@@ -5,6 +5,7 @@
 UENUM(BlueprintType)
 enum class EEventResponderEventType : uint8 {
     OneShotEvent,
+    PersistentEventJoinInProgress,
     PersistentEventStart,
     PersistentEventChange,
     PersistentEventEnd,

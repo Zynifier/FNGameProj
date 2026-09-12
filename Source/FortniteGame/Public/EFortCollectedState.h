@@ -11,5 +11,8 @@ enum class EFortCollectedState : uint8 {
     Collected,
     NewBest,
     NewRecord,
+    NewLocation,
+    NewlyCompleted,
+    Complete,
 };
 

@@ -51,9 +51,6 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortBaseWeaponStats DamageStats;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, Transient, meta=(AllowPrivateAccess=true))
-    UFortDamageSet* DamageAttributeSet;
-    
     AFortConstructorBASE();
     UFUNCTION(BlueprintCallable, BlueprintCosmetic, BlueprintImplementableEvent)
     void StopBuildingActorVisuals(ABuildingSMActor* BuildingActor, UStaticMeshComponent* EffectMeshComp);

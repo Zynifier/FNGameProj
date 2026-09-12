@@ -57,10 +57,5 @@
 			]
 		}
 	],
-	"Plugins": [
-		{
-			"Name": "ElectraUtil",
-			"Enabled": true
-		}
-	]
+	"Plugins": []
 }

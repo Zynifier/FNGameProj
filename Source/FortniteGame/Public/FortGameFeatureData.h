@@ -9,6 +9,8 @@
 #include "PawnGoalSelectionTableEntry.h"
 #include "Templates/SubclassOf.h"
 #include "UIExtension.h"
+#include "FortGameFeatureDataBaseCurveTableOverrides.h"
+#include "FortGameFeatureDataBaseDataTableOverrides.h"
 #include "FortGameFeatureData.generated.h"
 
 class UChildCheatManager;
@@ -25,6 +27,11 @@ class UFortPlayspaceConfig;
 class UWidget;
 class UWorld;
 
+class UExternalContent;
+class UFortMobileHUDPresetExtensionContainer;
+class UFortWeaponReticleExtensionData;
+class UObject;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UFortGameFeatureData : public UPrimaryDataAsset {
     GENERATED_BODY()
@@ -37,13 +44,31 @@ protected:
     TArray<FUIExtension> UIExtensions;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortWeaponReticleExtensionData> WeaponReticleExtensions;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> DynamicHUDDirectorClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> UIMapManagerOverrideClass;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UFortMobileHUDWidgetRegistryBase> MobileHUDWidgetRegistry;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UFortMobileHUDPresetExtensionContainer> MobileHUDPresetExtensionContainer;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FPrimaryAssetTypeInfo> PrimaryAssetTypesToScan;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FString> GameplayCueNotifyPaths;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortGameFeatureDataBaseCurveTableOverrides> PlaylistBaseCurveTableOverrides;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortGameFeatureDataBaseDataTableOverrides> PlaylistBaseDataTableOverrides;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<TSubclassOf<UChildCheatManager>> CheatManagers;
@@ -53,6 +78,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<FGameplayTag, FFortGameFeatureLootTableData> PlaylistOverrideLootTableData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftObjectPtr<UDataTable> DefaulAILootOnDeathDataTable;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UCurveTable> DefaultGameData;
@@ -65,6 +93,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<FGameplayTag, TSoftObjectPtr<UDataTable>> PlaylistOverrideRangedWeapons;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FGameplayTag, TSoftObjectPtr<UDataTable>> PlaylistOverrideAILootOnDeathDataTable;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortGameFeatureComponentEntry> ComponentList;
@@ -104,6 +135,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<FFortGameFeatureItemsToFullyLoadData> PlaylistItemsToFullyLoad;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<UExternalContent*> ExternalContentDependencies;
     
 public:
     UFortGameFeatureData();

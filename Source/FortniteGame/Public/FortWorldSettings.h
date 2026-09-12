@@ -20,6 +20,9 @@ class UMaterialInterface;
 class USoundBase;
 class UTexture2D;
 
+class AFortPhysicsObjectManager;
+class UFortExternalContentManager;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortWorldSettings : public AWorldSettings {
     GENERATED_BODY()
@@ -105,6 +108,9 @@ public:
     uint8 bSpawnVehicleManager: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bSpawnPhysicsObjectManager: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MapWorldScale;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -137,6 +143,9 @@ public:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bSpawnTimeOfDayManager: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bDisableGlobalWeatherEvents: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<AFortTimeOfDayManager> WorldTimeOfDayManager;
@@ -172,8 +181,14 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     AFortVehicleManager* VehicleManager;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AFortPhysicsObjectManager* PhysicsObjectManager;
+    
     UPROPERTY(BlueprintReadWrite, DuplicateTransient, EditAnywhere, TextExportTransient, Transient, meta=(AllowPrivateAccess=true))
     UFortLevelOverlayManager* LevelOverlayManager;
+    
+    UPROPERTY(BlueprintReadWrite, DuplicateTransient, EditAnywhere, TextExportTransient, Transient, meta=(AllowPrivateAccess=true))
+    UFortExternalContentManager* ExternalContentManager;
     
 public:
     AFortWorldSettings();

@@ -9,10 +9,10 @@ class UFortCheatManagerCurie : public UChildCheatManager {
 public:
     UFortCheatManagerCurie();
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
-    void VislogElementSubgridCollision();
+    void VislogElementSubgridCollision(const FString& ElementTag);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
-    void VisLogAllElementSubGridNodes();
+    void VisLogAllElementSubGridNodes(const FString& ElementTag);
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
     void VisLogAllElectricGrids();

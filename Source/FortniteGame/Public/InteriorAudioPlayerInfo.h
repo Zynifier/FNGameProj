@@ -4,6 +4,8 @@
 #include "EInteriorAudioQuadrant.h"
 #include "EStructuralWallPosition.h"
 #include "InteriorAudioDirectionScanInfo.h"
+#include "EInteriorAudioState.h"
+#include "GameplayTagContainer.h"
 #include "InteriorAudioPlayerInfo.generated.h"
 
 class ABuildingSMActor;
@@ -13,6 +15,12 @@ USTRUCT(BlueprintType)
 struct FInteriorAudioPlayerInfo {
     GENERATED_BODY()
 public:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EInteriorAudioState CurrentState;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGameplayTag CurrentRoomSizeTag;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UAmbientAudioDataAsset* CurrentAmbientBank;
     

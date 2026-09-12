@@ -23,9 +23,10 @@ namespace ELevelSaveRecordVersion {
         AddedLevelStreamedDeleteRecord,
         UsingSaveActorGUID,
         UsingActorFNameForEditorSpawning,
+        AddedPlayerPersistenceUserWipeNumber,
         VersionPlusOne,
-        LatestVersion = 0x11,
-        ELevelSaveRecordVersion_MAX = 0x13,
+        LatestVersion = 0x12,
+        ELevelSaveRecordVersion_MAX = 0x14,
     };
 }
 

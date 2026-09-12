@@ -193,6 +193,28 @@ bool UFortQuestManager::CanProgressQuestInCurrentZone(const UFortQuestItemDefini
 void UFortQuestManager::AppendTemporaryRelevancyTags(const FGameplayTagContainer& SourceTags, const FGameplayTagContainer& ContextTags, const FGameplayTagContainer& TargetTags) {
 }
 
+void UFortQuestManager::ServerRemoveTransientQuestItemFromDefinition_Implementation(const UFortQuestItemDefinition* QuestItemDef) {
+}
+
+bool UFortQuestManager::CanGrantSharedQuests() const {
+    return false;
+}
+
+void UFortQuestManager::GetSharedQuests(TArray<UFortQuestItem*>& OutSharedQuests) const {
+}
+
+bool UFortQuestManager::HasCompletedTransientQuest(const UFortQuestItemDefinition* Definition) const {
+    return false;
+}
+
+TMap<FUniqueNetIdRepl, FSharedQuestData> UFortQuestManager::GetSquadSharedQuestData() const {
+    return TMap<FUniqueNetIdRepl, FSharedQuestData>();
+}
+
+bool UFortQuestManager::GetSquadSharedQuestDataForPlayer(const FUniqueNetIdRepl& PlayerID, FSharedQuestData& OutData) const {
+    return false;
+}
+
 UFortQuestManager::UFortQuestManager() {
     DamageEventFlushDelaySeconds = 1;
     BuildingEventFlushDelaySeconds = 1;
@@ -209,5 +231,6 @@ UFortQuestManager::UFortQuestManager() {
     bBlockAthenaFeatsCompletionInCompetitive = true;
     bAllowAthenaMCPNotifyOnComplete = true;
     QuestMapMode = EQuestMapScreenMode::Invalid;
+    bEnableObjectiveConditionHandling = false;
 }
 

@@ -3,6 +3,7 @@
 #include "UObject/Object.h"
 #include "EFortPlayerSurveyQuestionPresentationStyle.h"
 #include "EFortPlayerSurveyQuestionType.h"
+#include "EFortPlayerSurveyQuestionTypeLegacy.h"
 #include "FortPlayerSurveyQuestionLegacy.generated.h"
 
 UCLASS(Abstract, Blueprintable, EditInlineNew)
@@ -11,7 +12,7 @@ class UFortPlayerSurveyQuestionLegacy : public UObject {
 public:
     UFortPlayerSurveyQuestionLegacy();
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    EFortPlayerSurveyQuestionType GetQuestionType() const;
+    EFortPlayerSurveyQuestionTypeLegacy GetQuestionType() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
     EFortPlayerSurveyQuestionPresentationStyle GetPresentationStyle() const;

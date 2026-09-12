@@ -54,5 +54,7 @@ UFortChallengeBundleItemDefinition::UFortChallengeBundleItemDefinition(const FOb
     bHideFromMapChallenges = false;
     bHideRewardFromMapChallenges = false;
     ItemType = EFortItemType::ChallengeBundle;
+    bHideFromMapChallengeUntilBundleExists = false;
+    bHideTimeRemaining = false;
 }
 

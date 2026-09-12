@@ -25,6 +25,9 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bReplaceExistingWhenAdded;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bRefreshExistingWhenAdded;
+    
     FORTNITEGAME_API FIndicatedActorInfoEntry();
 };
 

@@ -2,6 +2,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 #include "FortPlayerSurveyAnswer.h"
+#include "FortPlayerSurveyFinishedDelegate.h"
+#include "FortPlayerSurveyItemChangedInternalDelegateDelegate.h"
 #include "FortPlayerSurveyBase.generated.h"
 
 UCLASS(Abstract, Blueprintable)
@@ -14,6 +16,14 @@ public:
 protected:
    // UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     //FFortPlayerSurveyItemChangedInternalDelegate OnAnswerChangedDelegate;
+    
+public:
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortPlayerSurveyFinished OnSurveyFinished;
+    
+protected:
+    UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortPlayerSurveyItemChangedInternalDelegate OnAnswerChangedDelegate;
     
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

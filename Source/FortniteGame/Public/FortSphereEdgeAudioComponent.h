@@ -2,21 +2,16 @@
 #include "CoreMinimal.h"
 #include "FortAudioShapeComponent.h"
 #include "OnSphereEdgeAudioComponentInsideStateChangedDelegate.h"
+#include "FortAudioShapePrimitiveComponent.h"
 #include "FortSphereEdgeAudioComponent.generated.h"
 
 class UAudioComponent;
 class USoundBase;
 
 UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
-class UFortSphereEdgeAudioComponent : public UFortAudioShapeComponent {
+class UFortSphereEdgeAudioComponent : public UFortAudioShapePrimitiveComponent {
     GENERATED_BODY()
 public:
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    USoundBase* SoundOnEdge;
-    
-    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
-    USoundBase* SoundOnInside;
-    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float Radius;
     
@@ -37,9 +32,6 @@ public:
     UFortSphereEdgeAudioComponent();
     UFUNCTION(BlueprintCallable)
     void SetRadius(float InRadius);
-    
-    UFUNCTION(BlueprintCallable, BlueprintPure)
-    bool GetIsPlayerInside() const;
     
 };
 

@@ -28,6 +28,10 @@ class UFortPlaysetGrenadeItemDefinition;
 class UFortVariantTokenType;
 class UObject;
 
+class AFortPlayerController;
+class UClass;
+class UFortPlaysetItemDefinition;
+
 UCLASS(Blueprintable)
 class UFortniteAutomationBlueprintLibrary : public UBlueprintFunctionLibrary {
     GENERATED_BODY()
@@ -113,6 +117,18 @@ public:
     
     UFUNCTION(BlueprintCallable)
     static void ApplyItemWrapToActor(UAthenaItemWrapDefinition* wrap, AActor* Actor, EItemWrapMaterialType MaterialType);
+    
+    UFUNCTION(BlueprintCallable)
+    static TArray<UFortPlaysetItemDefinition*> GetAllPlaysetItemDefinitions();
+    
+    UFUNCTION(BlueprintCallable)
+    static TArray<AActor*> SpawnAthenaBackpackPawn(UAthenaBackpackItemDefinition* ItemDefinition, const FTransform SpawnTransform, const TArray<FMcpVariantChannelInfo> VariantChannelInfos, const bool ClearAnimations);
+    
+    UFUNCTION(BlueprintCallable)
+    static TArray<AActor*> SpawnAthenaCharacterSkinPawn(UAthenaCharacterItemDefinition* ItemDefinition, const FTransform SpawnTransform, const TArray<FMcpVariantChannelInfo> VariantChannelInfos, const bool ClearAnimations, UClass* MannequinClass);
+    
+    UFUNCTION(BlueprintCallable)
+    static AFortPlayerController* SpawnCosmeticPlayerPawn(const FTransform SpawnTransform);
     
 };
 

@@ -8,6 +8,8 @@ class UCameraComponent;
 class ULevelRecordSpawner;
 class USceneCaptureComponent2D;
 
+class UObject;
+
 UCLASS(Blueprintable)
 class ULevelSaveRecordThumbnailGenerator : public UObject {
     GENERATED_BODY()
@@ -15,6 +17,9 @@ public:
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftClassPtr<AActor> StageActorClassSoftClassPtr;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSoftClassPtr<UObject> StageActorClassPtr;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     USceneCaptureComponent2D* SceneCaptureComponent;

@@ -72,5 +72,6 @@ AFortAthenaSupplyDrop::AFortAthenaSupplyDrop() {
     SpectatorMapIcon = CreateDefaultSubobject<UFortSpectateClickableMapIcon>(TEXT("FortSpectateClickableMapIcon"));
     NumPlayersInteracting = 0;
     bVisualizePlayerInteractionChanges = false;
+    bDisableAbilitySystemReplication = false;
 }
 

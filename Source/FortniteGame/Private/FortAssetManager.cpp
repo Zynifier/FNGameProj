@@ -13,5 +13,6 @@ UFortAssetManager::UFortAssetManager() {
     PerfMemTheaterPath = TEXT("/Game/World/Theaters/Theater_TEST_PerfMem.Theater_TEST_PerfMem");
     BROnlyTheaterPath = TEXT("/Game/World/Theaters/Theater_Athena.Theater_Athena");
     ActiveTheaterListPath = TEXT("/Game/World/ActiveTheaterList.ActiveTheaterList");
+    FortReleaseVersionManager = NULL;
 }
 

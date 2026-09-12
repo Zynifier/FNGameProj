@@ -7,6 +7,8 @@ enum class EFortUIFriendNotificationType : uint8 {
     Default,
     FriendRequest,
     PartyInvite,
+    InviteFriendToParty,
+    PartyRequest,
     AutoImportFriendSuggestion,
     PartyMemberCreated,
 };

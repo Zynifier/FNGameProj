@@ -26,6 +26,8 @@ class IFortHUDTargetUnderReticleInterface;
 class UFortHUDTargetUnderReticleInterface;
 class UInputComponent;
 
+class UFortControllerComponent_TriggerHaptics;
+
 UCLASS(Blueprintable, MinimalAPI)
 class AFortPlayerControllerZone : public AFortPlayerControllerGameplay/*, public IFortAbilitySystemInterface*/ {
     GENERATED_BODY()
@@ -57,6 +59,9 @@ public:
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TSet<FGuid> GadgetTrackedAttributeItemInstanceIds;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortControllerComponent_TriggerHaptics* TriggerHapticsComponent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     UInputComponent* DeathInputComponent;
@@ -124,6 +129,12 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVector MovementCancellableActionStartingLeashLocation;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat UpdateSurfaceTypeMinimumLength;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat UpdateSurfaceTypeMinimumDelay;
+    
 public:
     AFortPlayerControllerZone();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -167,7 +178,7 @@ public:
     void ServerRequestSeatChange(int32 TargetSeatIndex);
     
     UFUNCTION(BlueprintCallable, Reliable, Server)
-    void ServerRequestLoadoutRefresh();
+    void ServerRequestLoadoutRefresh(bool bForceResfresh);
     
     UFUNCTION(BlueprintCallable, Reliable, Server, WithValidation)
     void ServerEndGameplayVote(EFortVoteType VoteType);
@@ -273,5 +284,8 @@ public:
     
     
     // Fix for true pure virtual functions not being implemented
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool IsShowingSeasonLevel() const;
+    
 };
 

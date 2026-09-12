@@ -24,6 +24,7 @@ void UFortCurieComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
     DOREPLIFETIME(UFortCurieComponent, LastElectrifiedTime);
     DOREPLIFETIME(UFortCurieComponent, LastFireFXRelatedStateTime);
     DOREPLIFETIME(UFortCurieComponent, ActiveStateBitfield);
+    DOREPLIFETIME(UFortCurieComponent, LastElectricityPropagationParent);
 }
 
 UFortCurieComponent::UFortCurieComponent() {
@@ -34,5 +35,6 @@ UFortCurieComponent::UFortCurieComponent() {
     CurieCollisionComponent = NULL;
     CableSocketComponent = NULL;
     TrackedNativeGlowFlags = EFortCurieNativeFXType::None;
+    LastElectricityPropagationParent = NULL;
 }
 

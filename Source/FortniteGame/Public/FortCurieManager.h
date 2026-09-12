@@ -14,11 +14,22 @@ class UFortCurieFXManager;
 class UFortCurieFirePropagationManager;
 class UFortCurieSpatialManager;
 
+class UFortCurieManagerComponent;
+class UFortCurieManagerComponentConfig;
+class UFortCurieSettings;
+class UPrimitiveComponent;
+
 UCLASS(Blueprintable, MinimalAPI, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UFortCurieManager : public UCurieManager {
     GENERATED_BODY()
 public:
 protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FName CurieManagerRegistryName;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortCurieManagerComponent*> CurieManagerComponents;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TMap<FGameplayTag, FCurieToggleComponentGroup> ToggleComponentGroups;
     
@@ -42,6 +53,18 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TMap<FGameplayTag, int32> StateIdentifierToIdxMap;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortCurieSettings* CurieSettings;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    TArray<UFortCurieManagerComponentConfig*> ConfigOverrides;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bAllowCurieApplicationViaDamageFormulaTags;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bCurieElementsBlockBuildingEdit;
     
 public:
     UFortCurieManager();
@@ -75,6 +98,10 @@ public:
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
     void BindDelegateOnToggleGroupFullyActive(FGameplayTag ToggleGroup, FCurieToggleGroupSameStateSignature Delegate);
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void InternalPhysicsComponentAwakeChanged(UPrimitiveComponent* SimulatingComponent, bool bIsAwake);
     
 };
 

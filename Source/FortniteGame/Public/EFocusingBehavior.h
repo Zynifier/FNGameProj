@@ -11,5 +11,6 @@ enum class EFocusingBehavior : uint8 {
     LookAtHeardSound,
     LookAtScanAround,
     LookAtScanAroundOnly,
+    Invalid,
 };
 

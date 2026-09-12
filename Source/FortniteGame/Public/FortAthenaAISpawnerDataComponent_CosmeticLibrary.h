@@ -3,13 +3,14 @@
 #include "AttributeSet.h"
 #include "GameplayTagContainer.h"
 #include "FortAthenaAISpawnerDataComponent_CosmeticBase.h"
+#include "FortAthenaAISpawnerDataComponent_AIBotCosmeticBase.h"
 #include "FortAthenaAISpawnerDataComponent_CosmeticLibrary.generated.h"
 
 class UDataTable;
 class UFortAthenaAIBotCosmeticLibraryData;
 
 UCLASS(Blueprintable, EditInlineNew)
-class UFortAthenaAISpawnerDataComponent_CosmeticLibrary : public UFortAthenaAISpawnerDataComponent_CosmeticBase {
+class UFortAthenaAISpawnerDataComponent_CosmeticLibrary : public UFortAthenaAISpawnerDataComponent_AIBotCosmeticBase {
     GENERATED_BODY()
 public:
 private:

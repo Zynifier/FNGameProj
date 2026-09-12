@@ -6,6 +6,8 @@
 #include "GameStartCountdownEndDelegate.h"
 #include "FortAthenaMutator_GameStartCountdown.generated.h"
 
+class USoundBase;
+
 UCLASS(Blueprintable, MinimalAPI)
 class AFortAthenaMutator_GameStartCountdown : public AFortAthenaMutator {
     GENERATED_BODY()
@@ -15,6 +17,10 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameStartCountdownEnd OnGameStartCountdownEnd;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundBase* CountdownMusicStinger;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

@@ -19,6 +19,28 @@ UFortMinigameManager* UCreativeBlueprintLibrary::GetMinigameManager(AController*
     return NULL;
 }
 
+bool UCreativeBlueprintLibrary::IsBlackListedItemDefinition(const AFortVolumeManager* VolumeManager, const UFortItemDefinition* ItemDefinition) {
+    return false;
+}
+
+bool UCreativeBlueprintLibrary::IsUseRestrictionComponentDebuggingEnabled() {
+    return false;
+}
+
+bool UCreativeBlueprintLibrary::IsWhiteListedItemDefinition(const UFortItemDefinition* ItemDefinition) {
+    return false;
+}
+
+void UCreativeBlueprintLibrary::LogCreativeStreamingMessage(const FString& Message) {
+}
+
+void UCreativeBlueprintLibrary::UpdateInGameMapHeatmapTexture(const UObject* WorldContextObject) {
+}
+
+FFortCreativeAnimateFloatCurveResult UCreativeBlueprintLibrary::AnimateFloatCurve(const float DeltaTime, UPARAM(Ref) float& CurrentTime, UCurveFloat* FCurve, const float TotalAnimationTime, const bool bInvertTime) {
+    return FFortCreativeAnimateFloatCurveResult{};
+}
+
 UCreativeBlueprintLibrary::UCreativeBlueprintLibrary() {
 }
 

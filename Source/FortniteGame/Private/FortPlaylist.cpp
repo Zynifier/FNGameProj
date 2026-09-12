@@ -38,5 +38,8 @@ UFortPlaylist::UFortPlaylist() {
     ServerPerformanceEventFrequency = 1;
     ServerMetricsEventFrequency = 1;
     bUseLocalizationService = false;
+    bAllowKeepPlayingTogether = false;
+    bAllowSquadSizeTracking = false;
+    RootExternalContent = NULL;
 }
 

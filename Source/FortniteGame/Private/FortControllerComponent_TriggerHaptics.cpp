@@ -13,5 +13,6 @@ void UFortControllerComponent_TriggerHaptics::OnPawnChanged(AFortPawn* InPawn) {
 }
 
 UFortControllerComponent_TriggerHaptics::UFortControllerComponent_TriggerHaptics() {
+    bTriggerHapticsAvailable = false;
 }
 

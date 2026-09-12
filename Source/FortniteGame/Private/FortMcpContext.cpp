@@ -53,7 +53,7 @@ void UFortMcpContext::QueryUnredeemedFriendCodes(const UFortMcpContext::FOnQuery
 void UFortMcpContext::PurchaseRealMoneyCatalogEntry(const FString& OfferId, const FOnRealMoneyPurchaseComplete& Callback, int32 PriceIndex, int32 Quantity) {
 }
 
-EOfferPurchaseError UFortMcpContext::PurchaseOfferAsGift(const FString& OfferId, int32 Quantity, int32 PriceIndex, const TArray<FString>& ReceiverAccountIds, const FString& GiftWrapTemplateId, const FString& UserMessageToRecipients, const FOnGiftOfferComplete& OnComplete) const {
+EOfferPurchaseError UFortMcpContext::PurchaseOfferAsGift(const FString& OfferId, int32 Quantity, int32 PriceIndex, const TArray<FString>& ReceiverAccountIds, const FString& GiftWrapTemplateId, const FString& UserMessageToRecipients, const FOnGiftOfferComplete& OnComplete, int32 ExpectedTotalPrice) const {
     return EOfferPurchaseError::NoError;
 }
 
@@ -365,6 +365,17 @@ void UFortMcpContext::ApplyAlteration(UFortAlterableItem* Item, UFortAlterationI
 }
 
 void UFortMcpContext::AbandonExpedition(const UFortExpeditionItem* Expedition) {
+}
+
+void UFortMcpContext::PurchaseBattlePassOffer(const TArray<FString>& OfferIdList, const FOnPurchaseBattlePassOfferComplete& Callback) {
+}
+
+EOfferPurchaseError UFortMcpContext::PurchaseMultipleOffers(const TMap<FString, int32>& OfferIdToQuantityMap, const FOnPurchaseMultipleOffersComplete& Callback, int32 IndexInSection, int32 ColumnIndexInSection, int32 InnerRowIndexInSection, int32 SectionIndex) {
+    return EOfferPurchaseError::NoError;
+}
+
+bool UFortMcpContext::IsQosProbeDone() const {
+    return false;
 }
 
 UFortMcpContext::UFortMcpContext() {

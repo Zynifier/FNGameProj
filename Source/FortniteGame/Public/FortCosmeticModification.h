@@ -34,7 +34,7 @@ public:
     TSoftObjectPtr<UNiagaraSystem> BeamNiagaraSystem;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    TSoftObjectPtr<UParticleSystem> ImpactPhysicalSurfaceEffects[26];
+    TSoftObjectPtr<UParticleSystem> ImpactPhysicalSurfaceEffects[27];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<TSoftObjectPtr<UNiagaraSystem>> ImpactNiagaraPhysicalSurfaceEffects;

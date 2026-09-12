@@ -44,5 +44,14 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool ShouldProposeRequiredVBucksSKUs() const;
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldCapMips() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldShowPRMMOTDNews() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool ShouldUseLargeItemShopLayout() const;
+    
 };
 

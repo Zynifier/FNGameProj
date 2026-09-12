@@ -6,6 +6,8 @@
 #include "ELayeredAudioTriggerDirection.h"
 #include "MarshalledVFXAuthoredData.h"
 #include "Templates/SubclassOf.h"
+#include "FortCosmeticDependentSwapData.h"
+#include "FortGliderLayeredAudioFloatParam.h"
 #include "AthenaGliderItemDefinition.generated.h"
 
 class AFortPlayerParachute;
@@ -52,6 +54,9 @@ private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true, AssetBundles="Equipped"))
     TSoftObjectPtr<UFortPlayerGliderAnimSet> PlayerAnimSet;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FTransform GliderMeshTransform;
+    
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSoftObjectPtr<UParticleSystem> TrailParticles;
     
@@ -77,6 +82,9 @@ private:
     TSoftObjectPtr<UNiagaraSystem> TrailEffectNiagara2;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortCosmeticDependentSwapData> GlidingSwaps;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bAutoActivate;
     
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -99,6 +107,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true, AssetBundles="Equipped"))
     TSoftObjectPtr<USoundBase> ThrustLoopSound;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<ELayeredAudioTriggerDirection, FFortGliderLayeredAudioFloatParam> ThrustSoundParams;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true, AssetBundles="Equipped"))
     TMap<ELayeredAudioTriggerDirection, TSoftObjectPtr<USoundBase>> ThrustStartSounds;

@@ -88,7 +88,7 @@ private:
 public:
     AFortAthenaTutorial_Ambush();
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-    AFortPawn* SpawnAmbushBot();
+    bool SpawnAmbushBot();
     
 private:
     UFUNCTION(BlueprintCallable)
@@ -99,6 +99,10 @@ private:
     
     UFUNCTION(BlueprintCallable)
     void HandleOnAIDummyDied(AActor* DamagedActor, float Damage, AController* InstigatedBy, AActor* DamageCauser, FVector HitLocation, UPrimitiveComponent* FHitComponent, FName BoneName, FVector Momentum);
+    
+public:
+    UFUNCTION(BlueprintCallable)
+    void OnAmbushBotSpawned(AFortPawn* Pawn);
     
 };
 

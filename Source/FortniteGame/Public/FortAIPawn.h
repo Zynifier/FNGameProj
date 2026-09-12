@@ -52,6 +52,10 @@
 #include "MinimapGoalByTagColorsData.h"
 #include "TInteractionType.h"
 #include "Templates/SubclassOf.h"
+#include "AttributeSet.h"
+#include "EFortPickupSourceTypeFlag.h"
+#include "EFortPickupSpawnSource.h"
+#include "EInteractionBeingAttempted.h"
 #include "FortAIPawn.generated.h"
 
 class AActor;
@@ -87,6 +91,8 @@ class UPrimitiveComponent;
 class UShapeComponent;
 class USoundBase;
 class USplineComponent;
+
+class AFortPawn;
 
 UCLASS(Blueprintable)
 class FORTNITEGAME_API AFortAIPawn : public AFortPawn, public IFortSpawnableByPlacementSystemInterface/*, public IAIPerceptionListenerInterface*/, public IFortInteractInterface, public IFortInventoryOwnerInterface, public IFortHUDTargetUnderReticleInterface, public IFortMarkableActorInterface {
@@ -377,8 +383,23 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float InteractionDuration;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FText InteractionText;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TEnumAsByte<TInteractionType> SecondInteractionType;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float SecondInteractionDuration;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FText SecondInteractionText;
+    
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortAIInteraction OnInteraction;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    USoundBase* InteractionSound;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     ABuildingTrapDefender* DefenderTrap;
@@ -416,6 +437,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bCanUseDoors: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bCanUseOpenedDoors: 1;
     
     UPROPERTY(AdvancedDisplay, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bCanUseShootingHotspots: 1;
@@ -601,10 +625,13 @@ protected:
     UFortWeaponAttrSet* WeaponAttrSet;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    USoundBase* ImpactPhysicalSurfaceSounds[26];
+    USoundBase* ImpactPhysicalSurfaceSounds[27];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UParticleSystem* ImpactPhysicalSurfaceEffects[26];
+    UParticleSystem* ImpactPhysicalSurfaceEffects[27];
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat AthenaRVOWeightOverride;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortSimpleMiniMapIndicator* MinimapIndicator;
@@ -660,6 +687,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bCanBeMarked;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FScalableFloat IsBlockingBuilding;
+    
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAccountItem* DefenderItem;
@@ -699,14 +729,23 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     UFortAIPawnCustomizationDefinition* CustomizationsToLoad;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, meta=(AllowPrivateAccess=true))
+    bool bCanUnloadCustomization;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAIPawnCustomizationDefinition* UsedCustomization;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FFortAIPawnCustomizationsLoaded OnCustomizationsLoadedEvent;
     
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FFortAIPawnCustomizationsLoaded OnCustomizationsUnloadedEvent;
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     UFortAIAssetLoader* AIAssetLoader;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float UpdateMovementSoundIndicatorFrequency;
     
 public:
     AFortAIPawn();
@@ -1060,6 +1099,34 @@ public:
     
     UFUNCTION(BlueprintCallable)
     float GetHUDTargetDifficultyRating() override PURE_VIRTUAL(GetHUDTargetDifficultyRating, return 0.0f;);
+    
+    UFUNCTION(BlueprintCallable)
+    void DespawnAI(bool bDueToInactivity);
+    
+protected:
+    UFUNCTION(BlueprintCallable)
+    void HideMapMarker();
+    
+public:
+    UFUNCTION(BlueprintCallable, NetMulticast, Reliable)
+    void NetMulticast_OnTurn(float TurnAngle, float TurnRate);
+    
+protected:
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void OnCustomizationsUnloaded_BP();
+    
+    UFUNCTION(BlueprintCallable)
+    void OnRep_CustomizationsToLoad();
+    
+    UFUNCTION(BlueprintCallable)
+    void ShowMapMarker();
+    
+public:
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable)
+    void SpawnPickupInWorldWithLootTierAsync(FName LootTierName, FVector Position, int32 OverrideMaxStackCount, bool bToss, EFortPickupSourceTypeFlag SourceType, EFortPickupSpawnSource Source);
+    
+    UFUNCTION(BlueprintCallable, BlueprintNativeEvent, BlueprintPure)
+    bool BlueprintCanInteract(const AFortPawn* InteractingPawn, const EInteractionBeingAttempted InteractionBeingAttempted) const;
     
 };
 

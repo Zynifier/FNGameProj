@@ -8,6 +8,9 @@
 
 class UFortItemDefinition;
 
+class UFortItem;
+class UObject;
+
 UCLASS(Blueprintable)
 class FORTNITEGAME_API UFortRarityData : public UDataAsset {
     GENERATED_BODY()
@@ -24,6 +27,9 @@ public:
     
     UFUNCTION(BlueprintCallable)
     static FFortColorPalette BPGetRarityColorPalette(EFortRarity Rarity);
+    
+    UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject"))
+    static EFortRarity GetRarityCosmeticForItem(const UObject* WorldContextObject, const UFortItem* Item);
     
 };
 

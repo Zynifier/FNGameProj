@@ -15,6 +15,8 @@ class AFortPlayerController;
 class UFortPlaylist;
 class UFortQuestItem;
 
+class UFortQuestItemDefinition;
+
 UCLASS(Blueprintable, ClassGroup=Custom, meta=(BlueprintSpawnableComponent))
 class UConsolidatedQuestComponent : public USceneComponent {
     GENERATED_BODY()
@@ -24,6 +26,9 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FSimpleQuestComponentDelegate OnQuestReady;
+    
+    UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FSimpleQuestComponentDelegate OnQuestComponentSuccessEvent;
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FSimpleQuestComponentDelegate OnQuestComponentScuccesEvent;
@@ -39,6 +44,10 @@ public:
     
     UPROPERTY(BlueprintAssignable, BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FQuestComponentCustomUpdatedOjective OnCustomUpdateQuest;
+    
+protected:
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    UFortQuestItemDefinition* QuestItemDefinition;
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -88,6 +97,10 @@ private:
 protected:
     UFUNCTION(BlueprintCallable)
     void DelayBeginPlay();
+    
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortQuestItemDefinition* GetQuestItemDefinition() const;
     
 };
 

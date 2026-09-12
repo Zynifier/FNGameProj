@@ -14,6 +14,7 @@ enum class EInventoryContentSortType : uint8 {
     ByBonus,
     BySubtype,
     ByGrantTime,
+    BySeries,
     Invalid,
 };
 

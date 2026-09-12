@@ -6,7 +6,7 @@
 class UTexture2D;
 
 UCLASS(Blueprintable)
-class UFortItemIconDefinition : public UDataAsset {
+class UFortItemIconDefinition : public UPrimaryDataAsset {
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

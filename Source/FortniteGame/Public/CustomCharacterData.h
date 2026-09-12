@@ -16,7 +16,7 @@ public:
     int32 RequiredVariantPartFlags;
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
-    UCustomCharacterPart* Parts[6];
+    UCustomCharacterPart* Parts[7];
     
     UPROPERTY(EditAnywhere, meta=(AllowPrivateAccess=true))
     UAthenaCharmItemDefinition* Charms[4];

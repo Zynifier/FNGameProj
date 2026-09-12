@@ -43,6 +43,9 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     FGameplayTagContainer BlockedByTags;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bOnlyInterruptibleHealingItem;
+    
 public:
     UFortContextualTutorialDefinition_Consumable();
 };

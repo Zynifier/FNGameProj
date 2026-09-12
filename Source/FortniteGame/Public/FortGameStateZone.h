@@ -212,7 +212,7 @@ public:
     
 protected:
     UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
-    FPlayerBuildableClassContainer PlayerBuildableClasses[5];
+    FPlayerBuildableClassContainer PlayerBuildableClasses[6];
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Replicated, Transient, meta=(AllowPrivateAccess=true))
     AFortInGameMapManager* UIMapManager;

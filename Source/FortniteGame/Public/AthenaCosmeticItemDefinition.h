@@ -13,6 +13,7 @@
 #include "FortCosmeticVariantPreview.h"
 #include "McpVariantChannelInfo.h"
 #include "Templates/SubclassOf.h"
+#include "CosmeticVariantInfo.h"
 #include "AthenaCosmeticItemDefinition.generated.h"
 
 class AActor;
@@ -27,6 +28,10 @@ class UFortItem;
 class UFortMontageItemDefinitionBase;
 class UPrimitiveComponent;
 class UTexture2D;
+
+class AFortPlayerController;
+class UFortVariantPreviewGenerator;
+class UObject;
 
 UCLASS(Abstract, Blueprintable, MinimalAPI)
 class UAthenaCosmeticItemDefinition : public UFortAccountItemDefinition {
@@ -54,11 +59,20 @@ protected:
     UPROPERTY(Transient, meta=(AllowPrivateAccess=true))
     uint8 bDynamicInstallBundlesError: 1;
     
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint8 bDynamicInstallBundlesCancelled: 1;
+    
     UPROPERTY(Transient, meta=(AllowPrivateAccess=true))
     uint8 bDynamicInstallBundlesComplete: 1;
     
     UPROPERTY(Transient, meta=(AllowPrivateAccess=true))
     double DynamicInstallBundlesUpdateStartTime;
+    
+    UPROPERTY(EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    uint32 DynamicInstallBundleRequestRefCount;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    int32 DynamicInstallBundleRequestRetryCount;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Variants")
     EVariantUnlockType VariantUnlockType;
@@ -96,6 +110,9 @@ protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Display")
     TArray<FGameplayTag> VariantChannelsToNeverSendToMCP;
 
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TMap<FCosmeticVariantInfo, TSoftClassPtr<UObject>> ReactivePreviewDrivers;
+    
     /**
      * Optional list of (material, material index) pairs to override the default materials on a mesh.
      */
@@ -122,6 +139,9 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Variants")
     TArray<FFortCosmeticVariantPreview> ItemVariantPreviews;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
+    UFortVariantPreviewGenerator* ItemVariantPreviewGenerator;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true), Category = "Variants")
     FText DirectAquisitionStyleDisclaimerOverride;
@@ -220,6 +240,15 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure=false)
     void ApplyVariants(AActor* InActor, const FFortAthenaLoadout& Loadout, const FApplyVariantsAdditionalParams& Params) const;
+    
+    UFUNCTION(BlueprintCallable)
+    static TArray<FString> GetAllPossibleNativeMeshComponentNames();
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    TArray<FFortCosmeticVariantPreview> GetOrGenerateItemVariantPreviews(const AFortPlayerController* PlayerController) const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure=false)
+    void UpdateLockedFloatSliderVariant(const AFortPlayerController* FortPC, FGameplayTag ChannelTag) const;
     
 };
 

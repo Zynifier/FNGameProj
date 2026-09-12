@@ -81,9 +81,9 @@ bool AFortCreativeMoveTool::ServerSpawnActorWithTransform_Validate(AActor* Actor
     return true;
 }
 
-void AFortCreativeMoveTool::ServerSetAlwaysMoveFreely_Implementation(bool bNewValue) {
+void AFortCreativeMoveTool::ServerSetAlwaysMoveFreely_Implementation(EBuildingAsPropSetting NewSetting) {
 }
-bool AFortCreativeMoveTool::ServerSetAlwaysMoveFreely_Validate(bool bNewValue) {
+bool AFortCreativeMoveTool::ServerSetAlwaysMoveFreely_Validate(EBuildingAsPropSetting NewSetting) {
     return true;
 }
 
@@ -492,6 +492,10 @@ void AFortCreativeMoveTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
     DOREPLIFETIME(AFortCreativeMoveTool, bAllowGravityOnPlace);
     DOREPLIFETIME(AFortCreativeMoveTool, bClientNeedsToProcessNewlyPlacedActors);
     DOREPLIFETIME(AFortCreativeMoveTool, bAlwaysMoveFreely);
+    DOREPLIFETIME(AFortCreativeMoveTool, bBuildingsAsPropsSnapToCenter);
+}
+
+void AFortCreativeMoveTool::OnRep_BuildingsAsPropsSnapToCenter() {
 }
 
 AFortCreativeMoveTool::AFortCreativeMoveTool() {
@@ -528,5 +532,7 @@ AFortCreativeMoveTool::AFortCreativeMoveTool() {
     ActiveRecordSpawner = NULL;
     bAlwaysMoveFreely = false;
     HoveredActor = NULL;
+    bBuildingsAsPropsSnapToCenter = false;
+    CreativeHeatmapThermometerPreview = NULL;
 }
 

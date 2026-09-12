@@ -6,6 +6,7 @@
 #include "IndicatedActorData.h"
 #include "StenciledActorData.h"
 #include "Templates/SubclassOf.h"
+#include "EFortTeamAffiliation.h"
 #include "IndicatedActorDataWithFilter.generated.h"
 
 class AActor;
@@ -25,6 +26,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<AActor> ActorClassFilter;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<TEnumAsByte<EFortTeamAffiliation::Type>> WithAffiliation;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FIndicatedActorData IndicatedData;

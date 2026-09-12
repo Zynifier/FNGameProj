@@ -14,6 +14,9 @@ class USkeletalMesh;
 class USoundBase;
 class UStaticMesh;
 
+class AFortPickup;
+class UFortItem;
+
 UCLASS(Blueprintable)
 class AFortPickupEffect : public AActor {
     GENERATED_BODY()
@@ -23,6 +26,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     USkeletalMesh* SkeletalMesh;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    AFortPickup* ParentPickupActor;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     TArray<UFortAlterationItemDefinition*> ActiveAlterations;
@@ -59,7 +65,7 @@ public:
     void OnTossed();
     
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-    void OnPickedUp();
+    void OnPickedUp(AFortPawn* PickupTarget);
     
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void OnAttached();
@@ -75,6 +81,9 @@ public:
     
     UFUNCTION(BlueprintCallable)
     UMaterialInstanceDynamic* ApplyCosmeticOverridesToMaterial(UMeshComponent* MeshComponent, int32 MatIndex);
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    UFortItem* GetPickupDummyItem() const;
     
 };
 

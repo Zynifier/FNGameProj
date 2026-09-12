@@ -49,6 +49,12 @@ protected:
     uint8 bShowHLODWhenDisabled: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bFlipXAxis: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    uint8 bFlipYAxis: 1;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     uint8 bOverrideNavigationGraphCells: 1;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -108,6 +114,12 @@ protected:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FVector MapLocationTextOffset;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FVector MapLocationOverride;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bShadowLayer;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     FBuildingFoundationStreamingData StreamingData;
@@ -200,6 +212,15 @@ public:
     
     UFUNCTION(BlueprintCallable, BlueprintPure=false)
     bool DoesBuildingFoundationContainActor(AActor* Actor) const;
+    
+    UFUNCTION(BlueprintCallable)
+    void HideHLODProxies();
+    
+    UFUNCTION(BlueprintCallable)
+    void ShowHLODProxies();
+    
+    UFUNCTION(BlueprintCallable)
+    void UpdateMinimapDetailsLocation(const FVector& InLocation);
     
 };
 

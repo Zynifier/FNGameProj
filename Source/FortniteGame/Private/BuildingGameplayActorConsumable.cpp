@@ -54,5 +54,6 @@ ABuildingGameplayActorConsumable::ABuildingGameplayActorConsumable() {
     MaxDrawDistanceStw = 1;
     MaxDrawDistanceAthena = 1;
     SearchAnim = NULL;
+    bReplicateLongInteractionDetails = false;
 }
 

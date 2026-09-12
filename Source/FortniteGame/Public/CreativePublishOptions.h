@@ -22,6 +22,9 @@ public:
     bool bActivateLink;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bClearPersistentData;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FString UserLocale;
     
     FCreativePublishOptions();

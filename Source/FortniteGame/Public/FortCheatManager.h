@@ -11,6 +11,7 @@
 #include "ERiftCosmeticState.h"
 #include "FriendCode.h"
 #include "Templates/SubclassOf.h"
+#include "EFortPartyMemberLocation.h"
 #include "FortCheatManager.generated.h"
 
 class AActor;
@@ -445,7 +446,7 @@ protected:
     void StartFillFloorMovement();
     
     UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
-    void SpawnVehicle(const FString& CarName, int32 ForcedMaterialVariantIndex);
+    AActor* SpawnVehicle(const FString& VehicleName, int32 ForcedMaterialVariantIndex);
     
     UFUNCTION(BlueprintCallable)
     AFortPlayerPawn* SpawnSimplePawn();
@@ -462,7 +463,7 @@ public:
     
 protected:
     UFUNCTION(BlueprintCallable, Exec)
-    void SpawnReplaySpotLightEx(float X, float Y, float Z, float Yaw, float Pitch, bool bDebugDrawOn, int32 R, int32 G, int32 B, float InnerAngle, float OuterAngle, float Intensity, float Temp);
+    void SpawnReplaySpotLightEx(float X, float Y, float Z, float Yaw, float Pitch, int32 R, int32 G, int32 B, float InnerAngle, float OuterAngle, float Intensity, float Radius, float Temp);
     
     UFUNCTION(BlueprintCallable, Exec)
     void SpawnReplaySpotLight();
@@ -1107,7 +1108,7 @@ protected:
     void JoinFriendGame(const FString& FriendId);
     
     UFUNCTION(BlueprintCallable, Exec)
-    void Island_MMS(const FString& IslandCode);
+    void Island_MMS(const FString& IslandCode, FName TargetPlaylistName);
     
     UFUNCTION(BlueprintCallable, Exec)
     void Island_Destroy(const FString& Island_ItemId);
@@ -1678,6 +1679,156 @@ protected:
     
     UFUNCTION(BlueprintCallable, Exec)
     void AcceptEULA();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void AddWeaponModToCurrentWeapon(const FString& WeaponModName, bool bIsDynamic);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Collection_CollectNpc(const FString& TagMatch, bool bFromQuest, int32 LocationIndex);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Collection_CollectNpcAllLocations(const FString& TagMatch, bool bFromQuest);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Collection_CollectNpcIndex(int32 Index, bool bFromQuest, int32 LocationIndex);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Collection_MarkAllFishSeen();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Collection_MarkOneFishSeen(const FString& Species);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Collection_NpcBulkUpdateCollections(const FString& TagMatch);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void Collection_ShowNpcCount();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DebugPhysicsObjects();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DisableAllReplaySpotLights();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DisableReplaySpotLight();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DumpQuickbarItemTags();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void DumpServerAIProfilingReport();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void DuplicateReplaySpotLight();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableAllReplaySpotLights();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableCsvCategory(const FString& CategoryName);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void EnableReplaySpotLight();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void EnableServerAIProfiling(const bool bEnable);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void EnableServerAIProfilingVerbose(const bool bEnable);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void GiveBars(int32 Amount);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void GiveBotGE(const FString& GEtoApply, const FString& BotCommand);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void GiveGlobalCurrency(int32 Amount);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void GiveMultiItem(const FString& MultiItemName, int32 RequestedLevel, int32 Count);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ListBuildingProps(const FString& PropName);
+    
+public:
+    UFUNCTION(BlueprintCallable, Exec)
+    void LoadAndActivateGameFeaturePlugin(const FString& GameFeaturePluginURL);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void LoadAndActivateGameFeaturePluginViaFeatureName(const FString& GameFeatureName);
+    
+protected:
+    UFUNCTION(BlueprintCallable, Exec)
+    void LogItemQuantityForTemplate(const FString& TemplateId);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void PilotReplaySpotLight();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void PrintValidWeaponMods();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void PrintWeaponModsOnCurrentWeapon();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void ReleaseAIPawn();
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void RemoveBars(int32 Amount);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void RemoveGlobalCurrency(int32 Amount);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void RemoveWeaponModFromCurrentWeapon(const FString& WeaponModName);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void RemoveWeaponModFromCurrentWeaponAtSlot(int32 Index);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void ResetItemShopSeenOffers();
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SelectPrevSpotLight();
+    
+    UFUNCTION(Exec)
+    void SelectSpotLightByNumber(uint32 Number);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetEnableRenderCustomDepthOnAllPlayerPawns(bool bEnable);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetPartyLocation(EFortPartyMemberLocation NewLocation);
+    
+    UFUNCTION(BlueprintCallable, Exec)
+    void SetReplaySpotLightRadius(float Radius);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void SetVehicleFuel(float FuelAmount);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void SetWeaponModToCurrentWeaponAtSlot(const FString& WeaponModName, int32 Index);
+    
+public:
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void SpawnGroupOfScriptedPawnOnGrid(int32 Rows, int32 Columns, float RowPadding, float ColumnPadding, const FString& ProfileName, const float X, const float Y, const float Z, const float Pitch, const float Yaw, const float Roll);
+    
+protected:
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void SpawnPhysicsProp(const FString& PropName, int32 Count, bool bSpawnAwake, bool bCanBeDamaged);
+    
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void TakeoverAIPawn();
+    
+public:
+    UFUNCTION(BlueprintAuthorityOnly, BlueprintCallable, Exec)
+    void ToggleSmartBuild();
+    
+protected:
+    UFUNCTION(BlueprintCallable, Exec)
+    void ListMultiItems() const;
     
 };
 

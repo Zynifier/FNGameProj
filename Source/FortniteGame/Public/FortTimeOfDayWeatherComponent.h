@@ -107,5 +107,8 @@ public:
     UFUNCTION(BlueprintCallable, BlueprintPure)
     float GetBlendTimePercentage() const;
     
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    EGlobalWeatherState GetWeatherState() const;
+    
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "CurieMaterialDefinitionBase.h"
+#include "FortCurieMaterialElementIntensityDecayMultiplier.h"
 #include "FortCurieMaterialDefinition.generated.h"
 
 USTRUCT(BlueprintType)
@@ -42,6 +43,9 @@ private:
     float MaxWaterContent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float WaterContentStabilizationRate;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float DefaultFuelContent;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -49,6 +53,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float MaxFuelContent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float FuelContentStabilizationRate;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float ElectricityIntensityDecayMultiplier;
@@ -64,6 +71,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     int32 ElectricityPropagationLimitIncrease;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortCurieMaterialElementIntensityDecayMultiplier> ElementDecayMultipliers;
     
 public:
     FORTNITEGAME_API FFortCurieMaterialDefinition();

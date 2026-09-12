@@ -61,7 +61,8 @@ void AFortWeapon::SetTraceThroughBuildingsLimit(int32 NewTraceThroughBuildingsLi
 void AFortWeapon::SetShouldDrawNativeReticle(bool bInShouldDrawReticle) {
 }
 
-void AFortWeapon::SetHudKeyActionVisibility(int32 Index, bool bVisible) {
+bool AFortWeapon::SetHudKeyActionVisibility(int32 Index, bool bVisible) {
+    return false;
 }
 
 void AFortWeapon::SetHudKeyActionsVisibility(const TArray<FWeaponHudKeyActionVisibility>& IndexVisibilityArray) {
@@ -474,6 +475,52 @@ void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
     DOREPLIFETIME(AFortWeapon, ReloadAbilitySpecHandle);
     DOREPLIFETIME(AFortWeapon, ImpactAbilitySpecHandle);
     DOREPLIFETIME(AFortWeapon, AppliedAlterations);
+    DOREPLIFETIME(AFortWeapon, bDisableEquipAnimation);
+    DOREPLIFETIME(AFortWeapon, TrackerGuid);
+    DOREPLIFETIME(AFortWeapon, ReticleTraceOverrideSpecHandle);
+    DOREPLIFETIME(AFortWeapon, WeaponModSlots);
+}
+
+void AFortWeapon::OnRep_ReplicatedWeaponModSlots() {
+}
+
+bool AFortWeapon::SetHudKeyActionDescription(int32 Index, FText InActionDescription) {
+    return false;
+}
+
+bool AFortWeapon::SetHudKeyActionDescriptionByID(const FString& KeyActionId, FText InActionDescription) {
+    return false;
+}
+
+bool AFortWeapon::SetHudKeyActionVisibilityByID(const FString& KeyActionId, bool bVisible) {
+    return false;
+}
+
+void AFortWeapon::SetTraceThroughLandscapeLimit(int32 NewTraceThroughTerrainLimit) {
+}
+
+USoundBase* AFortWeapon::GetChargedWeaponFireSound_Implementation(EFortWeaponSoundState::Type Channel, const bool bSecondaryFire) const {
+    return NULL;
+}
+
+float AFortWeapon::GetChargeToAutoDischarge() const {
+    return 0.0f;
+}
+
+int32 AFortWeapon::GetTraceThroughLandscapeLimit() const {
+    return 0;
+}
+
+FGuid AFortWeapon::GetTrackerGuid() const {
+    return FGuid{};
+}
+
+UFortWeaponAdditiveAnimSet* AFortWeapon::GetWeaponAdditiveAnimSet() const {
+    return NULL;
+}
+
+bool AFortWeapon::IsGauntlet() const {
+    return false;
 }
 
 AFortWeapon::AFortWeapon() {
@@ -542,58 +589,6 @@ AFortWeapon::AFortWeapon() {
     TargetingStartSound = NULL;
     TargetingEndSound = NULL;
     PrimaryFireSoundFadeOutTime = 1;
-    ImpactPhysicalSurfaceSounds[0] = NULL;
-    ImpactPhysicalSurfaceSounds[1] = NULL;
-    ImpactPhysicalSurfaceSounds[2] = NULL;
-    ImpactPhysicalSurfaceSounds[3] = NULL;
-    ImpactPhysicalSurfaceSounds[4] = NULL;
-    ImpactPhysicalSurfaceSounds[5] = NULL;
-    ImpactPhysicalSurfaceSounds[6] = NULL;
-    ImpactPhysicalSurfaceSounds[7] = NULL;
-    ImpactPhysicalSurfaceSounds[8] = NULL;
-    ImpactPhysicalSurfaceSounds[9] = NULL;
-    ImpactPhysicalSurfaceSounds[10] = NULL;
-    ImpactPhysicalSurfaceSounds[11] = NULL;
-    ImpactPhysicalSurfaceSounds[12] = NULL;
-    ImpactPhysicalSurfaceSounds[13] = NULL;
-    ImpactPhysicalSurfaceSounds[14] = NULL;
-    ImpactPhysicalSurfaceSounds[15] = NULL;
-    ImpactPhysicalSurfaceSounds[16] = NULL;
-    ImpactPhysicalSurfaceSounds[17] = NULL;
-    ImpactPhysicalSurfaceSounds[18] = NULL;
-    ImpactPhysicalSurfaceSounds[19] = NULL;
-    ImpactPhysicalSurfaceSounds[20] = NULL;
-    ImpactPhysicalSurfaceSounds[21] = NULL;
-    ImpactPhysicalSurfaceSounds[22] = NULL;
-    ImpactPhysicalSurfaceSounds[23] = NULL;
-    ImpactPhysicalSurfaceSounds[24] = NULL;
-    ImpactPhysicalSurfaceSounds[25] = NULL;
-    ImpactPhysicalSurfaceEffects[0] = NULL;
-    ImpactPhysicalSurfaceEffects[1] = NULL;
-    ImpactPhysicalSurfaceEffects[2] = NULL;
-    ImpactPhysicalSurfaceEffects[3] = NULL;
-    ImpactPhysicalSurfaceEffects[4] = NULL;
-    ImpactPhysicalSurfaceEffects[5] = NULL;
-    ImpactPhysicalSurfaceEffects[6] = NULL;
-    ImpactPhysicalSurfaceEffects[7] = NULL;
-    ImpactPhysicalSurfaceEffects[8] = NULL;
-    ImpactPhysicalSurfaceEffects[9] = NULL;
-    ImpactPhysicalSurfaceEffects[10] = NULL;
-    ImpactPhysicalSurfaceEffects[11] = NULL;
-    ImpactPhysicalSurfaceEffects[12] = NULL;
-    ImpactPhysicalSurfaceEffects[13] = NULL;
-    ImpactPhysicalSurfaceEffects[14] = NULL;
-    ImpactPhysicalSurfaceEffects[15] = NULL;
-    ImpactPhysicalSurfaceEffects[16] = NULL;
-    ImpactPhysicalSurfaceEffects[17] = NULL;
-    ImpactPhysicalSurfaceEffects[18] = NULL;
-    ImpactPhysicalSurfaceEffects[19] = NULL;
-    ImpactPhysicalSurfaceEffects[20] = NULL;
-    ImpactPhysicalSurfaceEffects[21] = NULL;
-    ImpactPhysicalSurfaceEffects[22] = NULL;
-    ImpactPhysicalSurfaceEffects[23] = NULL;
-    ImpactPhysicalSurfaceEffects[24] = NULL;
-    ImpactPhysicalSurfaceEffects[25] = NULL;
     ImpactCameraShake = NULL;
     PrimaryForceFeedbackEffect = NULL;
     SecondaryForceFeedbackEffect = NULL;
@@ -678,5 +673,12 @@ AFortWeapon::AFortWeapon() {
     LockOnTargetCandidate = NULL;
     bIgnoreTryToFireSlotCooldownRestriction = false;
     bFireConsumableAnalyticEvent = true;
+    bDisableEquipAnimation = false;
+    TraceThroughLandscapeLimit = 0;
+    bUseVariableFocalDistanceTargeting = false;
+    bSecondaryFireAlwaysCancelSwimSprint = false;
+    SecondaryAbilityAnimation = NULL;
+    WeaponSecondaryAbilityMontage = NULL;
+    WeaponAdditiveAnimSet = NULL;
 }
 

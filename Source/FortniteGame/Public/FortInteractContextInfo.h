@@ -5,6 +5,7 @@
 #include "UObject/NoExportTypes.h"
 #include "EInteractionBeingAttempted.h"
 #include "Templates/SubclassOf.h"
+#include "EFortInteractContextInfoType.h"
 #include "FortInteractContextInfo.generated.h"
 
 class AActor;
@@ -31,6 +32,9 @@ public:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     TSubclassOf<UFortInteractContextInfoWidget> ContextOverrideWidget;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TSubclassOf<UFortInteractContextInfoWidget> SecondContextOverrideWidget;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FText SecondContextText;
@@ -93,11 +97,20 @@ public:
     bool bSuppressInteractionWidget;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bHasCustomInteractionWidget;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bSuppressSimpleInteractionWidgetForTouch;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortInteractContextInfoType InteractContextInfoType;
     
     UFortInteractContextInfo();
     UFUNCTION(BlueprintCallable, BlueprintPure)
     bool HasValidContextOverride() const;
+    
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool HasValidSecondContextOverride() const;
     
 };
 

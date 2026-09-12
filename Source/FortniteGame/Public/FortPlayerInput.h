@@ -4,6 +4,10 @@
 #include "EFortInputActionGroup.h"
 #include "EFortMotionYawAxis.h"
 #include "FortInputActionGroupContext.h"
+#include "EGyroAcceleration.h"
+#include "EGyroActiveMode.h"
+#include "EGyroButtonResponse.h"
+#include "FortPerModeInputConfig.h"
 #include "FortPlayerInput.generated.h"
 
 class UFortPlayerInputSettings;
@@ -86,6 +90,75 @@ protected:
     float MotionHarvestingToolMultiplier;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2Sensitivity;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortMotionYawAxis GyroV2DetachedYawAxis;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EFortMotionYawAxis GyroV2AttachedYawAxis;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EGyroActiveMode GyroV2ActiveMode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bGyroV2LookStickDisables;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bGyroV2AimAssist;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2AccelMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2AccelMinThreshold;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2AccelMaxThreshold;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EGyroAcceleration GyroV2AccelerationMode;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2VerticalMultiplier;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2DeadZone;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2Smoothing;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2Tightening;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EGyroButtonResponse GyroV2ButtonX;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    EGyroButtonResponse GyroV2ButtonY;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2TrackballDecay;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float GyroV2ButtonHoldTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bGyroV2DisabledWhileDriving;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    bool bFlickStickEnabled;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float FlickTime;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float FlickSmoothingThreshold;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    float FlickDeadZone;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     float GamepadMoveStickDeadZone;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
@@ -110,7 +183,20 @@ private:
     UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
     TArray<EFortInputActionGroup> InputActionGroupExemptFromAllModesCheck;
     
+    UPROPERTY(BlueprintReadWrite, Config, EditAnywhere, meta=(AllowPrivateAccess=true))
+    TArray<FFortPerModeInputConfig> PerModeInputConfigs;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    FFortPerModeInputConfig ActivePerModeInputConfig;
+    
 public:
     UFortPlayerInput();
+private:
+    UFUNCTION(BlueprintCallable)
+    void HandleDesiredGamepadInputSettingsReloadConfig(UFortPlayerInputSettings* GamepadSettings);
+    
+    UFUNCTION(BlueprintCallable)
+    void HandleDesiredKBMInputSettingsReloadConfig(UFortPlayerInputSettings* KBMSettings);
+    
 };
 

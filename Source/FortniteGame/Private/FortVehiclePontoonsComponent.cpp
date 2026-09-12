@@ -10,7 +10,7 @@ void UFortVehiclePontoonsComponent::GetLifetimeReplicatedProps(TArray<FLifetimeP
     DOREPLIFETIME(UFortVehiclePontoonsComponent, OverridePontoonRadiuses);
 }
 
-UFortVehiclePontoonsComponent::UFortVehiclePontoonsComponent() {
+UFortVehiclePontoonsComponent::UFortVehiclePontoonsComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
     OwnerVehicle = NULL;
     WaterLineStartPontoonIndex = 0;
     WaterLineEndPontoonIndex = 0;

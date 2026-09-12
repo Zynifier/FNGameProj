@@ -22,6 +22,10 @@ float UFortScalableFloatUtils::GetValue(const FScalableFloat& Input) {
     return 0.0f;
 }
 
+bool UFortScalableFloatUtils::GetValueAsBool(const FScalableFloat& Input, float Level) {
+    return false;
+}
+
 UFortScalableFloatUtils::UFortScalableFloatUtils() {
 }
 

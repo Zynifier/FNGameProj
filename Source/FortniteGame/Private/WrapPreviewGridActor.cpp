@@ -3,6 +3,10 @@
 void AWrapPreviewGridActor::SetWrap(UAthenaItemWrapDefinition* NewWrap) {
 }
 
+TArray<FName> AWrapPreviewGridActor::GetMeshComponentNames() {
+    return TArray<FName>();
+}
+
 AWrapPreviewGridActor::AWrapPreviewGridActor() {
     WrapToApply = NULL;
     MaterialTypeForRawMeshes = EItemWrapMaterialType::WeaponWrap;

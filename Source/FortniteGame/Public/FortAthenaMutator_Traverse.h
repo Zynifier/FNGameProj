@@ -61,8 +61,5 @@ protected:
     UFUNCTION(BlueprintCallable)
     void OnRep_CurrentPointIndex();
     
-    UFUNCTION(BlueprintCallable)
-    void OnGamePhaseStepChanged(const TScriptInterface<IFortSafeZoneInterface>& SafeZoneInterface, const EAthenaGamePhaseStep GamePhaseStep);
-    
 };
 

@@ -11,11 +11,14 @@
 #include "LevelSaveSpawnable.h"
 #include "OnShowPublishWatermarkChangedDelegateDelegate.h"
 #include "VolumeMachineSetDelegateDelegate.h"
+#include "EMMSPrivacy.h"
 #include "FortMinigameSettingsBuilding.generated.h"
 
 class AFortMinigameSettingsBuilding;
 class AFortVolume;
 class UFortCreativeVolumeLinkComponent;
+
+class AActor;
 
 UCLASS(Blueprintable, MinimalAPI)
 class AFortMinigameSettingsBuilding : public AInfo, public ILevelSaveSpawnable, public IFortVolumeAccessor {
@@ -65,6 +68,9 @@ protected:
     EMMSRulePreset MmsType;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    EMMSPrivacy MmsPrivacy;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
     bool bPrefersRespectingPartiesFromMMS;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
@@ -82,7 +88,7 @@ public:
     
 protected:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, ReplicatedUsing=OnRep_SettingsVolume, meta=(AllowPrivateAccess=true))
-    AFortVolume* SettingsVolume;
+    AActor* SettingsVolume;
     
 private:
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))

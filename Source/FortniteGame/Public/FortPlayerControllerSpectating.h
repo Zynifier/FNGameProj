@@ -298,9 +298,6 @@ public:
     bool GetShowBusPathsOnMap() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)
-    UAthenaMarkerComponent* GetMarkerComponent() const;
-    
-    UFUNCTION(BlueprintCallable, BlueprintPure)
     bool GetMapWeaponTracersEnabled() const;
     
     UFUNCTION(BlueprintCallable, BlueprintPure)

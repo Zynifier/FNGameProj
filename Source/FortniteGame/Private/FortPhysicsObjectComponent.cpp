@@ -1,4 +1,5 @@
 #include "FortPhysicsObjectComponent.h"
+#include "Net/UnrealNetwork.h"
 
 void UFortPhysicsObjectComponent::WakeUp() {
 }
@@ -50,10 +51,84 @@ void UFortPhysicsObjectComponent::BroadcastLinearVelocity_Implementation(FVector
 void UFortPhysicsObjectComponent::BroadcastAngularVelocity_Implementation(FVector NewVel, bool bAddToCurrent, FName BoneName) {
 }
 
+void UFortPhysicsObjectComponent::ActivatePhysicsObject(AActor* PhysicsObject) {
+}
+
+void UFortPhysicsObjectComponent::ClearImpactInstigatorFromPhysicsObject(AActor* PhysicsObject) {
+}
+
+void UFortPhysicsObjectComponent::DeactivatePhysicsObject(AActor* PhysicsObject) {
+}
+
+void UFortPhysicsObjectComponent::PutToSleepPhysicsObject(AActor* PhysicsObject) {
+}
+
+void UFortPhysicsObjectComponent::SetImpactInstigatorForPhysicsObject(AActor* PhysicsObject, AActor* Instigator) {
+}
+
+void UFortPhysicsObjectComponent::WakeUpPhysicsObject(AActor* PhysicsObject) {
+}
+
+void UFortPhysicsObjectComponent::DecrementNeverSleep() {
+}
+
+void UFortPhysicsObjectComponent::DeferredSetupPhysicsObject() {
+}
+
+void UFortPhysicsObjectComponent::IgnorePawnForCollision(AFortPawn* Pawn, bool bIgnore) {
+}
+
+void UFortPhysicsObjectComponent::IncrementNeverSleep() {
+}
+
+void UFortPhysicsObjectComponent::OnRep_AwakeState() {
+}
+
+void UFortPhysicsObjectComponent::SetBuoyancyAssetOverride(const UFortPhysicsObjectBuoyancyData* InBuoyancyAssetOverride) {
+}
+
+void UFortPhysicsObjectComponent::SetCollisionEffectsDataOverride(const UFortPhysicsObjectCollisionEffectsData* InEffectsDataOverride) {
+}
+
+void UFortPhysicsObjectComponent::SetImpactDamageDataOverride(const UFortPhysicsObjectImpactDamageData* InImpactDamageData) {
+}
+
+void UFortPhysicsObjectComponent::SetNavigationDataOverride(const UFortPhysicsObjectNavigationData* InNavigationDataOverride) {
+}
+
+void UFortPhysicsObjectComponent::SetPhysicalMaterialOverride(const UPhysicalMaterial* InPhysicalMaterialOverride) {
+}
+
+float UFortPhysicsObjectComponent::GetGravity(bool bUseGravityMultiplier) const {
+    return 0.0f;
+}
+
+void UFortPhysicsObjectComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const {
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    
+    DOREPLIFETIME(UFortPhysicsObjectComponent, bServerHasSetupPhysicsObject);
+    DOREPLIFETIME(UFortPhysicsObjectComponent, bForceStartActiveAndAwake);
+    DOREPLIFETIME(UFortPhysicsObjectComponent, PhysicsObjectAwakeState);
+}
+
+void UFortPhysicsObjectComponent::GetMovingStateData(AActor*& OutInstigator, FHitResult& OutHitResult, float& OutLinearSpeed, EFortPhysicsObjectMovementState& OutMovementState) const {
+}
+
 UFortPhysicsObjectComponent::UFortPhysicsObjectComponent() {
     PhysicsPreset = NULL;
     bInitializeUsingRootComponent = true;
     SimulatingComponent = NULL;
     BuoyancyComponent = NULL;
+    CustomGravityMultiplier = 0.0f;
+    EffectsDataOverride = NULL;
+    PhysicalMaterialOverride = NULL;
+    BuoyancyAssetOverride = NULL;
+    ImpactDamageDataOverride = NULL;
+    NavigationDataOverride = NULL;
+    bHasSetupPhysicsObject = false;
+    bServerHasSetupPhysicsObject = false;
+    bForceStartActiveAndAwake = false;
+    bHasComponentActivated = false;
+    PhysicsObjectAwakeState = EFortPhysicsObjectAwakeState::Invalid;
 }
 

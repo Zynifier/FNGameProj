@@ -8,6 +8,8 @@ class USkeletalMeshComponent;
 class UStaticMeshComponent;
 class UTexture2D;
 
+class UFortItemDefinition;
+
 UCLASS(Abstract, Blueprintable)
 class AFortItemPreviewOffPawnActor : public AFortItemPreviewSingleAngleActor {
     GENERATED_BODY()
@@ -21,6 +23,9 @@ private:
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Instanced, meta=(AllowPrivateAccess=true))
     USkeletalMeshComponent* PreviewSkelMeshComponent;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Transient, meta=(AllowPrivateAccess=true))
+    UFortItemDefinition* ContentOnDemandItemDefinition;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     bool bUseItemDefConfiguredLocation;

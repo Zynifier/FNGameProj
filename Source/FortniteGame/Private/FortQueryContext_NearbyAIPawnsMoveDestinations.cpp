@@ -1,0 +1,4 @@
+#include "FortQueryContext_NearbyAIPawnsMoveDestinations.h"
+
+UFortQueryContext_NearbyAIPawnsMoveDestinations::UFortQueryContext_NearbyAIPawnsMoveDestinations() {
+}

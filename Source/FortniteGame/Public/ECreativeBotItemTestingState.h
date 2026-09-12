@@ -9,9 +9,10 @@ enum class ECreativeBotItemTestingState : uint8 {
     ITS_Landing,
     ITS_Grant,
     ITS_Equip,
-    ITS_Throw,
-    ITS_Throwing,
+    ITS_Place,
     ITS_Cleanup,
     ITS_MAX UMETA(Hidden),
+    ITS_Throw,
+    ITS_Throwing,
 };
 

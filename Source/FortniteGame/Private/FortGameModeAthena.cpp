@@ -83,6 +83,15 @@ void AFortGameModeAthena::AddContentKeysToGameState() {
 void AFortGameModeAthena::AddAIClassToReplicationGraph(TSubclassOf<AFortPawn> NewAIClass) const {
 }
 
+void AFortGameModeAthena::GetSquadIds(TArray<uint8>& SquadIds) {
+}
+
+void AFortGameModeAthena::GetSquadIdsOfNonSolos(TArray<uint8>& SquadsWithNonSolos) {
+}
+
+void AFortGameModeAthena::GetSquadMembers(uint8 SquadId, TArray<AFortPlayerStateAthena*>& SquadMembers) {
+}
+
 AFortGameModeAthena::AFortGameModeAthena() {
     DelayForStormCapWarning = 1;
     DelayForStormCapDamage = 1;
@@ -171,5 +180,6 @@ AFortGameModeAthena::AFortGameModeAthena() {
     DDoSDetectionMatchInvalidationCount = 0;
     DDoSDetectionMatchInvalidationEvalDurationSeconds = 1;
     bReticulateSplineKeysOnStart = false;
+    bIgnoreCanSpectateAfterDeathToken = false;
 }
 

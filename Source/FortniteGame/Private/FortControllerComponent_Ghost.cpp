@@ -28,6 +28,9 @@ bool UFortControllerComponent_Ghost::IsInGhostMode() const {
 void UFortControllerComponent_Ghost::EndGhostMode() {
 }
 
+void UFortControllerComponent_Ghost::HandleAbilityEnded(const FAbilityEndedData& AbilityData) {
+}
+
 UFortControllerComponent_Ghost::UFortControllerComponent_Ghost() {
     ItemProvidingGhostMode = NULL;
     bBecomeInvulnerableWhenGhosted = false;

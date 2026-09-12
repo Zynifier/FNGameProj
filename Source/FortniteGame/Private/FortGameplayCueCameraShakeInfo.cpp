@@ -6,5 +6,6 @@ FFortGameplayCueCameraShakeInfo::FFortGameplayCueCameraShakeInfo() {
     bAlwaysPlayOnTarget = false;
     bCalculateUserPlaySpaceRotationFromLocation = false;
     bCancelOnRemove = false;
+    Playspace = ECameraShakePlaySpace::CameraLocal;
 }
 

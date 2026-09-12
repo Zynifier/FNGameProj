@@ -1,5 +1,8 @@
 #include "FortAthenaAIBotEvaluator_Movement.h"
 
+void UFortAthenaAIBotEvaluator_Movement::OnCurrentUnstuckSteeringAttemptFinished() {
+}
+
 UFortAthenaAIBotEvaluator_Movement::UFortAthenaAIBotEvaluator_Movement() {
     LastPartialPathTimeKeyName = TEXT("AIEvaluator_UnstuckTeleport_LastPartialPathTime");
     LastPartialPathCountKeyName = TEXT("AIEvaluator_UnstuckTeleport_LastPartialCount");

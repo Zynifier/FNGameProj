@@ -49,7 +49,7 @@ bool UFortMcpProfileAthena::GetSeasonLevelUpReward(int32 SeasonLevel, FFortItemI
     return false;
 }
 
-FAthenaSeasonRewardLevelInfo UFortMcpProfileAthena::GetSeasonLevelInfo(int32 SeasonLevel) {
+FAthenaSeasonRewardLevelInfo UFortMcpProfileAthena::GetSeasonLevelInfo(const int32 SeasonLevel) const {
     return FAthenaSeasonRewardLevelInfo{};
 }
 

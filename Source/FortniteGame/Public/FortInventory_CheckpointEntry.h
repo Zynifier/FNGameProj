@@ -11,6 +11,9 @@ public:
     FString StartDeviceActorName;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
+    FGuid LevelSpawnableGuid;
+    
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, meta=(AllowPrivateAccess=true))
     FDateTime MostRecentUseTime;
     
     FORTNITEGAME_API FFortInventory_CheckpointEntry();
